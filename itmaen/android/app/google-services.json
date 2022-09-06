@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "814027048944",
+    "project_id": "itma-en",
+    "storage_bucket": "itma-en.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814027048944:android:72cf21d6e9c4d92ffabf35",
+        "android_client_info": {
+          "package_name": "com.example.itmaen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814027048944-0ban7s1jd6dl5esrg6gonk5r4lrq1h4n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4OyY62kjgb8ivY_sYPT_w_co1nfg6S8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814027048944-0ban7s1jd6dl5esrg6gonk5r4lrq1h4n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
