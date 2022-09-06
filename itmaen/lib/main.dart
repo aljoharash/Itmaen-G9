@@ -5,9 +5,9 @@ import 'package:firebase_core/firebase_core.dart';
 //Just For Testing that your database works ! Remove the code below after testing (Windows Usesrs)
 import 'login.dart';
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
+WidgetsFlutterBinding.ensureInitialized();
+await Firebase.initializeApp();
+runApp(MyApp());
 }
 
 //test1
