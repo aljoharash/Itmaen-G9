@@ -26,7 +26,7 @@ class _ForgotpassState extends State<Forgotpass> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                color: Colors.blue[900],
+                color: Colors.blueGrey,
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.70,
                 child: Center(
@@ -39,8 +39,8 @@ class _ForgotpassState extends State<Forgotpass> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Forgot\n"
-                            "Password",
+                            "نسيت\n"
+                            "كلمة المرور؟",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -48,7 +48,7 @@ class _ForgotpassState extends State<Forgotpass> {
                             ),
                           ),
                           Text(
-                            "Dont worry...",
+                            "لا تقلق...",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -66,7 +66,7 @@ class _ForgotpassState extends State<Forgotpass> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
-                              hintText: 'Email',
+                              hintText: 'البريد الإلكتروني',
                               enabled: true,
                               contentPadding: const EdgeInsets.only(
                                   left: 14.0, bottom: 8.0, top: 8.0),
@@ -82,12 +82,12 @@ class _ForgotpassState extends State<Forgotpass> {
                             textInputAction: TextInputAction.done,
                             validator: (value) {
                               if (value!.length == 0) {
-                                return "Email cannot be empty";
+                                return "يجب ملء هذا الحقل";
                               }
                               if (!RegExp(
                                       "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
                                   .hasMatch(value)) {
-                                return ("Please enter a valid email");
+                                return ("أرجو ادخال بريد إلكتروني صحيح");
                               } else {
                                 return null;
                               }
@@ -117,7 +117,7 @@ class _ForgotpassState extends State<Forgotpass> {
                                           builder: (context) => LoginPage()));
                                 },
                                 child: Text(
-                                  "Login",
+                                  "تسجيل الدخول",
                                   style: TextStyle(
                                     fontSize: 20,
                                   ),
@@ -137,7 +137,7 @@ class _ForgotpassState extends State<Forgotpass> {
                                   });
                                 },
                                 child: Text(
-                                  "Ok",
+                                  "نعم",
                                   style: TextStyle(
                                     fontSize: 20,
                                   ),

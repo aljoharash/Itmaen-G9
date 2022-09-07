@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 30,
                         ),
                         Text(
-                          "Login",
+                          "تسجيل الدخول",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            hintText: 'Email',
+                            hintText: 'ايميل',
                             enabled: true,
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 8.0),
@@ -72,12 +72,12 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           validator: (value) {
                             if (value!.length == 0) {
-                              return "Email cannot be empty";
+                              return "يجب ملء هذا الحقل";
                             }
                             if (!RegExp(
                                     "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
                                 .hasMatch(value)) {
-                              return ("Please enter a valid email");
+                              return ("أرجو ادخال بريد إلكتروني صحيح");
                             } else {
                               return null;
                             }
@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                                 }),
                             filled: true,
                             fillColor: Colors.white,
-                            hintText: 'Password',
+                            hintText: 'كلمة المرور',
                             enabled: true,
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 15.0),
@@ -121,10 +121,10 @@ class _LoginPageState extends State<LoginPage> {
                           validator: (value) {
                             RegExp regex = new RegExp(r'^.{6,}$');
                             if (value!.isEmpty) {
-                              return "Password cannot be empty";
+                              return "يجب ملء هذا الحقل";
                             }
                             if (!regex.hasMatch(value)) {
-                              return ("please enter valid password min. 6 character");
+                              return ("أرجو ادخال كلمة مرور صحيحة، أقل عدد 6");
                             } else {
                               return null;
                             }
@@ -135,8 +135,8 @@ class _LoginPageState extends State<LoginPage> {
                           keyboardType: TextInputType.emailAddress,
                         ),
                         MaterialButton(
-                          color: Colors.blue[900],
-                          textColor: Colors.white,
+                          color: Color.fromARGB(255, 237, 238, 240),
+                          textColor: Color.fromARGB(255, 10, 5, 5),
                           shape: RoundedRectangleBorder(
                               // side: BorderSide(color: Colors.black, width: 1),
                               ),
@@ -146,11 +146,12 @@ class _LoginPageState extends State<LoginPage> {
                                     builder: (context) => Forgotpass()));
                           },
                           child: Text(
-                            "Forgot Password ....",
+                            "نسيت كلمة المرور...",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color.fromARGB(255, 10, 8, 8),
                               fontSize: 18,
                               decoration: TextDecoration.underline,
+                              
                             ),
                           ),
                         ),
@@ -171,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                                 emailController.text, passwordController.text);
                           },
                           child: Text(
-                            "Login",
+                            "تسجيل الدخول",
                             style: TextStyle(
                               fontSize: 20,
                             ),
