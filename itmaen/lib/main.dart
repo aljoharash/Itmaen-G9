@@ -1,45 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-
-//Just For Testing that your database works ! Remove the code below after testing (Windows Usesrs)
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:itmaen/registerScreen.dart';
+import 'package:itmaen/signUp.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(FlashChat());
 }
 
-//test1
-class MyApp extends StatelessWidget {
-// This widget is the root
-// of your application.
+class FlashChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Firebase',
-      home: AddData(),
-    );
-  }
-}
-
-class AddData extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: Text("geeksforgeeks"),
-      ),
-      body: Center(
-        child: FloatingActionButton(
-          backgroundColor: Colors.green,
-          child: Icon(Icons.add),
-          onPressed: () {
-            FirebaseFirestore.instance.collection('data').add({'text': 'FFF'});
-          },
-        ),
-      ),
+      initialRoute: SignUpScreen.id,
+      routes: {
+        SignUpScreen.id: (context) => SignUpScreen(),
+      },
     );
   }
 }
