@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'generateqr.dart';
 import 'scanqr.dart';
+import 'pages/addmedicine.dart';
 
 class HomePage extends StatefulWidget {
 @override
@@ -55,7 +56,22 @@ Widget build(BuildContext context) {
 			child: Text("إضافة مريض", style: TextStyle(color: Color.fromARGB(255, 245, 244, 244), fontSize: 15 , fontWeight:FontWeight.bold ),textAlign: TextAlign.center,),
 			
 			),
-      )
+      ),
+
+      Center(
+			child:ElevatedButton(
+        
+			
+			onPressed: (){
+				Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
+															QrCode()));
+			},
+			child: Text("إضافة دواء", style: TextStyle(color: Color.fromARGB(255, 245, 244, 244), fontSize: 15 , fontWeight:FontWeight.bold ),textAlign: TextAlign.center,),
+			
+			),
+      ),
+
+
 		],
 		),
 	)
