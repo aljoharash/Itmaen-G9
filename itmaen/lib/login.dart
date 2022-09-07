@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:itmaen/patient-login.dart';
 
 import 'forgot.dart';
 import 'home.dart';
@@ -25,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: <Widget>[
             Container(
-              color: Colors.blue[900],
+              color: Colors.blueGrey,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.70,
               child: Center(
@@ -133,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           keyboardType: TextInputType.emailAddress,
                         ),
-                        RaisedButton(
+                        MaterialButton(
                           color: Colors.blue[900],
                           textColor: Colors.white,
                           shape: RoundedRectangleBorder(
@@ -189,11 +190,37 @@ class _LoginPageState extends State<LoginPage> {
                                 child: CircularProgressIndicator(
                               color: Colors.white,
                             ))),
+/////////////////////////////////to be removed/////////////////////////
+                             Container(
+                      height: 80,
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(top: 25, left: 24, right: 24),
+                      child: ElevatedButton(
+                        // elevation: 0,
+                        // shape: RoundedRectangleBorder(
+                        //     borderRadius: BorderRadius.circular(25),
+                        // ),
+                        // color: Colors.white,
+                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
+															patientScreen())),
+                        child: Text(
+                          'Go to patient Screen [FOR TEST] WILL BE REMOVED',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromARGB(255, 248, 250, 250),
+                          ),
+                        ),
+                      ),
+                    ),
+                    /////////////////////////////////////////////////////////////////////////
                       ],
                     ),
                   ),
+                  
                 ),
               ),
+             
             ),
             
           ],

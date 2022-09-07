@@ -1,49 +1,64 @@
 import 'package:flutter/material.dart';
 
+import 'generateqr.dart';
+import 'scanqr.dart';
+
 class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
+@override
+_HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Homepage",
-        ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Please press the subscribe button for more videos",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            MaterialButton(
-              color: Colors.red,
-              onPressed: () {},
-              child: Text(
-                'Subscribe',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+
+@override
+Widget build(BuildContext context) {
+	return Scaffold(
+    appBar: AppBar(
+		title: Center(child: Text("إطمئن")),
+	),
+	
+	body: Container(
+		width: 200,
+		height: 200,
+    
+		child: Column(
+		mainAxisAlignment: MainAxisAlignment.center,
+		crossAxisAlignment: CrossAxisAlignment.stretch,
+		children: [
+			//Display Image
+			// Image(image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQyYwscUPOH_qPPe8Hp0HAbFNMx-TxRFubpg&usqp=CAU")),
+			// Center(
+			// //First Button
+			// child:ElevatedButton(
+			
+			// onPressed: (){
+			// 	Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ScanQR()));
+			// },
+			// 	child: Text("مسح الكود", style: TextStyle(color: Color.fromARGB(255, 245, 244, 244), fontSize: 15 , fontWeight:FontWeight.bold ),textAlign: TextAlign.center,),
+			// // shape: RoundedRectangleBorder(
+			// // 	borderRadius: BorderRadius.circular(20),
+			// // 	side: BorderSide(color: Color.fromARGB(255, 122, 130, 215)),
+			// // ),
+			// ),
+      // ),
+			SizedBox(height: 10),
+
+			//Second Button
+      Center(
+			child:ElevatedButton(
+        
+			
+			onPressed: (){
+				Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
+															GenerateQR()));
+			},
+			child: Text("إضافة مريض", style: TextStyle(color: Color.fromARGB(255, 245, 244, 244), fontSize: 15 , fontWeight:FontWeight.bold ),textAlign: TextAlign.center,),
+			
+			),
+      )
+		],
+		),
+	)
+	);
+}
 }
