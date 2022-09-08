@@ -8,9 +8,7 @@ import 'package:itmaen/secure-storage.dart';
 import 'biometric-auth.dart';
 
 class patientScreen extends StatelessWidget {
-
-
-final StorageService st = StorageService();
+  StorageService st = StorageService();
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +16,17 @@ final StorageService st = StorageService();
       body: Stack(
         children: [
           Container(
-            //put the logo here 
-            // decoration: BoxDecoration(
-            //   image: DecorationImage(
-            //     image: Image()
-            //       // image: NetworkImage(
-            //       //     'https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE4fHx8ZW58MHx8fHw%3D&w=1000&q=80'),
-            //       // fit: BoxFit.fill
-            //       ),
-            // ),
-            
-          ),
+              //put the logo here
+              // decoration: BoxDecoration(
+              //   image: DecorationImage(
+              //     image: Image()
+              //       // image: NetworkImage(
+              //       //     'https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE4fHx8ZW58MHx8fHw%3D&w=1000&q=80'),
+              //       // fit: BoxFit.fill
+              //       ),
+              // ),
+
+              ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -38,11 +36,25 @@ final StorageService st = StorageService();
                   padding: const EdgeInsets.only(top: 60, left: 25),
                   child: Column(
                     children: [
-                      Text('أهلا بك', style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 118, 176, 186)), textAlign: TextAlign.left,),
-                      Text('من فضلك قم بتسجيل الرخول', style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic, color: Colors.blueGrey),),
+                      Text(
+                        'أهلا بك',
+                        style: TextStyle(
+                            fontSize: 55,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 118, 176, 186)),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        'من فضلك قم بتسجيل الرخول',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.blueGrey),
+                      ),
                     ],
                   ),
-                ),),
+                ),
+              ),
               Expanded(
                 flex: 3,
                 child: Column(
@@ -50,42 +62,25 @@ final StorageService st = StorageService();
                     Container(
                       height: 80,
                       width: double.infinity,
-                      padding: const EdgeInsets.only(top: 25, left: 24, right: 24),
-                      child: ElevatedButton(
-                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-															ScanQR())),
-                        // elevation: 0,
-                        // shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(25),
-                        // ),
-                        // color: Colors.indigo,
-                        child: Text(
-                          'تسجيل الدخول بمسح الكود',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,),
+                      padding:
+                          const EdgeInsets.only(top: 25, left: 24, right: 24),
+                      child: MaterialButton(
+                        onPressed: () async {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ScanQR()));
+                          
+                        },
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
                         ),
-                      ),
-                    ),
-                    Container(
-                      height: 80,
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(top: 25, left: 24, right: 24),
-                      child: ElevatedButton(
-                        // elevation: 0,
-                        // shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(25),
-                        // ),
-                        // color: Colors.white,
-                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-															ScanQR())),
+                        color: Colors.blueGrey,
                         child: Text(
-                          'تسجيل الدخول بالبصمة',
+                          'تسجيل الدخول لأول مرة بمسح الكود',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
-                            color: Color.fromARGB(255, 248, 250, 250),
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -93,15 +88,17 @@ final StorageService st = StorageService();
                     Container(
                       height: 80,
                       width: double.infinity,
-                      padding: const EdgeInsets.only(top: 25, left: 24, right: 24),
-                      child: ElevatedButton(
-                        // elevation: 0,
-                        // shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(25),
-                        // ),
-                        // color: Colors.white,
+                      padding:
+                          const EdgeInsets.only(top: 25, left: 24, right: 24),
+                      child: MaterialButton(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                        ),
+                        color: Colors.blueGrey,
                         onPressed: () async {
-                          bool isAuthenticated = await BiometricAuthentication.authenticateWithBiometrics();
+                          bool isAuthenticated = await BiometricAuthentication
+                              .authenticateWithBiometrics();
                           Future<String?> id = st.readSecureData("caregiverID");
                           if (isAuthenticated && id != null) {
                             // WE SHOULD READ FROM THE STORAGE ALSO IF THE IS A CAREGIVER
@@ -119,6 +116,30 @@ final StorageService st = StorageService();
                             //  );
                           }
                         },
+                        child: Text(
+                          'تسجيل الدخول بالبصمة',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromARGB(255, 248, 250, 250),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 80,
+                      width: double.infinity,
+                      padding:
+                          const EdgeInsets.only(top: 25, left: 24, right: 24),
+                      child: ElevatedButton(
+                        // elevation: 0,
+                        // shape: RoundedRectangleBorder(
+                        //     borderRadius: BorderRadius.circular(25),
+                        // ),
+                        // color: Colors.white,
+                        onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => HomePage())),
                         child: Text(
                           'GO TO HOME PAGE [FOR TEST] WILL BE REMOVED',
                           style: TextStyle(
