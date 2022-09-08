@@ -1,0 +1,339 @@
+[
+    {
+     "Generic name": "VITAMIN D3 (CHOLECALCIFEROL)",
+     "Trade name": "VIDROP ORAL DROPS",
+     "Strength value": "2800",
+     "Unit of strength": "IU\/ml",
+     "Volume": 15,
+     "Unit of volume": "ml",
+     "Package size": 1,
+     "barcode": "6221508220422"
+    },
+    {
+     "Generic name": "CHLORZOXAZONE, PARACETAMOL",
+     "Trade name": "PARAFON",
+     "Strength value": "250, 300",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "6281080002380"
+    },
+    {
+     "Generic name": "ESOMEPRAZOLE",
+     "Trade name": "NEXIUM 40MG TAB",
+     "Strength value": "40",
+     "Unit of strength": "mg",
+     "Package size": 14,
+     "barcode": "3717800001715"
+    },
+    {
+     "Generic name": "ENOXAPARIN SODIUM",
+     "Trade name": "CLEXANE 40MG\\0.4ML PREFILLED SYRINGE",
+     "Strength value": "40",
+     "Unit of strength": "mg",
+     "Volume": 0.4,
+     "Unit of volume": "ml",
+     "Package size": 2,
+     "barcode": "3582910029397"
+    },
+    {
+     "Generic name": "ESCITALOPRAM OXALATE",
+     "Trade name": "CIPRALEX 10 MG F.C. TABLETS",
+     "Strength value": "10",
+     "Unit of strength": "mg",
+     "Package size": 28,
+     "barcode": "5702157150809"
+    },
+    {
+     "Generic name": "AMLODIPINE BESYLATE",
+     "Trade name": "AMLOCARD 5MG TABLETS",
+     "Strength value": "5",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "6285104000062"
+    },
+    {
+     "Generic name": "BUDESONIDE",
+     "Trade name": "PULMICORT 0.5MG-ML (S.DOSE FOR NUB) SUSP",
+     "Strength value": "0.5",
+     "Unit of strength": "mg\/ml",
+     "Volume": 2,
+     "Unit of volume": "ml",
+     "Package size": 1,
+     "barcode": "3717800001577"
+    },
+    {
+     "Generic name": "GLIBENCLAMIDE, METFORMIN",
+     "Trade name": "GLUCOVANCE 5\/500",
+     "Strength value": "5, 500",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "6281080002465"
+    },
+    {
+     "Generic name": "BRIMONIDINE TARTRATE",
+     "Trade name": "ALPHAGAN-P  0.15% OPHTHALMIC SOLUTION",
+     "Strength value": "0.15",
+     "Unit of strength": "%",
+     "Volume": 5,
+     "Unit of volume": "ml",
+     "Package size": 1,
+     "barcode": "5016007206258"
+    },
+    {
+     "Generic name": "ALLOPURINOL",
+     "Trade name": "NO-URIC TAB 300MG",
+     "Strength value": "300",
+     "Unit of strength": "mg",
+     "Package size": 20,
+     "barcode": "6221032114143"
+    },
+    {
+     "Generic name": "SPIRONOLACTONE",
+     "Trade name": "ALDACTONE TAB",
+     "Strength value": "25",
+     "Unit of strength": "mg",
+     "Package size": 20,
+     "barcode": "5415062002193"
+    },
+    {
+     "Generic name": "FLUOXETINE",
+     "Trade name": "FLOZAK",
+     "Strength value": "20",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "6281080003530"
+    },
+    {
+     "Generic name": "LORNOXICAM",
+     "Trade name": "XEFO 8MG TAB",
+     "Strength value": "8",
+     "Unit of strength": "mg",
+     "Package size": 20,
+     "barcode": "6281936131813"
+    },
+    {
+     "Generic name": "AMLODIPINE, VALSARTAN",
+     "Trade name": "EXFORGE 5MG-160 MG F.C. TABLETS",
+     "Strength value": "5, 160",
+     "Unit of strength": "mg",
+     "Package size": 28,
+     "barcode": "3711500000847"
+    },
+    {
+     "Generic name": "MOMETASONE FUROATE",
+     "Trade name": "NASONEX 0.05% NASAL SPRAY",
+     "Strength value": "0.05",
+     "Unit of strength": "%",
+     "Package size": 1,
+     "barcode": "40000108307"
+    },
+    {
+     "Generic name": "PANTOPRAZOLE",
+     "Trade name": "PANTOMAX 40MG E.C.TABLETS",
+     "Strength value": "40",
+     "Unit of strength": "mg",
+     "Package size": 15,
+     "barcode": "3701759040466"
+    },
+    {
+     "Generic name": "IBUPROFEN",
+     "Trade name": "NUROFEN 100MG-5ML PAEDIATRIC SUSPENSION",
+     "Strength value": "20",
+     "Unit of strength": "mg\/ml",
+     "Volume": 150,
+     "Unit of volume": "ml",
+     "Package size": 1,
+     "barcode": "5000158071599"
+    },
+    {
+     "Generic name": "PARACETAMOL",
+     "Trade name": "FEVADOL 500MG TAB",
+     "Strength value": "500",
+     "Unit of strength": "mg",
+     "Package size": 20,
+     "barcode": "6281086000090"
+    },
+    {
+     "Generic name": "PARACETAMOL",
+     "Trade name": "PANADOL ADVANCE 500MG FILM COATED TABLET",
+     "Strength value": "500",
+     "Unit of strength": "mg",
+     "Package size": 24,
+     "barcode": "9502930973214"
+    },
+    {
+     "Generic name": "MULTIVITAMINS, MINERALS",
+     "Trade name": "CENTRUM WITH LUTEIN TABLETS",
+     "Package size": 100,
+     "barcode": "6251613000503"
+    },
+    {
+     "Generic name": "DEXTROMETHORPHAN HBR",
+     "Trade name": "KAFOSED SYRUP 15MG-5ML",
+     "Strength value": "3",
+     "Unit of strength": "mg\/ml",
+     "Volume": 100,
+     "Unit of volume": "ml",
+     "Package size": 1,
+     "barcode": "6281086000113"
+    },
+    {
+     "Generic name": "BROMHEXINE",
+     "Trade name": "EZOLVIN 8MG TAB",
+     "Strength value": "8",
+     "Unit of strength": "mg",
+     "Package size": 20,
+     "barcode": "3704500367010"
+    },
+    {
+     "Generic name": "DESLORATADINE",
+     "Trade name": "AERIUS 5MG TABLETS",
+     "Strength value": "5",
+     "Unit of strength": "mg",
+     "Package size": 18,
+     "barcode": "6281086001806"
+    },
+    {
+     "Generic name": "DESLORATADINE",
+     "Trade name": "NEORIN 5MG F.C. TABLET",
+     "Strength value": "5",
+     "Unit of strength": "mg",
+     "Package size": 20,
+     "barcode": "6281086002513"
+    },
+    {
+     "Generic name": "GLUCOSAMINE, CHONDROITIN, VITAMIN E (TOCOPHEROL), VITAMIN D3 (CHOLECALCIFEROL), VITAMIN B12 (CYANOCOBALAMIN), VITAMIN C (ASCORBIC ACID), FOLIC ACID, SELENIUM, MANGANESE, ZINC, COPPER, GINGER EXTRACT",
+     "Trade name": "JOINTACE TABLET",
+     "Package size": 60,
+     "barcode": "5021265245901"
+    },
+    {
+     "Generic name": "ESCITALOPRAM OXALATE",
+     "Trade name": "ENTAPRO 10MG FILM COATED TABLETS",
+     "Strength value": "10",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "6281086002674"
+    },
+    {
+     "Generic name": "MIRTAZAPINE",
+     "Trade name": "MIRZAGEN 15 mg film-coated tablet",
+     "Strength value": "15",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "6281080003646"
+    },
+    {
+     "Generic name": "PAROXETINE HYDROCHLORIDE",
+     "Trade name": "PAROXAT 10 MG F-C TABLETS",
+     "Strength value": "10",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "6281086002483"
+    },
+    {
+     "Generic name": "ESCITALOPRAM OXALATE",
+     "Trade name": "DEPRALEX 20MG FILM COATED TABLET",
+     "Strength value": "20",
+     "Unit of strength": "mg",
+     "Package size": 28,
+     "barcode": "6285147000845"
+    },
+    {
+     "Generic name": "FEBUXOSTAT",
+     "Trade name": "AGOUT 80 mg film-coated tablets",
+     "Strength value": "80",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "6281086002933"
+    },
+    {
+     "Generic name": "GLUCOSAMINE, GINKGO BILOBA",
+     "Trade name": "DOROFEN 500-50 MG CAPSULE",
+     "Strength value": "500, 50",
+     "Unit of strength": "mg",
+     "Package size": 40,
+     "barcode": "610644193114"
+    },
+    {
+     "Generic name": "ORLISTAT",
+     "Trade name": "FATLOS 120MG CAPSULES",
+     "Strength value": "120",
+     "Unit of strength": "mg",
+     "Package size": 80,
+     "barcode": "6285147001187"
+    },
+    {
+     "Generic name": "OMEPRAZOLE",
+     "Trade name": "GASTROZOLE",
+     "Strength value": "20",
+     "Unit of strength": "mg",
+     "Package size": 14,
+     "barcode": "6281080003547"
+    },
+    {
+     "Generic name": "SOLIFENACIN SUCCINATE",
+     "Trade name": "VESICARE 10 mg film-coated tablet",
+     "Strength value": "10",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "3701790020014"
+    },
+    {
+     "Generic name": "MONTELUKAST SODIUM",
+     "Trade name": "AIRFAST 10MG FILM COATED TABLET",
+     "Strength value": "10",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "6281102232306"
+    },
+    {
+     "Generic name": "GLIBENCLAMIDE, METFORMIN",
+     "Trade name": "DAONIL M 500\/2.5MG TABLETS",
+     "Strength value": "2.5, 500",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "6281086610022"
+    },
+    {
+     "Generic name": "GLIMEPIRIDE",
+     "Trade name": "GLITRA 2MG TABLETS",
+     "Strength value": "2",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "6251154188012"
+    },
+    {
+     "Generic name": "AMLODIPINE",
+     "Trade name": "DUACTIN 5MG CAPSULES",
+     "Strength value": "5",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "6251106140105"
+    },
+    {
+     "Generic name": "VALSARTAN, HYDROCHLOROTHIAZIDE",
+     "Trade name": "ARBITEN PLUS 80MG\/12.5MG FILM COATED TABLET",
+     "Strength value": "80, 12.5",
+     "Unit of strength": "mg",
+     "Package size": 30,
+     "barcode": "6251599000993"
+    },
+    {
+     "Generic name": "CANDESARTAN CILEXETIL, HYDROCHLOROTHIAZIDE",
+     "Trade name": "BLOPRESS 8 PLUS TABLETS",
+     "Strength value": "8 , 12.5",
+     "Unit of strength": "mg",
+     "Package size": 28,
+     "barcode": "6251159023851"
+    },
+    {
+     "Generic name": "ACETYLSALICYLIC ACID",
+     "Trade name": "AZERA 100 mg enteric-coated tablet",
+     "Strength value": "100",
+     "Unit of strength": "mg",
+     "Package size": 90,
+     "barcode": "6251653750000"
+    }
+   ]
+   
