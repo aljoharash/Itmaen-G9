@@ -14,7 +14,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreen extends State<SignUpScreen> {
   final _auth = FirebaseAuth.instance;
 //final _formKey =GlobalKey<FormState>() ;
-  String username = '';
+  late String username = '';
   late String email = '';
   late String password = '';
   late String phoneNum = '';
@@ -90,13 +90,13 @@ class _SignUpScreen extends State<SignUpScreen> {
             print(e);
           }
         },
-        child: Text('Register'),
+        child: Text('انشاء حساب'),
       )
     ];
 
     Future addUserDetails(
         String username1, String mobileNumber, String email1) async {
-      await FirebaseFirestore.instance.collection('Users').add({
+      await FirebaseFirestore.instance.collection('caregivers').add({
         'user name': username1,
         'mobile number': mobileNumber,
         'email': email1
