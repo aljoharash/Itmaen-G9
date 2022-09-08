@@ -47,5 +47,7 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
     <string>App requires the camera to scan a QR Code.</string>
+	<key>NSFaceIDUsageDescription</key>
+    <string>Biometric authentication for accessing secrets</string>
 </dict>
 </plist>

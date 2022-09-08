@@ -3,10 +3,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:itmaen/home.dart';
 import 'package:itmaen/scanqr.dart';
+import 'package:itmaen/secure-storage.dart';
+
+import 'biometric-auth.dart';
 
 class patientScreen extends StatelessWidget {
 
 
+final StorageService st = StorageService();
 
   @override
   Widget build(BuildContext context) {
@@ -96,8 +100,25 @@ class patientScreen extends StatelessWidget {
                         //     borderRadius: BorderRadius.circular(25),
                         // ),
                         // color: Colors.white,
-                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-															HomePage())),
+                        onPressed: () async {
+                          bool isAuthenticated = await BiometricAuthentication.authenticateWithBiometrics();
+                          Future<String?> id = st.readSecureData("caregiverID");
+                          if (isAuthenticated && id != null) {
+                            // WE SHOULD READ FROM THE STORAGE ALSO IF THE IS A CAREGIVER
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => HomePage(),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Authentication failed.'),
+                              ),
+                            );
+                            //  );
+                          }
+                        },
                         child: Text(
                           'GO TO HOME PAGE [FOR TEST] WILL BE REMOVED',
                           style: TextStyle(
