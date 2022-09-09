@@ -4,10 +4,11 @@ import 'package:firebase_core/firebase_core.dart';
 
 //Just For Testing that your database works ! Remove the code below after testing (Windows Usesrs)
 import 'login.dart';
+
 void main() async {
-WidgetsFlutterBinding.ensureInitialized();
-await Firebase.initializeApp();
-runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 //test1
@@ -21,7 +22,8 @@ class MyApp extends StatefulWidget {
       home: AddData(),
     );
   }
-   _MyAppState createState() => _MyAppState();
+
+  _MyAppState createState() => _MyAppState();
 }
 
 class AddData extends StatelessWidget {
@@ -44,6 +46,7 @@ class AddData extends StatelessWidget {
     );
   }
 }
+
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
