@@ -33,11 +33,13 @@ class patientScreen extends StatelessWidget {
               Expanded(
                 flex: 6,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 60, left: 25),
+                  padding: const EdgeInsets.only(top: 60, left: 25,right:25),
                   child: Column(
                     children: [
+
                       Text(
                         'أهلا بك',
+                        
                         style: TextStyle(
                             fontSize: 55,
                             fontWeight: FontWeight.bold,
@@ -66,6 +68,7 @@ class patientScreen extends StatelessWidget {
                           const EdgeInsets.only(top: 25, left: 24, right: 24),
                       child: MaterialButton(
                         onPressed: () async {
+                          // st.deleteSecureData("caregiverID");
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ScanQR()));
                           
@@ -99,8 +102,11 @@ class patientScreen extends StatelessWidget {
                         onPressed: () async {
                           bool isAuthenticated = await BiometricAuthentication
                               .authenticateWithBiometrics();
-                          Future<String?> id = st.readSecureData("caregiverID");
-                          if (isAuthenticated && id != null) {
+                              
+                          String? id = await st.readSecureData("caregiverID");
+
+                          print(id); 
+                          if (isAuthenticated) {
                             // WE SHOULD READ FROM THE STORAGE ALSO IF THE IS A CAREGIVER
                             Navigator.of(context).push(
                               MaterialPageRoute(
@@ -110,7 +116,7 @@ class patientScreen extends StatelessWidget {
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Authentication failed.'),
+                                content: Text('خطأ في تسجيل الدخول! في حال كنت مستخدم للتطبيق لأول مرة يرجى مسح الكود'),
                               ),
                             );
                             //  );
@@ -126,30 +132,30 @@ class patientScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
-                      height: 80,
-                      width: double.infinity,
-                      padding:
-                          const EdgeInsets.only(top: 25, left: 24, right: 24),
-                      child: ElevatedButton(
-                        // elevation: 0,
-                        // shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(25),
-                        // ),
-                        // color: Colors.white,
-                        onPressed: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => HomePage())),
-                        child: Text(
-                          'GO TO HOME PAGE [FOR TEST] WILL BE REMOVED',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: Color.fromARGB(255, 248, 250, 250),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   height: 80,
+                    //   width: double.infinity,
+                    //   padding:
+                    //       const EdgeInsets.only(top: 25, left: 24, right: 24),
+                    //   child: ElevatedButton(
+                    //     // elevation: 0,
+                    //     // shape: RoundedRectangleBorder(
+                    //     //     borderRadius: BorderRadius.circular(25),
+                    //     // ),
+                    //     // color: Colors.white,
+                    //     onPressed: () => Navigator.of(context).push(
+                    //         MaterialPageRoute(
+                    //             builder: (context) => HomePage())),
+                    //     child: Text(
+                    //       'GO TO HOME PAGE [FOR TEST] WILL BE REMOVED',
+                    //       style: TextStyle(
+                    //         fontSize: 20,
+                    //         fontWeight: FontWeight.w700,
+                    //         color: Color.fromARGB(255, 248, 250, 250),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

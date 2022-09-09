@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'generateqr.dart';
 import 'scanqr.dart';
+import 'add-patient.dart';
 
 class HomePage extends StatefulWidget {
 @override
@@ -50,7 +51,7 @@ Widget build(BuildContext context) {
 			
 			onPressed: (){
 				Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-															GenerateQR()));
+															AddPatient()));
 			},
 			child: Text("إضافة مريض", style: TextStyle(color: Color.fromARGB(255, 245, 244, 244), fontSize: 15 , fontWeight:FontWeight.bold ),textAlign: TextAlign.center,),
 			
