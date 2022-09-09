@@ -18,7 +18,7 @@ Widget build(BuildContext context) {
 	return Scaffold(
 	//Appbar having title
 	appBar: AppBar(
-		title: Center(child: Text("إطمئن")),
+		title: Center(child: Text("كود" ,style: TextStyle(fontFamily:'Madani Arabic Black'),)),
 	),
 	body: Container(
 		padding: EdgeInsets.all(20),
@@ -31,7 +31,7 @@ Widget build(BuildContext context) {
 			children: [
 			QrImage(data: qrData),
 			SizedBox(height: 20),
-			Text(" كود المريض لتسجيل الدخول",style: TextStyle(fontSize: 20),textAlign: TextAlign.center),
+			Text(" كود المريض لتسجيل الدخول",style: TextStyle(fontSize: 20, fontFamily: 'Madani Arabic Black'),textAlign: TextAlign.center),
 			
 			//TextField for input link
 			// TextField(
@@ -85,8 +85,8 @@ Widget build(BuildContext context) {
                           'العودة للقائمة الرئيسية',
                           style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.w700,
                             color: Colors.white,
+                            fontFamily: 'Madani Arabic Black'
                           ),
                         ),
                       ),
