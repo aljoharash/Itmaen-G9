@@ -13,7 +13,6 @@ class patientScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Stack(
         children: [
           Container(
@@ -35,40 +34,36 @@ class patientScreen extends StatelessWidget {
                 flex: 6,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
-                 child: Center(
-                 
-                  child: Column(
-                    children: [
-                  
-                      Text(
-                        'أهلا بك',
-                        style: TextStyle(
-                            fontSize: 55,
-                            // fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 118, 176, 186),
-                            fontFamily: 'Madani Arabic Black'
-                            ),
-                            textDirection: TextDirection.rtl,
-                        // textAlign: TextAlign.left,
-                      
-                      ),
-                      Text(
-                        'من فضلك قم بتسجيل الدخول',
-                        style: TextStyle(
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          'أهلا بك',
+                          style: TextStyle(
+                              fontSize: 55,
+                              // fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 118, 176, 186),
+                              fontFamily: 'Madani Arabic Black'),
+                          textDirection: TextDirection.rtl,
+                          // textAlign: TextAlign.left,
+                        ),
+                        Text(
+                          'من فضلك قم بتسجيل الدخول',
+                          style: TextStyle(
                             fontSize: 18,
                             fontStyle: FontStyle.italic,
                             color: Colors.blueGrey,
-                            fontFamily:'Madani Arabic Black' ,),
-                            textDirection: TextDirection.rtl,
-                            
-                            
-                      ),
-                      Image.asset('assets/Images/itmaenlogo.jpg',
-                                 height:210 , 
-                                  width:210, 
+                            fontFamily: 'Madani Arabic Black',
+                          ),
+                          textDirection: TextDirection.rtl,
+                        ),
+                        Image.asset(
+                          'assets/Images/itmaenlogo.png',
+                          height: 400,
+                          width: 400,
                         )
-                    ],
-                  ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -141,11 +136,10 @@ class patientScreen extends StatelessWidget {
                         child: Text(
                           'تسجيل الدخول السريع',
                           style: TextStyle(
-                            fontSize: 20,
-                            // fontWeight: FontWeight.w700,
-                            color: Color.fromARGB(255, 248, 250, 250),
-                            fontFamily: 'Madani Arabic Black'
-                          ),
+                              fontSize: 20,
+                              // fontWeight: FontWeight.w700,
+                              color: Color.fromARGB(255, 248, 250, 250),
+                              fontFamily: 'Madani Arabic Black'),
                         ),
                       ),
                     ),
