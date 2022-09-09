@@ -33,13 +33,11 @@ class patientScreen extends StatelessWidget {
               Expanded(
                 flex: 6,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 60, left: 25,right:25),
+                  padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
                   child: Column(
                     children: [
-
                       Text(
                         'أهلا بك',
-                        
                         style: TextStyle(
                             fontSize: 55,
                             fontWeight: FontWeight.bold,
@@ -71,11 +69,10 @@ class patientScreen extends StatelessWidget {
                           // st.deleteSecureData("caregiverID");
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ScanQR()));
-                          
                         },
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         color: Colors.blueGrey,
                         child: Text(
@@ -96,17 +93,17 @@ class patientScreen extends StatelessWidget {
                       child: MaterialButton(
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         color: Colors.blueGrey,
                         onPressed: () async {
                           bool isAuthenticated = await BiometricAuthentication
                               .authenticateWithBiometrics();
-                              
+
                           String? id = await st.readSecureData("caregiverID");
 
-                          print(id); 
-                          if (isAuthenticated) {
+                          print(id);
+                          if (isAuthenticated && id != null) {
                             // WE SHOULD READ FROM THE STORAGE ALSO IF THE IS A CAREGIVER
                             Navigator.of(context).push(
                               MaterialPageRoute(
@@ -116,7 +113,8 @@ class patientScreen extends StatelessWidget {
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('خطأ في تسجيل الدخول! في حال كنت مستخدم للتطبيق لأول مرة يرجى مسح الكود'),
+                                content: Text(
+                                    'خطأ في تسجيل الدخول! في حال كنت مستخدم للتطبيق لأول مرة يرجى مسح الكود'),
                               ),
                             );
                             //  );
