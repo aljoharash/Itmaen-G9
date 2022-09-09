@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 30,
                         ),
                         Text(
-                          "Login",
+                          "تسجيل الدخول ",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            hintText: 'Email',
+                            hintText: 'ايميل',
                             enabled: true,
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 8.0),
@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                                 }),
                             filled: true,
                             fillColor: Colors.white,
-                            hintText: 'Password',
+                            hintText: 'كلمة مرور',
                             enabled: true,
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 15.0),

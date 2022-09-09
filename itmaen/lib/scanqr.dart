@@ -26,7 +26,8 @@ class _ScanQRState extends State<ScanQR> {
     
     return Scaffold(
       appBar: AppBar(
-        title: Text("تسجيل الدخول بالكود الخاص بك"),
+        title: Text("تسجيل الدخول بالكود الخاص بك", 
+        style: TextStyle(fontFamily: 'Madani Arabic Black')),
       ),
       body: Container(
         padding: EdgeInsets.all(20),
@@ -35,21 +36,21 @@ class _ScanQRState extends State<ScanQR> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             //Message displayed over here
-            Text(
-              "Result",
-              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            Text (
-              qrCodeResult,
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
+            // Text(
+            //   "Result",
+            //   style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+            //   textAlign: TextAlign.center,
+            // ),
+            // Text (
+            //   qrCodeResult,
+            //   style: TextStyle(
+            //     fontSize: 20.0,
+            //   ),
+            //   textAlign: TextAlign.center,
+            // ),
+            // SizedBox(
+            //   height: 20.0,
+            // ),
 
             //Button to scan QR code
             MaterialButton(
@@ -88,7 +89,7 @@ class _ScanQRState extends State<ScanQR> {
               },
               child: Text(
                 "افتح الماسح الضوئي",
-                style: TextStyle(color: Color.fromARGB(255, 228, 229, 231),fontSize: 20,),
+                style: TextStyle(color: Color.fromARGB(255, 228, 229, 231),fontSize: 20,fontFamily: 'Madani Arabic Black'),
               ),
               
             ),

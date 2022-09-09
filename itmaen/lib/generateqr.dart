@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import 'home.dart';
+
 class GenerateQR extends StatefulWidget {
 @override
 _GenerateQRState createState() => _GenerateQRState();
@@ -62,6 +64,33 @@ Widget build(BuildContext context) {
 				// // ),
 				// ),
 			),
+       Container(
+                      height: 80,
+                      width: double.infinity,
+                      padding:
+                          const EdgeInsets.only(top: 25, left: 24, right: 24),
+                      child: MaterialButton(
+                        onPressed: () async {
+                          // st.deleteSecureData("caregiverID");
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => HomePage()));
+                          
+                        },
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                        ),
+                        color: Colors.blueGrey,
+                        child: Text(
+                          'العودة للقائمة الرئيسية',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
 			],
 		),
 		),
