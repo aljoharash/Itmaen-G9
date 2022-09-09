@@ -1,4 +1,4 @@
-[
+const List<dynamic> medicinesData = [
     {
      "Generic name": "VITAMIN D3 (CHOLECALCIFEROL)",
      "Trade name": "VIDROP ORAL DROPS - فيدروب ",
