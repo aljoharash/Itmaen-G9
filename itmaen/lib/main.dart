@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 //Just For Testing that your database works ! Remove the code below after testing (Windows Usesrs)
+import 'directLogin.dart';
 import 'login.dart';
 void main() async {
 WidgetsFlutterBinding.ensureInitialized();
@@ -52,7 +53,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: LoginPage(),
+      home: Directlogin(),
     );
   }
 }
