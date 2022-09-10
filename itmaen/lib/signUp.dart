@@ -15,116 +15,166 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreen extends State<SignUpScreen> {
   final _auth = FirebaseAuth.instance;
-//final _formKey =GlobalKey<FormState>() ;
-  var username = '';
-  var email = '';
-  var password = '';
-  var phoneNum = '';
-
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController username = new TextEditingController();
+  TextEditingController email = new TextEditingController();
+  TextEditingController password = new TextEditingController();
+  TextEditingController phoneNum = new TextEditingController();
+  String errorMessage = '';
   @override
-  Widget build(BuildContext context) {
-    var children2 = <Widget>[
-      Flexible(
-        child: Hero(
-          tag: 'logo',
-          child: Container(
-            height: 200.0,
-            child: Image.asset('images/logo.jpg'),
-          ),
+  Widget build(BuildContext context) => Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("images/background.jpg"),
+          fit: BoxFit.cover,
         ),
       ),
-      SizedBox(
-        height: 48.0,
-      ),
-      TextField(
-          //key: _formKey,
-          textAlign: TextAlign.center,
-          onChanged: (value) {
-            username = value;
-          },
-          decoration: kTextFieldDecoration.copyWith(hintText: ' اسم المستخدم')),
-      SizedBox(
-        height: 12.0,
-      ),
-      TextField(
-        keyboardType: TextInputType.emailAddress,
-        textAlign: TextAlign.center,
-        onChanged: (value) {
-          email = value;
-        },
-        decoration:
-            kTextFieldDecoration.copyWith(hintText: 'البريد الالكتروني'),
-      ),
-      SizedBox(
-        height: 12.0,
-      ),
-      TextField(
-        obscureText: true,
-        textAlign: TextAlign.center,
-        onChanged: (value) {
-          password = value;
-        },
-        decoration: kTextFieldDecoration.copyWith(hintText: 'الرقم السري'),
-      ),
-      SizedBox(
-        height: 12.0,
-      ),
-      TextField(
-        keyboardType: TextInputType.phone,
-        textAlign: TextAlign.center,
-        onChanged: (value) {
-          phoneNum = value;
-        },
-        decoration: kTextFieldDecoration.copyWith(hintText: 'رقم الجوال'),
-      ),
-      SizedBox(
-        height: 24.0,
-      ),
-      TextButton(
-        style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side:
-                        BorderSide(color: Color.fromARGB(255, 54, 158, 244))))),
-        onPressed: () async {
-          try {
-            final newUser = await _auth.createUserWithEmailAndPassword(
-                email: email, password: password);
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Form(
+            key: _formKey,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    /*SafeArea(
+                      child: Hero(
+                        tag: 'logo',
+                        child: Container(
+                          height: 500.0,
+                          child: Text('sss'),
+                        ),
+                      ),
+                    ),*/
+                    SizedBox(
+                      height: 180.0,
+                    ),
+                    SafeArea(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "انشاء حساب",
+                          textAlign: TextAlign.center,
+                          style:
+                              TextStyle(fontSize: 50, color: Colors.blueGrey),
+                        ),
+                      ),
+                    ),
+                    /*SizedBox(
+                      height: 50.0,
+                    ),*/
+                    TextFormField(
+                        controller: username,
+                        validator: ValidateUserName,
+                        textAlign: TextAlign.right,
+                        decoration: kTextFieldDecoration.copyWith(
+                            hintText: ' اسم المستخدم')),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    TextFormField(
+                        controller: email,
+                        validator: ValidateEmail,
+                        textAlign: TextAlign.right,
+                        decoration: kTextFieldDecoration.copyWith(
+                            hintText: 'البريد الالكتروني ')),
+                    Center(
+                      child: Text(errorMessage),
+                    ),
+                    SizedBox(
+                      height: 2.0,
+                    ),
+                    TextFormField(
+                      obscureText: true,
+                      controller: password,
+                      validator: ValidatePassword,
+                      textAlign: TextAlign.right,
+                      decoration: kTextFieldDecoration.copyWith(
+                          hintText: 'الرقم السري'),
+                    ),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    TextFormField(
+                      controller: phoneNum,
+                      validator: ValidatePhoneNumber,
+                      textAlign: TextAlign.right,
+                      decoration:
+                          kTextFieldDecoration.copyWith(hintText: 'رقم الهاتف'),
+                    ),
+                    SizedBox(
+                      height: 24.0,
+                    ),
+                    ElevatedButton(
+                      style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 40),
+                          backgroundColor: Colors.blueGrey),
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          try {
+                            final newUser =
+                                await _auth.createUserWithEmailAndPassword(
+                                    email: email.text, password: password.text);
+                            errorMessage = '';
+                            /*if(newUser!=null){     will take us to the homescreen
+                    Navigator.pushNamed(context, )
+                  }*/
+                            User? updateUser =
+                                FirebaseAuth.instance.currentUser;
+                            //updateUser?.updateDisplayName(username);
+                            userSetup(username, email, password, phoneNum);
+                          } on FirebaseAuthException catch (error) {
+                            errorMessage = error.message!;
+                            errorMessage = 'البريد الالكتروني مسجل مسبقا';
+                          }
+                          setState(() {});
+                        }
+                      },
+                      child: Text('انشاء '),
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () {},
+                      child: const Text('لديّ حساب مسبقا'),
+                    ),
+                  ]),
+            ),
+          )));
+}
 
-            User? updateUser = FirebaseAuth.instance.currentUser;
-            //updateUser?.updateDisplayName(username);
-            userSetup(username, email, password, phoneNum);
-          } catch (e) {
-            print(e);
-          }
-        },
-        child: Text('انشاء حساب'),
-      )
-    ];
+String? ValidateEmail(String? formEmail) {
+  if (formEmail == null || formEmail.isEmpty)
+    return ' الرجاء ادخال البريد الالكتروني';
 
-    /*Future addUserDetails(var username1, var mobileNumber, var email1) async {
-      await FirebaseFirestore.instance.collection('caregivers').add({
-        'user name': username1,
-        'mobile number': mobileNumber,
-        'email': email1
-      });
-    }
+  String pattern = r'\w+@\w+\.\w+';
+  RegExp regex = RegExp(pattern);
+  if (!regex.hasMatch(formEmail)) return 'البريد الاكتروني المدخل غير صحيح';
+  return null;
+}
 
-    addUserDetails(username, phoneNum, email); */
+String? ValidatePassword(String? formPassword) {
+  if (formPassword == null || formPassword.isEmpty)
+    return ' الرجاء ادخال الرقم السري';
+  String pattern = r'^.{8,}$';
+  RegExp regex = RegExp(pattern);
+  if (!regex.hasMatch(formPassword))
+    return ('يحب أن يتكون من ٨ ارقام على الاقل'); // check arabic formation
+  return null;
+}
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 14.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: children2,
-          ),
-        ),
-      ),
-    );
-  }
+String? ValidateUserName(String? FormName) {
+  if (FormName == null || FormName.isEmpty) return 'الرجاء ادخال اسم المستخدم';
+  return null;
+}
+
+String? ValidatePhoneNumber(String? FormNhoneNumber) {
+  if (FormNhoneNumber == null || FormNhoneNumber.isEmpty)
+    return 'الرجاء ادخال رقم الهاتف';
+  String pattern = r'[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$';
+  RegExp regex = RegExp(pattern);
+  if (!regex.hasMatch(FormNhoneNumber)) return ' الرقم المدخل غير صحيح  ';
+  return null;
 }

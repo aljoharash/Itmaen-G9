@@ -8,10 +8,10 @@ Future<void> userSetup(
   FirebaseAuth auth = FirebaseAuth.instance;
   String? uid = auth.currentUser?.uid.toString();
   caregivers.add({
-    'user name': username1,
-    'email': email,
-    'password': pass,
-    'mobileNum': mobileNum,
+    'user name': username1.text,
+    'email': email.text,
+    'password': pass.text,
+    'mobileNum': mobileNum.text,
     'uid': uid
   });
   return;
