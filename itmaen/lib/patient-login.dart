@@ -15,18 +15,13 @@ class patientScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-              //put the logo here
-              // decoration: BoxDecoration(
-              //   image: DecorationImage(
-              //     image: Image()
-              //       // image: NetworkImage(
-              //       //     'https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE4fHx8ZW58MHx8fHw%3D&w=1000&q=80'),
-              //       // fit: BoxFit.fill
-              //       ),
-              // ),
+          
+          Image(
+            image: AssetImage('assets/Images/background.jpeg'),
+            fit: BoxFit.contain,
+          ),
 
-              ),
+          // ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -36,32 +31,36 @@ class patientScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 60, left: 25, right: 25),
                   child: Center(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          'أهلا بك',
-                          style: TextStyle(
-                              fontSize: 55,
-                              // fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 118, 176, 186),
-                              fontFamily: 'Madani Arabic Black'),
-                          textDirection: TextDirection.rtl,
-                          // textAlign: TextAlign.left,
+                        SizedBox(
+                          height: 150,
                         ),
                         Text(
-                          'من فضلك قم بتسجيل الدخول',
+                          'عزيزي المريض',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 25,
                             fontStyle: FontStyle.italic,
-                            color: Colors.blueGrey,
+                            color: Color.fromARGB(255, 122, 164, 186),
                             fontFamily: 'Madani Arabic Black',
                           ),
                           textDirection: TextDirection.rtl,
                         ),
-                        Image.asset(
-                          'assets/Images/itmaenlogo.png',
-                          height: 400,
-                          width: 400,
-                        )
+                        Text(
+                          'من فضلك قم بتسجيل الدخول',
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontStyle: FontStyle.italic,
+                            color: Color.fromARGB(255, 122, 164, 186),
+                            fontFamily: 'Madani Arabic Black',
+                          ),
+                          textDirection: TextDirection.rtl,
+                        ),
+                        // Image.asset(
+                        //   'assets/Images/background.jpeg',
+
+                        // )
                       ],
                     ),
                   ),
@@ -84,9 +83,9 @@ class patientScreen extends StatelessWidget {
                         },
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        color: Colors.blueGrey,
+                        color: Color.fromARGB(255, 122, 164, 186),
                         child: Text(
                           'تسجيل الدخول لأول مرة بمسح الكود',
                           style: TextStyle(
@@ -106,9 +105,9 @@ class patientScreen extends StatelessWidget {
                       child: MaterialButton(
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        color: Colors.blueGrey,
+                        color: Color.fromARGB(255, 122, 164, 186),
                         onPressed: () async {
                           bool isAuthenticated = await BiometricAuthentication
                               .authenticateWithBiometrics();

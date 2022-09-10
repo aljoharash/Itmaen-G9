@@ -56,9 +56,9 @@ class _ScanQRState extends State<ScanQR> {
             MaterialButton(
               padding: EdgeInsets.all(15),
               shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
+                            borderRadius: BorderRadius.circular(10),
                         ),
-                        color: Colors.blueGrey,
+                        color: Color.fromARGB(255, 122, 164, 186),
               onPressed: () async {
                 //test
                 //String? q = await st.readSecureData("caregiver");
@@ -91,8 +91,13 @@ class _ScanQRState extends State<ScanQR> {
                 "افتح الماسح الضوئي",
                 style: TextStyle(color: Color.fromARGB(255, 228, 229, 231),fontSize: 20,fontFamily: 'Madani Arabic Black'),
               ),
+
+            
               
             ),
+            Image.asset('assets/Images/itmaenlogo.png',
+            height:200,
+            width:200),
           ],
         ),
       ),
