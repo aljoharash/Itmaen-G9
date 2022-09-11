@@ -36,21 +36,21 @@ class _AddMedicineState extends State<AddMedicine> {
       child: Column(
         children: [
           Text(
-            'Add Medicine',
+            'إضافة دواء',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 32,
                 color: Colors.blueGrey),
           ),
-          buildTextfield('Medicine name', mednameCont),
-          buildTextfield('Dose', dosecont),
+          buildTextfield('اسم الدواء', mednameCont),
+          buildTextfield('الجرعة', dosecont),
           ElevatedButton(
             onPressed: () {},
-            child: Text('Add medicine'),
+            child: Text('أضف الدواء'),
           ),
           ElevatedButton(
             onPressed: () => addMedicineController().scanBarcode(),
-            child: Text('Scan'),
+            child: Text('الماسح الضوئي'),
           ),
         ],
       ),
