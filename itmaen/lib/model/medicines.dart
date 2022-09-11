@@ -3,9 +3,9 @@ class medicines {
   String? tradeName;
   String? strengthValue;
   String? unitOfStrength;
-  int? volume;
+  String? volume;
   String? unitOfVolume;
-  int? packageSize;
+  String? packageSize;
   String? barcode;
   String? description;
 
