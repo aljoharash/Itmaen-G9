@@ -43,6 +43,7 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   local_auth: ^2.1.2
   flutter_secure_storage: ^6.0.0
+  alert_dialog: ^1.0.1
 
 dev_dependencies:
   flutter_test:

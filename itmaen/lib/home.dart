@@ -45,6 +45,16 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('إطمئن'),
+         actions: <Widget>[
+          MaterialButton(
+            child: Text('Log Out',style: TextStyle(fontSize: 18,color: Colors.white),),
+            color: Colors.blue,
+            onPressed: () async{
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+            }
+          ),
+       ],
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),

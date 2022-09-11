@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 190,
                         ),
                         Text(
-                          "تسجيل الدخول ",
+                          "تسجيل الدخول",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 124, 148, 185),
@@ -88,12 +88,12 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           validator: (value) {
                             if (value!.length == 0) {
-                              return "Email cannot be empty";
+                              return "يجب ملء هذا الحقل";
                             }
                             if (!RegExp(
                                     "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-                                .hasMatch(value)) {
-                              return ("Please enter a valid email");
+                                .hasMatch(value.trim())) {
+                              return ("الرجاء ادخال بريد إلكتروني صحيح");
                             } else {
                               return null;
                             }
@@ -112,7 +112,9 @@ class _LoginPageState extends State<LoginPage> {
                           controller: passwordController,
                           obscureText: _isObscure3,
                           decoration: InputDecoration(
+                          
                             suffixIcon: IconButton(
+                            
                                 icon: Icon(_isObscure3
                                     ? Icons.visibility
                                     : Icons.visibility_off),
@@ -142,10 +144,10 @@ class _LoginPageState extends State<LoginPage> {
                           validator: (value) {
                             RegExp regex = new RegExp(r'^.{8,}$');
                             if (value!.isEmpty) {
-                              return "Password cannot be empty";
+                              return "يجب ملء هذا الحقل";
                             }
                             if (!regex.hasMatch(value)) {
-                              return ("أرجو ادخال كلمة مرور صحيحة، أقل عدد 8");
+                              return ("الرجاء ادخال كلمة مرور صحيحة، أقل عدد 8");
                             } else {
                               return null;
                             }
@@ -155,27 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           keyboardType: TextInputType.emailAddress,
                         ),
-                        MaterialButton(
-                          height: 70,
-                          color: Colors.white,
-                          textColor: Color.fromARGB(255, 10, 5, 5),
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.white, width: 0),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => Forgotpass()));
-                          },
-                          child: Text(
-                            "نسيت كلمة المرور ؟",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
+         
                         SizedBox(
                           height: 20,
                         ),
@@ -201,7 +183,36 @@ class _LoginPageState extends State<LoginPage> {
                           color: Color.fromARGB(255, 120, 156, 174),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 25,
+                        ),
+                        Row( 
+                          mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                          children:[ 
+                                  TextButton(onPressed: (){
+                                     Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => Forgotpass()));
+                                  },
+                         child: const Text('كلمة المرور',style: TextStyle(fontSize:20, color: Color.fromARGB(255, 127, 187, 222), decoration: TextDecoration.underline,))),
+                            Text(' نسيت كلمة المرور؟',  style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 156, 184, 201)),),
+                         
+                          ]
+                        ),
+                       
+                        Row( 
+                          mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                          children:[ 
+                                  TextButton(onPressed: (){
+                                     Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => Forgotpass()));
+                                  },
+                         child: const Text('إنشاء حساب ',style: TextStyle(fontSize:20, color: Color.fromARGB(255, 127, 187, 222), decoration: TextDecoration.underline,))),
+                            Text('مستخدم جديد؟',  style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 156, 184, 201)),),
+                         
+                          ]
                         ),
                         Visibility(
                             maintainSize: true,
