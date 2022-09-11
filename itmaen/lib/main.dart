@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 //Just For Testing that your database works ! Remove the code below after testing (Windows Usesrs)
+import 'directLogin.dart';
 import 'login.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -28,12 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      //Declared first page of our app
-      home: Directionality(
-        // add this
-        textDirection: TextDirection.rtl, // set this property
-        child: LoginPage(),
-      ),
+      home: Directlogin(),
     );
   }
 }
