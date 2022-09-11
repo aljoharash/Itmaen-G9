@@ -20,6 +20,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = new TextEditingController();
 
   final _auth = FirebaseAuth.instance;
+  //String uid = '';
+  //String? uid = _auth.currentUser?.uid.toString();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 40,
                         ),
                         TextFormField(
-                           textAlign:TextAlign.right,
+                          textAlign: TextAlign.right,
                           controller: emailController,
                           decoration: InputDecoration(
                             filled: true,
@@ -72,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                             hintText: 'البريد الإلكتروني ',
                             enabled: true,
                             contentPadding: const EdgeInsets.only(
-                                left: 14.0,right:12.0,  bottom: 8.0, top: 8.0),
+                                left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Color.fromARGB(255, 236, 231, 231),
@@ -105,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
 
                         TextFormField(
-                            textAlign:TextAlign.right,
+                          textAlign: TextAlign.right,
                           controller: passwordController,
                           obscureText: _isObscure3,
                           decoration: InputDecoration(
@@ -121,10 +123,12 @@ class _LoginPageState extends State<LoginPage> {
                             filled: true,
                             fillColor: Color.fromARGB(255, 239, 237, 237),
                             hintText: 'كلمة المرور',
-                        
                             enabled: true,
                             contentPadding: const EdgeInsets.only(
-                                left: 14.0, right:12.0, bottom: 8.0, top: 15.0),
+                                left: 14.0,
+                                right: 12.0,
+                                bottom: 8.0,
+                                top: 15.0),
                             focusedBorder: OutlineInputBorder(
                               borderSide: new BorderSide(color: Colors.white),
                               borderRadius: new BorderRadius.circular(10),
@@ -133,7 +137,6 @@ class _LoginPageState extends State<LoginPage> {
                               borderSide: new BorderSide(color: Colors.white),
                               borderRadius: new BorderRadius.circular(10),
                             ),
-                            
                           ),
                           validator: (value) {
                             RegExp regex = new RegExp(r'^.{8,}$');
@@ -159,9 +162,9 @@ class _LoginPageState extends State<LoginPage> {
                             side: BorderSide(color: Colors.white, width: 0),
                           ),
                           onPressed: () {
-                           Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                   builder: (context) => Forgotpass()));
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => Forgotpass()));
                           },
                           child: Text(
                             "نسيت كلمة المرور ؟",
@@ -194,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                             "تسجيل الدخول",
                             style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
-                          color:  Color.fromARGB(255, 120, 156, 174),
+                          color: Color.fromARGB(255, 120, 156, 174),
                         ),
                         SizedBox(
                           height: 10,

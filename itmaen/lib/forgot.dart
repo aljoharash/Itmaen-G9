@@ -64,7 +64,7 @@ class _ForgotpassState extends State<Forgotpass> {
                                textAlign:TextAlign.center,
                           ),
                           Text(
-                            "أدخل بريدك الإلكتروني المسجل وسيتم إرسال رابط ستتمكن من خلاله استعادة حسابك",
+                            "أدخل بريدك الإلكتروني المسجل وسيتم إرسال رابط ستتمكن من خلاله استعادة حسابك.",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color:  Color.fromARGB(255, 124, 148, 185),
