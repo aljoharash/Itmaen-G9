@@ -15,9 +15,9 @@ class patientScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          
           Image(
-            image: AssetImage('assets/Images/background.jpeg'),
+            image: AssetImage('images/background.jpg'),
+            //  image: AssetImage('assets/Images/background.jpeg'),
             fit: BoxFit.contain,
           ),
 

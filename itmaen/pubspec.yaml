@@ -38,8 +38,8 @@ dependencies:
   cloud_firestore: ^3.4.7
   firebase_database: ^9.1.3
   firebase_auth: ^3.3.0
-  fluttertoast: ^8.0.9
   qr_flutter: ^4.0.0
+  fluttertoast: ^8.0.9
   flutter_barcode_scanner: ^2.0.0
   local_auth: ^2.1.2
   flutter_secure_storage: ^6.0.0
@@ -68,12 +68,15 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/Images/itmaenlogo.png
-     - assets/Images/itmaenlogo.jpg
-     - assets/Images/background.jpeg
-     - lib/data/medicinesData.json
-     -  images/logo.jpg
-     -  images/background.jpg
+   - assets/Images/itmaenlogo.png
+   - assets/Images/itmaenlogo.jpg
+   - assets/Images/background.jpeg
+   - lib/data/medicinesData.json
+   - images/logo.jpg
+   - images/background.jpg
+   - images/itmaenlogo.jpg
+   - images/itmaenlogo.png
+   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
