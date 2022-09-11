@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 30,
                         ),
                         Text(
-                          "تسجيل الدخول",
+                          "تسجيل الدخول ",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -72,12 +72,12 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           validator: (value) {
                             if (value!.length == 0) {
-                              return "يجب ملء هذا الحقل";
+                              return "Email cannot be empty";
                             }
                             if (!RegExp(
                                     "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
                                 .hasMatch(value)) {
-                              return ("أرجو ادخال بريد إلكتروني صحيح");
+                              return ("Please enter a valid email");
                             } else {
                               return null;
                             }
@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                                 }),
                             filled: true,
                             fillColor: Colors.white,
-                            hintText: 'كلمة المرور',
+                            hintText: 'كلمة مرور',
                             enabled: true,
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 15.0),
@@ -121,10 +121,10 @@ class _LoginPageState extends State<LoginPage> {
                           validator: (value) {
                             RegExp regex = new RegExp(r'^.{6,}$');
                             if (value!.isEmpty) {
-                              return "يجب ملء هذا الحقل";
+                              return "Password cannot be empty";
                             }
                             if (!regex.hasMatch(value)) {
-                              return ("أرجو ادخال كلمة مرور صحيحة، أقل عدد 6");
+                              return ("please enter valid password min. 6 character");
                             } else {
                               return null;
                             }
@@ -135,8 +135,8 @@ class _LoginPageState extends State<LoginPage> {
                           keyboardType: TextInputType.emailAddress,
                         ),
                         MaterialButton(
-                          color: Color.fromARGB(255, 237, 238, 240),
-                          textColor: Color.fromARGB(255, 10, 5, 5),
+                          color: Colors.blue[900],
+                          textColor: Colors.white,
                           shape: RoundedRectangleBorder(
                               // side: BorderSide(color: Colors.black, width: 1),
                               ),
@@ -146,12 +146,11 @@ class _LoginPageState extends State<LoginPage> {
                                     builder: (context) => Forgotpass()));
                           },
                           child: Text(
-                            "نسيت كلمة المرور...",
+                            "Forgot Password ....",
                             style: TextStyle(
-                              color: Color.fromARGB(255, 10, 8, 8),
+                              color: Colors.white,
                               fontSize: 18,
                               decoration: TextDecoration.underline,
-                              
                             ),
                           ),
                         ),
@@ -172,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                                 emailController.text, passwordController.text);
                           },
                           child: Text(
-                            "تسجيل الدخول",
+                            "Login",
                             style: TextStyle(
                               fontSize: 20,
                             ),
@@ -191,37 +190,32 @@ class _LoginPageState extends State<LoginPage> {
                                 child: CircularProgressIndicator(
                               color: Colors.white,
                             ))),
-/////////////////////////////////to be removed/////////////////////////
-                             Container(
-                      height: 80,
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(top: 25, left: 24, right: 24),
-                      child: ElevatedButton(
-                        // elevation: 0,
-                        // shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(25),
-                        // ),
-                        // color: Colors.white,
-                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-															patientScreen())),
-                        child: Text(
-                          'Go to patient Screen [FOR TEST] WILL BE REMOVED',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: Color.fromARGB(255, 248, 250, 250),
+                            MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0))),
+                          elevation: 5.0,
+                          height: 40,
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => patientScreen(),
+                            
+                    ),); } ,
+                           
+                          child: Text(
+                            "patient log in",
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
                           ),
+                          color: Colors.white,
                         ),
-                      ),
-                    ),
-                    /////////////////////////////////////////////////////////////////////////
                       ],
                     ),
                   ),
-                  
                 ),
               ),
-             
             ),
             
           ],
