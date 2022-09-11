@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:itmaen/generateqr.dart';
 import 'package:itmaen/secure-storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddPatient extends StatefulWidget {
   @override
@@ -9,6 +10,29 @@ class AddPatient extends StatefulWidget {
 }
 
 class _AddPatient extends State<AddPatient> {
+  
+  final _auth = FirebaseAuth.instance ; 
+   String caregiverID="";
+  late User loggedInUser; 
+  @override
+  void initState(){
+    super.initState(); 
+    getCurrentUser(); 
+  }
+
+  void getCurrentUser() async{
+    //String qrData=""; 
+    try{
+      final user = await _auth.currentUser; 
+      if(user!=null){
+        loggedInUser = user ; 
+        caregiverID=loggedInUser.uid ; 
+      }
+    }
+    catch(e){
+      print(e); 
+    }
+  }
 
   final TextEditingController nameController = TextEditingController(); 
   StorageService st = StorageService(); 
@@ -51,7 +75,7 @@ class _AddPatient extends State<AddPatient> {
                         color: Colors.blueGrey,
             onPressed:()  {
               // String? id = await st.readSecureData("caregiverID");
-              FirebaseFirestore.instance.collection('patients').add({'name': nameController.text, 'caregiverID':'123'});
+              FirebaseFirestore.instance.collection('patients').add({'name': nameController.text, 'caregiverID':caregiverID});
               // FirebaseFirestore.instance.collection('patients').add({'caregiverID': '123'});
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => GenerateQR()));
