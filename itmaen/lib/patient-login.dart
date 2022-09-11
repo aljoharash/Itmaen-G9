@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:itmaen/home.dart';
+import 'package:itmaen/login.dart';
 import 'package:itmaen/scanqr.dart';
 import 'package:itmaen/secure-storage.dart';
 
@@ -38,7 +39,7 @@ class patientScreen extends StatelessWidget {
                           height: 150,
                         ),
                         Text(
-                          'عزيزي المريض',
+                          'أهلا بك!',
                           style: TextStyle(
                             fontSize: 25,
                             fontStyle: FontStyle.italic,
@@ -47,6 +48,7 @@ class patientScreen extends StatelessWidget {
                           ),
                           textDirection: TextDirection.rtl,
                         ),
+                        SizedBox(height: 10,),
                         Text(
                           'من فضلك قم بتسجيل الدخول',
                           style: TextStyle(
@@ -126,7 +128,9 @@ class patientScreen extends StatelessWidget {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text(
-                                    'خطأ في تسجيل الدخول! في حال كنت مستخدم للتطبيق لأول مرة يرجى مسح الكود'),
+                                    'خطأ في تسجيل الدخول! في حال كنت مستخدم للتطبيق لأول مرة يرجى مسح الكود' ,
+                                    textAlign:TextAlign.right
+                                    ),
                               ),
                             );
                             //  );
@@ -142,6 +146,22 @@ class patientScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(height: 10,),
+                  Row( 
+                          mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                          children:[ 
+                                  TextButton(onPressed: (){
+                                     Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()));
+                                  },
+                         child: const Text('اضغط هنا لتسجيل الدخول',style: TextStyle(fontSize:18, color: Color.fromARGB(255, 127, 187, 222), decoration: TextDecoration.underline,))),
+                            Text('مقدم رعاية ؟ ',  style: TextStyle(fontSize: 20, color: Color.fromARGB(167, 156, 184, 201)),),
+                         
+                          ]
+                        ),
+
                     // Container(
                     //   height: 80,
                     //   width: double.infinity,

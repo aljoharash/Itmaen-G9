@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:itmaen/patient-login.dart';
 
 import 'login.dart';
 
@@ -28,7 +29,7 @@ class _DirectloginState extends State<Directlogin> {
                   alignment:Alignment.center,
                    decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/images/background.jpeg'),
+                      image: AssetImage('assets/Images/background.jpeg'),
                       fit: BoxFit.fill)
 
                   ////حطي هنا البوكس شادو
@@ -97,7 +98,7 @@ class _DirectloginState extends State<Directlogin> {
                                           builder: (context) => LoginPage()));
                                 },
                                 child: Text(
-                                  "تسجيل الدخول كمقدم العناية",
+                                  "تسجيل الدخول كمقدم الرعاية",
                                   style: TextStyle(
                                     fontSize: 20, color: Colors.white
                                   ),
@@ -119,7 +120,7 @@ class _DirectloginState extends State<Directlogin> {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => LoginPage()));
+                                          builder: (context) => patientScreen()));
                                 },
                                 child: Text(
                                   " تسجيل الدخول كمريض",

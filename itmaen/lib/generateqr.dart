@@ -41,7 +41,7 @@ Widget build(BuildContext context) {
 	return Scaffold(
 	//Appbar having title
 	appBar: AppBar(
-		title: Center(child: Text("كود" ,style: TextStyle(fontFamily:'Madani Arabic Black'),)),
+		title: Center(child: Text("كود الاضافة " ,style: TextStyle(fontFamily:'Madani Arabic Black'),)),
 	),
 	body: Container(
 		padding: EdgeInsets.all(20),
@@ -101,7 +101,7 @@ Widget build(BuildContext context) {
                         },
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
+                            borderRadius: BorderRadius.circular(10),
                         ),
                         color: Colors.blueGrey,
                         child: Text(
