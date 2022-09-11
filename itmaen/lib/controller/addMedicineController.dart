@@ -1,7 +1,7 @@
-import 'package:flutter/services.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart' show PlatformException, rootBundle;
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:itmaen/model/medicines.dart';
-import 'package:itmaen/data/medicinesData.dart';
 
 class addMedicineController {
   String scan = '-1';
@@ -9,28 +9,41 @@ class addMedicineController {
   List<medicines> scannedMedicine = [];
   bool found = true;
 
-  @override
-  onInit() {
-    for (var medicineInfo in medicinesData) {
+  /*onInit() {
+    /* for (var medicineInfo in medicinesData) {
       medicinesList.add(medicines.fromJson(medicineInfo));
-    }
-  }
+    } */
+    medicinesList = ReadJsonData() as List<medicines>;
+  } */
 
-  _scan() async {
-    await FlutterBarcodeScanner.scanBarcode(
-        "#000000", "cancel", true, ScanMode.BARCODE);
-    // .then((value) => setState(() => scannedMed = value))
-    //  .then((value) => null);
+  /*Future<void> readJson() async {
+    final String response =
+        await rootBundle.loadString('data/medicinesData.json');
+    final data = await json.decode(response);
+    // medicinesList = medicines.fromJson(data) as List<medicines>;
+    //data["medicinesInformation"];
+  }*/
+
+  Future<List<medicines>> ReadJsonData() async {
+    //read json file
+    final jsondata = await rootBundle.loadString('lib/data/medicinesData.json');
+    //decode json data as list
+    final list = json.decode(jsondata) as List<dynamic>;
+
+    //map json and initialize using DataModel
+    return list.map((e) => medicines.fromJson(e)).toList();
   }
 
   Future<void> scanBarcode() async {
+    medicinesList = await ReadJsonData() as List<medicines>;
     String barcodeResult;
 
     try {
-      barcodeResult = await _scan();
+      barcodeResult = await FlutterBarcodeScanner.scanBarcode(
+          "#000000", "cancel", true, ScanMode.BARCODE);
       print(barcodeResult);
     } on PlatformException {
-      barcodeResult = 'Couldn\'t Scan';
+      barcodeResult = 'failed';
     }
 
     scan = barcodeResult;
@@ -38,7 +51,7 @@ class addMedicineController {
     for (var i = 0; i < medicinesList.length; i++) {
       scannedMedicine.clear();
 
-      if (scanBarcode == medicinesList[i].barcode) {
+      if (scanBarcode == medicinesList[i].barcode.toString()) {
         print(medicinesList[i].tradeName);
         scannedMedicine.add(medicines.fromJson(medicinesList[i].toJson()));
         break;

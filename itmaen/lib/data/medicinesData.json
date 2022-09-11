@@ -1,4 +1,5 @@
-const List<dynamic> medicinesData = [
+ 
+ [
   {
     "Generic name": "VITAMIN D3 (CHOLECALCIFEROL)",
     "Trade name": "VIDROP ORAL DROPS - فيدروب ",
@@ -496,4 +497,5 @@ const List<dynamic> medicinesData = [
     "description":
         "يؤخذ حمض أسيتيلساليسيليك لتقليل خطر تكون جلطات الدم وبالتالي يمنع الأزمة قلبية والسكتة الدماغية ومشاكل القلب والأوعية الدموية في المرضى الذين يعانون من الذبحة الصدرية المستقرة أو غير المستقرة (نوع من آلام الصدر)"
   }
-];
+] 
+ 
