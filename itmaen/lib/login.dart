@@ -31,8 +31,7 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('images/background.jpg'),
-                      // image: AssetImage('assets/images/background.jpeg'),
+                      image: AssetImage('assets/Images/background.jpeg'),
                       fit: BoxFit.fill)
 
                   ////حطي هنا البوكس شادو
