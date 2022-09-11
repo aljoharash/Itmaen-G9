@@ -26,52 +26,48 @@ class _ForgotpassState extends State<Forgotpass> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-              //  color: Colors.blueGrey,
-              alignment:Alignment.center,
-                   decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/background.jpeg'),
-                      fit: BoxFit.fill)
+                //  color: Colors.blueGrey,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('images/background.jpg'),
+                        // image: AssetImage('assets/images/background.jpeg'),
+                        fit: BoxFit.fill)
 
-                  ////حطي هنا البوكس شادو
-                  ),
+                    ////حطي هنا البوكس شادو
+                    ),
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: Center(
                   child: Container(
-                    
                     margin: EdgeInsets.all(12),
                     child: Form(
                       key: _formkey,
                       child: Column(
-                        
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          
-                           SizedBox(
-                          height: 220,
-                        ),
+                          SizedBox(
+                            height: 220,
+                          ),
                           Text(
-                            
                             "نسيت كلمة المرور؟",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color:  Color.fromARGB(255, 124, 148, 185),
+                              color: Color.fromARGB(255, 124, 148, 185),
                               fontSize: 40,
-                              
                             ),
-                               textAlign:TextAlign.center,
+                            textAlign: TextAlign.center,
                           ),
                           Text(
                             "أدخل بريدك الإلكتروني المسجل وسيتم إرسال رابط ستتمكن من خلاله استعادة حسابك.",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color:  Color.fromARGB(255, 124, 148, 185),
+                              color: Color.fromARGB(255, 124, 148, 185),
                               fontSize: 20,
-                             // alignment:Alignment.center,
+                              // alignment:Alignment.center,
                             ),
-                              textAlign:TextAlign.center,
+                            textAlign: TextAlign.center,
                           ),
                           SizedBox(
                             height: 30,
@@ -80,7 +76,7 @@ class _ForgotpassState extends State<Forgotpass> {
                             height: 10,
                           ),
                           TextFormField(
-                              textAlign:TextAlign.right,
+                            textAlign: TextAlign.right,
                             controller: emailController,
                             decoration: InputDecoration(
                               filled: true,
@@ -88,7 +84,10 @@ class _ForgotpassState extends State<Forgotpass> {
                               hintText: 'البريد الإلكتروني',
                               enabled: true,
                               contentPadding: const EdgeInsets.only(
-                                  left: 19.0,right:12.0, bottom: 8.0, top: 8.0),
+                                  left: 19.0,
+                                  right: 12.0,
+                                  bottom: 8.0,
+                                  top: 8.0),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: new BorderSide(color: Colors.white),
                                 borderRadius: new BorderRadius.circular(20),
@@ -124,9 +123,9 @@ class _ForgotpassState extends State<Forgotpass> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               MaterialButton(
-                                   padding: EdgeInsets.symmetric(
-                              vertical: 9, horizontal: 170),
-                             shape: RoundedRectangleBorder(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 9, horizontal: 170),
+                                shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(10.0))),
                                 elevation: 5.0,
@@ -140,18 +139,17 @@ class _ForgotpassState extends State<Forgotpass> {
                                 child: Text(
                                   "إرسال",
                                   style: TextStyle(
-                                    fontSize: 20, color: Colors.white
-                                  ),
+                                      fontSize: 20, color: Colors.white),
                                 ),
-                                color:  Color.fromARGB(255, 120, 156, 174),
+                                color: Color.fromARGB(255, 120, 156, 174),
                               ),
-                                 SizedBox(
-                          height: 20,
-                        ),
+                              SizedBox(
+                                height: 20,
+                              ),
                               MaterialButton(
-                                    padding: EdgeInsets.symmetric(
-                              vertical: 9, horizontal: 138),
-                          shape: RoundedRectangleBorder(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 9, horizontal: 138),
+                                shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(10.0))),
                                 elevation: 5.0,
@@ -165,10 +163,9 @@ class _ForgotpassState extends State<Forgotpass> {
                                 child: Text(
                                   "تسجيل الدخول",
                                   style: TextStyle(
-                                    fontSize: 20, color: Colors.white
-                                  ),
+                                      fontSize: 20, color: Colors.white),
                                 ),
-                               color:  Color.fromARGB(255, 120, 156, 174),
+                                color: Color.fromARGB(255, 120, 156, 174),
                               ),
                             ],
                           ),
