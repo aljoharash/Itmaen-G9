@@ -49,9 +49,10 @@ class addMedicineController {
     scan = barcodeResult;
 
     for (var i = 0; i < medicinesList.length; i++) {
+      //print(medicinesList[i].tradeName);
       scannedMedicine.clear();
 
-      if (scanBarcode == medicinesList[i].barcode.toString()) {
+      if (scan == medicinesList[i].barcode) {
         print(medicinesList[i].tradeName);
         scannedMedicine.add(medicines.fromJson(medicinesList[i].toJson()));
         break;
