@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:itmaen/patient-login.dart';
-
+//import 'package:fluttertoast/fluttertoast.dart';
 import 'forgot.dart';
 import 'home.dart';
 //import 'register.dart';
@@ -19,19 +20,31 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = new TextEditingController();
 
   final _auth = FirebaseAuth.instance;
+  //String uid = '';
+  //String? uid = _auth.currentUser?.uid.toString();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Container(
         child: Column(
           children: <Widget>[
             Container(
-              color: Colors.blueGrey,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/background.jpeg'),
+                      fit: BoxFit.fill)
+
+                  ////حطي هنا البوكس شادو
+                  ),
+
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.70,
+              height: MediaQuery.of(context)
+                  .size
+                  .height, //للسماوي اللي شلتيه  كان تحت صفحة بيضاء
+
               child: Center(
                 child: Container(
-                  margin: EdgeInsets.all(12),
+                  margin: EdgeInsets.all(12), // بعد عن الأطراف لل
                   child: Form(
                     key: _formkey,
                     child: Column(
@@ -39,45 +52,47 @@ class _LoginPageState extends State<LoginPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: 30,
+                          height: 190,
                         ),
                         Text(
-                          "تسجيل الدخول",
+                          "تسجيل الدخول ",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 124, 148, 185),
                             fontSize: 40,
                           ),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 40,
                         ),
                         TextFormField(
+                          textAlign: TextAlign.right,
                           controller: emailController,
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: Colors.white,
-                            hintText: 'ايميل',
+                            fillColor: Color.fromARGB(255, 239, 237, 237),
+                            hintText: 'البريد الإلكتروني ',
                             enabled: true,
                             contentPadding: const EdgeInsets.only(
-                                left: 14.0, bottom: 8.0, top: 8.0),
+                                left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 236, 231, 231),
+                                    width: 3)),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.white),
-                              borderRadius: new BorderRadius.circular(10),
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.white),
+                              borderSide: new BorderSide(
+                                  color: Color.fromARGB(79, 255, 255, 255)),
                               borderRadius: new BorderRadius.circular(10),
                             ),
                           ),
                           validator: (value) {
                             if (value!.length == 0) {
-                              return "يجب ملء هذا الحقل";
+                              return "Email cannot be empty";
                             }
                             if (!RegExp(
                                     "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
                                 .hasMatch(value)) {
-                              return ("أرجو ادخال بريد إلكتروني صحيح");
+                              return ("Please enter a valid email");
                             } else {
                               return null;
                             }
@@ -90,7 +105,9 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 20,
                         ),
+
                         TextFormField(
+                          textAlign: TextAlign.right,
                           controller: passwordController,
                           obscureText: _isObscure3,
                           decoration: InputDecoration(
@@ -104,11 +121,14 @@ class _LoginPageState extends State<LoginPage> {
                                   });
                                 }),
                             filled: true,
-                            fillColor: Colors.white,
+                            fillColor: Color.fromARGB(255, 239, 237, 237),
                             hintText: 'كلمة المرور',
                             enabled: true,
                             contentPadding: const EdgeInsets.only(
-                                left: 14.0, bottom: 8.0, top: 15.0),
+                                left: 14.0,
+                                right: 12.0,
+                                bottom: 8.0,
+                                top: 15.0),
                             focusedBorder: OutlineInputBorder(
                               borderSide: new BorderSide(color: Colors.white),
                               borderRadius: new BorderRadius.circular(10),
@@ -119,12 +139,12 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           validator: (value) {
-                            RegExp regex = new RegExp(r'^.{6,}$');
+                            RegExp regex = new RegExp(r'^.{8,}$');
                             if (value!.isEmpty) {
-                              return "يجب ملء هذا الحقل";
+                              return "Password cannot be empty";
                             }
                             if (!regex.hasMatch(value)) {
-                              return ("أرجو ادخال كلمة مرور صحيحة، أقل عدد 6");
+                              return ("أرجو ادخال كلمة مرور صحيحة، أقل عدد 8");
                             } else {
                               return null;
                             }
@@ -135,23 +155,23 @@ class _LoginPageState extends State<LoginPage> {
                           keyboardType: TextInputType.emailAddress,
                         ),
                         MaterialButton(
-                          color: Color.fromARGB(255, 237, 238, 240),
+                          height: 70,
+                          color: Colors.white,
                           textColor: Color.fromARGB(255, 10, 5, 5),
                           shape: RoundedRectangleBorder(
-                              // side: BorderSide(color: Colors.black, width: 1),
-                              ),
+                            side: BorderSide(color: Colors.white, width: 0),
+                          ),
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) => Forgotpass()));
                           },
                           child: Text(
-                            "نسيت كلمة المرور...",
+                            "نسيت كلمة المرور ؟",
                             style: TextStyle(
-                              color: Color.fromARGB(255, 10, 8, 8),
+                              color: Colors.white,
                               fontSize: 18,
                               decoration: TextDecoration.underline,
-                              
                             ),
                           ),
                         ),
@@ -161,9 +181,11 @@ class _LoginPageState extends State<LoginPage> {
                         MaterialButton(
                           shape: RoundedRectangleBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0))),
+                                  BorderRadius.all(Radius.circular(10.0))),
                           elevation: 5.0,
                           height: 40,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 9, horizontal: 138),
                           onPressed: () {
                             setState(() {
                               visible = true;
@@ -173,11 +195,9 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           child: Text(
                             "تسجيل الدخول",
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
-                          color: Colors.white,
+                          color: Color.fromARGB(255, 120, 156, 174),
                         ),
                         SizedBox(
                           height: 10,
@@ -192,38 +212,14 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.white,
                             ))),
 /////////////////////////////////to be removed/////////////////////////
-                             Container(
-                      height: 80,
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(top: 25, left: 24, right: 24),
-                      child: ElevatedButton(
-                        // elevation: 0,
-                        // shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(25),
-                        // ),
-                        // color: Colors.white,
-                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-															patientScreen())),
-                        child: Text(
-                          'Go to patient Screen [FOR TEST] WILL BE REMOVED',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: Color.fromARGB(255, 248, 250, 250),
-                          ),
-                        ),
-                      ),
-                    ),
-                    /////////////////////////////////////////////////////////////////////////
+
+                        /////////////////////////////////////////////////////////////////////////
                       ],
                     ),
                   ),
-                  
                 ),
               ),
-             
             ),
-            
           ],
         ),
       ),
@@ -244,11 +240,13 @@ class _LoginPageState extends State<LoginPage> {
             builder: (context) => HomePage(),
           ),
         );
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found') {
-          print('No user found for that email.');
-        } else if (e.code == 'wrong-password') {
-          print('Wrong password provided for that user.');
+      } on FirebaseAuthException catch (error) {
+        if (error.code == 'user-not-found') {
+          Fluttertoast.showToast(
+              msg: " البريد الإلكتروني أو كلمة المرور غير صحيحة ");
+        } else if (error.code == 'wrong-password') {
+          Fluttertoast.showToast(
+              msg: " البريد الإلكتروني أو كلمة المرور غير صحيحة ");
         }
       }
     }

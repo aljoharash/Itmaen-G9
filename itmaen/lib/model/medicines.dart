@@ -3,10 +3,11 @@ class medicines {
   String? tradeName;
   String? strengthValue;
   String? unitOfStrength;
-  int? volume;
+  String? volume;
   String? unitOfVolume;
-  int? packageSize;
+  String? packageSize;
   String? barcode;
+  String? description;
 
   medicines(
       {this.genericName,
@@ -16,7 +17,8 @@ class medicines {
       this.volume,
       this.unitOfVolume,
       this.packageSize,
-      this.barcode});
+      this.barcode,
+      this.description});
 
   medicines.fromJson(Map<String, dynamic> json) {
     genericName = json['Generic name'];
@@ -27,6 +29,7 @@ class medicines {
     unitOfVolume = json['Unit of volume'];
     packageSize = json['Package size'];
     barcode = json['barcode'];
+    description = json['description'];
   }
 
   Map<String, dynamic> toJson() {
@@ -39,6 +42,7 @@ class medicines {
     data['Unit of volume'] = this.unitOfVolume;
     data['Package size'] = this.packageSize;
     data['barcode'] = this.barcode;
+    data['description'] = this.description;
     return data;
   }
 }
