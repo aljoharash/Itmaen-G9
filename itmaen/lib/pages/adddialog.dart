@@ -11,12 +11,12 @@ class AddMedicine extends StatefulWidget {
 class _AddMedicineState extends State<AddMedicine> {
   @override
   Widget build(BuildContext context) {
-    Widget buildTextfield(String hint, TextEditingController controller) {
+    Widget buildTextfield(String hint, TextEditingController controller, var val) {
       return Container(
         margin: EdgeInsets.all(4),
         child: TextField(
           decoration: InputDecoration(
-              labelText: hint,
+              labelText: val,
               border: OutlineInputBorder(
                   borderSide: BorderSide(
                 color: Colors.black38,
@@ -29,6 +29,9 @@ class _AddMedicineState extends State<AddMedicine> {
     var mednameCont = TextEditingController();
     var dosecont = TextEditingController();
 
+    var medVal = addMedicineController().scannedMedicine[0].tradeName;
+    var doseVal = addMedicineController().scannedMedicine[0].strengthValue ;
+
     return Container(
       padding: EdgeInsets.all(8),
       height: 300,
@@ -36,21 +39,21 @@ class _AddMedicineState extends State<AddMedicine> {
       child: Column(
         children: [
           Text(
-            'Add Medicine',
+            'أضف دواء',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 32,
                 color: Colors.blueGrey),
           ),
-          buildTextfield('Medicine name', mednameCont),
-          buildTextfield('Dose', dosecont),
+          buildTextfield('اسم الدواء', mednameCont,medVal ),
+          buildTextfield('الجرعة', dosecont, doseVal ),
           ElevatedButton(
             onPressed: () {},
-            child: Text('Add medicine'),
+            child: Text('أضف الدواء'),
           ),
           ElevatedButton(
             onPressed: () => addMedicineController().scanBarcode(),
-            child: Text('Scan'),
+            child: Text('الماسح الضوئي'),
           ),
         ],
       ),
