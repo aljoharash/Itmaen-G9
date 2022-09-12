@@ -24,6 +24,9 @@ class _HomePageState extends State<HomePage> {
   late String id = '';
 
   _HomePageState() {
+    getCurrentUser();
+    getCurrentUserStorage();
+    medcineStream();
     id_ = id;
   }
   Future<String?> getCurrentUserStorage() async {
@@ -111,20 +114,17 @@ class _HomePageState extends State<HomePage> {
           .push(MaterialPageRoute(builder: (context) => AddPatient()));
     } else if (index == 2) {
       //print('test is:');
-      check();
-      getCurrentUser();
-      getCurrentUserStorage();
-      medcineStream();
+      //check();
+
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('إطمئن'),
-        //  actions:
-      ),
+      appBar: AppBar(title: Center(child: Text("قائمة الادوية"))
+          //  actions:
+          ),
       body: SafeArea(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -140,36 +140,24 @@ class _HomePageState extends State<HomePage> {
                   return Text("Loading...");
                 } else {
                   final medicines = snapshot.data?.docs;
-                  List<Text> medWidgets = [];
+                  List<medBubble> medBubbles = [];
                   for (var med in medicines!) {
+                    //final medName = med.data();
                     final medName = med.get('Trade name');
-                    final medWidget = Text('$medName ');
-                    medWidgets.add(medWidget);
+                    final MedBubble = medBubble(medName);
+                    medBubbles.add(MedBubble);
                   }
-
-                  return Column(
-                    children: medWidgets,
+                  return Expanded(
+                    child: ListView(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      children: medBubbles,
+                    ),
                   );
                 }
               })
         ],
-      )
-
-          /*TextButton(
-            style: TextButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 20),
-            ),
-            onPressed: () {
-              print('test is:');
-              check();
-              getCurrentUser();
-              getCurrentUserStorage();
-              medcineStream();
-            },
-            child: const Text('print'),
-          ),*/
-
-          ),
+      )),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -189,6 +177,29 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Colors.black,
         onTap: _onItemTapped,
       ),
+    );
+  }
+}
+
+class medBubble extends StatelessWidget {
+  medBubble(this.medicName);
+  var medicName;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Material(
+          borderRadius: BorderRadius.circular(20.0),
+          elevation: 7,
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Text(
+              ' $medicName ',
+              style:
+                  TextStyle(fontSize: 30, color: Color.fromARGB(255, 0, 0, 0)),
+            ),
+          )),
     );
   }
 }
