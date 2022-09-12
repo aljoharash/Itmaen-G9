@@ -34,8 +34,8 @@ class _AddMedicineState extends State<AddMedicine> {
           //buildTextfield('اسم الدواء', mednameCont),
           //buildTextfield('الجرعة', dosecont),
           ElevatedButton(
-            onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-															addByScan()));
+            onPressed: () {//Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
+															//));
                               },
             child: Text('أضف الدواء يدويًا'),
             style: ElevatedButton.styleFrom(
@@ -44,7 +44,8 @@ class _AddMedicineState extends State<AddMedicine> {
             ),
           ),
           ElevatedButton(
-            onPressed: () => addMedicineController().scanBarcode(),
+            onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
+															addByScan()));},
             child:Icon(Icons.qr_code_scanner),
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(200,40),

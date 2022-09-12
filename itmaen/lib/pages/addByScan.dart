@@ -3,6 +3,9 @@ import 'package:itmaen/controller/addMedicineController.dart';
 import 'package:itmaen/Widget/Card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:itmaen/pages/adddialog.dart';
+
+import 'addmedicine.dart';
 
 class addByScan extends StatelessWidget {
   @override
@@ -31,7 +34,7 @@ class addByScan extends StatelessWidget {
                               ? Container(
                                   alignment: Alignment.center,
                                   height: 100,
-                                  child: _.found
+                                  child: _.notFound
                                       ? Text(
                                           'لم يتم العثور على الدواء',
                                           style: TextStyle(
@@ -142,8 +145,46 @@ class addByScan extends StatelessWidget {
                               ],
                             ),
                             onPressed: () => _.scanBarcode()),
+                            
                       ),
                     ),
+                     Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 70.0,
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        child: TextButton(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Center(
+                                    child: Icon(
+                                  FontAwesomeIcons.barcode,
+                                  size: 16,
+                                  color: Colors.white,
+                                )),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "إلغاء",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
+															QrCode()));}),
+                            
+                      ),
+                    ),
+                    
                   ],
                 );
               }),
