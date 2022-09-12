@@ -7,6 +7,7 @@ import 'generateqr.dart';
 import 'login.dart';
 import 'scanqr.dart';
 import 'pages/addmedicine.dart';
+import 'pages/adddialog.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -63,7 +64,10 @@ class _HomePageState extends State<HomePage> {
     } else if (index == 1) {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => AddPatient()));
-    } else if (index == 2) {}
+    } else if (index == 2) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => AddMedicine()));
+    }
   }
 
   @override
