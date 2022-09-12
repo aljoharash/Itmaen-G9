@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show PlatformException, rootBundle;
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:itmaen/model/medicines.dart';
+import 'package:get/get.dart';
 
-class addMedicineController {
+class addMedicineController extends GetController {
   String scan = '-1';
   List<medicines> medicinesList = [];
   List<medicines> scannedMedicine = [];

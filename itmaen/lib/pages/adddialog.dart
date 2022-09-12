@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:itmaen/controller/addMedicineController.dart';
 import 'package:itmaen/model/medicinesModel.dart';
+import 'package:itmaen/pages/addByScan.dart';
 
 class AddMedicine extends StatefulWidget {
   @override
@@ -11,27 +14,13 @@ class AddMedicine extends StatefulWidget {
 class _AddMedicineState extends State<AddMedicine> {
   @override
   Widget build(BuildContext context) {
-    Widget buildTextfield(String hint, TextEditingController controller) {
-      return Container(
-        margin: EdgeInsets.all(4),
-        child: TextField(
-          decoration: InputDecoration(
-              labelText: hint,
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                color: Colors.black38,
-              ))),
-          controller: controller,
-        ),
-      );
-    }
-
-    var mednameCont = TextEditingController();
-    var dosecont = TextEditingController();
+    // 
+    // var mednameCont = TextEditingController();
+    // var dosecont = TextEditingController();
 
     return Container(
-      padding: EdgeInsets.all(8),
-      height: 300,
+      padding: EdgeInsets.all(10),
+      height: 200,
       width: 400,
       child: Column(
         children: [
@@ -42,15 +31,25 @@ class _AddMedicineState extends State<AddMedicine> {
                 fontSize: 32,
                 color: Colors.blueGrey),
           ),
-          buildTextfield('اسم الدواء', mednameCont),
-          buildTextfield('الجرعة', dosecont),
+          //buildTextfield('اسم الدواء', mednameCont),
+          //buildTextfield('الجرعة', dosecont),
           ElevatedButton(
-            onPressed: () {},
-            child: Text('أضف الدواء'),
+            onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
+															addByScan()));
+                              },
+            child: Text('أضف الدواء يدويًا'),
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(200,40),
+              maximumSize: const Size(200,40),
+            ),
           ),
           ElevatedButton(
             onPressed: () => addMedicineController().scanBarcode(),
-            child: Text('الماسح الضوئي'),
+            child:Icon(Icons.qr_code_scanner),
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(200,40),
+              maximumSize: const Size(200,40),
+            ),
           ),
         ],
       ),
