@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/home.dart';
 import 'package:itmaen/secure-storage.dart';
 import 'biometric-auth.dart';
@@ -23,7 +24,7 @@ class _ScanQRState extends State<ScanQR> {
     return Scaffold(
       appBar: AppBar(
         title: Text("تسجيل الدخول بالكود الخاص بك",
-            style: TextStyle(fontFamily: 'Madani Arabic Black')),
+            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
       ),
       body: Container(
         padding: EdgeInsets.all(20),
@@ -87,10 +88,10 @@ class _ScanQRState extends State<ScanQR> {
               },
               child: Text(
                 "افتح الماسح الضوئي",
-                style: TextStyle(
+                style: GoogleFonts.tajawal(
                     color: Color.fromARGB(255, 228, 229, 231),
                     fontSize: 20,
-                    fontFamily: 'Madani Arabic Black'),
+                    fontWeight: FontWeight.bold),
               ),
             ),
             Image.asset('images/itmaenlogo.png', height: 200, width: 200),
