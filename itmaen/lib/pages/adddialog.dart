@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:itmaen/controller/addMedicineController.dart';
 import 'package:itmaen/model/medicinesModel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:itmaen/secure-storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddMedicine extends StatefulWidget {
   @override
@@ -9,6 +12,38 @@ class AddMedicine extends StatefulWidget {
 }
 
 class _AddMedicineState extends State<AddMedicine> {
+  String? genericName;
+  String? tradeName;
+  String? strengthValue;
+  String? unitOfStrength;
+  String? volume;
+  String? unitOfVolume;
+  String? packageSize;
+  String? barcode;
+  String? description;
+
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  String caregiverID = "";
+  late User loggedInUser;
+
+  @override
+  void initState() {
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        caregiverID = loggedInUser.uid;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget buildTextfield(
@@ -30,8 +65,8 @@ class _AddMedicineState extends State<AddMedicine> {
     var mednameCont = TextEditingController();
     var dosecont = TextEditingController();
 
-    var medVal = addMedicineController().scannedMedicine[0].tradeName;
-    var doseVal = addMedicineController().scannedMedicine[0].strengthValue;
+    //var medVal = addMedicineController().scannedMedicine[0].tradeName;
+    // var doseVal = addMedicineController().scannedMedicine[0].strengthValue;
 
     return Container(
       padding: EdgeInsets.all(8),
@@ -46,10 +81,23 @@ class _AddMedicineState extends State<AddMedicine> {
                 fontSize: 32,
                 color: Colors.blueGrey),
           ),
-          buildTextfield('اسم الدواء', mednameCont, medVal),
-          buildTextfield('الجرعة', dosecont, doseVal),
+          //  buildTextfield('اسم الدواء', mednameCont, medVal),
+          // buildTextfield('الجرعة', dosecont, doseVal),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              _firestore.collection('medicines').add({
+                'Generic name': genericName,
+                'Trade name': tradeName,
+                'Strength value': strengthValue,
+                'Unit of strength': unitOfStrength,
+                'Volume': volume,
+                'Unit of volume': unitOfVolume,
+                'Package size': packageSize,
+                'barcode': barcode,
+                'description': description,
+                'caregiverID': caregiverID,
+              });
+            },
             child: Text('أضف الدواء'),
           ),
           ElevatedButton(
