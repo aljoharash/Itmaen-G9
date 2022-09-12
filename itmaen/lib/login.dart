@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:itmaen/patient-login.dart';
+import 'package:itmaen/signUp.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
 import 'forgot.dart';
 import 'home.dart';
@@ -112,16 +113,19 @@ class _LoginPageState extends State<LoginPage> {
                           obscureText: _isObscure3,
                           decoration: InputDecoration(
                           
-                            suffixIcon: IconButton(
-                            
-                                icon: Icon(_isObscure3
-                                    ? Icons.visibility
-                                    : Icons.visibility_off),
-                                onPressed: () {
-                                  setState(() {
-                                    _isObscure3 = !_isObscure3;
-                                  });
-                                }),
+                            suffixIcon:  Directionality(
+                              textDirection: TextDirection.ltr,
+                              child: IconButton(
+                              
+                                  icon: Icon(_isObscure3
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isObscure3 = !_isObscure3;
+                                    });
+                                  }),
+                            ),
                             filled: true,
                             fillColor: Color.fromARGB(255, 239, 237, 237),
                             hintText: 'كلمة المرور',
@@ -206,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
                                   TextButton(onPressed: (){
                                      Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                    builder: (context) => Forgotpass()));
+                                    builder: (context) => SignUpScreen()));
                                   },
                          child: const Text('إنشاء حساب ',style: TextStyle(fontSize:20, color: Color.fromARGB(255, 127, 187, 222), decoration: TextDecoration.underline,))),
                             Text('مستخدم جديد؟',  style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 156, 184, 201)),),
