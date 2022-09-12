@@ -8,6 +8,7 @@ import 'login.dart';
 import 'scanqr.dart';
 import 'pages/addmedicine.dart';
 import 'package:itmaen/secure-storage.dart';
+//import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,14 +17,31 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   StorageService st = StorageService();
-  String caregiverID = "";
+  var caregiverID;
   final _auth = FirebaseAuth.instance;
   late User loggedInUser;
+  static var id_;
+  late String id = '';
+
+  _HomePageState() {
+    id_ = id;
+  }
+  Future<String?> getCurrentUserStorage() async {
+    final String = await (st.readSecureData('caregiverID').then((value) {
+      setState(() {
+        id = value.toString();
+      });
+    }));
+    return id;
+  }
 
   @override
   void initState() {
     super.initState();
+    id = (getCurrentUserStorage()).toString();
   }
+  //getUserid().then((String userID) {...})
+  //getCurrentUserStorage();
 
   void getCurrentUser() async {
     try {
@@ -50,14 +68,20 @@ class _HomePageState extends State<HomePage> {
         }
       }
     } else {
-      Future<String?> getCurrentUser() async {
-        return st.readSecureData('caregiverID').then((value) {
-          setState(() {
-            caregiverID = value as String;
-          });
-        });
+      final medicines = FirebaseFirestore.instance
+          .collection('medicines')
+          .where('caregiverID', isEqualTo: id_);
+      await for (var snapchot in medicines.snapshots()) {
+        for (var medicine in snapchot.docs) {
+          print(medicine.data());
+        }
       }
     }
+  }
+
+  void check() {
+    StorageService st = StorageService();
+    st.writeSecureData('caregiverID', caregiverID);
   }
 
   int _selectedIndex = 0;
@@ -85,7 +109,13 @@ class _HomePageState extends State<HomePage> {
     } else if (index == 1) {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => AddPatient()));
-    } else if (index == 2) {}
+    } else if (index == 2) {
+      //print('test is:');
+      check();
+      getCurrentUser();
+      getCurrentUserStorage();
+      medcineStream();
+    }
   }
 
   @override
@@ -93,19 +123,53 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('إطمئن'),
+        //  actions:
       ),
-      body: Center(
-        child: TextButton(
-          style: TextButton.styleFrom(
-            textStyle: const TextStyle(fontSize: 20),
+      body: SafeArea(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('medicines')
+                  .where('caregiverID', isEqualTo: caregiverID)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Text("Loading...");
+                } else {
+                  final medicines = snapshot.data?.docs;
+                  List<Text> medWidgets = [];
+                  for (var med in medicines!) {
+                    final medName = med.get('Trade name');
+                    final medWidget = Text('$medName ');
+                    medWidgets.add(medWidget);
+                  }
+
+                  return Column(
+                    children: medWidgets,
+                  );
+                }
+              })
+        ],
+      )
+
+          /*TextButton(
+            style: TextButton.styleFrom(
+              textStyle: const TextStyle(fontSize: 20),
+            ),
+            onPressed: () {
+              print('test is:');
+              check();
+              getCurrentUser();
+              getCurrentUserStorage();
+              medcineStream();
+            },
+            child: const Text('print'),
+          ),*/
+
           ),
-          onPressed: () {
-            getCurrentUser();
-            medcineStream();
-          },
-          child: const Text('print'),
-        ),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
