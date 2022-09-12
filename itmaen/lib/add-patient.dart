@@ -113,7 +113,7 @@ class _AddPatient extends State<AddPatient> {
                                 
                                 content: Text(
                                   
-                                    'يرجى كتابة الاسم قبل الاضافة',
+                                    'يجب أن يحتوي اسم المريض على حرفين أو أكثر ',
                                     textAlign:TextAlign.right),
                                     
                               ),

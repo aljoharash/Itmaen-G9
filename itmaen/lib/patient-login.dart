@@ -150,29 +150,21 @@ class patientScreen extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'مقدم رعاية؟ ',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Color.fromARGB(167, 156, 184, 201)),
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginPage()));
-                              },
-                              child: const Text('اضغط هنا لتسجيل الدخول',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Color.fromARGB(255, 127, 187, 222),
-                                    decoration: TextDecoration.underline,
-                                  ))),
-                        ]),
+
+                    Row( 
+                          mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                          children:[ 
+                                  TextButton(onPressed: (){
+                                     Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()));
+                                  },
+                         child: const Text('اضغط هنا لتسجيل الدخول',style: TextStyle(fontSize:20, color: Color.fromARGB(255, 127, 187, 222), decoration: TextDecoration.underline,))),
+                            Text(' مقدم رعاية؟ ',  style: TextStyle(fontSize: 20, color: Color.fromARGB(167, 156, 184, 201)),),
+                         
+                          ]
+                        ),
 
                     // Container(
                     //   height: 80,
