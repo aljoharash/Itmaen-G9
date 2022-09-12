@@ -82,11 +82,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void check() {
-    StorageService st = StorageService();
-    st.writeSecureData('caregiverID', caregiverID);
-  }
-
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -114,7 +109,6 @@ class _HomePageState extends State<HomePage> {
           .push(MaterialPageRoute(builder: (context) => AddPatient()));
     } else if (index == 2) {
       //print('test is:');
-      //check();
 
     }
   }
