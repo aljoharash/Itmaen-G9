@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:itmaen/add-patient.dart';
+import 'package:itmaen/pages/adddialog.dart';
 import 'generateqr.dart';
 import 'login.dart';
 import 'scanqr.dart';
 import 'pages/addmedicine.dart';
+import 'pages/adddialog.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -37,7 +39,10 @@ class _HomePageState extends State<HomePage> {
     } else if (index == 1) {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => AddPatient()));
-    } else if (index == 2) {}
+    } else if (index == 2) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => AddMedicine()));
+    }
   }
 
   @override
@@ -45,6 +50,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('إطمئن'),
+        actions: <Widget>[
+          MaterialButton(
+              child: Text(
+                'Log Out',
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+              color: Colors.blue,
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              }),
+        ],
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
