@@ -4,10 +4,44 @@ import 'package:itmaen/Widget/Card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:itmaen/pages/adddialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'addmedicine.dart';
 
 class addByScan extends StatelessWidget {
+  String? genericName;
+  String? tradeName;
+  String? strengthValue;
+  String? unitOfStrength;
+  String? volume;
+  String? unitOfVolume;
+  String? packageSize;
+  String? barcode;
+  String? description;
+
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  // String caregiverID = "";
+  // late User loggedInUser;
+
+  // @override
+  // void initState() {
+  //   getCurrentUser();
+  // }
+
+  // void getCurrentUser() async {
+  //   try {
+  //     final user = await _auth.currentUser;
+  //     if (user != null) {
+  //       loggedInUser = user;
+  //       caregiverID = loggedInUser.uid;
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,47 +83,54 @@ class addByScan extends StatelessWidget {
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
                                   children: [
-                                    
                                     SizedBox(
                                       height: 30,
                                     ),
                                     BuildCard(
                                       info: 'اسم الدواء',
                                       icon: FontAwesomeIcons.medkit,
-                                      item: _.scannedMedicine[0].tradeName.toString(),
+                                      item: tradeName = _
+                                          .scannedMedicine[0].tradeName
+                                          .toString(),
                                     ),
                                     Divider(),
                                     BuildCard(
                                       info: 'وصف الدواء ',
                                       icon: FontAwesomeIcons.list,
-                                      item: _.scannedMedicine[0].description.toString(),
+                                      item: description = _
+                                          .scannedMedicine[0].description
+                                          .toString(),
                                     ),
                                     Divider(),
                                     BuildCard(
                                       info: 'الجرعة ',
                                       icon: FontAwesomeIcons.diagnoses,
-                                      item: _.scannedMedicine[0].strengthValue.toString(),
+                                      item: strengthValue = _
+                                          .scannedMedicine[0].strengthValue
+                                          .toString(),
                                     ),
                                     Divider(),
                                     BuildCard(
                                       info: 'الاسم العلمي ',
                                       icon: FontAwesomeIcons.stethoscope,
-                                      item: _.scannedMedicine[0].genericName.toString(),
+                                      item: genericName = _
+                                          .scannedMedicine[0].genericName
+                                          .toString(),
                                     ),
                                     Divider(),
                                     BuildCard(
-                                      info: 'حجم العلبة ',
+                                      info: 'عدد الحبات',
                                       icon: FontAwesomeIcons.pills,
-                                      item: _.scannedMedicine[0].packageSize.toString(),
+                                      item: packageSize = _
+                                          .scannedMedicine[0].packageSize
+                                          .toString(),
                                     ),
                                     Divider(),
-    
                                   ],
                                 ),
                         ),
                       ),
                     ),
-
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
@@ -97,7 +138,7 @@ class addByScan extends StatelessWidget {
                         width: 200,
                         margin: EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255,140,167,190),
+                          color: Color.fromARGB(255, 140, 167, 190),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: TextButton(
@@ -123,10 +164,8 @@ class addByScan extends StatelessWidget {
                               ],
                             ),
                             onPressed: () => _.scanBarcode()),
-                            
                       ),
                     ),
-
                     Align(
                       alignment: Alignment.center,
                       child: Container(
@@ -160,15 +199,25 @@ class addByScan extends StatelessWidget {
                               ],
                             ),
                             onPressed: () {
-                              //add to database
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-															QrCode()));}
-                              ),
-                            
+                              _firestore.collection('medicines').add({
+                                'Generic name': genericName,
+                                'Trade name': tradeName,
+                                'Strength value': strengthValue,
+                                'Unit of strength': unitOfStrength,
+                                'Volume': volume,
+                                'Unit of volume': unitOfVolume,
+                                'Package size': packageSize,
+                                'barcode': barcode,
+                                'description': description,
+                                //'caregiverID': caregiverID,
+                              });
+
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => QrCode()));
+                            }),
                       ),
                     ),
-
-                     Align(
+                    Align(
                       alignment: Alignment.center,
                       child: Container(
                         height: 60.0,
@@ -198,17 +247,14 @@ class addByScan extends StatelessWidget {
                                     color: Colors.white,
                                   ),
                                 ),
-
-
                               ],
                             ),
-                            onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-															QrCode()));}),
-                            
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => QrCode()));
+                            }),
                       ),
                     ),
-                    
-                  
                   ],
                 );
               }),

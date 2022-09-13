@@ -5,6 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:itmaen/pages/adddialog.dart';
 import 'addmedicine.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class addManually extends StatefulWidget {
   const addManually({Key? key}) : super(key: key);
@@ -14,6 +16,9 @@ class addManually extends StatefulWidget {
 }
 
 class _addManuallyState extends State<addManually> {
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+
   @override
   final _formKey = GlobalKey<FormState>();
   TextEditingController medName = new TextEditingController();
@@ -23,7 +28,6 @@ class _addManuallyState extends State<addManually> {
   String errorMessage = '';
   @override
   Widget build(BuildContext context) => Container(
-      
       child: Scaffold(
           backgroundColor: Colors.white,
           body: Form(
@@ -171,24 +175,31 @@ class _addManuallyState extends State<addManually> {
                           padding: EdgeInsets.symmetric(horizontal: 40),
                           backgroundColor: Colors.blueGrey),
                       onPressed: () async {
-                        // add to database
+                        _firestore.collection('medicines').add({
+                          //  'Generic name': genericName,
+                          'Trade name': medName.text,
+                          'Strength value': doseCount.text,
+                          //   'Unit of strength': unitOfStrength,
+                          // 'Volume': volume,
+                          //'Unit of volume': unitOfVolume,
+                          'Package size': packSize.text,
+                          //'barcode': barcode,
+                          'description': description.text,
+                          //'caregiverID': caregiverID,
+                        });
                       },
                       child: Text(
                         'إضافة',
                         style: TextStyle(fontFamily: 'Madani Arabic Black'),
                       ),
                     ),
-
                   ]),
             ),
           )));
 }
 
-
 String? ValidatePack(String? formPack) {
-  if (formPack == null || formPack.isEmpty)
-    return ' الرجاء ادخال حجم العبوة';
-
+  if (formPack == null || formPack.isEmpty) return ' الرجاء ادخال حجم العبوة';
 }
 
 String? ValidateMedName(String? FormName) {
@@ -202,6 +213,5 @@ String? ValidateMedName(String? FormName) {
 }
 
 String? ValidateDose(String? FormDose) {
-  if (FormDose == null || FormDose.isEmpty)
-    return 'الرجاء ادخال الجرعة ';
+  if (FormDose == null || FormDose.isEmpty) return 'الرجاء ادخال الجرعة ';
 }
