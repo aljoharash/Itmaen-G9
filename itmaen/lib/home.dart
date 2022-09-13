@@ -188,12 +188,12 @@ StorageService st = StorageService();
             actions: <Widget>[
               Directionality(
                 textDirection: TextDirection.rtl,
-                child: MaterialButton(
+                child: TextButton(
                     child: Text(
                       'تسجيل الخروج',
                       style: TextStyle(fontSize: 12, color: Colors.white),
                     ),
-                    color: Color.fromARGB(255, 140, 167, 190),
+                   
                     onPressed: () async {
                       if (caregiverID != null) {
                         final action = await AlertDialogs.yesCancelDialog(
