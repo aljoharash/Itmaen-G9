@@ -113,7 +113,8 @@ class _AddPatient extends State<AddPatient> {
                                 
                                 content: Text(
                                   
-                                    'يجب أن يحتوي اسم المريض على حرفين أو أكثر ',
+                                    'يجب أن يحتوي اسم مستقبل الرعاية على حرفين أو أكثر ',
+                                    style: TextStyle(fontSize: 20),
                                     textAlign:TextAlign.right),
                                     
                               ),
