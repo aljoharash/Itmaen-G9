@@ -4,7 +4,6 @@ import 'package:itmaen/Widget/Card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:itmaen/pages/adddialog.dart';
-
 import 'addmedicine.dart';
 
 class addManually extends StatefulWidget {
@@ -24,14 +23,9 @@ class _addManuallyState extends State<addManually> {
   String errorMessage = '';
   @override
   Widget build(BuildContext context) => Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("images/background.jpg"),
-          fit: BoxFit.cover,
-        ),
-      ),
+      
       child: Scaffold(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           body: Form(
             key: _formKey,
             child: Padding(
