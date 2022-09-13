@@ -211,6 +211,7 @@ class addByScan extends StatelessWidget {
                                 'description': description,
                                 //'caregiverID': caregiverID,
                               });
+                              _.scannedMedicine.clear();
 
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => QrCode()));
@@ -250,6 +251,7 @@ class addByScan extends StatelessWidget {
                               ],
                             ),
                             onPressed: () {
+                              _.scannedMedicine.clear();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => QrCode()));
                             }),

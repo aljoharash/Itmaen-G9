@@ -119,7 +119,7 @@ class _addManuallyState extends State<addManually> {
                       height: 2.0,
                     ),
                     TextFormField(
-                      obscureText: true,
+                      keyboardType: TextInputType.number,
                       controller: doseCount,
                       validator: ValidateDose,
                       textAlign: TextAlign.right,
