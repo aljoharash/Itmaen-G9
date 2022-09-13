@@ -49,28 +49,12 @@ class addByScan extends StatelessWidget {
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        FaIcon(FontAwesomeIcons.barcode),
-                                        SizedBox(
-                                          width: 3,
-                                        ),
-                                        Text(
-                                          'الباركود: ' +
-                                              _.scannedMedicine[0].barcode.toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0XFF666666)),
-                                        ),
-                                      ],
-                                    ),
+                                    
                                     SizedBox(
                                       height: 30,
                                     ),
                                     BuildCard(
-                                      info: 'اسم الدواء: ',
+                                      info: 'اسم الدواء',
                                       icon: FontAwesomeIcons.medkit,
                                       item: _.scannedMedicine[0].tradeName.toString(),
                                     ),
@@ -82,45 +66,39 @@ class addByScan extends StatelessWidget {
                                     ),
                                     Divider(),
                                     BuildCard(
-                                      info: 'الجرعة: ',
+                                      info: 'الجرعة ',
                                       icon: FontAwesomeIcons.diagnoses,
                                       item: _.scannedMedicine[0].strengthValue.toString(),
                                     ),
                                     Divider(),
                                     BuildCard(
-                                      info: 'الاسم العلمي: ',
+                                      info: 'الاسم العلمي ',
                                       icon: FontAwesomeIcons.stethoscope,
                                       item: _.scannedMedicine[0].genericName.toString(),
                                     ),
                                     Divider(),
                                     BuildCard(
-                                      info: 'حجم العلبة: ',
+                                      info: 'حجم العلبة ',
                                       icon: FontAwesomeIcons.pills,
                                       item: _.scannedMedicine[0].packageSize.toString(),
                                     ),
                                     Divider(),
-                                    BuildCard(
-                                      info: 'الحجم ',
-                                      icon: FontAwesomeIcons.moneyBillAlt,
-                                      item:
-                                          _.scannedMedicine[0].volume.toString(),
-                                    ),
-                                    Divider(),
-                                    
-
+    
                                   ],
                                 ),
                         ),
                       ),
                     ),
+
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
-                        height: 70.0,
-                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: 60.0,
+                        width: 200,
+                        margin: EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(30.0),
+                          color: Color.fromARGB(255,140,167,190),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: TextButton(
                             child: Row(
@@ -148,14 +126,16 @@ class addByScan extends StatelessWidget {
                             
                       ),
                     ),
-                     Align(
-                      alignment: Alignment.bottomCenter,
+
+                    Align(
+                      alignment: Alignment.center,
                       child: Container(
-                        height: 70.0,
-                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: 60.0,
+                        width: 200,
+                        margin: EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(30.0),
+                          color: Color.fromARGB(255, 76, 146, 15),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: TextButton(
                             child: Row(
@@ -163,7 +143,48 @@ class addByScan extends StatelessWidget {
                               children: <Widget>[
                                 Center(
                                     child: Icon(
-                                  FontAwesomeIcons.barcode,
+                                  FontAwesomeIcons.plus,
+                                  size: 16,
+                                  color: Colors.white,
+                                )),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "إضافة",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            onPressed: () {
+                              //add to database
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
+															QrCode()));}
+                              ),
+                            
+                      ),
+                    ),
+
+                     Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        height: 60.0,
+                        width: 200,
+                        margin: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 187, 18, 6),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: TextButton(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Center(
+                                    child: Icon(
+                                  FontAwesomeIcons.ban,
                                   size: 16,
                                   color: Colors.white,
                                 )),
@@ -177,6 +198,8 @@ class addByScan extends StatelessWidget {
                                     color: Colors.white,
                                   ),
                                 ),
+
+
                               ],
                             ),
                             onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
@@ -185,6 +208,7 @@ class addByScan extends StatelessWidget {
                       ),
                     ),
                     
+                  
                   ],
                 );
               }),

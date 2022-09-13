@@ -12,24 +12,26 @@ class BuildCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        FaIcon(
-          icon,
-          color: Colors.black87,
-        ),
+        Flexible(child: Text(item)),
         SizedBox(
           width: 6,
         ),
         Text(
           info,
           style:
-              TextStyle(fontWeight: FontWeight.bold, color: Color(0XFF666666)),
+              TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 140, 167, 190), ),
+              textAlign: TextAlign.right,
         ),
         SizedBox(
           width: 6,
         ),
-        Flexible(child: Text(item)),
+        
+        FaIcon(
+          icon,
+          color: Color.fromARGB(255, 140, 167, 190),
+        ),
       ],
     );
   }
