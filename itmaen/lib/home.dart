@@ -1,3 +1,6 @@
+import 'dart:core';
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,17 +25,33 @@ class _HomePageState extends State<HomePage> {
   String title = 'AlertDialog';
   bool tappedYes = false;
   StorageService st = StorageService();
-  var caregiverID;
+  //var caregiverID;
   final _auth = FirebaseAuth.instance;
-  late User loggedInUser;
-  static var id_;
+  late User loggedInUser; 
+ 
+   //Future<String?> loggedInUser = getCurrentUser();
+ 
   late String id = '';
+  static var id_ ; 
+  //var Cid; 
+  var cid; 
+  var caregiverID ; 
+  
 
   _HomePageState() {
-    getCurrentUser();
-    getCurrentUserStorage();
-    medcineStream();
-    id_ = id;
+   // Test(); 
+    Future<User?> loggedInUser = getCurrentUser();
+    //Cid = getCurrentUser();
+    if(loggedInUser!=null){
+      // id_ = loggedInUser.toString(); 
+      Test();
+     // medcineStream();
+    }
+    else{
+    id_= getCurrentUserStorage(); 
+    //medcineStream();}
+    //id_ = id;
+  }
   }
 
   Future<String?> getCurrentUserStorage() async {
@@ -41,13 +60,15 @@ class _HomePageState extends State<HomePage> {
         id = value.toString();
       });
     }));
-    return id;
+   // return id.toString();
+   return id ; 
   }
 
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
+    //Test(); 
+    //getCurrentUser();
     id = (getCurrentUserStorage()).toString();
   }
 
@@ -58,26 +79,47 @@ StorageService st = StorageService();
   final _auth = FirebaseAuth.instance;
   late User loggedInUser;*/
 
-  @override
-  /*void initState() {
-    super.initState();
-    id = (getCurrentUserStorage()).toString();
-  } */
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   //id = (getCurrentUserStorage()).toString();
+  //   Test();
+  // } 
   //getUserid().then((String userID) {...})
   //getCurrentUserStorage();
 
-  void getCurrentUser() async {
+  Future<User?> getCurrentUser() async {
+    final user = await _auth.currentUser; 
+    // try {
+    //    user = await _auth.currentUser;
+    //   if (user != null) {
+    //     loggedInUser = user;
+    //     caregiverID= loggedInUser.uid;
+    //     // print(loggedInUser.email);
+    //   }
+      
+    // } catch (e) {
+    //   print(e);
+    // }
+   // return user?.uid.toString(); 
+     return user ;
+  }
+  ///////////////////////////////
+
+  void Test() async {
     try {
       final user = await _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
-        caregiverID = loggedInUser.uid;
+        id_= loggedInUser.uid;
         // print(loggedInUser.email);
       }
     } catch (e) {
       print(e);
     }
   }
+
+
 
   void medcineStream() async {
     final user = await _auth.currentUser;
@@ -195,15 +237,15 @@ StorageService st = StorageService();
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              StreamBuilder<QuerySnapshot>(
+              StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection('medicines')
-                      .where('caregiverID', isEqualTo: caregiverID)
+                      .where('caregiverID', isEqualTo: id_)
                       .snapshots(),
-                  builder: (context, snapshot) {
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
                       return Text("Loading...");
-                    } else {
+                    } //else {
                       final medicines = snapshot.data?.docs;
                       List<medBubble> medBubbles = [];
                       for (var med in medicines!) {
@@ -219,7 +261,7 @@ StorageService st = StorageService();
                           children: medBubbles,
                         ),
                       );
-                    }
+                   // }
                   })
             ],
           )),
