@@ -5,6 +5,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:itmaen/controller/addMedicineController.dart';
 import 'package:itmaen/model/medicinesModel.dart';
 import 'package:itmaen/pages/addByScan.dart';
+import 'package:itmaen/pages/addManually.dart';
 
 class AddMedicine extends StatefulWidget {
   @override
@@ -34,8 +35,8 @@ class _AddMedicineState extends State<AddMedicine> {
           //buildTextfield('اسم الدواء', mednameCont),
           //buildTextfield('الجرعة', dosecont),
           ElevatedButton(
-            onPressed: () {//Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-															//));
+            onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
+															addManually()));
                               },
             child: Text('أضف الدواء يدويًا'),
             style: ElevatedButton.styleFrom(
