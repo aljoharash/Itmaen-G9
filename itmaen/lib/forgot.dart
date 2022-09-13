@@ -19,6 +19,17 @@ class _ForgotpassState extends State<Forgotpass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        automaticallyImplyLeading: true,
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios), color:Color.fromARGB(255, 107, 137, 162),
+        onPressed: () {  Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()));
+                             },),
+      ),
       body: Container(
         child: Center(
           child: Column(

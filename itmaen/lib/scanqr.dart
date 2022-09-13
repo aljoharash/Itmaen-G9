@@ -23,6 +23,7 @@ class _ScanQRState extends State<ScanQR> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 140, 167, 190),
         title: Text("تسجيل الدخول بالكود الخاص بك",
             style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
       ),
@@ -55,7 +56,7 @@ class _ScanQRState extends State<ScanQR> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              color: Color.fromARGB(255, 122, 164, 186),
+              color: Color.fromARGB(255, 140, 167, 190),
               onPressed: () async {
                 //test
                 //String? q = await st.readSecureData("caregiver");

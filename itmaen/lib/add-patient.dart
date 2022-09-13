@@ -39,6 +39,7 @@ class _AddPatient extends State<AddPatient> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 140, 167, 190),
         title: Center(
             child: Text(
           "إضافة مستقبل الرعاية",
@@ -55,7 +56,7 @@ class _AddPatient extends State<AddPatient> {
               'من فضلك قم بإدخال اسم مستقبل الرعاية : ',
               style: GoogleFonts.tajawal(
                 fontSize: 25,
-                color: Color.fromARGB(255, 118, 176, 186),
+                color: Color.fromARGB(255, 140, 167, 190),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -99,10 +100,10 @@ class _AddPatient extends State<AddPatient> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                color: Colors.blueGrey,
+                color:Color.fromARGB(255, 140, 167, 190),
                 onPressed: () {
                   // String? id = await st.readSecureData("caregiverID");
-                  if (nameController.text.length >= 2) {
+                  if (nameController.text.length >= 2 && nameController.text.length<=20) {
                     FirebaseFirestore.instance.collection('patients').add({
                       'name': nameController.text,
                       'caregiverID': caregiverID

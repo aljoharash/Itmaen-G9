@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //Given Theme Color
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        //primarySwatch: Colors.blueGrey,
       ),
       home: patientScreen(),
     );

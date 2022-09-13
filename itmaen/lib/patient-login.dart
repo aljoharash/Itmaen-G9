@@ -42,8 +42,8 @@ class patientScreen extends StatelessWidget {
                         Text(
                           'أهلا بك!',
                           style: GoogleFonts.tajawal(
-                            fontSize: 25,
-                            fontStyle: FontStyle.italic,
+                            fontSize: 30,
+                            //fontStyle: FontStyle.italic,
                             color: Color.fromARGB(255, 122, 164, 186),
                             fontWeight: FontWeight.bold,
                           ),
@@ -56,9 +56,9 @@ class patientScreen extends StatelessWidget {
                           'من فضلك قم بتسجيل الدخول',
                           style: GoogleFonts.tajawal(
                             fontSize: 25,
-                            fontStyle: FontStyle.italic,
+                            //fontStyle: FontStyle.italic,
                             color: Color.fromARGB(255, 122, 164, 186),
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.bold,
                           ),
                           textDirection: TextDirection.rtl,
                         ),
@@ -90,7 +90,7 @@ class patientScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        color: Color.fromARGB(255, 122, 164, 186),
+                        color: Color.fromARGB(255, 140, 167, 190),
                         child: Text(
                           'تسجيل الدخول لأول مرة بمسح الكود',
                           style: GoogleFonts.tajawal(
@@ -111,7 +111,7 @@ class patientScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        color: Color.fromARGB(255, 122, 164, 186),
+                        color: Color.fromARGB(255, 140, 167, 190),
                         onPressed: () async {
                           bool isAuthenticated = await BiometricAuthentication
                               .authenticateWithBiometrics();
@@ -129,8 +129,10 @@ class patientScreen extends StatelessWidget {
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
+                                
                                 content: Text(
                                     'خطأ في تسجيل الدخول! في حال كنت مستخدم للتطبيق لأول مرة يرجى مسح الكود',
+                                    style: TextStyle(fontSize: 18),
                                     textAlign: TextAlign.right),
                               ),
                             );
@@ -163,7 +165,7 @@ class patientScreen extends StatelessWidget {
                             child: const Text('اضغط هنا لتسجيل الدخول',
                                 style: TextStyle(
                                   fontSize: 20,
-                                  color: Color.fromARGB(255, 127, 187, 222),
+                                  color: Color.fromARGB(255, 140, 167, 190),
                                   decoration: TextDecoration.underline,
                                 )),
                           ),
@@ -171,7 +173,7 @@ class patientScreen extends StatelessWidget {
                             ' مقدم رعاية؟ ',
                             style: GoogleFonts.tajawal(
                                 fontSize: 20,
-                                color: Color.fromARGB(167, 156, 184, 201)),
+                                color: Color.fromARGB(167, 135, 168, 188),fontWeight: FontWeight.bold),
                           ),
                         ]),
                     // Container(

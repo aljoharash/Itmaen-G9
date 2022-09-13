@@ -141,6 +141,7 @@ StorageService st = StorageService();
         textDirection: TextDirection.rtl,
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor:Color.fromARGB(255, 140, 167, 190) ,
             title: const Text('قائمة الادوية'),
             actions: <Widget>[
               Directionality(
@@ -230,7 +231,7 @@ StorageService st = StorageService();
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
-                label: 'إضافة مريض',
+                label: 'إضافة مستقبل رعاية',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.local_hospital_rounded),
@@ -238,7 +239,7 @@ StorageService st = StorageService();
               ),
             ],
             currentIndex: _selectedIndex,
-            selectedItemColor: Colors.black,
+            selectedItemColor: Color.fromARGB(255, 140, 167, 190),
             onTap: _onItemTapped,
           ),
         ));
