@@ -55,7 +55,7 @@ class _addManuallyState extends State<addManually> {
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(
-                          "انشاء حساب",
+                          "إضافة دواء",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 50,
