@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/home.dart';
 import 'package:itmaen/login.dart';
 import 'package:itmaen/scanqr.dart';
@@ -40,11 +41,11 @@ class patientScreen extends StatelessWidget {
                         ),
                         Text(
                           'أهلا بك!',
-                          style: TextStyle(
+                          style: GoogleFonts.tajawal(
                             fontSize: 25,
                             fontStyle: FontStyle.italic,
                             color: Color.fromARGB(255, 122, 164, 186),
-                            fontFamily: 'Madani Arabic Black',
+                            fontWeight: FontWeight.bold,
                           ),
                           textDirection: TextDirection.rtl,
                         ),
@@ -53,11 +54,11 @@ class patientScreen extends StatelessWidget {
                         ),
                         Text(
                           'من فضلك قم بتسجيل الدخول',
-                          style: TextStyle(
+                          style: GoogleFonts.tajawal(
                             fontSize: 25,
                             fontStyle: FontStyle.italic,
                             color: Color.fromARGB(255, 122, 164, 186),
-                            fontFamily: 'Madani Arabic Black',
+                            fontWeight: FontWeight.w800,
                           ),
                           textDirection: TextDirection.rtl,
                         ),
@@ -92,11 +93,10 @@ class patientScreen extends StatelessWidget {
                         color: Color.fromARGB(255, 122, 164, 186),
                         child: Text(
                           'تسجيل الدخول لأول مرة بمسح الكود',
-                          style: TextStyle(
+                          style: GoogleFonts.tajawal(
                             fontSize: 20,
-                            // fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w700,
                             color: Colors.white,
-                            fontFamily: 'Madani Arabic Black',
                           ),
                         ),
                       ),
@@ -139,33 +139,41 @@ class patientScreen extends StatelessWidget {
                         },
                         child: Text(
                           'تسجيل الدخول السريع',
-                          style: TextStyle(
-                              fontSize: 20,
-                              // fontWeight: FontWeight.w700,
-                              color: Color.fromARGB(255, 248, 250, 250),
-                              fontFamily: 'Madani Arabic Black'),
+                          style: GoogleFonts.tajawal(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromARGB(255, 248, 250, 250),
+                          ),
                         ),
                       ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-
-                    Row( 
-                          mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                          children:[ 
-                                  TextButton(onPressed: (){
-                                     Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => LoginPage()));
-                                  },
-                         child: const Text('اضغط هنا لتسجيل الدخول',style: TextStyle(fontSize:20, color: Color.fromARGB(255, 127, 187, 222), decoration: TextDecoration.underline,))),
-                            Text(' مقدم رعاية؟ ',  style: TextStyle(fontSize: 20, color: Color.fromARGB(167, 156, 184, 201)),),
-                         
-                          ]
-                        ),
-
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()));
+                            },
+                            child: const Text('اضغط هنا لتسجيل الدخول',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 127, 187, 222),
+                                  decoration: TextDecoration.underline,
+                                )),
+                          ),
+                          Text(
+                            ' مقدم رعاية؟ ',
+                            style: GoogleFonts.tajawal(
+                                fontSize: 20,
+                                color: Color.fromARGB(167, 156, 184, 201)),
+                          ),
+                        ]),
                     // Container(
                     //   height: 80,
                     //   width: double.infinity,

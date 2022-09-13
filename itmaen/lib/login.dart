@@ -112,17 +112,18 @@ class _LoginPageState extends State<LoginPage> {
                           controller: passwordController,
                           obscureText: _isObscure3,
                           decoration: InputDecoration(
-                          
-                            suffixIcon: IconButton(
-                            
-                                icon: Icon(_isObscure3
-                                    ? Icons.visibility
-                                    : Icons.visibility_off),
-                                onPressed: () {
-                                  setState(() {
-                                    _isObscure3 = !_isObscure3;
-                                  });
-                                }),
+                            suffixIcon: Directionality(
+                              textDirection: TextDirection.ltr,
+                              child: IconButton(
+                                  icon: Icon(_isObscure3
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isObscure3 = !_isObscure3;
+                                    });
+                                  }),
+                            ),
                             filled: true,
                             fillColor: Color.fromARGB(255, 239, 237, 237),
                             hintText: 'كلمة المرور',
@@ -157,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           keyboardType: TextInputType.emailAddress,
                         ),
-         
+
                         SizedBox(
                           height: 20,
                         ),
@@ -185,35 +186,57 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 25,
                         ),
-                        Row( 
-                          mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                          children:[ 
-                                  TextButton(onPressed: (){
-                                     Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => Forgotpass()));
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Forgotpass()));
                                   },
-                         child: const Text('كلمة المرور',style: TextStyle(fontSize:20, color: Color.fromARGB(255, 127, 187, 222), decoration: TextDecoration.underline,))),
-                            Text(' نسيت كلمة المرور؟',  style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 156, 184, 201)),),
-                         
-                          ]
-                        ),
-                       
-                        Row( 
-                          mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                          children:[ 
-                                  TextButton(onPressed: (){
-                                     Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => SignUpScreen()));
+                                  child: const Text('كلمة المرور',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color:
+                                            Color.fromARGB(255, 127, 187, 222),
+                                        decoration: TextDecoration.underline,
+                                      ))),
+                              Text(
+                                ' نسيت كلمة المرور؟',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color.fromARGB(255, 156, 184, 201)),
+                              ),
+                            ]),
+
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SignUpScreen()));
                                   },
-                         child: const Text('إنشاء حساب ',style: TextStyle(fontSize:20, color: Color.fromARGB(255, 127, 187, 222), decoration: TextDecoration.underline,))),
-                            Text('مستخدم جديد؟',  style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 156, 184, 201)),),
-                         
-                          ]
-                        ),
+                                  child: const Text('إنشاء حساب ',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color:
+                                            Color.fromARGB(255, 127, 187, 222),
+                                        decoration: TextDecoration.underline,
+                                      ))),
+                              Text(
+                                'مستخدم جديد؟',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color.fromARGB(255, 156, 184, 201)),
+                              ),
+                            ]),
                         Visibility(
                             maintainSize: true,
                             maintainAnimation: true,

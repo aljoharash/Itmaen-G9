@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:itmaen/patient-login.dart';
 
 import 'login.dart';
+import 'package:itmaen/secure-storage.dart';
+import 'package:itmaen/home.dart';
 
 class Directlogin extends StatefulWidget {
   const Directlogin({Key? key}) : super(key: key);
@@ -25,18 +27,15 @@ class _DirectloginState extends State<Directlogin> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-                
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/Images/background.jpeg'),
+                        fit: BoxFit.fill)
 
-                  alignment:Alignment.center,
-                   decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/Images/background.jpeg'),
-                      fit: BoxFit.fill)
-
-                  ////حطي هنا البوكس شادو
-                  ),
-
-                    width: MediaQuery.of(context).size.width,
+                    ////حطي هنا البوكس شادو
+                    ),
+                width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: Center(
                     child: Container(
@@ -78,54 +77,56 @@ class _DirectloginState extends State<Directlogin> {
 //////////////////////////////////////////
 ///////
                               Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              MaterialButton(
-                                   padding: EdgeInsets.symmetric(
-                              vertical: 9, horizontal: 80),
-                             shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0))),
-                                elevation: 5.0,
-                                height: 40,
-                                onPressed: () {
-                                 Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LoginPage()));
-                                },
-                                child: Text(
-                                  "تسجيل الدخول كمقدم الرعاية",
-                                  style: TextStyle(
-                                    fontSize: 20, color: Colors.white
-                                  ),
-                                ),
-                                color:  Color.fromARGB(255, 120, 156, 174),
-                              ),
-                                 SizedBox(
-                          height: 20,
-                        ),
-                              MaterialButton(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  MaterialButton(
                                     padding: EdgeInsets.symmetric(
-                              vertical: 9, horizontal: 98),
-                          shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0))),
-                                elevation: 5.0,
-                                height: 40,
-                                onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => patientScreen()));
-                                },
-                                child: Text(
-                                  " تسجيل الدخول كمريض",
-                                  style: TextStyle(
-                                    fontSize: 20, color: Colors.white
-                                  ),),),
-                                  
+                                        vertical: 9, horizontal: 80),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0))),
+                                    elevation: 5.0,
+                                    height: 40,
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()));
+                                    },
+                                    child: Text(
+                                      "تسجيل الدخول كمقدم الرعاية",
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.white),
+                                    ),
+                                    color: Color.fromARGB(255, 120, 156, 174),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  MaterialButton(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 9, horizontal: 98),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0))),
+                                    elevation: 5.0,
+                                    height: 40,
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  patientScreen()));
+                                    },
+                                    child: Text(
+                                      " تسجيل الدخول كمريض",
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.white),
+                                    ),
+                                  ),
                                   SizedBox(
                                     height: 20,
                                   ),

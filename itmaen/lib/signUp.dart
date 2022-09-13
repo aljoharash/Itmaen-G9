@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:itmaen/constant.dart';
+import 'package:itmaen/home.dart';
+import 'package:itmaen/login.dart';
 
 import 'firebase.dart';
 
@@ -56,8 +58,10 @@ class _SignUpScreen extends State<SignUpScreen> {
                         child: Text(
                           "انشاء حساب",
                           textAlign: TextAlign.center,
-                          style:
-                              TextStyle(fontSize: 50, color: Colors.blueGrey),
+                          style: TextStyle(
+                              fontSize: 50,
+                              color: Colors.blueGrey,
+                              fontFamily: 'Madani Arabic Black'),
                         ),
                       ),
                     ),
@@ -65,20 +69,53 @@ class _SignUpScreen extends State<SignUpScreen> {
                       height: 50.0,
                     ),*/
                     TextFormField(
-                        controller: username,
-                        validator: ValidateUserName,
-                        textAlign: TextAlign.right,
-                        decoration: kTextFieldDecoration.copyWith(
-                            hintText: ' اسم المستخدم')),
+                      controller: username,
+                      validator: ValidateUserName,
+                      textAlign: TextAlign.right,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 239, 237, 237),
+                        hintText: 'اسم المستخدم ',
+                        enabled: true,
+                        contentPadding: const EdgeInsets.only(
+                            left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 236, 231, 231),
+                                width: 3)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: new BorderSide(
+                              color: Color.fromARGB(79, 255, 255, 255)),
+                          borderRadius: new BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 16.0,
                     ),
                     TextFormField(
-                        controller: email,
-                        validator: ValidateEmail,
-                        textAlign: TextAlign.right,
-                        decoration: kTextFieldDecoration.copyWith(
-                            hintText: 'البريد الالكتروني ')),
+                      keyboardType: TextInputType.emailAddress,
+                      controller: email,
+                      validator: ValidateEmail,
+                      textAlign: TextAlign.right,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 239, 237, 237),
+                        hintText: ' البريد الالكتروني ',
+                        enabled: true,
+                        contentPadding: const EdgeInsets.only(
+                            left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 236, 231, 231),
+                                width: 3)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: new BorderSide(
+                              color: Color.fromARGB(79, 255, 255, 255)),
+                          borderRadius: new BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
                     Center(
                       child: Text(errorMessage),
                     ),
@@ -90,18 +127,49 @@ class _SignUpScreen extends State<SignUpScreen> {
                       controller: password,
                       validator: ValidatePassword,
                       textAlign: TextAlign.right,
-                      decoration: kTextFieldDecoration.copyWith(
-                          hintText: 'الرقم السري'),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 239, 237, 237),
+                        hintText: 'كلمة المرور ',
+                        enabled: true,
+                        contentPadding: const EdgeInsets.only(
+                            left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 236, 231, 231),
+                                width: 3)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: new BorderSide(
+                              color: Color.fromARGB(79, 255, 255, 255)),
+                          borderRadius: new BorderRadius.circular(10),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 16.0,
                     ),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       controller: phoneNum,
                       validator: ValidatePhoneNumber,
                       textAlign: TextAlign.right,
-                      decoration:
-                          kTextFieldDecoration.copyWith(hintText: 'رقم الهاتف'),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 239, 237, 237),
+                        hintText: 'رقم الهاتف ',
+                        enabled: true,
+                        contentPadding: const EdgeInsets.only(
+                            left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 236, 231, 231),
+                                width: 3)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: new BorderSide(
+                              color: Color.fromARGB(79, 255, 255, 255)),
+                          borderRadius: new BorderRadius.circular(10),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 24.0,
@@ -117,9 +185,16 @@ class _SignUpScreen extends State<SignUpScreen> {
                                 await _auth.createUserWithEmailAndPassword(
                                     email: email.text, password: password.text);
                             errorMessage = '';
-                            /*if(newUser!=null){     will take us to the homescreen
-                    Navigator.pushNamed(context, )
-                  }*/
+                            if (newUser != null) {
+                              //will take us to the homescreen
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(),
+                                ),
+                              );
+                            }
+
                             User? updateUser =
                                 FirebaseAuth.instance.currentUser;
                             //updateUser?.updateDisplayName(username);
@@ -131,14 +206,23 @@ class _SignUpScreen extends State<SignUpScreen> {
                           setState(() {});
                         }
                       },
-                      child: Text('انشاء '),
+                      child: Text(
+                        'انشاء ',
+                        style: TextStyle(fontFamily: 'Madani Arabic Black'),
+                      ),
                     ),
                     TextButton(
                       style: TextButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 20),
                       ),
-                      onPressed: () {},
-                      child: const Text('لديّ حساب مسبقا'),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => LoginPage()));
+                      },
+                      child: const Text(
+                        'لديّ حساب مسبقا',
+                        style: TextStyle(fontFamily: 'Madani Arabic Black'),
+                      ),
                     ),
                   ]),
             ),
@@ -151,22 +235,29 @@ String? ValidateEmail(String? formEmail) {
 
   String pattern = r'\w+@\w+\.\w+';
   RegExp regex = RegExp(pattern);
-  if (!regex.hasMatch(formEmail)) return 'البريد الاكتروني المدخل غير صحيح';
+  if (!regex.hasMatch(formEmail.trim()))
+    return 'البريد الاكتروني المدخل غير صحيح';
   return null;
 }
 
 String? ValidatePassword(String? formPassword) {
   if (formPassword == null || formPassword.isEmpty)
     return ' الرجاء ادخال الرقم السري';
-  String pattern = r'^.{8,}$';
+  String pattern = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$';
   RegExp regex = RegExp(pattern);
-  if (!regex.hasMatch(formPassword))
-    return ('يحب أن يتكون من ٨ ارقام على الاقل'); // check arabic formation
+  if (!regex.hasMatch(formPassword.trim()))
+    return ('يجب أن تتكون كلمة المرور على ٨ رموز(منها حرف ورقم على الاقل) ');
+  ; // check arabic formation
   return null;
 }
 
 String? ValidateUserName(String? FormName) {
   if (FormName == null || FormName.isEmpty) return 'الرجاء ادخال اسم المستخدم';
+  String pattern =
+      r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
+  RegExp regex = RegExp(pattern);
+  if (!regex.hasMatch(FormName.trim()))
+    return 'يجب أن يحتوي اسم المستخدم على حرفين على الاقل';
   return null;
 }
 
@@ -175,6 +266,7 @@ String? ValidatePhoneNumber(String? FormNhoneNumber) {
     return 'الرجاء ادخال رقم الهاتف';
   String pattern = r'[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$';
   RegExp regex = RegExp(pattern);
-  if (!regex.hasMatch(FormNhoneNumber)) return ' الرقم المدخل غير صحيح  ';
+  if (!regex.hasMatch(FormNhoneNumber.trim()))
+    return ' الرقم المدخل غير صحيح  ';
   return null;
 }
