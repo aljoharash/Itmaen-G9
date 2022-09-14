@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:itmaen/addMedicinePages/adddialog.dart';
+import 'package:itmaen/patient-login.dart';
 import 'package:itmaen/view.dart';
 import 'add-patient.dart';
+import 'alert_dialog.dart';
 import 'home.dart';
+import 'login.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({Key? key}) : super(key: key);
@@ -13,11 +17,35 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
+  String title = 'AlertDialog';
+  bool tappedYes = false;
+  final _auth = FirebaseAuth.instance;
+  String caregiverID = "";
+  late User loggedInUser;
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    //String qrData="";
+    try {
+      final user = await _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        caregiverID = loggedInUser.uid;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   int _selectedIndex = 0;
   bodyFunction() {
     switch (_selectedIndex) {
       case 0:
-        return AddPatient();
+        return View();
         break;
       case 1:
         return AddPatient();
@@ -47,6 +75,34 @@ class _NavigationState extends State<Navigation> {
       );
     }
 
+    Future<void> logout() async {
+          if (caregiverID != null) {
+            final action = await AlertDialogs.yesCancelDialog(
+                context, 'تسجيل الخروج', 'هل متأكد من عملية تسجيل الخروج؟');
+            if (action == DialogsAction.yes) {
+              setState(() => tappedYes = true);
+
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => LoginPage()));
+            } else {
+              setState(() => tappedYes = false);
+            }
+          } else {
+            final action = await AlertDialogs.yesCancelDialog(
+                context, 'تسجيل الخروج', 'هل متأكد من عملية تسجيل الخروج؟');
+            if (action == DialogsAction.yes) {
+              setState(() => tappedYes = true);
+
+              // await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => patientScreen()));
+            } else {
+              setState(() => tappedYes = false);
+            }
+          }
+        }
+
     void _onItemTapped(int index) {
       setState(() {
         _selectedIndex = index;
@@ -55,7 +111,7 @@ class _NavigationState extends State<Navigation> {
         showAddDialog();
       }
       if (index == 0) {
-        //logout
+        logout();
       }
     }
 
