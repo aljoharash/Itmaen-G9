@@ -7,6 +7,7 @@ import 'package:itmaen/signUp.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
 import 'forgot.dart';
 import 'home.dart';
+import 'navigation.dart';
 //import 'register.dart';
 
 class LoginPage extends StatefulWidget {
@@ -294,7 +295,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => HomePage(),
+            builder: (context) => Navigation(),
           ),
         );
       } on FirebaseAuthException catch (error) {

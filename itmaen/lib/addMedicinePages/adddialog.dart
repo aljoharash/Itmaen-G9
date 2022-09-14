@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:itmaen/controller/addMedicineController.dart';
 import 'package:itmaen/model/medicinesModel.dart';
-import 'package:itmaen/pages/addByScan.dart';
-import 'package:itmaen/pages/addManually.dart';
+import 'package:itmaen/addMedicinePages/addByScan.dart';
+import 'package:itmaen/addMedicinePages/addManually.dart';
 
 class AddMedicine extends StatefulWidget {
   @override
@@ -41,6 +41,7 @@ class _AddMedicineState extends State<AddMedicine> {
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(200,40),
               maximumSize: const Size(200,40),
+              backgroundColor: Color.fromARGB(255, 140, 167, 190),
             ),
           ),
           ElevatedButton(
@@ -50,6 +51,7 @@ class _AddMedicineState extends State<AddMedicine> {
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(200,40),
               maximumSize: const Size(200,40),
+              backgroundColor: Color.fromARGB(255, 140, 167, 190),
             ),
           ),
         ],

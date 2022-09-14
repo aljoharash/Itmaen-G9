@@ -10,9 +10,10 @@ import 'alert_dialog.dart';
 import 'package:itmaen/model/medicines.dart';
 import 'generateqr.dart';
 import 'login.dart';
+import 'navigation.dart';
 import 'scanqr.dart';
-import 'pages/addmedicine.dart';
-import 'pages/adddialog.dart';
+import 'addMedicinePages/addmedicine.dart';
+import 'addMedicinePages/adddialog.dart';
 import 'package:itmaen/secure-storage.dart';
 //import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -147,7 +148,6 @@ StorageService st = StorageService();
     //    //return user ;
     // }
     ///////////////////////////////
-
     // void Test() async {
     //   try {
     //     final user = await _auth.currentUser;
@@ -203,23 +203,22 @@ StorageService st = StorageService();
     ),
   ];
 
-  void _onItemTapped(int index) {
-    if (index == 0) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => HomePage()));
-    } else if (index == 1) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => AddPatient()));
-    } else if (index == 2) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => AddMedicine()));
-      //print('test is:');
-
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    void showAddDialog() {
+      showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            content: AddMedicine(),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          );
+        },
+      );
+    }
+
 // Future<bool> getrealvalue() async {
 // bool val = await getstatu();
 // return val;
@@ -297,6 +296,7 @@ StorageService st = StorageService();
                 ),
               ],
             ),
+
             body: SafeArea(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -331,25 +331,7 @@ StorageService st = StorageService();
                     })
               ],
             )),
-            bottomNavigationBar: BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'الرئيسية',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'إضافة مستقبل رعاية',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.local_hospital_rounded),
-                  label: 'إضافة دواء',
-                ),
-              ],
-              currentIndex: _selectedIndex,
-              selectedItemColor: Color.fromARGB(255, 140, 167, 190),
-              onTap: _onItemTapped,
-            ),
+            //bottomNavigationBar:Navigation(),
           ));
     } else {
       return Directionality(
@@ -405,6 +387,8 @@ StorageService st = StorageService();
                 ),
               ],
             ),
+
+
             body: SafeArea(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -439,25 +423,7 @@ StorageService st = StorageService();
                     })
               ],
             )),
-            bottomNavigationBar: BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'الرئيسية',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'إضافة مستقبل رعاية',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.local_hospital_rounded),
-                  label: 'إضافة دواء',
-                ),
-              ],
-              currentIndex: _selectedIndex,
-              selectedItemColor: Color.fromARGB(255, 140, 167, 190),
-              onTap: _onItemTapped,
-            ),
+            //bottomNavigationBar: Navigation(),
           ));
     }
   }
