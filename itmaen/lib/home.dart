@@ -259,7 +259,7 @@ StorageService st = StorageService();
                           final action = await AlertDialogs.yesCancelDialog(
                               context,
                               'تسجيل الخروج',
-                              'هل متأكد من عملية تسجيل الخروج؟');
+                              'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
                           if (action == DialogsAction.yes) {
                             setState(() => tappedYes = true);
 
