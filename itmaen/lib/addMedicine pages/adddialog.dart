@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:itmaen/controller/addMedicineController.dart';
 import 'package:itmaen/model/medicinesModel.dart';
-import 'package:itmaen/pages/addByScan.dart';
-import 'package:itmaen/pages/addManually.dart';
+import 'package:itmaen/addMedicine%20pages/addByScan.dart';
+import 'package:itmaen/addMedicine%20pages/addManually.dart';
 
 class AddMedicine extends StatefulWidget {
   @override

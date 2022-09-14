@@ -3,7 +3,7 @@ import 'package:itmaen/controller/addMedicineController.dart';
 import 'package:itmaen/Widget/Card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:itmaen/pages/adddialog.dart';
+import 'package:itmaen/addMedicine%20pages/adddialog.dart';
 import 'addmedicine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

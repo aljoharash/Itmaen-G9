@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:itmaen/pages/adddialog.dart';
+import 'package:itmaen/addMedicine%20pages/adddialog.dart';
 import 'add-patient.dart';
 import 'home.dart';
 
