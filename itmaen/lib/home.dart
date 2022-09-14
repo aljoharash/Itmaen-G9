@@ -12,8 +12,8 @@ import 'generateqr.dart';
 import 'login.dart';
 import 'navigation.dart';
 import 'scanqr.dart';
-import 'addMedicine pages/addmedicine.dart';
-import 'addMedicine pages/adddialog.dart';
+import 'addMedicinePages/addmedicine.dart';
+import 'addMedicinePages/adddialog.dart';
 import 'package:itmaen/secure-storage.dart';
 //import 'package:modal_progress_hud/modal_progress_hud.dart';
 
