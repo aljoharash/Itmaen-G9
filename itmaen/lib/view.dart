@@ -12,7 +12,7 @@ import 'generateqr.dart';
 import 'login.dart';
 import 'scanqr.dart';
 import 'pages/addmedicine.dart';
-import 'pages/adddialog.dart';
+//import 'pages/adddialog.dart';
 import 'package:itmaen/secure-storage.dart';
 //import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -75,7 +75,7 @@ return val2;
   Future<bool> getCurrentUser() async {
     //HomePage();
     final user = await _auth.currentUser; 
-    st.writeSecureData("caregiverID", "vEvVOOqyORTSyfork3f3rZWnqKb2"); 
+   // st.writeSecureData("caregiverID", "vEvVOOqyORTSyfork3f3rZWnqKb2"); 
    //print(user!.uid); 
    var isAvailable = user?.uid; 
    if(isAvailable==null){
