@@ -119,7 +119,7 @@ class patientScreen extends StatelessWidget {
                           String? id = await st.readSecureData("caregiverID");
 
                           print(id);
-                          if (isAuthenticated && id != null) {
+                          if (isAuthenticated && id!=null) {
                             // WE SHOULD READ FROM THE STORAGE ALSO IF THE IS A CAREGIVER
                             Navigator.of(context).push(
                               MaterialPageRoute(
