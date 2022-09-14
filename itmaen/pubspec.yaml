@@ -45,6 +45,11 @@ dependencies:
   flutter_secure_storage: ^6.0.0
   alert_dialog: ^1.0.1
   google_fonts: ^3.0.1
+  qr_code_scanner: ^1.0.1
+  curved_navigation_bar: ^1.0.3
+  font_awesome_flutter: any
+  get: ^4.6.1
+  get_storage: ^2.0.3
 
 dev_dependencies:
   flutter_test:

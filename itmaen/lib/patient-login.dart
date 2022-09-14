@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/home.dart';
 import 'package:itmaen/login.dart';
+import 'package:itmaen/navigation.dart';
 import 'package:itmaen/scanqr.dart';
 import 'package:itmaen/secure-storage.dart';
 
@@ -119,11 +120,11 @@ class patientScreen extends StatelessWidget {
                           String? id = await st.readSecureData("caregiverID");
 
                           print(id);
-                          if (isAuthenticated && id != null) {
+                          if (isAuthenticated && id!=null) {
                             // WE SHOULD READ FROM THE STORAGE ALSO IF THE IS A CAREGIVER
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => HomePage(),
+                                builder: (context) => Navigation(),
                               ),
                             );
                           } else {

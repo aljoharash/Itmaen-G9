@@ -59,17 +59,17 @@ class _ScanQRState extends State<ScanQR> {
               color: Color.fromARGB(255, 140, 167, 190),
               onPressed: () async {
                 //test
-                //String? q = await st.readSecureData("caregiver");
+                // String? id = await st.readSecureData("caregiverID");
+                // print(id);
                 String barcodeScanRes;
                 try {
                   barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
                       '#ff6666', 'Cancel', true, ScanMode.QR);
-
+                 print(barcodeScanRes);
                   bool isAuthenticated = await BiometricAuthentication
                       .authenticateWithBiometrics();
                   if (isAuthenticated) {
-                    st.writeSecureData("caregiverID",
-                        barcodeScanRes); // if it did not work replace it with qr code result
+                    st.writeSecureData("caregiverID", barcodeScanRes); // if it did not work replace it with qr code result
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => HomePage(),
