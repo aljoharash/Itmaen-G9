@@ -20,7 +20,7 @@ class _NavigationState extends State<Navigation> {
         return AddPatient();
         break;
       case 1:
-        return View();
+        return AddPatient();
         break;
       case 2:
         return View();
@@ -54,6 +54,9 @@ class _NavigationState extends State<Navigation> {
       if (index == 2) {
         showAddDialog();
       }
+      if (index == 0) {
+        //logout
+      }
     }
 
     return Scaffold(
@@ -65,11 +68,11 @@ class _NavigationState extends State<Navigation> {
         animationDuration: Duration(milliseconds: 300),
         items: [
           Icon(
-            Icons.person_add,
+            Icons.logout,
             color: Colors.white,
           ),
           Icon(
-            Icons.list,
+            Icons.person_add,
             color: Colors.white,
           ),
           Icon(
