@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/controller/addMedicineController.dart';
 import 'package:itmaen/Widget/Card.dart';
@@ -193,6 +194,7 @@ class addByScan extends StatelessWidget {
                               ],
                             ),
                             onPressed: () {
+                              if(_.notFound == false){
                               _firestore.collection('medicines').add({
                                 'Generic name': genericName,
                                 'Trade name': tradeName,
@@ -204,7 +206,11 @@ class addByScan extends StatelessWidget {
                                 'barcode': barcode,
                                 'description': description,
                                 'caregiverID': loggedInUser!.uid,
-                              });
+                              });}
+                              else{
+                                Fluttertoast.showToast( msg: "عليك إستخدام الماسح الضوئي أولًا");
+                              }
+
                               _.scannedMedicine.clear();
 
                               Navigator.of(context).push(MaterialPageRoute(
