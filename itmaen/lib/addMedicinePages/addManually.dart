@@ -77,7 +77,7 @@ class _addManuallyState extends State<addManually> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SizedBox(
-                              height: 220,
+                              height: 100,
                             ),
                             Text(
                               "إضافة دواء",
@@ -148,7 +148,7 @@ class _addManuallyState extends State<addManually> {
                             ),
                             
                             SizedBox(
-                              height: 2.0,
+                              height: 16.0,
                             ),
                             TextFormField(
                               keyboardType: TextInputType.number,
