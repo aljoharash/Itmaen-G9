@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:itmaen/pages/adddialog.dart';
+import 'package:itmaen/addMedicine%20pages/adddialog.dart';
 
 class QrCode extends StatefulWidget {
   @override
