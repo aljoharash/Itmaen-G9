@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/navigation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,14 +37,13 @@ class _addManuallyState extends State<addManually> {
     }
   }
 
-  @override
   final _formKey = GlobalKey<FormState>();
   TextEditingController medName = new TextEditingController();
   TextEditingController doseCount = new TextEditingController();
   TextEditingController description = new TextEditingController();
   TextEditingController packSize = new TextEditingController();
+  
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
         extendBodyBehindAppBar: true,
@@ -93,7 +93,14 @@ class _addManuallyState extends State<addManually> {
                             ),
                             TextFormField(
                               controller: medName,
-                              validator: ValidateMedName,
+                              validator: (value){
+                                if (value == null || value.isEmpty) return 'الرجاء ادخال اسم الدواء';
+                                String pattern = r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
+                                RegExp regex = RegExp(pattern);
+                                if (!regex.hasMatch(value.trim()))
+                                return 'يجب أن يحتوي اسم الدواء على حرفين على الاقل';
+                                return null;
+                              },
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,
@@ -153,7 +160,10 @@ class _addManuallyState extends State<addManually> {
                             TextFormField(
                               keyboardType: TextInputType.number,
                               controller: doseCount,
-                              validator: ValidateDose,
+                              validator: (value){
+                                 if (value == null || value.isEmpty) return 'الرجاء ادخال الجرعة ';
+                                 return null;
+                              },
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,
@@ -215,6 +225,7 @@ class _addManuallyState extends State<addManually> {
                                   padding: EdgeInsets.symmetric(horizontal: 40),
                                   backgroundColor: Colors.blueGrey),
                               onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
                                  _firestore.collection('medicines').add({
                           //  'Generic name': genericName,
                           'Trade name': medName.text,
@@ -226,10 +237,12 @@ class _addManuallyState extends State<addManually> {
                           //'barcode': barcode,
                           'description': description.text,
                           'caregiverID': caregiverID,
-                        });
+                                });
+                                
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => Navigation()));
-                              },
+                              }}
+                              ,
                               child: Text('إضافة',
                                style: GoogleFonts.tajawal()
                                   // style: TextStyle(fontFamily: 'Madani Arabic Black'),
