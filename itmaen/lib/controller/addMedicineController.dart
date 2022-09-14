@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show PlatformException, rootBundle;
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:itmaen/model/medicines.dart';
+import 'package:get/get.dart';
 
-class addMedicineController {
+class addMedicineController extends GetxController {
   String scan = '-1';
   List<medicines> medicinesList = [];
   List<medicines> scannedMedicine = [];
-  bool found = true;
+  bool notFound = false;
 
   /*onInit() {
     /* for (var medicineInfo in medicinesData) {
@@ -37,6 +38,7 @@ class addMedicineController {
   Future<void> scanBarcode() async {
     medicinesList = await ReadJsonData() as List<medicines>;
     String barcodeResult;
+    
 
     try {
       barcodeResult = await FlutterBarcodeScanner.scanBarcode(
@@ -47,6 +49,7 @@ class addMedicineController {
     }
 
     scan = barcodeResult;
+    update();
 
     for (var i = 0; i < medicinesList.length; i++) {
       //print(medicinesList[i].tradeName);
@@ -55,9 +58,12 @@ class addMedicineController {
       if (scan == medicinesList[i].barcode) {
         print(medicinesList[i].tradeName);
         scannedMedicine.add(medicines.fromJson(medicinesList[i].toJson()));
+        update();
+        notFound = false;
         break;
       } else {
-        found = false;
+        notFound = true;
+        update();
       }
     }
     scan = '-1';
