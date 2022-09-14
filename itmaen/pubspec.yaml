@@ -46,6 +46,7 @@ dependencies:
   alert_dialog: ^1.0.1
   google_fonts: ^3.0.1
   qr_code_scanner: ^1.0.1
+  curved_navigation_bar: ^1.0.3
 
 dev_dependencies:
   flutter_test:
