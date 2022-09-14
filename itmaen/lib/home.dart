@@ -10,6 +10,7 @@ import 'alert_dialog.dart';
 import 'package:itmaen/model/medicines.dart';
 import 'generateqr.dart';
 import 'login.dart';
+import 'navigation.dart';
 import 'scanqr.dart';
 import 'pages/addmedicine.dart';
 import 'pages/adddialog.dart';
@@ -319,11 +320,7 @@ StorageService st = StorageService();
               ),
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: Color.fromARGB(255, 140, 167, 190),
-        onPressed: showAddDialog,
-        child: Icon(Icons.add),
-      ),
+          
           
           body: SafeArea(
             
@@ -360,25 +357,7 @@ StorageService st = StorageService();
                   })
             ],
           )),
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'الرئيسية',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'إضافة مستقبل رعاية',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.local_hospital_rounded),
-                label: 'إضافة دواء',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: Color.fromARGB(255, 140, 167, 190),
-            onTap: _onItemTapped,
-          ),
+          //bottomNavigationBar:Navigation(),
         ));
   }
   else{
@@ -438,11 +417,7 @@ StorageService st = StorageService();
               ),
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-         backgroundColor: Color.fromARGB(255, 140, 167, 190) ,
-        onPressed: showAddDialog,
-        child: Icon(Icons.add),
-      ),
+          
           body: SafeArea(
             
               child: Column(
@@ -477,25 +452,7 @@ StorageService st = StorageService();
                   })
             ],
           )),
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'الرئيسية',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'إضافة مستقبل رعاية',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.local_hospital_rounded),
-                label: 'إضافة دواء',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: Color.fromARGB(255, 140, 167, 190),
-            onTap: _onItemTapped,
-          ),
+          //bottomNavigationBar: Navigation(),
         ));
   }
 
