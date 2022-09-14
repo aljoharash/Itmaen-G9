@@ -226,6 +226,20 @@ StorageService st = StorageService();
   @override
  Widget build(BuildContext context) {
 
+  void showAddDialog() {
+      showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            content: AddMedicine(),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          );
+        },
+      );
+    }
+
 // Future<bool> getrealvalue() async {
 // bool val = await getstatu(); 
 // return val; 
@@ -305,8 +319,14 @@ StorageService st = StorageService();
               ),
             ],
           ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Color.fromARGB(255, 140, 167, 190),
+        onPressed: showAddDialog,
+        child: Icon(Icons.add),
+      ),
           
           body: SafeArea(
+            
             
               child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -418,6 +438,11 @@ StorageService st = StorageService();
               ),
             ],
           ),
+          floatingActionButton: FloatingActionButton(
+         backgroundColor: Color.fromARGB(255, 140, 167, 190) ,
+        onPressed: showAddDialog,
+        child: Icon(Icons.add),
+      ),
           body: SafeArea(
             
               child: Column(

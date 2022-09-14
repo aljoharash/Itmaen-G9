@@ -41,6 +41,7 @@ class _AddMedicineState extends State<AddMedicine> {
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(200,40),
               maximumSize: const Size(200,40),
+              backgroundColor: Color.fromARGB(255, 140, 167, 190),
             ),
           ),
           ElevatedButton(
@@ -50,6 +51,7 @@ class _AddMedicineState extends State<AddMedicine> {
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(200,40),
               maximumSize: const Size(200,40),
+              backgroundColor: Color.fromARGB(255, 140, 167, 190),
             ),
           ),
         ],
