@@ -209,20 +209,6 @@ StorageService st = StorageService();
     ),
   ];
 
-  void _onItemTapped(int index) {
-    if (index == 0) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => HomePage()));
-    } else if (index == 1) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => AddPatient()));
-    } else if (index == 2) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => AddMedicine()));
-      //print('test is:');
-
-    }
-  }
 
   @override
  Widget build(BuildContext context) {

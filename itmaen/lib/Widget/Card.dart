@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BuildCard extends StatelessWidget {
   final String info;
@@ -21,7 +22,7 @@ class BuildCard extends StatelessWidget {
         Text(
           info,
           style:
-              TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 140, 167, 190), ),
+              GoogleFonts.tajawal(fontWeight: FontWeight.bold),
               textAlign: TextAlign.right,
         ),
         SizedBox(

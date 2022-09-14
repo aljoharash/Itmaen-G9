@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/controller/addMedicineController.dart';
 import 'package:itmaen/Widget/Card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:itmaen/addMedicine%20pages/adddialog.dart';
+import 'package:itmaen/home.dart';
+import 'package:itmaen/navigation.dart';
 import 'addmedicine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,6 +32,14 @@ class _addManuallyState extends State<addManually> {
   @override
   Widget build(BuildContext context) => Container(
       child: Scaffold(
+        appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 140, 167, 190),
+        title: Center(
+            child: Text(
+          "إضافة دواء يدويًا",
+          style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+        )),
+      ),
           backgroundColor: Colors.white,
           body: Form(
             key: _formKey,
@@ -55,10 +66,11 @@ class _addManuallyState extends State<addManually> {
                         child: Text(
                           "إضافة دواء",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 50,
-                              color: Colors.blueGrey,
-                              fontFamily: 'Madani Arabic Black'),
+                          style:GoogleFonts.tajawal(fontWeight: FontWeight.bold
+                          ,
+                          fontSize: 50,
+                          color: Color.fromARGB(255, 140, 167, 190),
+                          ),
                         ),
                       ),
                     ),
@@ -173,7 +185,7 @@ class _addManuallyState extends State<addManually> {
                     ElevatedButton(
                       style: TextButton.styleFrom(
                           padding: EdgeInsets.symmetric(horizontal: 40),
-                          backgroundColor: Colors.blueGrey),
+                          backgroundColor: Color.fromARGB(255, 140, 167, 190)),
                       onPressed: () async {
                         _firestore.collection('medicines').add({
                           //  'Generic name': genericName,
@@ -187,10 +199,12 @@ class _addManuallyState extends State<addManually> {
                           'description': description.text,
                           //'caregiverID': caregiverID,
                         });
+                        Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Navigation()));
                       },
                       child: Text(
                         'إضافة',
-                        style: TextStyle(fontFamily: 'Madani Arabic Black'),
+                        style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ]),
@@ -200,6 +214,7 @@ class _addManuallyState extends State<addManually> {
 
 String? ValidatePack(String? formPack) {
   if (formPack == null || formPack.isEmpty) return ' الرجاء ادخال حجم العبوة';
+  if(int.parse(formPack) > 9999) return 'لا يمكنك إدخال اكثر من 4 خانات';
 }
 
 String? ValidateMedName(String? FormName) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/controller/addMedicineController.dart';
 import 'package:itmaen/Widget/Card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:itmaen/addMedicine%20pages/adddialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:itmaen/home.dart';
+import 'package:itmaen/navigation.dart';
 
 import 'addmedicine.dart';
 
@@ -45,6 +48,14 @@ class addByScan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 140, 167, 190),
+        title: Center(
+            child: Text(
+          "الماسح الضوئي",
+          style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+        )),
+      ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20),
         width: double.infinity,
@@ -71,13 +82,11 @@ class addByScan extends StatelessWidget {
                                   child: _.notFound
                                       ? Text(
                                           'لم يتم العثور على الدواء',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
+                                          style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
                                         )
                                       : Text(
                                           'اقرأ الباركود',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
+                                          style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
                                         ))
                               : Column(
                                   crossAxisAlignment:
@@ -157,9 +166,8 @@ class addByScan extends StatelessWidget {
                                 Text(
                                   "الماسح الضوئي",
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
+                                  style: GoogleFonts.tajawal(fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                                 ),
                               ],
                             ),
@@ -192,9 +200,8 @@ class addByScan extends StatelessWidget {
                                 Text(
                                   "إضافة",
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
+                                  style: GoogleFonts.tajawal(fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                                 ),
                               ],
                             ),
@@ -214,49 +221,11 @@ class addByScan extends StatelessWidget {
                               _.scannedMedicine.clear();
 
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => QrCode()));
+                                  builder: (context) => Navigation()));
                             }),
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        height: 60.0,
-                        width: 200,
-                        margin: EdgeInsets.all(10.0),
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 187, 18, 6),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: TextButton(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Center(
-                                    child: Icon(
-                                  FontAwesomeIcons.ban,
-                                  size: 16,
-                                  color: Colors.white,
-                                )),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "إلغاء",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            onPressed: () {
-                              _.scannedMedicine.clear();
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => QrCode()));
-                            }),
-                      ),
-                    ),
+                    
                   ],
                 );
               }),

@@ -57,6 +57,7 @@ class _NavigationState extends State<Navigation> {
       if(index==2){
       showAddDialog();
       }
+      
   }
 
 
