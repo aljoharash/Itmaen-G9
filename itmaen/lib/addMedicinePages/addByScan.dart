@@ -9,10 +9,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:itmaen/home.dart';
 import 'package:itmaen/navigation.dart';
+import 'package:itmaen/secure-storage.dart';
 
 import 'addmedicine.dart';
 
 class addByScan extends StatelessWidget {
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  late User? loggedInUser = _auth.currentUser;
+
   String? genericName;
   String? tradeName;
   String? strengthValue;
@@ -22,28 +27,6 @@ class addByScan extends StatelessWidget {
   String? packageSize;
   String? barcode;
   String? description;
-
-  final _firestore = FirebaseFirestore.instance;
-  final _auth = FirebaseAuth.instance;
-  // String caregiverID = "";
-  // late User loggedInUser;
-
-  // @override
-  // void initState() {
-  //   getCurrentUser();
-  // }
-
-  // void getCurrentUser() async {
-  //   try {
-  //     final user = await _auth.currentUser;
-  //     if (user != null) {
-  //       loggedInUser = user;
-  //       caregiverID = loggedInUser.uid;
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -82,11 +65,13 @@ class addByScan extends StatelessWidget {
                                   child: _.notFound
                                       ? Text(
                                           'لم يتم العثور على الدواء',
-                                          style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                                          style: GoogleFonts.tajawal(
+                                              fontWeight: FontWeight.bold),
                                         )
                                       : Text(
                                           'اقرأ الباركود',
-                                          style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                                          style: GoogleFonts.tajawal(
+                                              fontWeight: FontWeight.bold),
                                         ))
                               : Column(
                                   crossAxisAlignment:
@@ -166,8 +151,9 @@ class addByScan extends StatelessWidget {
                                 Text(
                                   "الماسح الضوئي",
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.tajawal(fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                                  style: GoogleFonts.tajawal(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
                                 ),
                               ],
                             ),
@@ -200,8 +186,9 @@ class addByScan extends StatelessWidget {
                                 Text(
                                   "إضافة",
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.tajawal(fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                                  style: GoogleFonts.tajawal(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
                                 ),
                               ],
                             ),
@@ -216,7 +203,7 @@ class addByScan extends StatelessWidget {
                                 'Package size': packageSize,
                                 'barcode': barcode,
                                 'description': description,
-                                //'caregiverID': caregiverID,
+                                'caregiverID': loggedInUser!.uid,
                               });
                               _.scannedMedicine.clear();
 
@@ -225,7 +212,6 @@ class addByScan extends StatelessWidget {
                             }),
                       ),
                     ),
-                    
                   ],
                 );
               }),

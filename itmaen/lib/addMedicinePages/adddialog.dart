@@ -14,7 +14,7 @@ class AddMedicine extends StatefulWidget {
 class _AddMedicineState extends State<AddMedicine> {
   @override
   Widget build(BuildContext context) {
-    // 
+    //
     // var mednameCont = TextEditingController();
     // var dosecont = TextEditingController();
 
@@ -34,24 +34,27 @@ class _AddMedicineState extends State<AddMedicine> {
           //buildTextfield('اسم الدواء', mednameCont),
           //buildTextfield('الجرعة', dosecont),
           ElevatedButton(
-            onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-															addManually()));
-                              },
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => addManually()));
+            },
             child: Text('أضف الدواء يدويًا'),
             style: ElevatedButton.styleFrom(
-              minimumSize: const Size(200,40),
-              maximumSize: const Size(200,40),
-              backgroundColor: Color.fromARGB(255, 140, 167, 190),
+              minimumSize: const Size(200, 40),
+              maximumSize: const Size(200, 40),
+              //backgroundColor: Color.fromARGB(255, 140, 167, 190),
             ),
           ),
           ElevatedButton(
-            onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-															addByScan()));},
-            child:Icon(Icons.qr_code_scanner),
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => addByScan()));
+            },
+            child: Icon(Icons.qr_code_scanner),
             style: ElevatedButton.styleFrom(
-              minimumSize: const Size(200,40),
-              maximumSize: const Size(200,40),
-              backgroundColor: Color.fromARGB(255, 140, 167, 190),
+              minimumSize: const Size(200, 40),
+              maximumSize: const Size(200, 40),
+              //  backgroundColor: Color.fromARGB(255, 140, 167, 190),
             ),
           ),
         ],
@@ -59,4 +62,3 @@ class _AddMedicineState extends State<AddMedicine> {
     );
   }
 }
-

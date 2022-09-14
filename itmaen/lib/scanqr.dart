@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/home.dart';
 import 'package:itmaen/secure-storage.dart';
 import 'biometric-auth.dart';
+import 'view.dart';
+import 'navigation.dart';
 
 class ScanQR extends StatefulWidget {
   @override
@@ -65,14 +67,15 @@ class _ScanQRState extends State<ScanQR> {
                 try {
                   barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
                       '#ff6666', 'Cancel', true, ScanMode.QR);
-                 print(barcodeScanRes);
+                  print(barcodeScanRes);
                   bool isAuthenticated = await BiometricAuthentication
                       .authenticateWithBiometrics();
                   if (isAuthenticated) {
-                    st.writeSecureData("caregiverID", barcodeScanRes); // if it did not work replace it with qr code result
+                    st.writeSecureData("caregiverID",
+                        barcodeScanRes); // if it did not work replace it with qr code result
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => HomePage(),
+                        builder: (context) => View(),
                       ),
                     );
                   } else {

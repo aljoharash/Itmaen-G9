@@ -27,88 +27,113 @@ class _ViewPageState extends State<View> {
   StorageService st = StorageService();
   //var caregiverID;
   final _auth = FirebaseAuth.instance;
-  late User loggedUser; 
-  
- 
+  late User loggedUser;
+
   //Future<String?> loggedInUser = getCurrentUser();
- 
+
   late String id = '';
-  static var id_ ='' ; 
-  //var Cid; 
-  static String cid_ =''; 
-  var caregiverID ; 
-  
+  static var id_ = '';
+  //var Cid;
+  static String cid_ = '';
+  var caregiverID;
+
   static var t;
- 
-  //getCurrentUser(); 
+
+  //getCurrentUser();
 
   _ViewPageState() {
-    
-    
-
-    View(); 
+    View();
     //assignboolean();
   }
   //}
 
-
   @override
   void initState() {
     super.initState();
-    //HomePage(); 
-   
-       getCurrentUser().then((value) => t = value);
-  
-   
+    //HomePage();
+
+    getCurrentUser().then((value) => t = value);
   }
-Future<bool> getstatu() async {
-bool val = await getCurrentUser(); 
-bool val2 = val; 
-return val2; 
 
-}
-
-
-
- 
+  Future<bool> getstatu() async {
+    bool val = await getCurrentUser();
+    bool val2 = val;
+    return val2;
+  }
 
   Future<bool> getCurrentUser() async {
     //HomePage();
-    final user = await _auth.currentUser; 
-   // st.writeSecureData("caregiverID", "vEvVOOqyORTSyfork3f3rZWnqKb2"); 
-   //print(user!.uid); 
-   var isAvailable = user?.uid; 
-   if(isAvailable==null){
-    t=true;
-    id_ = (await st.readSecureData("caregiverID"))!; 
-    print("$id_ here 1");
-    t = true; 
-    
-    return Future<bool>.value(true);
-   }
-   else{
-    t=false;
-    cid_ = user!.uid.toString() ;
-    print("$cid_ here 2");
-    t = false;
-    return Future<bool>.value(false);
+    final user = await _auth.currentUser;
+    // st.writeSecureData("caregiverID", "vEvVOOqyORTSyfork3f3rZWnqKb2");
+    //print(user!.uid);
+    var isAvailable = user?.uid;
+    if (isAvailable == null) {
+      t = true;
+      id_ = (await st.readSecureData("caregiverID"))!;
+      print("$id_ here 1");
+      t = true;
 
-   }
+      return Future<bool>.value(true);
+    } else {
+      t = false;
+      cid_ = user!.uid.toString();
+      print("$cid_ here 2");
+      t = false;
+      return Future<bool>.value(false);
+    }
+  }
 
-
-
-    
-   }
-   
-     @override
-     Widget build(BuildContext context) {
-      var data; 
+  @override
+  Widget build(BuildContext context) {
+    var data;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor:Color.fromARGB(255, 140, 167, 190),
-          title: Text('قائمة الأدوية'),
-       ),
+          backgroundColor: Color.fromARGB(255, 140, 167, 190),
+          title: const Text('قائمة الادوية'),
+          actions: <Widget>[
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: TextButton(
+                  child: Text(
+                    'تسجيل الخروج',
+                    style: TextStyle(fontSize: 12, color: Colors.white),
+                  ),
+                  onPressed: () async {
+                    if (caregiverID != null) {
+                      final action = await AlertDialogs.yesCancelDialog(context,
+                          'تسجيل الخروج', 'هل متأكد من عملية تسجيل الخروج؟');
+                      if (action == DialogsAction.yes) {
+                        setState(() => tappedYes = true);
+
+                        await FirebaseAuth.instance.currentUser!.delete();
+                        await FirebaseAuth.instance.signOut();
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()));
+                      } else {
+                        setState(() => tappedYes = false);
+                      }
+                    } else {
+                      final action = await AlertDialogs.yesCancelDialog(context,
+                          'تسجيل الخروج', 'هل متأكد من عملية تسجيل الخروج؟');
+                      if (action == DialogsAction.yes) {
+                        setState(() => tappedYes = true);
+                        //await FirebaseAuth.instance.currentUser!.delete();
+                        await FirebaseAuth.instance.signOut();
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => patientScreen()));
+                      } else {
+                        setState(() => tappedYes = false);
+                      }
+                    }
+                  }),
+            ),
+          ],
+        ),
         body: FutureBuilder(
           builder: (ctx, snapshot) {
             // Checking if future is resolved or not
@@ -120,89 +145,86 @@ return val2;
                     '${snapshot.error} occurred',
                     style: TextStyle(fontSize: 18),
                   ),
-                  );
- 
+                );
+
                 // if we got our data
               } else if (snapshot.hasData) {
                 // Extracting data from snapshot object
                 data = snapshot.data as bool;
-                if(data==true){
-                return SafeArea(
-
-            
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('medicines')
-                      .where('caregiverID', isEqualTo: id_)
-                      .snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (!snapshot.hasData) {
-                      return Text("Loading...");
-                    } //else {
-                      final medicines = snapshot.data?.docs;
-                      List<medBubble> medBubbles = [];
-                      for (var med in medicines!) {
-                        //final medName = med.data();
-                        final medName = med.get('Trade name');
-                        final MedBubble = medBubble(medName);
-                        medBubbles.add(MedBubble);
-                      }
-                      return Expanded(
-                        child: ListView(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 20),
-                          children: medBubbles,
-                        ),
-                      );
-                   // }
-                  })
-            ],
-          ));
-                }
-                else{
+                if (data == true) {
                   return SafeArea(
-
-            
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('medicines')
-                      .where('caregiverID', isEqualTo: cid_)
-                      .snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (!snapshot.hasData) {
-                      return Text("Loading...");
-                    } //else {
-                      final medicines = snapshot.data?.docs;
-                      List<medBubble> medBubbles = [];
-                      for (var med in medicines!) {
-                        //final medName = med.data();
-                        final medName = med.get('Trade name');
-                        final MedBubble = medBubble(medName);
-                        medBubbles.add(MedBubble);
-                      }
-                      return Expanded(
-                        child: ListView(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 20),
-                          children: medBubbles,
-                        ),
-                      );
-                   // }
-                  })
-            ],
-          ));
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('medicines')
+                              .where('caregiverID', isEqualTo: id_)
+                              .snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (!snapshot.hasData) {
+                              return Text("Loading...");
+                            } //else {
+                            final medicines = snapshot.data?.docs;
+                            List<medBubble> medBubbles = [];
+                            for (var med in medicines!) {
+                              //final medName = med.data();
+                              final medName = med.get('Trade name');
+                              final MedBubble = medBubble(medName);
+                              medBubbles.add(MedBubble);
+                            }
+                            return Expanded(
+                              child: ListView(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 20),
+                                children: medBubbles,
+                              ),
+                            );
+                            // }
+                          })
+                    ],
+                  ));
+                } else {
+                  return SafeArea(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('medicines')
+                              .where('caregiverID', isEqualTo: cid_)
+                              .snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (!snapshot.hasData) {
+                              return Text("Loading...");
+                            } //else {
+                            final medicines = snapshot.data?.docs;
+                            List<medBubble> medBubbles = [];
+                            for (var med in medicines!) {
+                              //final medName = med.data();
+                              final medName = med.get('Trade name');
+                              final MedBubble = medBubble(medName);
+                              medBubbles.add(MedBubble);
+                            }
+                            return Expanded(
+                              child: ListView(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 20),
+                                children: medBubbles,
+                              ),
+                            );
+                            // }
+                          })
+                    ],
+                  ));
                 }
               }
             }
- 
+
             // Displaying LoadingSpinner to indicate waiting state
             return Center(
               child: CircularProgressIndicator(),
@@ -213,11 +235,9 @@ return val2;
           future: getCurrentUser(),
         ),
       ),
-      );
-     }
-  
-
- }
+    );
+  }
+}
 
 class medBubble extends StatelessWidget {
   medBubble(this.medicName);
@@ -225,7 +245,7 @@ class medBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //HomePage(); 
+    //HomePage();
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Material(
@@ -241,6 +261,5 @@ class medBubble extends StatelessWidget {
             ),
           )),
     );
-  
   }
 }

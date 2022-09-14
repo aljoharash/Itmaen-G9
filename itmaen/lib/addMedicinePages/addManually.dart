@@ -10,6 +10,7 @@ import 'package:itmaen/navigation.dart';
 import 'addmedicine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'addmedicine.dart';
 
 class addManually extends StatefulWidget {
   const addManually({Key? key}) : super(key: key);
@@ -22,6 +23,26 @@ class _addManuallyState extends State<addManually> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
 
+  String caregiverID = "";
+  late User loggedInUser;
+
+  @override
+  void initState() {
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        caregiverID = loggedInUser.uid;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   final _formKey = GlobalKey<FormState>();
   TextEditingController medName = new TextEditingController();
@@ -32,14 +53,14 @@ class _addManuallyState extends State<addManually> {
   @override
   Widget build(BuildContext context) => Container(
       child: Scaffold(
-        appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 140, 167, 190),
-        title: Center(
-            child: Text(
-          "إضافة دواء يدويًا",
-          style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-        )),
-      ),
+          appBar: AppBar(
+            backgroundColor: Color.fromARGB(255, 140, 167, 190),
+            title: Center(
+                child: Text(
+              "إضافة دواء يدويًا",
+              style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+            )),
+          ),
           backgroundColor: Colors.white,
           body: Form(
             key: _formKey,
@@ -66,10 +87,10 @@ class _addManuallyState extends State<addManually> {
                         child: Text(
                           "إضافة دواء",
                           textAlign: TextAlign.center,
-                          style:GoogleFonts.tajawal(fontWeight: FontWeight.bold
-                          ,
-                          fontSize: 50,
-                          color: Color.fromARGB(255, 140, 167, 190),
+                          style: GoogleFonts.tajawal(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 50,
+                            color: Color.fromARGB(255, 140, 167, 190),
                           ),
                         ),
                       ),
@@ -164,7 +185,7 @@ class _addManuallyState extends State<addManually> {
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Color.fromARGB(255, 239, 237, 237),
-                        hintText: 'حجم العبوة',
+                        hintText: 'عدد الحبات',
                         enabled: true,
                         contentPadding: const EdgeInsets.only(
                             left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
@@ -197,10 +218,10 @@ class _addManuallyState extends State<addManually> {
                           'Package size': packSize.text,
                           //'barcode': barcode,
                           'description': description.text,
-                          //'caregiverID': caregiverID,
+                          'caregiverID': caregiverID,
                         });
                         Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Navigation()));
+                            builder: (context) => Navigation()));
                       },
                       child: Text(
                         'إضافة',
@@ -214,7 +235,7 @@ class _addManuallyState extends State<addManually> {
 
 String? ValidatePack(String? formPack) {
   if (formPack == null || formPack.isEmpty) return ' الرجاء ادخال حجم العبوة';
-  if(int.parse(formPack) > 9999) return 'لا يمكنك إدخال اكثر من 4 خانات';
+  if (int.parse(formPack) > 9999) return 'لا يمكنك إدخال اكثر من 4 خانات';
 }
 
 String? ValidateMedName(String? FormName) {

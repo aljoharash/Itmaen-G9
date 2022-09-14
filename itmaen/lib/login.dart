@@ -33,11 +33,14 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         automaticallyImplyLeading: true,
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), color:Color.fromARGB(255, 107, 137, 162),
-        onPressed: () {  Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => patientScreen()));
-                             },),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          color: Color.fromARGB(255, 107, 137, 162),
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => patientScreen()));
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -47,17 +50,17 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('images/background.jpeg'),
+                          image: AssetImage('images/background.jpg'),
                           fit: BoxFit.fill)
-              
+
                       ////حطي هنا البوكس شادو
                       ),
-              
+
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context)
                       .size
                       .height, //للسماوي اللي شلتيه  كان تحت صفحة بيضاء
-              
+
                   child: Center(
                     child: Container(
                       margin: EdgeInsets.all(12), // بعد عن الأطراف لل
@@ -73,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               Text(
                                 "تسجيل الدخول",
-                               style: GoogleFonts.tajawal(
+                                style: GoogleFonts.tajawal(
                                   fontSize: 30,
                                   //fontStyle: FontStyle.italic,
                                   color: Color.fromARGB(255, 122, 164, 186),
@@ -92,14 +95,19 @@ class _LoginPageState extends State<LoginPage> {
                                   hintText: 'البريد الإلكتروني ',
                                   enabled: true,
                                   contentPadding: const EdgeInsets.only(
-                                      left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
+                                      left: 14.0,
+                                      right: 12.0,
+                                      bottom: 8.0,
+                                      top: 8.0),
                                   enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: Color.fromARGB(255, 236, 231, 231),
+                                          color: Color.fromARGB(
+                                              255, 236, 231, 231),
                                           width: 3)),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: new BorderSide(
-                                        color: Color.fromARGB(79, 255, 255, 255)),
+                                        color:
+                                            Color.fromARGB(79, 255, 255, 255)),
                                     borderRadius: new BorderRadius.circular(10),
                                   ),
                                 ),
@@ -123,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                               SizedBox(
                                 height: 20,
                               ),
-                                      
+
                               TextFormField(
                                 textAlign: TextAlign.right,
                                 controller: passwordController,
@@ -151,15 +159,16 @@ class _LoginPageState extends State<LoginPage> {
                                       bottom: 8.0,
                                       top: 15.0),
                                   focusedBorder: OutlineInputBorder(
-                                  borderSide: new BorderSide(
-                                        color: Color.fromARGB(79, 255, 255, 255)),
+                                    borderSide: new BorderSide(
+                                        color:
+                                            Color.fromARGB(79, 255, 255, 255)),
                                     borderRadius: new BorderRadius.circular(10),
                                   ),
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                          color: Color.fromARGB(255, 236, 231, 231),
-                                          width: 3)
-                                  ),
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 236, 231, 231),
+                                          width: 3)),
                                 ),
                                 validator: (value) {
                                   RegExp regex = new RegExp(r'^.{8,}$');
@@ -170,21 +179,21 @@ class _LoginPageState extends State<LoginPage> {
                                     return ("الرجاء ادخال كلمة مرور صحيحة، أقل عدد ٨");
                                   } else {
                                     return null;
-                                 }
+                                  }
                                 },
                                 onSaved: (value) {
                                   passwordController.text = value!;
                                 },
                                 keyboardType: TextInputType.emailAddress,
                               ),
-                                      
+
                               SizedBox(
                                 height: 30,
                               ),
                               MaterialButton(
                                 shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10.0))),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(10.0))),
                                 elevation: 5.0,
                                 height: 50,
                                 padding: EdgeInsets.symmetric(
@@ -193,19 +202,18 @@ class _LoginPageState extends State<LoginPage> {
                                   setState(() {
                                     visible = true;
                                   });
-                                  signIn(
-                                      emailController.text, passwordController.text);
+                                  signIn(emailController.text,
+                                      passwordController.text);
                                 },
                                 child: Text(
                                   "تسجيل الدخول",
-                                          style: GoogleFonts.tajawal(
-                                  fontSize: 20,
-                            
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                                  style: GoogleFonts.tajawal(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                                ),
-                                color:  Color.fromARGB(255, 140, 167, 190),
+                                color: Color.fromARGB(255, 140, 167, 190),
                               ),
                               SizedBox(
                                 height: 25,
@@ -222,19 +230,23 @@ class _LoginPageState extends State<LoginPage> {
                                                       Forgotpass()));
                                         },
                                         child: const Text('كلمة المرور',
-                                           style: TextStyle(
-                                        fontSize: 20,
-                                        color: Color.fromARGB(255, 140, 167, 190),
-                                        decoration: TextDecoration.underline,
-                                      ))),
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: Color.fromARGB(
+                                                  255, 140, 167, 190),
+                                              decoration:
+                                                  TextDecoration.underline,
+                                            ))),
                                     Text(
                                       ' نسيت كلمة المرور؟',
-                                  style: GoogleFonts.tajawal(
-                                      fontSize: 20,
-                                      color: Color.fromARGB(167, 135, 168, 188),fontWeight: FontWeight.bold),
+                                      style: GoogleFonts.tajawal(
+                                          fontSize: 20,
+                                          color: Color.fromARGB(
+                                              167, 135, 168, 188),
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ]),
-                                      
+
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -247,16 +259,20 @@ class _LoginPageState extends State<LoginPage> {
                                                       SignUpScreen()));
                                         },
                                         child: const Text('إنشاء حساب ',
-                                          style: TextStyle(
-                                        fontSize: 20,
-                                        color: Color.fromARGB(255, 140, 167, 190),
-                                        decoration: TextDecoration.underline,
-                                      ))),
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: Color.fromARGB(
+                                                  255, 140, 167, 190),
+                                              decoration:
+                                                  TextDecoration.underline,
+                                            ))),
                                     Text(
                                       'مستخدم جديد؟',
-                                       style: GoogleFonts.tajawal(
-                                      fontSize: 20,
-                                      color: Color.fromARGB(167, 135, 168, 188),fontWeight: FontWeight.bold),
+                                      style: GoogleFonts.tajawal(
+                                          fontSize: 20,
+                                          color: Color.fromARGB(
+                                              167, 135, 168, 188),
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ]),
                               Visibility(
@@ -268,8 +284,8 @@ class _LoginPageState extends State<LoginPage> {
                                       child: CircularProgressIndicator(
                                     color: Colors.white,
                                   ))),
-                                      /////////////////////////////////to be removed/////////////////////////
-                                      
+                              /////////////////////////////////to be removed/////////////////////////
+
                               /////////////////////////////////////////////////////////////////////////
                             ],
                           ),

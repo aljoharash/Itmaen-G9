@@ -6,6 +6,7 @@ import 'package:itmaen/constant.dart';
 import 'package:itmaen/home.dart';
 import 'package:itmaen/login.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'navigation.dart';
 
 import 'firebase.dart';
 
@@ -62,7 +63,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                               height: 220,
                             ),
                             Text(
-                              "تسجيل الدخول",
+                              "إنشاء حساب",
                               style: GoogleFonts.tajawal(
                                 fontSize: 30,
                                 //fontStyle: FontStyle.italic,
@@ -212,7 +213,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => HomePage(),
+                                          builder: (context) => Navigation(),
                                         ),
                                       );
                                     }

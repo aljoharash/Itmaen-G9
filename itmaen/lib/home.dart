@@ -10,7 +10,6 @@ import 'alert_dialog.dart';
 import 'package:itmaen/model/medicines.dart';
 import 'generateqr.dart';
 import 'login.dart';
-import 'navigation.dart';
 import 'scanqr.dart';
 import 'addMedicinePages/addmedicine.dart';
 import 'addMedicinePages/adddialog.dart';
@@ -43,8 +42,6 @@ class _HomePageState extends State<HomePage> {
   //getCurrentUser();
 
   _HomePageState() {
-    getstatu();
-    HomePage();
     // Test();
 
     // Future<String?> loggedInUser = getCurrentUser().then((value) => cid=value);
@@ -80,7 +77,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    HomePage();
     getCurrentUser().then((value) => t = value);
     //Test();
     // getCurrentUser();
@@ -115,7 +111,7 @@ StorageService st = StorageService();
 
   Future<bool> getCurrentUser() async {
     final user = await _auth.currentUser;
-    //st.writeSecureData("caregiverID", "3Tflquyaa4ghz5bjOF0kxqHfP5f1");
+    st.writeSecureData("caregiverID", "3Tflquyaa4ghz5bjOF0kxqHfP5f1");
     //print(user!.uid);
     var isAvailable = user?.uid;
     if (isAvailable == null) {
@@ -203,50 +199,27 @@ StorageService st = StorageService();
     ),
   ];
 
+  void _onItemTapped(int index) {
+    if (index == 0) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => HomePage()));
+    } else if (index == 1) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => AddPatient()));
+    } else if (index == 2) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => AddMedicine()));
+      //print('test is:');
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-        textDirection: TextDirection.rtl,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor:Color.fromARGB(255, 140, 167, 190) ,
-            title: const Text('قائمة الادوية'),
-            actions: <Widget>[
-              Directionality(
-                textDirection: TextDirection.rtl,
-                child: TextButton(
-                    child: Text(
-                      'تسجيل الخروج',
-                      style: TextStyle(fontSize: 12, color: Colors.white),
-                    ),
-                   
-                    onPressed: () async {
-                      if (caregiverID != null) {
-                        final action = await AlertDialogs.yesCancelDialog(
-                            context,
-                            'تسجيل الخروج',
-                            'هل انت متأكد أنك تريد تسجيل الخروج؟');
-                        if (action == DialogsAction.yes) {
-                          setState(() => tappedYes = true);
-
-                          await FirebaseAuth.instance.signOut();
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
-                                   void initState() {
-    super.initState();
-  }
-                        } else {
-                          setState(() => tappedYes = false);
-                        }
-                      } else {
-                        final action = await AlertDialogs.yesCancelDialog(
-                            context,
-                            'تسجيل الخروج',
-                            'هل انت متأكد أنك تريد تسجيل الخروج ؟');
-                        if (action == DialogsAction.yes) {
-                          setState(() => tappedYes = true);
+// Future<bool> getrealvalue() async {
+// bool val = await getstatu();
+// return val;
+// }
 
 //void x(){
     // String = await (st.readSecureData('caregiverID').then((value) {
@@ -285,9 +258,20 @@ StorageService st = StorageService();
                         if (caregiverID != null) {
                           final action = await AlertDialogs.yesCancelDialog(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => patientScreen()));
-    
+                              'تسجيل الخروج',
+                              'هل متأكد من عملية تسجيل الخروج؟');
+                          if (action == DialogsAction.yes) {
+                            setState(() => tappedYes = true);
+
+                            await FirebaseAuth.instance.currentUser!.delete();
+                            await FirebaseAuth.instance.signOut();
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()));
+                          } else {
+                            setState(() => tappedYes = false);
+                          }
                         } else {
                           final action = await AlertDialogs.yesCancelDialog(
                               context,
@@ -309,7 +293,6 @@ StorageService st = StorageService();
                 ),
               ],
             ),
-
             body: SafeArea(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -344,7 +327,25 @@ StorageService st = StorageService();
                     })
               ],
             )),
-            //bottomNavigationBar:Navigation(),
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'الرئيسية',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: 'إضافة مستقبل رعاية',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.local_hospital_rounded),
+                  label: 'إضافة دواء',
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Color.fromARGB(255, 140, 167, 190),
+              onTap: _onItemTapped,
+            ),
           ));
     } else {
       return Directionality(
@@ -400,8 +401,6 @@ StorageService st = StorageService();
                 ),
               ],
             ),
-
-
             body: SafeArea(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -436,7 +435,25 @@ StorageService st = StorageService();
                     })
               ],
             )),
-            //bottomNavigationBar: Navigation(),
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'الرئيسية',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: 'إضافة مستقبل رعاية',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.local_hospital_rounded),
+                  label: 'إضافة دواء',
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Color.fromARGB(255, 140, 167, 190),
+              onTap: _onItemTapped,
+            ),
           ));
     }
   }

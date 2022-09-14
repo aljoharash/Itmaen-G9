@@ -7,6 +7,7 @@ import 'package:itmaen/login.dart';
 import 'package:itmaen/navigation.dart';
 import 'package:itmaen/scanqr.dart';
 import 'package:itmaen/secure-storage.dart';
+import 'view.dart';
 
 import 'biometric-auth.dart';
 
@@ -120,17 +121,16 @@ class patientScreen extends StatelessWidget {
                           String? id = await st.readSecureData("caregiverID");
 
                           print(id);
-                          if (isAuthenticated && id!=null) {
+                          if (isAuthenticated && id != null) {
                             // WE SHOULD READ FROM THE STORAGE ALSO IF THE IS A CAREGIVER
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => Navigation(),
+                                builder: (context) => View(),
                               ),
                             );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                
                                 content: Text(
                                     'خطأ في تسجيل الدخول! في حال كنت مستخدم للتطبيق لأول مرة يرجى مسح الكود',
                                     style: TextStyle(fontSize: 18),
@@ -174,7 +174,8 @@ class patientScreen extends StatelessWidget {
                             ' مقدم رعاية؟ ',
                             style: GoogleFonts.tajawal(
                                 fontSize: 20,
-                                color: Color.fromARGB(167, 135, 168, 188),fontWeight: FontWeight.bold),
+                                color: Color.fromARGB(167, 135, 168, 188),
+                                fontWeight: FontWeight.bold),
                           ),
                         ]),
                     // Container(
