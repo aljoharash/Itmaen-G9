@@ -157,7 +157,7 @@ StorageService st = StorageService();
                         final action = await AlertDialogs.yesCancelDialog(
                             context,
                             'تسجيل الخروج',
-                            'هل متأكد من عملية تسجيل الخروج؟');
+                            'هل انت متأكد أنك تريد تسجيل الخروج؟');
                         if (action == DialogsAction.yes) {
                           setState(() => tappedYes = true);
 
@@ -166,6 +166,9 @@ StorageService st = StorageService();
                               context,
                               MaterialPageRoute(
                                   builder: (context) => LoginPage()));
+                                   void initState() {
+    super.initState();
+  }
                         } else {
                           setState(() => tappedYes = false);
                         }
@@ -173,7 +176,7 @@ StorageService st = StorageService();
                         final action = await AlertDialogs.yesCancelDialog(
                             context,
                             'تسجيل الخروج',
-                            'هل متأكد من عملية تسجيل الخروج؟');
+                            'هل انت متأكد أنك تريد تسجيل الخروج ؟');
                         if (action == DialogsAction.yes) {
                           setState(() => tappedYes = true);
 
@@ -182,6 +185,9 @@ StorageService st = StorageService();
                               context,
                               MaterialPageRoute(
                                   builder: (context) => patientScreen()));
+                                   void initState() {
+    super.initState();
+  }
                         } else {
                           setState(() => tappedYes = false);
                         }
