@@ -25,6 +25,7 @@ class _SignUpScreen extends State<SignUpScreen> {
   TextEditingController password = new TextEditingController();
   TextEditingController phoneNum = new TextEditingController();
   String errorMessage = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +33,15 @@ class _SignUpScreen extends State<SignUpScreen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            color: Color.fromARGB(255, 107, 137, 162),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => LoginPage()));
+            },
+          ),
         ),
         body: SingleChildScrollView(
             child: Container(
@@ -196,10 +206,39 @@ class _SignUpScreen extends State<SignUpScreen> {
                             SizedBox(
                               height: 24.0,
                             ),
-                            ElevatedButton(
-                              style: TextButton.styleFrom(
-                                  padding: EdgeInsets.symmetric(horizontal: 40),
-                                  backgroundColor: Colors.blueGrey),
+                            /* MaterialButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(10.0))),
+                                elevation: 5.0,
+                                height: 50,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 11, horizontal: 122),
+                                onPressed: () {
+                                  setState(() {
+                                    visible = true;
+                                  });
+                                  signIn(emailController.text,
+                                      passwordController.text);
+                                },
+                                child: Text(
+                                  "تسجيل الدخول",
+                                  style: GoogleFonts.tajawal(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                color: Color.fromARGB(255, 140, 167, 190),
+                              ),*/
+                            MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0))),
+                              elevation: 5.0,
+                              height: 50,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 11, horizontal: 122),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   try {
@@ -231,22 +270,47 @@ class _SignUpScreen extends State<SignUpScreen> {
                                   setState(() {});
                                 }
                               },
-                              child: Text('انشاء ', style: GoogleFonts.tajawal()
+                              child: Text(
+                                'انشاء ',
+                                style: GoogleFonts.tajawal(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                   // style: TextStyle(fontFamily: 'Madani Arabic Black'),
-                                  ),
-                            ),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                textStyle: const TextStyle(fontSize: 20),
+                                ),
                               ),
-                              onPressed: () {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginPage()));
-                              },
-                              child: Text('لديّ حساب مسبقا',
-                                  style: GoogleFonts.tajawal()),
+                              color: Color.fromARGB(255, 140, 167, 190),
                             ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LoginPage()));
+                                      },
+                                      child: const Text('تسجيل الدخول',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            // fontWeight: bold,
+                                            color: Color.fromARGB(
+                                                255, 84, 139, 187),
+
+                                            decoration:
+                                                TextDecoration.underline,
+                                          ))),
+                                  Text(
+                                    'لديك حساب مسبقاً؟',
+                                    style: GoogleFonts.tajawal(
+                                        fontSize: 20,
+                                        color:
+                                            Color.fromARGB(167, 135, 168, 188),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ]),
                           ]),
                     ),
                   ),
@@ -256,9 +320,7 @@ class _SignUpScreen extends State<SignUpScreen> {
   }
 
   String? ValidateEmail(String? formEmail) {
-    if (formEmail == null || formEmail.isEmpty)
-      return ' الرجاء ادخال البريد الالكتروني';
-
+    if (formEmail == null || formEmail.isEmpty) return "يجب ملء هذا الحقل";
     String pattern = r'\w+@\w+\.\w+';
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(formEmail.trim()))
@@ -268,8 +330,8 @@ class _SignUpScreen extends State<SignUpScreen> {
 
   String? ValidatePassword(String? formPassword) {
     if (formPassword == null || formPassword.isEmpty)
-      return ' الرجاء ادخال الرقم السري';
-    String pattern = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$';
+      return "يجب ملء هذا الحقل";
+    String pattern = r'^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$';
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(formPassword.trim()))
       return ('يجب أن تتكون كلمة المرور على ٨ رموز(منها حرف ورقم على الاقل) ');
@@ -278,10 +340,8 @@ class _SignUpScreen extends State<SignUpScreen> {
   }
 
   String? ValidateUserName(String? FormName) {
-    if (FormName == null || FormName.isEmpty)
-      return 'الرجاء ادخال اسم المستخدم';
-    String pattern =
-        r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
+    if (FormName == null || FormName.isEmpty) return "يجب ملء هذا الحقل";
+    String pattern = r'^(?=.{2,20}$)(?![.])(?!.*[.]{2})[a-zA-Z0-9.]+(?<![.])$';
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(FormName.trim()))
       return 'يجب أن يحتوي اسم المستخدم على حرفين على الاقل';
@@ -290,7 +350,7 @@ class _SignUpScreen extends State<SignUpScreen> {
 
   String? ValidatePhoneNumber(String? FormNhoneNumber) {
     if (FormNhoneNumber == null || FormNhoneNumber.isEmpty)
-      return 'الرجاء ادخال رقم الهاتف';
+      return "يجب ملء هذا الحقل";
     String pattern =
         r'[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$';
     RegExp regex = RegExp(pattern);

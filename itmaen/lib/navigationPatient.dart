@@ -14,7 +14,7 @@ class NavigationPatient extends StatefulWidget {
 }
 
 class _NavigationPatientState extends State<NavigationPatient> {
-    String title = 'AlertDialog';
+  String title = 'AlertDialog';
   bool tappedYes = false;
   final _auth = FirebaseAuth.instance;
   String caregiverID = "";
@@ -38,12 +38,11 @@ class _NavigationPatientState extends State<NavigationPatient> {
     }
   }
 
-
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   bodyFunction() {
     switch (_selectedIndex) {
       case 0:
-        return View();
+        return;
         break;
       case 1:
         return View();
@@ -54,32 +53,36 @@ class _NavigationPatientState extends State<NavigationPatient> {
   @override
   Widget build(BuildContext context) {
     Future<void> logout() async {
-          if (caregiverID != null) {
-            final action = await AlertDialogs.yesCancelDialog(
-                context, 'تسجيل الخروج', 'هل متأكد من عملية تسجيل الخروج؟');
-            if (action == DialogsAction.yes) {
-              setState(() => tappedYes = true);
+      if (caregiverID != null) {
+        final action = await AlertDialogs.yesCancelDialog(
+            context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
+        if (action == DialogsAction.yes) {
+          setState(() => tappedYes = true);
 
-              await FirebaseAuth.instance.signOut();
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => LoginPage()));
-            } else {
-              setState(() => tappedYes = false);
-            }
-          } else {
-            final action = await AlertDialogs.yesCancelDialog(
-                context, 'تسجيل الخروج', 'هل متأكد من عملية تسجيل الخروج؟');
-            if (action == DialogsAction.yes) {
-              setState(() => tappedYes = true);
-
-              // await FirebaseAuth.instance.signOut();
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => patientScreen()));
-            } else {
-              setState(() => tappedYes = false);
-            }
-          }
+          await FirebaseAuth.instance.signOut();
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => LoginPage()));
+        } else {
+          setState(() => tappedYes = false);
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => NavigationPatient()));
         }
+      } else {
+        final action = await AlertDialogs.yesCancelDialog(
+            context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
+        if (action == DialogsAction.yes) {
+          setState(() => tappedYes = true);
+
+          // await FirebaseAuth.instance.signOut();
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => patientScreen()));
+        } else {
+          setState(() => tappedYes = false);
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => NavigationPatient()));
+        }
+      }
+    }
 
     void _onItemTapped(int index) {
       setState(() {

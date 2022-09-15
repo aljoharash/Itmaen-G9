@@ -5,7 +5,6 @@ import 'package:itmaen/navigation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class addManually extends StatefulWidget {
   const addManually({Key? key}) : super(key: key);
 
@@ -42,7 +41,7 @@ class _addManuallyState extends State<addManually> {
   TextEditingController doseCount = new TextEditingController();
   TextEditingController description = new TextEditingController();
   TextEditingController packSize = new TextEditingController();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,18 +49,16 @@ class _addManuallyState extends State<addManually> {
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 140, 167, 190),
           elevation: 0,
-          title: Center(
-                child: Text(
-              "إضافة دواء يدويًا",
-              style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-            )),
+          title: Text(
+            "إضافة دواء يدويًا",
+            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+          ),
         ),
         body: SingleChildScrollView(
             child: Container(
                 child: Column(children: <Widget>[
           SingleChildScrollView(
             child: Container(
-                
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context)
                     .size
@@ -93,12 +90,14 @@ class _addManuallyState extends State<addManually> {
                             ),
                             TextFormField(
                               controller: medName,
-                              validator: (value){
-                                if (value == null || value.isEmpty) return 'الرجاء ادخال اسم الدواء';
-                                String pattern = r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
+                              validator: (value) {
+                                if (value == null || value.isEmpty)
+                                  return 'الرجاء ادخال اسم الدواء';
+                                String pattern =
+                                    r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
                                 RegExp regex = RegExp(pattern);
                                 if (!regex.hasMatch(value.trim()))
-                                return 'يجب أن يحتوي اسم الدواء على حرفين على الاقل';
+                                  return 'يجب أن يحتوي اسم الدواء على حرفين على الاقل';
                                 return null;
                               },
                               textAlign: TextAlign.right,
@@ -128,7 +127,6 @@ class _addManuallyState extends State<addManually> {
                               height: 16.0,
                             ),
                             TextFormField(
-                              
                               controller: description,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
@@ -153,16 +151,16 @@ class _addManuallyState extends State<addManually> {
                                 ),
                               ),
                             ),
-                            
                             SizedBox(
                               height: 16.0,
                             ),
                             TextFormField(
                               keyboardType: TextInputType.number,
                               controller: doseCount,
-                              validator: (value){
-                                 if (value == null || value.isEmpty) return 'الرجاء ادخال الجرعة ';
-                                 return null;
+                              validator: (value) {
+                                if (value == null || value.isEmpty)
+                                  return 'الرجاء ادخال الجرعة ';
+                                return null;
                               },
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
@@ -220,35 +218,43 @@ class _addManuallyState extends State<addManually> {
                             SizedBox(
                               height: 24.0,
                             ),
-                            ElevatedButton(
-                              style: TextButton.styleFrom(
-                                  padding: EdgeInsets.symmetric(horizontal: 40),
-                                  backgroundColor: Colors.blueGrey),
+                            MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0))),
+                              elevation: 5.0,
+                              height: 50,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 11, horizontal: 122),
+                              color: Color.fromARGB(255, 140, 167, 190),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                 _firestore.collection('medicines').add({
-                          //  'Generic name': genericName,
-                          'Trade name': medName.text,
-                          'Strength value': doseCount.text,
-                          //   'Unit of strength': unitOfStrength,
-                          // 'Volume': volume,
-                          //'Unit of volume': unitOfVolume,
-                          'Package size': packSize.text,
-                          //'barcode': barcode,
-                          'description': description.text,
-                          'caregiverID': caregiverID,
-                                });
-                                
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Navigation()));
-                              }}
-                              ,
+                                  _firestore.collection('medicines').add({
+                                    //  'Generic name': genericName,
+                                    'Trade name': medName.text,
+                                    'Strength value': doseCount.text,
+                                    //   'Unit of strength': unitOfStrength,
+                                    // 'Volume': volume,
+                                    //'Unit of volume': unitOfVolume,
+                                    'Package size': packSize.text,
+                                    //'barcode': barcode,
+                                    'description': description.text,
+                                    'caregiverID': caregiverID,
+                                  });
+
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => Navigation()));
+                                }
+                              },
                               child: Text('إضافة',
-                               style: GoogleFonts.tajawal()
+                                  style: GoogleFonts.tajawal(
+                                    color: Color.fromARGB(255, 245, 244, 244),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  )
                                   // style: TextStyle(fontFamily: 'Madani Arabic Black'),
                                   ),
                             ),
-                            
                           ]),
                     ),
                   ),
@@ -257,23 +263,22 @@ class _addManuallyState extends State<addManually> {
         ]))));
   }
 
+  String? ValidatePack(String? formPack) {
+    if (formPack == null || formPack.isEmpty) return ' الرجاء ادخال حجم العبوة';
+    if (int.parse(formPack) > 9999) return 'لا يمكنك إدخال اكثر من 4 خانات';
+  }
 
-String? ValidatePack(String? formPack) {
-  if (formPack == null || formPack.isEmpty) return ' الرجاء ادخال حجم العبوة';
-  if (int.parse(formPack) > 9999) return 'لا يمكنك إدخال اكثر من 4 خانات';
-}
+  String? ValidateMedName(String? FormName) {
+    if (FormName == null || FormName.isEmpty) return 'الرجاء ادخال اسم الدواء';
+    String pattern =
+        r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
+    RegExp regex = RegExp(pattern);
+    if (!regex.hasMatch(FormName.trim()))
+      return 'يجب أن يحتوي اسم الدواء على حرفين على الاقل';
+    return null;
+  }
 
-String? ValidateMedName(String? FormName) {
-  if (FormName == null || FormName.isEmpty) return 'الرجاء ادخال اسم الدواء';
-  String pattern =
-      r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
-  RegExp regex = RegExp(pattern);
-  if (!regex.hasMatch(FormName.trim()))
-    return 'يجب أن يحتوي اسم الدواء على حرفين على الاقل';
-  return null;
-}
-
-String? ValidateDose(String? FormDose) {
-  if (FormDose == null || FormDose.isEmpty) return 'الرجاء ادخال الجرعة ';
-}
+  String? ValidateDose(String? FormDose) {
+    if (FormDose == null || FormDose.isEmpty) return 'الرجاء ادخال الجرعة ';
+  }
 }
