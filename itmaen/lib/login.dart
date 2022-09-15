@@ -318,11 +318,24 @@ class _LoginPageState extends State<LoginPage> {
         );
       } on FirebaseAuthException catch (error) {
         if (error.code == 'user-not-found') {
-          Fluttertoast.showToast(
-              msg: " البريد الإلكتروني أو كلمة المرور غير صحيحة ");
+          // Fluttertoast.showToast(
+          //  msg: " البريد الإلكتروني أو كلمة المرور غير صحيحة ");
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('البريد الإلكتروني أو كلمة المرور غير صحيحة',
+                  style: TextStyle(fontSize: 18), textAlign: TextAlign.right),
+            ),
+          );
+          //  );
         } else if (error.code == 'wrong-password') {
-          Fluttertoast.showToast(
-              msg: " البريد الإلكتروني أو كلمة المرور غير صحيحة ");
+          // Fluttertoast.showToast(
+          //msg: " البريد الإلكتروني أو كلمة المرور غير صحيحة ");
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('البريد الإلكتروني أو كلمة المرور غير صحيحة',
+                  style: TextStyle(fontSize: 18), textAlign: TextAlign.right),
+            ),
+          );
         }
       }
     }

@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/add-patient.dart';
 import 'package:itmaen/patient-login.dart';
 import 'alert_dialog.dart';
@@ -87,52 +88,12 @@ class _ViewPageState extends State<View> {
   Widget build(BuildContext context) {
     var data;
     return SafeArea(
+      top: false,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 140, 167, 190),
-          title: const Text('قائمة الادوية'),
-          actions: <Widget>[
-            Directionality(
-              textDirection: TextDirection.rtl,
-              child: TextButton(
-                  child: Text(
-                    'تسجيل الخروج',
-                    style: TextStyle(fontSize: 12, color: Colors.white),
-                  ),
-                  onPressed: () async {
-                    if (caregiverID != null) {
-                      final action = await AlertDialogs.yesCancelDialog(context,
-                          'تسجيل الخروج', 'هل متأكد من عملية تسجيل الخروج؟');
-                      if (action == DialogsAction.yes) {
-                        setState(() => tappedYes = true);
-
-                        await FirebaseAuth.instance.currentUser!.delete();
-                        await FirebaseAuth.instance.signOut();
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginPage()));
-                      } else {
-                        setState(() => tappedYes = false);
-                      }
-                    } else {
-                      final action = await AlertDialogs.yesCancelDialog(context,
-                          'تسجيل الخروج', 'هل متأكد من عملية تسجيل الخروج؟');
-                      if (action == DialogsAction.yes) {
-                        setState(() => tappedYes = true);
-                        //await FirebaseAuth.instance.currentUser!.delete();
-                        await FirebaseAuth.instance.signOut();
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => patientScreen()));
-                      } else {
-                        setState(() => tappedYes = false);
-                      }
-                    }
-                  }),
-            ),
-          ],
+          title: Text("قائمة الأدوية",
+              style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
         ),
         body: FutureBuilder(
           builder: (ctx, snapshot) {

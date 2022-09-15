@@ -8,6 +8,7 @@ import 'package:itmaen/secure-storage.dart';
 import 'biometric-auth.dart';
 import 'view.dart';
 import 'navigation.dart';
+import 'navigationPatient.dart';
 
 class ScanQR extends StatefulWidget {
   @override
@@ -75,7 +76,7 @@ class _ScanQRState extends State<ScanQR> {
                         barcodeScanRes); // if it did not work replace it with qr code result
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => View(),
+                        builder: (context) => NavigationPatient(),
                       ),
                     );
                   } else {
@@ -93,7 +94,7 @@ class _ScanQRState extends State<ScanQR> {
               child: Text(
                 "افتح الماسح الضوئي",
                 style: GoogleFonts.tajawal(
-                    color: Color.fromARGB(255, 228, 229, 231),
+                    color: Color.fromARGB(255, 255, 255, 255),
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
