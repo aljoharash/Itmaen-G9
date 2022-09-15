@@ -233,9 +233,9 @@ class _LoginPageState extends State<LoginPage> {
                                             style: TextStyle(
                                               fontSize: 20,
                                               color: Color.fromARGB(
-                                                  255, 140, 167, 190),
-                                              decoration:
-                                                  TextDecoration.underline,
+                                                  255, 84, 139, 187),
+                                              // decoration:
+                                              //    TextDecoration.underline,
                                             ))),
                                     Text(
                                       ' نسيت كلمة المرور؟',
@@ -262,9 +262,9 @@ class _LoginPageState extends State<LoginPage> {
                                             style: TextStyle(
                                               fontSize: 20,
                                               color: Color.fromARGB(
-                                                  255, 140, 167, 190),
-                                              decoration:
-                                                  TextDecoration.underline,
+                                                  255, 84, 139, 187),
+                                              //decoration:
+                                              //   TextDecoration.underline,
                                             ))),
                                     Text(
                                       'مستخدم جديد؟',

@@ -265,7 +265,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                                   } on FirebaseAuthException catch (error) {
                                     errorMessage = error.message!;
                                     errorMessage =
-                                        'البريد الالكتروني مسجل مسبقا';
+                                        'البريد الالكتروني مسجل مسبقًا';
                                   }
                                   setState(() {});
                                 }
@@ -294,7 +294,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                                       },
                                       child: const Text('تسجيل الدخول',
                                           style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 18,
                                             // fontWeight: bold,
                                             color: Color.fromARGB(
                                                 255, 84, 139, 187),
@@ -303,7 +303,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                                                 TextDecoration.underline,*/
                                           ))),
                                   Text(
-                                    'لديك حساب مسبقاً؟',
+                                    'لديك حساب مسبقًا؟',
                                     style: GoogleFonts.tajawal(
                                         fontSize: 20,
                                         color:
