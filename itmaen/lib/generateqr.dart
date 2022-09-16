@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import 'home.dart';
+import 'navigation.dart';
 
 class GenerateQR extends StatefulWidget {
   @override
@@ -104,7 +105,7 @@ class _GenerateQRState extends State<GenerateQR> {
                   onPressed: () async {
                     // st.deleteSecureData("caregiverID");
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => HomePage()));
+                        MaterialPageRoute(builder: (context) => Navigation()));
                   },
                   elevation: 0,
                   shape: RoundedRectangleBorder(

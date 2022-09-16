@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:itmaen/addMedicine%20pages/adddialog.dart';
+import 'package:itmaen/view.dart';
 import 'add-patient.dart';
 import 'home.dart';
 
@@ -20,7 +21,7 @@ class _NavigationState extends State<Navigation> {
       return AddPatient();
       break;
       case 1:
-      return HomePage();
+      return View();
       break;
       case 2:
       return HomePage();

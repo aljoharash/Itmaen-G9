@@ -8,6 +8,7 @@ import 'package:itmaen/scanqr.dart';
 import 'package:itmaen/secure-storage.dart';
 
 import 'biometric-auth.dart';
+import 'navigation.dart';
 
 class patientScreen extends StatelessWidget {
   StorageService st = StorageService();
@@ -123,7 +124,7 @@ class patientScreen extends StatelessWidget {
                             // WE SHOULD READ FROM THE STORAGE ALSO IF THE IS A CAREGIVER
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => HomePage(),
+                                builder: (context) => Navigation(),
                               ),
                             );
                           } else {
