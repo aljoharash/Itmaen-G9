@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-
+import 'navigation.dart';
 import 'home.dart';
 import 'navigation.dart';
 
@@ -14,12 +14,12 @@ class GenerateQR extends StatefulWidget {
 class _GenerateQRState extends State<GenerateQR> {
   final _auth = FirebaseAuth.instance;
   late User? loggedInUser = _auth.currentUser;
-   //String? qrData = loggedInUser!.uid ; 
- // late User loggedInUser;
+  //String? qrData = loggedInUser!.uid ;
+  // late User loggedInUser;
   //@override
   // void initState() {
   //   super.initState();
-    // getCurrentUser();
+  // getCurrentUser();
   // }
 
   // void getCurrentUser() async {
@@ -33,7 +33,7 @@ class _GenerateQRState extends State<GenerateQR> {
   //   } catch (e) {
   //     print(e);
   //   }
-    
+
   // }
 
 //String qrData="caregiver id"; // the caregiver id shall be passed from the home page to here in order to create the QR code
@@ -60,11 +60,14 @@ class _GenerateQRState extends State<GenerateQR> {
             children: [
               QrImage(data: loggedInUser!.uid),
               SizedBox(height: 20),
-              Text(" كود المريض لتسجيل الدخول",
-                  style: GoogleFonts.tajawal(
-                      fontSize: 20, fontWeight: FontWeight.bold , color: Color.fromARGB(255, 140, 167, 190) ),
-                  textAlign: TextAlign.center, 
-                  ),
+              Text(
+                " كود المريض لتسجيل الدخول",
+                style: GoogleFonts.tajawal(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 140, 167, 190)),
+                textAlign: TextAlign.center,
+              ),
 
               //TextField for input link
               // TextField(

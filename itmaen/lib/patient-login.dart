@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/home.dart';
 import 'package:itmaen/login.dart';
+import 'package:itmaen/navigation.dart';
+import 'package:itmaen/navigationPatient.dart';
 import 'package:itmaen/scanqr.dart';
 import 'package:itmaen/secure-storage.dart';
+import 'view.dart';
 
 import 'biometric-auth.dart';
 import 'navigation.dart';
@@ -120,17 +123,16 @@ class patientScreen extends StatelessWidget {
                           String? id = await st.readSecureData("caregiverID");
 
                           print(id);
-                          if (isAuthenticated && id!=null) {
+                          if (isAuthenticated && id != null) {
                             // WE SHOULD READ FROM THE STORAGE ALSO IF THE IS A CAREGIVER
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => Navigation(),
+                                builder: (context) => NavigationPatient(),
                               ),
                             );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                
                                 content: Text(
                                     'خطأ في تسجيل الدخول! في حال كنت مستخدم للتطبيق لأول مرة يرجى مسح الكود',
                                     style: TextStyle(fontSize: 18),
@@ -166,7 +168,7 @@ class patientScreen extends StatelessWidget {
                             child: const Text('اضغط هنا لتسجيل الدخول',
                                 style: TextStyle(
                                   fontSize: 20,
-                                  color: Color.fromARGB(255, 140, 167, 190),
+                                  color: Color.fromARGB(255, 84, 139, 187),
                                   decoration: TextDecoration.underline,
                                 )),
                           ),
@@ -174,7 +176,8 @@ class patientScreen extends StatelessWidget {
                             ' مقدم رعاية؟ ',
                             style: GoogleFonts.tajawal(
                                 fontSize: 20,
-                                color: Color.fromARGB(167, 135, 168, 188),fontWeight: FontWeight.bold),
+                                color: Color.fromARGB(167, 135, 168, 188),
+                                fontWeight: FontWeight.bold),
                           ),
                         ]),
                     // Container(

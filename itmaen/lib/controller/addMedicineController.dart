@@ -38,7 +38,6 @@ class addMedicineController extends GetxController {
   Future<void> scanBarcode() async {
     medicinesList = await ReadJsonData() as List<medicines>;
     String barcodeResult;
-    
 
     try {
       barcodeResult = await FlutterBarcodeScanner.scanBarcode(
