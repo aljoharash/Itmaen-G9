@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,6 +15,17 @@ class GenerateQR extends StatefulWidget {
 class _GenerateQRState extends State<GenerateQR> {
   final _auth = FirebaseAuth.instance;
   late User? loggedInUser = _auth.currentUser;
+  var _query ; 
+
+  Future<String> getName() async{
+     await FirebaseFirestore.instance.collection('patients').where("caregiverID", isEqualTo: loggedInUser!.uid)
+   .get().then((value) {
+      _query = value.docs[0].get('name'); 
+   });
+   return _query; 
+
+  }
+
   //String? qrData = loggedInUser!.uid ;
   // late User loggedInUser;
   //@override
@@ -61,7 +73,7 @@ class _GenerateQRState extends State<GenerateQR> {
               QrImage(data: loggedInUser!.uid),
               SizedBox(height: 20),
               Text(
-                " كود المريض لتسجيل الدخول",
+                " :كود تسجيل الدخول الخاص ب ",
                 style: GoogleFonts.tajawal(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -77,6 +89,59 @@ class _GenerateQRState extends State<GenerateQR> {
               // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
+                child: FutureBuilder(builder: (context, snapshot) {
+
+                  if (snapshot.connectionState == ConnectionState.done) {
+              // If we got an error
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    '${snapshot.error} occurred',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                );
+ 
+                // if we got our data
+              } else if (snapshot.hasData) {
+                // Extracting data from snapshot object
+                final data = snapshot.data as String;
+                return Center(
+                  child: Text('${data} ',
+
+                 style: GoogleFonts.tajawal(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 140, 167, 190)),
+                textAlign: TextAlign.center,
+                  ),
+                );
+              }
+            }
+ 
+            // Displaying LoadingSpinner to indicate waiting state
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+ 
+          // Future that needs to be resolved
+          // inorder to display something on the Canvas
+          future: getName(),
+        ),
+     
+    
+                  
+                ),
+                // Center(
+                //   child: Text('لتسجيل الدخول',
+
+                //  style: GoogleFonts.tajawal(
+                //     fontSize: 20,
+                //     fontWeight: FontWeight.bold,
+                //     color: Color.fromARGB(255, 140, 167, 190)),
+                // textAlign: TextAlign.center,
+                //   ),
+                // ),
                 //Button for generating QR code
                 // child: TextButton(
                 // 	onPressed: () async {
@@ -99,31 +164,31 @@ class _GenerateQRState extends State<GenerateQR> {
                 // // 	side: BorderSide(color: Color.fromARGB(255, 171, 177, 232)),
                 // // ),
                 // ),
-              ),
-              Container(
-                height: 80,
-                width: double.infinity,
-                padding: const EdgeInsets.only(top: 25, left: 24, right: 24),
-                child: MaterialButton(
-                  onPressed: () async {
-                    // st.deleteSecureData("caregiverID");
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Navigation()));
-                  },
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  color: Color.fromARGB(255, 140, 167, 190),
-                  child: Text(
-                    'العودة للقائمة الرئيسية',
-                    style: GoogleFonts.tajawal(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
+             
+              // Container(
+              //   height: 80,
+              //   width: double.infinity,
+              //   padding: const EdgeInsets.only(top: 25, left: 24, right: 24),
+              //   child: MaterialButton(
+              //     onPressed: () async {
+              //       // st.deleteSecureData("caregiverID");
+              //       Navigator.of(context).push(
+              //           MaterialPageRoute(builder: (context) => Navigation()));
+              //     },
+              //     elevation: 0,
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //     color: Color.fromARGB(255, 140, 167, 190),
+              //     child: Text(
+              //       'العودة للقائمة الرئيسية',
+              //       style: GoogleFonts.tajawal(
+              //           fontSize: 20,
+              //           color: Colors.white,
+              //           fontWeight: FontWeight.bold),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
