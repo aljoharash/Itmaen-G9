@@ -8,7 +8,7 @@ class addMedicineController extends GetxController {
   String scan = '-1';
   List<medicines> medicinesList = [];
   List<medicines> scannedMedicine = [];
-  bool notFound = false;
+  static bool notFound = true;
 
   /*onInit() {
     /* for (var medicineInfo in medicinesData) {

@@ -7,6 +7,7 @@ import 'package:itmaen/home.dart';
 import 'package:itmaen/login.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'navigation.dart';
+import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 
 import 'firebase.dart';
 
@@ -25,6 +26,17 @@ class _SignUpScreen extends State<SignUpScreen> {
   TextEditingController password = new TextEditingController();
   TextEditingController phoneNum = new TextEditingController();
   String errorMessage = '';
+  bool isPassEight = false;
+  bool hasLetter = false;
+  onPasswordChanged(String pass) {
+    final regex = RegExp(r'^(?=.*[A-Z])');
+    setState(() {
+      isPassEight = false;
+      if (pass.length >= 8) isPassEight = true;
+      hasLetter = false;
+      if (regex.hasMatch(pass)) hasLetter = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +100,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                               controller: username,
                               validator: ValidateUserName,
                               textAlign: TextAlign.right,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
@@ -117,6 +131,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                               keyboardType: TextInputType.emailAddress,
                               controller: email,
                               validator: ValidateEmail,
+                              autovalidateMode: AutovalidateMode
+                                  .onUserInteraction, // <-- add this line
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,
@@ -146,11 +162,30 @@ class _SignUpScreen extends State<SignUpScreen> {
                             SizedBox(
                               height: 2.0,
                             ),
+/*new TextField(
+    controller: _passwordController
+),
+new FlutterPwValidator(
+    controller: _passwordController,
+    minLength: 6,
+    uppercaseCharCount: 2,
+    numericCharCount: 3,
+    specialCharCount: 1,
+    width: 400,
+    height: 150,
+    onSuccess: yourCallbackFunction,
+    onFail: yourCallbackFunction
+)*/
+
                             TextFormField(
                               obscureText: true,
                               controller: password,
                               validator: ValidatePassword,
                               textAlign: TextAlign.right,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              onChanged: (password) =>
+                                  onPasswordChanged(password),
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
@@ -174,13 +209,92 @@ class _SignUpScreen extends State<SignUpScreen> {
                               ),
                             ),
                             SizedBox(
+                              height: 2.0,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '    يجب أن يحتوي على ٨ رموز(حروف وأرقام)  ',
+                                  textAlign: TextAlign.center,
+                                ),
+                                AnimatedContainer(
+                                    duration: (Duration(microseconds: 500)),
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                        color: isPassEight
+                                            ? Colors.green
+                                            : Colors.transparent,
+                                        border: isPassEight
+                                            ? Border.all(
+                                                color: Colors.transparent)
+                                            : Border.all(
+                                                color: Colors.grey.shade400),
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.check,
+                                        color: Colors.white,
+                                        size: 15,
+                                        //textDirection:te ,
+                                      ),
+                                    )),
+                              ],
+                            ),
+                            SizedBox(
                               height: 16.0,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '   يجب أن يحتوي على حرف كبير واحد على الاقل  ',
+                                  textAlign: TextAlign.right,
+                                ),
+                                AnimatedContainer(
+                                    //alignment: Alignment.topCenter,
+                                    duration: (Duration(microseconds: 500)),
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                        color: hasLetter
+                                            ? Colors.green
+                                            : Colors.transparent,
+                                        border: hasLetter
+                                            ? Border.all(
+                                                color: Colors.transparent)
+                                            : Border.all(
+                                                color: Colors.grey.shade400),
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Center(
+                                          child: Icon(
+                                            Icons.check,
+                                            color: Colors.white,
+                                            size: 15,
+                                            //textDirection:te ,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                              ],
                             ),
                             TextFormField(
                               keyboardType: TextInputType.number,
                               controller: phoneNum,
                               validator: ValidatePhoneNumber,
                               textAlign: TextAlign.right,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
@@ -276,6 +390,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                                   fontSize: 20,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
+
                                   // style: TextStyle(fontFamily: 'Madani Arabic Black'),
                                 ),
                               ),
@@ -299,8 +414,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                                             color: Color.fromARGB(
                                                 255, 84, 139, 187),
 
-                                            /* decoration:
-                                                TextDecoration.underline,*/
+                                            decoration:
+                                                TextDecoration.underline,
                                           ))),
                                   Text(
                                     'لديك حساب مسبقًا؟',
@@ -345,18 +460,19 @@ class _SignUpScreen extends State<SignUpScreen> {
         r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(FormName.trim()))
-      return 'يجب أن يحتوي اسم المستخدم على حرفين على الاقل';
+      return '  يجب أن يحتوي اسم المستخدم على حرفين على الاقل وأن لايتجاوز ٢٠حرف ';
     return null;
   }
 
   String? ValidatePhoneNumber(String? FormNhoneNumber) {
     if (FormNhoneNumber == null || FormNhoneNumber.isEmpty)
       return "يجب ملء هذا الحقل";
-    String pattern =
+    /*String pattern =
         r'[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$';
-    RegExp regex = RegExp(pattern);
-    if (!regex.hasMatch(FormNhoneNumber.trim()))
-      return ' الرقم المدخل غير صحيح  ';
+    RegExp regex = RegExp(pattern)*/
+    //value.length != 10
+    if (FormNhoneNumber.length != 10)
+      return ' رقم الهاتف يجب أن يتكون من ١٠ أرقام';
     return null;
   }
 }

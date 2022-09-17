@@ -64,6 +64,7 @@ class _ScanQRState extends State<ScanQR> {
                 //test
                 // String? id = await st.readSecureData("caregiverID");
                 // print(id);
+                //st.deleteSecureData("caregiverID");
                 String barcodeScanRes;
                 try {
                   barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(

@@ -57,8 +57,9 @@ class patientScreen extends StatelessWidget {
                         ),
                         Text(
                           'من فضلك قم بتسجيل الدخول',
+                          //textAlign: TextAlign.center,
                           style: GoogleFonts.tajawal(
-                            fontSize: 25,
+                            fontSize: 23,
                             //fontStyle: FontStyle.italic,
                             color: Color.fromARGB(255, 122, 164, 186),
                             fontWeight: FontWeight.bold,
@@ -96,8 +97,9 @@ class patientScreen extends StatelessWidget {
                         color: Color.fromARGB(255, 140, 167, 190),
                         child: Text(
                           'تسجيل الدخول لأول مرة بمسح الكود',
+                          textAlign: TextAlign.center,
                           style: GoogleFonts.tajawal(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.w700,
                             color: Colors.white,
                           ),
@@ -144,7 +146,7 @@ class patientScreen extends StatelessWidget {
                         child: Text(
                           'تسجيل الدخول السريع',
                           style: GoogleFonts.tajawal(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.w700,
                             color: Color.fromARGB(255, 248, 250, 250),
                           ),
@@ -168,7 +170,7 @@ class patientScreen extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Color.fromARGB(255, 84, 139, 187),
-                                  //decoration: TextDecoration.underline,
+                                  decoration: TextDecoration.underline,
                                 )),
                           ),
                           Text(

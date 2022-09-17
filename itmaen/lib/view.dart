@@ -217,8 +217,10 @@ class medBubble extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Text(
               ' $medicName ',
-              style:
-                  TextStyle(fontSize: 30, color: Color.fromARGB(255, 0, 0, 0)),
+              style: GoogleFonts.tajawal(
+                  fontSize: 20,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                  fontWeight: FontWeight.w600),
             ),
           )),
     );

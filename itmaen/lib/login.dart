@@ -197,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                                 elevation: 5.0,
                                 height: 50,
                                 padding: EdgeInsets.symmetric(
-                                    vertical: 11, horizontal: 122),
+                                    vertical: 11, horizontal: 116),
                                 onPressed: () {
                                   setState(() {
                                     visible = true;
@@ -207,10 +207,11 @@ class _LoginPageState extends State<LoginPage> {
                                 },
                                 child: Text(
                                   "تسجيل الدخول",
+                                  textAlign: TextAlign.center,
                                   style: GoogleFonts.tajawal(
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                                 color: Color.fromARGB(255, 140, 167, 190),
@@ -234,8 +235,8 @@ class _LoginPageState extends State<LoginPage> {
                                               fontSize: 20,
                                               color: Color.fromARGB(
                                                   255, 84, 139, 187),
-                                              // decoration:
-                                              //    TextDecoration.underline,
+                                              decoration:
+                                                  TextDecoration.underline,
                                             ))),
                                     Text(
                                       ' نسيت كلمة المرور؟',
@@ -263,8 +264,8 @@ class _LoginPageState extends State<LoginPage> {
                                               fontSize: 20,
                                               color: Color.fromARGB(
                                                   255, 84, 139, 187),
-                                              //decoration:
-                                              //   TextDecoration.underline,
+                                              decoration:
+                                                  TextDecoration.underline,
                                             ))),
                                     Text(
                                       'مستخدم جديد؟',

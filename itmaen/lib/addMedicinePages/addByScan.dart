@@ -63,9 +63,9 @@ class addByScan extends StatelessWidget {
                               ? Container(
                                   alignment: Alignment.center,
                                   height: 100,
-                                  child: _.notFound
+                                  child: addMedicineController.notFound
                                       ? Text(
-                                          'لم يتم العثور على الدواء',
+                                          'لم يتم المسح حتى الان أو لم يتم العثور على الدواء',
                                           style: GoogleFonts.tajawal(
                                               fontWeight: FontWeight.bold),
                                         )
@@ -194,7 +194,7 @@ class addByScan extends StatelessWidget {
                               ],
                             ),
                             onPressed: () {
-                              if (_.notFound == false) {
+                              if (addMedicineController.notFound == false) {
                                 _firestore.collection('medicines').add({
                                   'Generic name': genericName,
                                   'Trade name': tradeName,
@@ -207,15 +207,22 @@ class addByScan extends StatelessWidget {
                                   'description': description,
                                   'caregiverID': loggedInUser!.uid,
                                 });
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => Navigation()));
                               } else {
-                                Fluttertoast.showToast(
-                                    msg: "عليك إستخدام الماسح الضوئي أولًا");
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    // margin: EdgeInsets.only(right: 10),
+
+                                    content: Text(
+                                        'عليك استخدام الماسح الضوئي أولاً ',
+                                        style: TextStyle(fontSize: 20),
+                                        textAlign: TextAlign.right),
+                                  ),
+                                );
                               }
 
                               _.scannedMedicine.clear();
-
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Navigation()));
                             }),
                       ),
                     ),
