@@ -342,7 +342,10 @@ class _SignUpScreen extends State<SignUpScreen> {
   String? ValidateUserName(String? FormName) {
     if (FormName == null || FormName.isEmpty) return "يجب ملء هذا الحقل";
     String pattern = r'^(?=.{2,20}$)(?![.])(?!.*[.]{2})[a-zA-Z0-9.]+(?<![.])$';
+
     RegExp regex = RegExp(pattern);
+    RegExp r = new RegExp(r'\s');
+    if (r.hasMatch(FormName.trim())) return ' الرجاء عدم وضع فراغات بالإسم';
     if (!regex.hasMatch(FormName.trim()))
       return 'يجب أن يحتوي اسم المستخدم على حرفين على الاقل';
     return null;
@@ -356,6 +359,9 @@ class _SignUpScreen extends State<SignUpScreen> {
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(FormNhoneNumber.trim()))
       return ' الرقم المدخل غير صحيح  ';
+     //  else if (FormNhoneNumber.length > 10 && FormNhoneNumber.length<10 )
+       // return 'الرجاء إدخال رقم جوال صحيح';
+
     return null;
   }
 }

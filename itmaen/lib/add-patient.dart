@@ -93,6 +93,7 @@ class _AddPatient extends State<AddPatient> {
                     fontSize: 20,
                   ),
                 ),
+                
                 //textAlign: TextAlign.center,
                 //textAlign: TextAlign.right,
               ),
