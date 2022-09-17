@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:itmaen/addMedicinePages/adddialog.dart';
+import 'package:itmaen/generateqr.dart';
 import 'package:itmaen/patient-login.dart';
 import 'package:itmaen/view.dart';
 import 'add-patient.dart';
@@ -40,15 +42,27 @@ class _NavigationState extends State<Navigation> {
       print(e);
     }
   }
+ Future<bool> _isCollectionExits() async {
+    QuerySnapshot<Map<String, dynamic>> _query =
+        await FirebaseFirestore.instance.collection('patients').where("caregiverID", isEqualTo: caregiverID).get();
 
+    if (_query.docs.isNotEmpty) {
+      // Collection exits
+      return true;
+    } else {
+      // Collection not exits
+      return false;
+    }
+  }
   int _selectedIndex = 3;
-  bodyFunction() {
+  bodyFunction(){
     switch (_selectedIndex) {
       case 0:
         return;
         break;
       case 1:
-        return AddPatient();
+      
+ return AddPatient(); 
         break;
       case 2:
         return View();
@@ -107,7 +121,7 @@ class _NavigationState extends State<Navigation> {
       }
     }
 
-    void _onItemTapped(int index) {
+    Future<void> _onItemTapped(int index) async {
       setState(() {
         _selectedIndex = index;
       });
@@ -116,6 +130,13 @@ class _NavigationState extends State<Navigation> {
       }
       if (index == 0) {
         logout();
+      }
+      if(index==1){
+        if(await _isCollectionExits()==true){
+           Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => GenerateQR()));
+        }
+      
       }
     }
 

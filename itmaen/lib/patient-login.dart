@@ -11,6 +11,7 @@ import 'package:itmaen/secure-storage.dart';
 import 'view.dart';
 
 import 'biometric-auth.dart';
+import 'navigation.dart';
 
 class patientScreen extends StatelessWidget {
   StorageService st = StorageService();

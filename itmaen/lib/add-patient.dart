@@ -33,6 +33,19 @@ class _AddPatient extends State<AddPatient> {
     }
   }
 
+  Future<bool> _isCollectionExits() async {
+    QuerySnapshot<Map<String, dynamic>> _query =
+        await FirebaseFirestore.instance.collection('patients').where("caregiverID", isEqualTo: caregiverID).get();
+
+    if (_query.docs.isNotEmpty) {
+      // Collection exits
+      return true;
+    } else {
+      // Collection not exits
+      return false;
+    }
+  }
+
   final TextEditingController nameController = TextEditingController();
   StorageService st = StorageService();
   @override
@@ -42,7 +55,7 @@ class _AddPatient extends State<AddPatient> {
         backgroundColor: Color.fromARGB(255, 140, 167, 190),
         title: Center(
             child: Text(
-          "إضافة مستقبل الرعاية",
+          "إضافة  ",
           style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
         )),
       ),
@@ -75,11 +88,12 @@ class _AddPatient extends State<AddPatient> {
                 controller: nameController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'اسم مستقبل الرعاية',
+                  labelText: 'الاسم ',
                   labelStyle: TextStyle(
                     fontSize: 20,
                   ),
                 ),
+                
                 //textAlign: TextAlign.center,
                 //textAlign: TextAlign.right,
               ),
@@ -101,17 +115,60 @@ class _AddPatient extends State<AddPatient> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 color:Color.fromARGB(255, 140, 167, 190),
-                onPressed: () {
+                onPressed: () async {
+                  RegExp r = new RegExp(r'\s'); 
+                   if (r.hasMatch(nameController.text)){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        // margin: EdgeInsets.only(right: 10),
+
+                        content: Text(
+                            'يرجى عدم وضع فراغات بالاسم ',
+                            style: TextStyle(fontSize: 20),
+                            textAlign: TextAlign.right),
+                      ),
+                    );
+
+
+                   }
                   // String? id = await st.readSecureData("caregiverID");
-                  if (nameController.text.length >= 2 && nameController.text.length<=20) {
+                  else if (nameController.text.length >= 2 && nameController.text.length<=20 ) {
+
+                    if(await _isCollectionExits()){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        // margin: EdgeInsets.only(right: 10),
+
+                        content: Text(
+                            'تم إضافة مستقبل رعاية مسبقا',
+                            style: TextStyle(fontSize: 20),
+                            textAlign: TextAlign.right),
+                      ),
+                    );
+
+                  }
+                  else{
                     FirebaseFirestore.instance.collection('patients').add({
                       'name': nameController.text,
                       'caregiverID': caregiverID
                     });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        // margin: EdgeInsets.only(right: 10),
+
+                        content: Text(
+                            'تم إضافة مستقبل رعاية بنجاح',
+                            style: TextStyle(fontSize: 20),
+                            textAlign: TextAlign.right),
+                      ),
+                    );
+
                     // FirebaseFirestore.instance.collection('patients').add({'caregiverID': '123'});
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => GenerateQR()));
-                  } else {
+                        MaterialPageRoute(builder: (context) => GenerateQR()));}
+                  }  
+                  else {
+                    if(nameController.text.length<2){
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         // margin: EdgeInsets.only(right: 10),
@@ -122,6 +179,20 @@ class _AddPatient extends State<AddPatient> {
                             textAlign: TextAlign.right),
                       ),
                     );
+                    }
+                    else if(nameController.text.length>=20){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        // margin: EdgeInsets.only(right: 10),
+
+                        content: Text(
+                            'يجب أن يحتوي اسم مستقبل الرعاية على أقل من عشرين حرف  ',
+                            style: TextStyle(fontSize: 20),
+                            textAlign: TextAlign.right),
+                      ),
+                    );
+
+                    }
                   }
                 },
                 child: Text(

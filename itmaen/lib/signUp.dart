@@ -459,6 +459,8 @@ new FlutterPwValidator(
     String pattern =
         r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
     RegExp regex = RegExp(pattern);
+    RegExp r = new RegExp(r'\s');
+    if (r.hasMatch(FormName.trim())) return ' الرجاء عدم وضع فراغات بالإسم';
     if (!regex.hasMatch(FormName.trim()))
       return '  يجب أن يحتوي اسم المستخدم على حرفين على الاقل وأن لايتجاوز ٢٠حرف ';
     return null;
