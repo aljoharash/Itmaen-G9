@@ -288,6 +288,9 @@ new FlutterPwValidator(
                                     )),
                               ],
                             ),
+                            SizedBox(
+                              height: 16.0,
+                            ),
                             TextFormField(
                               keyboardType: TextInputType.number,
                               controller: phoneNum,
