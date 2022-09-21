@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:itmaen/addMedicinePages/adddialog.dart';
 import 'package:itmaen/generateqr.dart';
 import 'package:itmaen/patient-login.dart';
@@ -10,6 +13,10 @@ import 'add-patient.dart';
 import 'alert_dialog.dart';
 import 'home.dart';
 import 'login.dart';
+import 'notification.dart';
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 class Navigation extends StatefulWidget {
   const Navigation({Key? key}) : super(key: key);
@@ -23,11 +30,21 @@ class _NavigationState extends State<Navigation> {
   bool tappedYes = false;
   final _auth = FirebaseAuth.instance;
   String caregiverID = "";
-  late User loggedInUser;
+  //late User loggedInUser;
+  Timer? timer;
+  late User? loggedInUser = _auth.currentUser;
+
   @override
   void initState() {
     super.initState();
     getCurrentUser();
+    Noti.initialize(flutterLocalNotificationsPlugin);
+    
+    timer = Timer.periodic(const Duration(seconds: 40), (Timer t){sendNotification();
+    
+    
+    });
+  
   }
 
   void getCurrentUser() async {
@@ -36,15 +53,20 @@ class _NavigationState extends State<Navigation> {
       final user = await _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
-        caregiverID = loggedInUser.uid;
+        //caregiverID = loggedInUser.uid;
+        caregiverID = user.uid;
       }
     } catch (e) {
       print(e);
     }
   }
- Future<bool> _isCollectionExits() async {
-    QuerySnapshot<Map<String, dynamic>> _query =
-        await FirebaseFirestore.instance.collection('patients').where("caregiverID", isEqualTo: caregiverID).get();
+
+  Future<bool> _isCollectionExits() async {
+    QuerySnapshot<Map<String, dynamic>> _query = await FirebaseFirestore
+        .instance
+        .collection('patients')
+        .where("caregiverID", isEqualTo: caregiverID)
+        .get();
 
     if (_query.docs.isNotEmpty) {
       // Collection exits
@@ -54,15 +76,49 @@ class _NavigationState extends State<Navigation> {
       return false;
     }
   }
+
+  void sendNotification() async {
+    var _query;
+    await FirebaseFirestore.instance
+        .collection('doses')
+        .where("caregiverID", isEqualTo: caregiverID)
+        .get()
+        .then((value) {
+      for (var i = 0; i < value.size; i++) {
+        print("here is the size");
+        print("caregiver");
+        print(value.size);
+        _query = (value.docs[i].get('Time')).toDate().toString();
+        var time_ = DateTime.parse(_query);
+
+        var time = DateTime.parse(
+            "2022-09-20 19:43:00.999"); // just for test
+        var now = DateTime.now(); // today's time
+        var currentTime = DateTime.now();
+        var diff = time_.difference(currentTime).inMinutes;// getting the difference in mins 
+        print("here is the difference");
+        print(diff);
+        if (diff <= 5 && diff > 4) {
+          Noti.showBigTextNotification(
+              title: "تذكير بأخذ الجرعة",
+              body: ''' 
+  [${value.docs[i].get("MName")}]
+ عزيزي, تبقى 5 دقائق على موعد اخذ مستقبلك للرعاية لجرعته''',
+              fln: flutterLocalNotificationsPlugin);
+        }
+      } // end for
+    });
+    // }
+  }
+
   int _selectedIndex = 3;
-  bodyFunction(){
+  bodyFunction() {
     switch (_selectedIndex) {
       case 0:
         return;
         break;
       case 1:
-      
- return AddPatient(); 
+        return AddPatient();
         break;
       case 2:
         return View();
@@ -95,8 +151,9 @@ class _NavigationState extends State<Navigation> {
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
           setState(() => tappedYes = true);
-
+        timer?.cancel();
           await FirebaseAuth.instance.signOut();
+          loggedInUser = null ; 
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => LoginPage()));
         } else {
@@ -109,6 +166,7 @@ class _NavigationState extends State<Navigation> {
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
           setState(() => tappedYes = true);
+          timer?.cancel();
 
           // await FirebaseAuth.instance.signOut();
           Navigator.pushReplacement(context,
@@ -131,12 +189,11 @@ class _NavigationState extends State<Navigation> {
       if (index == 0) {
         logout();
       }
-      if(index==1){
-        if(await _isCollectionExits()==true){
-           Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => GenerateQR()));
+      if (index == 1) {
+        if (await _isCollectionExits() == true) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => GenerateQR()));
         }
-      
       }
     }
 
