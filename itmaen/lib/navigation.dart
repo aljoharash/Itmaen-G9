@@ -10,6 +10,7 @@ import 'add-patient.dart';
 import 'alert_dialog.dart';
 import 'home.dart';
 import 'login.dart';
+import 'package:itmaen/calendar/calendarView.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({Key? key}) : super(key: key);
@@ -42,9 +43,13 @@ class _NavigationState extends State<Navigation> {
       print(e);
     }
   }
- Future<bool> _isCollectionExits() async {
-    QuerySnapshot<Map<String, dynamic>> _query =
-        await FirebaseFirestore.instance.collection('patients').where("caregiverID", isEqualTo: caregiverID).get();
+
+  Future<bool> _isCollectionExits() async {
+    QuerySnapshot<Map<String, dynamic>> _query = await FirebaseFirestore
+        .instance
+        .collection('patients')
+        .where("caregiverID", isEqualTo: caregiverID)
+        .get();
 
     if (_query.docs.isNotEmpty) {
       // Collection exits
@@ -54,21 +59,21 @@ class _NavigationState extends State<Navigation> {
       return false;
     }
   }
+
   int _selectedIndex = 3;
-  bodyFunction(){
+  bodyFunction() {
     switch (_selectedIndex) {
       case 0:
         return;
         break;
       case 1:
-      
- return AddPatient(); 
+        return AddPatient();
         break;
       case 2:
         return View();
         break;
       case 3:
-        return View();
+        return CalendarEvents();
         break;
     }
   }
@@ -131,12 +136,11 @@ class _NavigationState extends State<Navigation> {
       if (index == 0) {
         logout();
       }
-      if(index==1){
-        if(await _isCollectionExits()==true){
-           Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => GenerateQR()));
+      if (index == 1) {
+        if (await _isCollectionExits() == true) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => GenerateQR()));
         }
-      
       }
     }
 
