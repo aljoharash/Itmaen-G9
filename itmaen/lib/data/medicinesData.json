@@ -18,7 +18,7 @@
     "Strength value": "250, 300",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "6281080002380",
     "description":
@@ -30,7 +30,7 @@
     "Strength value": "40",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "14",
     "barcode": "3717800001715",
     "description":
@@ -55,7 +55,7 @@
     "Strength value": "10",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "28",
     "barcode": "5702157150809",
     "description":
@@ -67,7 +67,7 @@
     "Strength value": "5",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "6285104000062",
     "description":
@@ -92,7 +92,7 @@
     "Strength value": "5, 500",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "6281080002465",
     "description":
@@ -117,7 +117,7 @@
     "Strength value": "300",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "20",
     "barcode": "6221032114143",
     "description":
@@ -129,7 +129,7 @@
     "Strength value": "25",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "20",
     "barcode": "5415062002193",
     "description":
@@ -141,7 +141,7 @@
     "Strength value": "20",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "6281080003530",
     "description":
@@ -153,7 +153,7 @@
     "Strength value": "8",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "20",
     "barcode": "6281936131813",
     "description":
@@ -166,32 +166,20 @@
     "Strength value": "5, 160",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "28",
     "barcode": "3711500000847",
     "description":
         "يستخدم أملوديبين \/ فالسارتان \/ هيدروكلوروثيازيد لعلاج ارتفاع ضغط الدم لدى المرضى البالغين الذين يتم التحكم في ضغط الدم لديهم بالفعل أثناء تناول أملوديبين وفالسارتان وهيدروكلورثيازيد والذين قد يستفيدون من تناول قرص واحد يحتوي على جميع المواد الثلاثة."
   },
-  {
-    "Generic name": "MOMETASONE FUROATE",
-    "Trade name":
-        "NASONEX 0.05% NASAL SPRAY - نازونكس بخاخ أنف مائى 50 ميكروغرام 120 جرعة",
-    "Strength value": "0.05",
-    "Unit of strength": "%",
-    "Volume": "-",
-    "Unit of volume": "-",
-    "Package size": "1",
-    "barcode": "40000108307",
-    "description":
-        "موميتازون هو كورتيكوستيرويد يعمل كمضاد للالتهابات. يعمل موميتازون عن طريق تخفيف الاستجابات الالتهابية المرتبطة بالربو والتهاب الأنف التحسسي والأورام الحميدة الأنفية والأمراض الجلدية المستجيبة للكورتيكوستيرويد. حيث يمنع عمل الخلايا الالتهابية المختلفة"
-  },
+
   {
     "Generic name": "PANTOPRAZOLE",
     "Trade name": "PANTOMAX 40MG E.C.TABLETS - بانتوماكس 40 مجم 15 قرص",
     "Strength value": "40",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "15",
     "barcode": "3701759040466",
     "description":
@@ -216,7 +204,7 @@
     "Strength value": "500",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "20",
     "barcode": "6281086000090",
     "description":
@@ -229,7 +217,7 @@
     "Strength value": "500",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "24",
     "barcode": "9502930973214",
     "description":
@@ -240,7 +228,7 @@
     "Trade name": "CENTRUM WITH LUTEIN TABLETS - سنترم مع لوتين 100 قرص",
     "Strength value": "-",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "100",
     "barcode": "6251613000503",
     "description":
@@ -264,7 +252,7 @@
     "Strength value": "8",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "20",
     "barcode": "3704500367010",
     "description":
@@ -276,7 +264,7 @@
     "Strength value": "5",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "18",
     "barcode": "6281086001806"
   },
@@ -286,7 +274,7 @@
     "Strength value": "5",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "20",
     "barcode": "6281086002513",
     "description":
@@ -299,7 +287,7 @@
     "Strength value": "-",
     "Unit of strength": "-",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "60",
     "barcode": "5021265245901",
     "description":
@@ -311,7 +299,7 @@
     "Strength value": "10",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "6281086002674",
     "description":
@@ -323,7 +311,7 @@
     "Strength value": "15",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "6281080003646",
     "description":
@@ -335,7 +323,7 @@
     "Strength value": "10",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "6281086002483",
     "description":
@@ -347,7 +335,7 @@
     "Strength value": "20",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "28",
     "barcode": "6285147000845",
     "description":
@@ -359,7 +347,7 @@
     "Strength value": "80",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "6281086002933",
     "description":
@@ -371,7 +359,7 @@
     "Strength value": "500, 50",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "40",
     "barcode": "610644193114",
     "description":
@@ -383,7 +371,7 @@
     "Strength value": "120",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "80",
     "barcode": "6285147001187",
     "description":
@@ -395,7 +383,7 @@
     "Strength value": "20",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "14",
     "barcode": "6281080003547",
     "description":
@@ -407,7 +395,7 @@
     "Strength value": "10",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "3701790020014",
     "description":
@@ -419,7 +407,7 @@
     "Strength value": "10",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "6281102232306",
     "description":
@@ -431,7 +419,7 @@
     "Strength value": "2.5, 500",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "6281086610022",
     "description":
@@ -443,7 +431,7 @@
     "Strength value": "2",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "6251154188012",
     "description":
@@ -455,7 +443,7 @@
     "Strength value": "5",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "6251106140105",
     "description":
@@ -468,7 +456,7 @@
     "Strength value": "80, 12.5",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "30",
     "barcode": "6251599000993",
     "description": "علاج ارتفاع ضغط الدم لدى البالغين 18 سنة فما فوق."
@@ -479,7 +467,7 @@
     "Strength value": "8 , 12.5",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "28",
     "barcode": "6251159023851",
     "description":
@@ -492,7 +480,7 @@
     "Strength value": "100",
     "Unit of strength": "مجم",
     "Volume": "-",
-    "Unit of volume": "-",
+    "Unit of volume": "حبة",
     "Package size": "90",
     "barcode": "6251653750000",
     "description":
