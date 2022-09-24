@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:itmaen/addMedicinePages/adddialog.dart';
+import 'package:itmaen/calendar/calendar.dart';
 import 'package:itmaen/generateqr.dart';
 import 'package:itmaen/patient-login.dart';
 import 'package:itmaen/view.dart';
@@ -73,7 +74,7 @@ class _NavigationState extends State<Navigation> {
         return View();
         break;
       case 3:
-        return CalendarEvents();
+        return Home();
         break;
     }
   }

@@ -56,6 +56,9 @@ dependencies:
   get: ^4.6.1
   get_storage: ^2.0.3
   flutter_pw_validator: ^1.4.2
+  url_launcher: any
+  flutter_datetime_picker: ^1.5.1
+
 
 dev_dependencies:
   flutter_test:
