@@ -6,6 +6,7 @@ import 'package:itmaen/addMedicinePages/adddialog.dart';
 import 'package:itmaen/generateqr.dart';
 import 'package:itmaen/patient-login.dart';
 import 'package:itmaen/view.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'add-patient.dart';
 import 'alert_dialog.dart';
 import 'home.dart';

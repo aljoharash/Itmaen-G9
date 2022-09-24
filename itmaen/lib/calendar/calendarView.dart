@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:googleapis/calendar/v3.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:googleapis/calendar/v3.dart' as googleAPI;
 import 'package:http/io_client.dart';
 import 'package:http/http.dart';
+/*void signIn(String email, String password) async {
+  UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+    email: email,
+    password: password,
+  );
+}*/
 
 void main() => runApp(GoogleCalendarEvents());
 
@@ -26,7 +34,8 @@ class CalendarEvents extends StatefulWidget {
 
 class CalendarEventsState extends State<CalendarEvents> {
   final GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId: 'OAuth Client ID',
+    clientId:
+        '814027048944-6mi45n0abi9liqtsmlhlpvflh80qu8l0.apps.googleusercontent.com',
     scopes: <String>[
       googleAPI.CalendarApi.calendarScope,
     ],
