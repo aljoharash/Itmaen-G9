@@ -40,7 +40,7 @@ class _NavigationState extends State<Navigation> {
     getCurrentUser();
     Noti.initialize(flutterLocalNotificationsPlugin);
     
-    timer = Timer.periodic(const Duration(seconds: 40), (Timer t){sendNotification();
+    timer = Timer.periodic(const Duration(seconds: 45), (Timer t){sendNotification();
     
     
     });
@@ -98,11 +98,11 @@ class _NavigationState extends State<Navigation> {
         var diff = time_.difference(currentTime).inMinutes;// getting the difference in mins 
         print("here is the difference");
         print(diff);
-        if (diff <= 5 && diff > 4) {
+        if (diff==4) {
           Noti.showBigTextNotification(
-              title: "تذكير بأخذ الجرعة",
+             title: "تذكير بأخذ الجرعة",
               body: ''' 
-  [${value.docs[i].get("MName")}]
+  [${value.docs[i].get("name")}]
  عزيزي, تبقى 5 دقائق على موعد اخذ مستقبلك للرعاية لجرعته''',
               fln: flutterLocalNotificationsPlugin);
         }
