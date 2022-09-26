@@ -6,6 +6,7 @@ import 'package:itmaen/addMedicinePages/adddialog.dart';
 import 'package:itmaen/generateqr.dart';
 import 'package:itmaen/patient-login.dart';
 import 'package:itmaen/view.dart';
+import 'package:itmaen/view2.dart';
 import 'add-patient.dart';
 import 'alert_dialog.dart';
 import 'home.dart';
@@ -68,7 +69,7 @@ class _NavigationState extends State<Navigation> {
         return View();
         break;
       case 3:
-        return View();
+        return ViewD();
         break;
     }
   }
