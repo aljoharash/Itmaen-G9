@@ -9,6 +9,8 @@ import 'package:itmaen/patient-login.dart';
 import 'package:itmaen/view.dart';
 import 'add-patient.dart';
 import 'alert_dialog.dart';
+import 'calendar/test1/Calendarr.dart';
+import 'calendar/test22/newCalendar.dart';
 import 'home.dart';
 import 'login.dart';
 import 'package:itmaen/calendar/calendarView.dart';
@@ -74,7 +76,7 @@ class _NavigationState extends State<Navigation> {
         return View();
         break;
       case 3:
-        return Home();
+        return LoadDataFromFireStoree();
         break;
     }
   }
