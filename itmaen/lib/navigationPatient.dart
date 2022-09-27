@@ -36,7 +36,7 @@ class _NavigationPatientState extends State<NavigationPatient> {
     getCurrentUser();
     
     Noti.initialize(flutterLocalNotificationsPlugin);
-    timer = Timer.periodic(const Duration(seconds: 45), (Timer t){sendNotification();
+    timer = Timer.periodic(const Duration(seconds: 60), (Timer t){sendNotification();
     
     
     });
@@ -89,6 +89,9 @@ class _NavigationPatientState extends State<NavigationPatient> {
   [${value.docs[i].get("name")}]
  لقد تبقى 5 دقائق على موعد جرعتك''',
               fln: flutterLocalNotificationsPlugin);
+        }
+         else if(diff <= -1440){ // passed a day over the medication , it will be removed 
+          value.docs[i].reference.delete();
         }
       } // end for
      

@@ -9,6 +9,7 @@ import 'package:itmaen/addMedicinePages/adddialog.dart';
 import 'package:itmaen/generateqr.dart';
 import 'package:itmaen/patient-login.dart';
 import 'package:itmaen/view.dart';
+import 'package:itmaen/viewDailyDoses.dart';
 import 'add-patient.dart';
 import 'alert_dialog.dart';
 import 'home.dart';
@@ -40,7 +41,7 @@ class _NavigationState extends State<Navigation> {
     getCurrentUser();
     Noti.initialize(flutterLocalNotificationsPlugin);
     
-    timer = Timer.periodic(const Duration(seconds: 45), (Timer t){sendNotification();
+    timer = Timer.periodic(const Duration(seconds: 60), (Timer t){sendNotification();
     
     
     });
@@ -106,6 +107,9 @@ class _NavigationState extends State<Navigation> {
  عزيزي, تبقى 5 دقائق على موعد اخذ مستقبلك للرعاية لجرعته''',
               fln: flutterLocalNotificationsPlugin);
         }
+        else if(diff <= -1440){ // passed a day over the medication , it will be removed 
+          value.docs[i].reference.delete();
+        }
       } // end for
     });
     // }
@@ -124,7 +128,7 @@ class _NavigationState extends State<Navigation> {
         return View();
         break;
       case 3:
-        return View();
+        return ViewD();
         break;
     }
   }

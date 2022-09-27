@@ -97,7 +97,7 @@ class patientScreen extends StatelessWidget {
                         ),
                         color: Color.fromARGB(255, 140, 167, 190),
                         child: Text(
-                          'تسجيل الدخول لأول مرة بمسح الكود',
+                          'أول مرة بمسح الكود',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.tajawal(
                             fontSize: 18,
@@ -145,7 +145,7 @@ class patientScreen extends StatelessWidget {
                           }
                         },
                         child: Text(
-                          'تسجيل الدخول السريع',
+                          ' الدخول السريع',
                           style: GoogleFonts.tajawal(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
