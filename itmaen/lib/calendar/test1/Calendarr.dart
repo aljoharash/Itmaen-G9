@@ -1,3 +1,5 @@
+/*
+
 // @dart=2.9
 // ignore_for_file: deprecated_member_use
 
@@ -217,3 +219,5 @@ class Meeting {
   bool isAllDay;
   String resourceId;
 }
+
+*/

@@ -1,3 +1,4 @@
+/*
 //
 // Generated file. Do not edit.
 //
@@ -19,4 +20,4 @@ void registerPlugins(PluginRegistry registry) {
   FirebaseCoreWeb.registerWith(registry.registrarFor(FirebaseCoreWeb));
   UrlLauncherPlugin.registerWith(registry.registrarFor(UrlLauncherPlugin));
   registry.registerMessageHandler();
-}
+}*/
