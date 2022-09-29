@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, prefer_const_constructors_in_immutables, use_key_in_widget_constructors
-
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -15,10 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'Medicine.dart';
-import 'constants.dart';
 import 'package:itmaen/navigation.dart';
-import 'colors.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class SetDose extends StatefulWidget {
   List<String> toBeTransformed;
@@ -54,15 +50,14 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
   double dropDownwidth = 2;
   double sliderValue = 50;
   double sliderValue2 = 3;
-  Medicine? meds;
+  //Medicine? meds;
   late SnackBar snackBar;
   String every_hours = '0';
   get onChanged => null;
   String? selectType = "مل";
   List<String> list = ['مل', 'مجم', 'حبة'];
-  String? selectedColor;
-  Color? selectedColorCode;
-
+  Color backColor = Color.fromARGB(255, 209, 209, 209);
+  Color pickerColor = Color.fromARGB(255, 140, 167, 190);
   DropdownMenuItem<String> buildMenuItem(String item) {
     return DropdownMenuItem(
       value: item,
@@ -145,26 +140,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
               ),
             ),
 
-            Padding(
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: TextField(
-                controller: description,
-                textAlign: TextAlign.right,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Color.fromARGB(255, 239, 237, 237),
-                  hintText: 'وصف الجرعة (اختياري) ',
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(255, 236, 231, 231), width: 3)),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: new BorderSide(
-                        color: Color.fromARGB(79, 255, 255, 255)),
-                    borderRadius: new BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-            ),
+
 
             Row(
               children: [
@@ -219,6 +195,58 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
               ],
             ),
 
+            Container(
+              height: 65,
+              width: double.infinity,
+              padding: const EdgeInsets.only(
+                  top: 5, bottom: 20, left: 17, right: 11),
+              child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                color: pickerColor,
+                // color: selectedColor == null
+                //     ? Color.fromARGB(255, 140, 167, 190)
+                //     : selectedColor,
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    changeColor(pickerColor);
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    "اختيار اللون",
+                                    style: GoogleFonts.tajawal(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 140, 167, 190),
+                                    ),
+                                  ),
+                                )
+                              ],
+                              content: SingleChildScrollView(
+                                child: MaterialPicker(
+                                  onColorChanged: changeColor,
+                                  pickerColor: pickerColor, //default color
+                                ),
+                              )));
+                },
+                child: Text(
+                  "تحديد لون الجرعة ",
+                  style: GoogleFonts.tajawal(
+                    color: Color.fromARGB(255, 245, 244, 244),
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+
             // Container(
             //   color: Color.fromARGB(255, 239, 237, 237),
             //   padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
@@ -237,28 +265,27 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
             //               child: Row(
             //                 children: <Widget>[
             //                   Text(color1.name + " "),
-            //                   Text(" " + color1.icon + "  "),
             //                 ],
             //               ),
             //             ))
             //         .toList(),
             //     onChanged: ((value) {
             //       setState(() {
-            //         //selectedColor = value as String;
+            //       selectedColor = value as String;
             //       });
             //     }),
             //   ),
             // ),
 
             Padding(
-              padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: Text(
                 ":المدة",
                 textAlign: TextAlign.right,
                 style: GoogleFonts.tajawal(
                     color: Color.fromARGB(255, 122, 164, 186),
                     fontWeight: FontWeight.bold,
-                    fontSize: 23),
+                    fontSize: 20),
               ),
             ),
             Padding(
@@ -300,7 +327,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                 style: GoogleFonts.tajawal(
                     color: Color.fromARGB(255, 122, 164, 186),
                     fontWeight: FontWeight.bold,
-                    fontSize: 23),
+                    fontSize: 20),
               ),
             ),
 
@@ -308,7 +335,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
               children: [
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(25, 2, 5, 2),
+                    padding: EdgeInsets.fromLTRB(25, 0, 5, 0),
                     margin: EdgeInsets.only(right: 15),
                     child: TextField(
                       textAlign: TextAlign.right,
@@ -380,7 +407,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                       setState(() {
                         setDate = DateTime(selectedDate.year,
                             selectedDate.month, selectedDate.day);
-                        meds?.date = setDate;
+                        // meds?.date = setDate;
                       });
                     }
                   },
@@ -397,7 +424,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                       children: [
                         Text(
                           dateFormat.format(setDate),
-                          style: TextStyle(fontSize: 27, color: Colors.black),
+                          style: TextStyle(fontSize: 27, color: Colors.grey,),
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(
@@ -406,7 +433,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                         Icon(
                           Icons.calendar_month,
                           size: 27,
-                          color: const Color(0xff1F51FF),
+                          color: Color.fromARGB(255, 140, 167, 190),
                         ),
                       ],
                     ),
@@ -418,7 +445,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                     if (selectedTime != null) {
                       setState(() {
                         setTime = selectedTime;
-                        meds?.time = selectedTime;
+                        //     meds?.time = selectedTime;
                       });
                     }
                   },
@@ -432,7 +459,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                       children: [
                         Text(
                           setTime.format(context),
-                          style: TextStyle(fontSize: 27, color: Colors.black),
+                          style: TextStyle(fontSize: 27, color: Colors.grey,),
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(
@@ -440,7 +467,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                         ),
                         Icon(
                           Icons.alarm,
-                          color: const Color(0xff1F51FF),
+                          color: Color.fromARGB(255, 140, 167, 190),
                           size: 27,
                         )
                       ],
@@ -449,6 +476,28 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                 )
               ],
             ),
+
+                  Padding(
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: TextField(
+                controller: description,
+                textAlign: TextAlign.right,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Color.fromARGB(255, 239, 237, 237),
+                  hintText: 'وصف الجرعة',
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 236, 231, 231), width: 3)),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: new BorderSide(
+                        color: Color.fromARGB(79, 255, 255, 255)),
+                    borderRadius: new BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+            ),
+
             Container(
               margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
@@ -456,17 +505,30 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                   saveMedicine();
                 },
                 child: Text(
-                  'Done',
+                  "إضافة",
+                  style: GoogleFonts.tajawal(
+                    color: Color.fromARGB(255, 245, 244, 244),
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 style: ElevatedButton.styleFrom(
-                    primary: const Color(0xff1F51FF),
+                    primary:Color.fromARGB(255, 140, 167, 190),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10))),
               ),
             ),
           ]),
     );
+  }
+
+  void changeColor(Color color) {
+    setState(() {
+      pickerColor = color;
+      backColor = color;
+      print(backColor);
+    });
   }
 
   Future<DateTime?> selectDate(BuildContext context) {
@@ -500,7 +562,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
       for (int i = 0; i < sliderValue; i++) {
         for (int j = 0; j < sliderValue2; j++) {
           tz.initializeTimeZones();
-          tz.setLocalLocation(tz.getLocation('Europe/Warsaw'));
+          tz.setLocalLocation(tz.getLocation('Asia/Riyadh'));
           newTime = setTime.replacing(
               hour: setTime.hour + (int.parse(every_hours) * j));
           newTime.format(context);
@@ -524,6 +586,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
             //'type': medType,
             'freqPerDay': sliderValue2.toString(),
             'description': description.text,
+            'color': int.parse(backColor.toString().substring(6,16)),
             'cheked': false,
             'caregiverID': caregiverID,
           });
@@ -547,8 +610,9 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
           children: const [
             Text(
               'تمت إضافة الدواء وتحديد الجرعة',
-              textAlign: TextAlign.right,
+            
               style: TextStyle(color: Colors.white, fontSize: 15),
+               textAlign: TextAlign.right
             ),
             Icon(
               Icons.check,
@@ -556,7 +620,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
             )
           ],
         ),
-        backgroundColor: Colors.green,
+       // backgroundColor: Color.fromARGB(255, 140, 167, 190),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
