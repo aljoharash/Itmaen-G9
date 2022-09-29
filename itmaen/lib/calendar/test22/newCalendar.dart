@@ -105,6 +105,9 @@ snap.documents.forEach((document) {
   print(document.documentID);
   });*/
 
+   var description;
+   var amount;
+
   Future<void> getDataFromFireStore() async {
     try {
       final user = await _auth.currentUser;
@@ -122,14 +125,20 @@ snap.documents.forEach((document) {
         .where('caregiverID', isEqualTo: caregiverID)
         .get();
 
-        var description = QuerySnapshot (querySnapshot) {
-        querySnapshot.docs.forEach((doc) {
-            print(doc["description"]);
-        });
-        
+        retrieve(QuerySnapshot snapshot) {
+          snapshot.docs.forEach((doc) {
+
+            description = doc['description'];
+            amount = doc['amount'];
+            print("$description + $amount");
+
+           });
+
+        } 
+
+        retrieve(snapShotsValue);
 
 
-        
 
 
       // List <Doses> doseList = snapShotsValue.docs.map((e) => Doses(
@@ -244,9 +253,9 @@ snap.documents.forEach((document) {
       String? _subjectText = appointmentDetails.eventName;
       var date = DateFormat('MMMM dd, yyyy');
       var name = Meeting().eventName;
-      var description = Doses().description;
-      var amount = Doses().amount;
-      print("$amount + $description");
+      // var description = Doses().description;
+      // var amount = Doses().amount;
+      // print("$amount + $description");
 
 
 
