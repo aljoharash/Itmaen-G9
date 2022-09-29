@@ -1,4 +1,4 @@
-import 'dart:js';
+//import 'dart:js';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -41,7 +41,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
     //getCurrentUser().then((value) => t = value);
     _initializeEventColor();
     getDataFromFireStore().then((results) {
-      SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
         setState(() {});
       });
     });
@@ -117,20 +117,37 @@ snap.documents.forEach((document) {
     }
     // print("first" + caregiverID);
     //StreamBuilder(  stream:(
-    var snapShotsValue = await databaseReference
+    var snapShotsValue = await FirebaseFirestore.instance
         .collection("doses")
         .where('caregiverID', isEqualTo: caregiverID)
         .get();
+
+        var description = QuerySnapshot (querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+            print(doc["description"]);
+        });
+        
+
+
+        
+
+
+      // List <Doses> doseList = snapShotsValue.docs.map((e) => Doses(
+      //   description: e.data()["description"],
+      //   amount: e.data()["amount"],
+      // )).toList();
+  
+
     //if (snapShotsValue != null) {
     // print("first" + caregiverID);
 //print('testinh'+))
     final Random random = new Random();
     List<Meeting> list = snapShotsValue.docs
         .map((e) => Meeting(
-            eventName: e.data()['unit'],
+            eventName: e.data()['name'],
             //freqPerDay: e.data()['freqPerDay'],
             from: DateFormat('dd/MM/yyyy').parse(e.data()['Date']),
-            to: DateFormat('dd/MM/yyyy').parse(e.data()['EndTime']),
+            to: DateFormat('dd/MM/yyyy').parse(e.data()['Date']),
             background: _colorCollection[random.nextInt(9)],
             isAllDay: false))
         .toList();
@@ -158,6 +175,8 @@ snap.documents.forEach((document) {
       });
     }*/
   }
+
+         
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +215,7 @@ snap.documents.forEach((document) {
             ),
         body: SfCalendar(
           view: CalendarView.month,
-          initialDisplayDate: DateTime(2022, 9, 25, 9, 0, 0),
+          initialDisplayDate: DateTime.now(),
           dataSource: events,
           onTap: calendarTapped,
           monthViewSettings: MonthViewSettings(
@@ -220,10 +239,16 @@ snap.documents.forEach((document) {
 
   void calendarTapped(CalendarTapDetails details) {
     if (details.targetElement == CalendarElement.appointment ||
-        details.targetElement == CalendarElement.agenda) {
+        details.targetElement == CalendarElement.agenda && details != null) {
       final Meeting appointmentDetails = details.appointments[0];
       String? _subjectText = appointmentDetails.eventName;
       var date = DateFormat('MMMM dd, yyyy');
+      var name = Meeting().eventName;
+      var description = Doses().description;
+      var amount = Doses().amount;
+      print("$amount + $description");
+
+
 
       showDialog(
           context: this.context,
@@ -237,7 +262,7 @@ snap.documents.forEach((document) {
                     Row(
                       children: <Widget>[
                         Text(
-                          'deem',
+                          '$name',
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 20,
@@ -247,13 +272,13 @@ snap.documents.forEach((document) {
                     ),
                     Row(
                       children: <Widget>[
-                        Text('test2',
+                        Text('$description',
                             style: TextStyle(
                                 fontWeight: FontWeight.w400, fontSize: 15)),
                       ],
                     ),
                     Row(
-                      children: [Text("Id:")],
+                      children: [Text('$amount')],
                     )
                   ],
                 ),
@@ -313,7 +338,6 @@ class MeetingDataSource extends CalendarDataSource {
 
 class Meeting {
   String? eventName;
-  //String? freqPerDay;
   DateTime? from;
   DateTime? to;
   Color? background;
@@ -321,11 +345,21 @@ class Meeting {
 
   Meeting(
       {this.eventName,
-      //this.freqPerDay,
       this.from,
       this.to,
       this.background,
       this.isAllDay});
 }
 //this.eventName,
+
+class Doses{
+  String? description;
+  String? amount;
+
+  Doses(
+    {this.description,
+    this.amount}
+  );
+
+}
 
