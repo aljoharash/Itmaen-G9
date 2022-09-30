@@ -10,7 +10,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import '../../view.dart';
 
 class LoadDataFromFireStoree extends StatefulWidget {
@@ -149,8 +149,17 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+            localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+            const Locale('ar'),
+        ],
+        locale: const Locale('ar'),
+      home: Scaffold(appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 140, 167, 190),
         title: Center(
             child: Text(
@@ -162,11 +171,12 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
           view: CalendarView.month,
           initialDisplayDate: DateTime.now(),
           dataSource: events,
-          onTap: calendarTapped,
+          onTap: calendarTapped, 
           monthViewSettings: MonthViewSettings(
             showAgenda: true,
           ),
-        ));
+        )),
+        );
   }
 
   void _initializeEventColor() {

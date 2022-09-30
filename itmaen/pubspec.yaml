@@ -58,6 +58,8 @@ dependencies:
   flutter_pw_validator: ^1.4.2
   url_launcher: any
   flutter_datetime_picker: ^1.5.1
+  flutter_localizations: 
+    sdk: flutter  
 
 
 dev_dependencies:
