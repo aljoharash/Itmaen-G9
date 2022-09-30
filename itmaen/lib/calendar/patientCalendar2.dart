@@ -14,12 +14,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import '../../view.dart';
 import '../../font.dart';
 
-class LoadDataFromFireStoree extends StatefulWidget {
+class PatientCalendar extends StatefulWidget {
   @override
-  LoadDataFromFireStoreeState createState() => LoadDataFromFireStoreeState();
+  PatientCalendar_ createState() => PatientCalendar_();
 }
 
-class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
+class PatientCalendar_ extends State<PatientCalendar> {
   StorageService st = StorageService();
   final _auth = FirebaseAuth.instance;
   late User loggedInUser;
@@ -37,7 +37,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
   static var t;
 
   LoadDataFromFireStoreeState() {
-    LoadDataFromFireStoree();
+    PatientCalendar_();
   }
 
   @override
@@ -106,20 +106,26 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
   }
 
   Future<void> getDataFromFireStore() async {
-    try {
-      final user = await _auth.currentUser;
-      if (user != null) {
-        loggedInUser = user;
-        caregiverID = loggedInUser.uid;
-      }
-    } catch (e) {
-      print(e);
+    final user = await _auth.currentUser;
+    var isAvailable = user?.uid;
+    if (isAvailable == null) {
+      t = true;
+      id_ = (await st.readSecureData("caregiverID"))!;
+      print("$id_ here 1");
+      t = true;
+
+      //return Future<bool>.value(true);
+    } else {
+      t = false;
+      cid_ = user!.uid.toString();
+      print("$cid_ here 2");
+      t = false;
     }
     // print("first" + caregiverID);
     //StreamBuilder(  stream:(
     var snapShotsValue = await FirebaseFirestore.instance
         .collection("doses")
-        .where('caregiverID', isEqualTo: caregiverID)
+        .where('caregiverID', isEqualTo: id_)
         .get();
 
     retrieve(snapShotsValue);

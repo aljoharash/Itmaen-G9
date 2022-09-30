@@ -193,7 +193,7 @@ class _ViewPageState extends State<View> {
           },
           // Future that needs to be resolved
           // inorder to display something on the Canvas
-          future: getCurrentUser(),
+        future: getCurrentUser(),
         ),
       ),
     );

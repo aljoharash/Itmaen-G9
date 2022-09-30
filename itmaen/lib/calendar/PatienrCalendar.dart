@@ -12,14 +12,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import '../../view.dart';
-import '../../font.dart';
 
-class LoadDataFromFireStoree extends StatefulWidget {
+class LoadDataFromFireStoreP extends StatefulWidget {
   @override
-  LoadDataFromFireStoreeState createState() => LoadDataFromFireStoreeState();
+  LoadDataFromFireStorePState createState() => LoadDataFromFireStorePState();
 }
 
-class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
+class LoadDataFromFireStorePState extends State<LoadDataFromFireStoreP> {
   StorageService st = StorageService();
   final _auth = FirebaseAuth.instance;
   late User loggedInUser;
@@ -37,7 +36,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
   static var t;
 
   LoadDataFromFireStoreeState() {
-    LoadDataFromFireStoree();
+    LoadDataFromFireStoreP();
   }
 
   @override
@@ -72,20 +71,24 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
   int count = 0;
 
   retrieve(QuerySnapshot snapshot) {
+    //if (snapshot.hasData) {
     snapshot.docs.forEach((doc) {
-      count++;
-      namee = doc['name'];
-      description = doc['description'];
-      amount = doc['amount'];
-      checked = doc['cheked'];
-      unit = doc['unit'];
-      doseDes.add(description);
-      doseAmount.add(amount);
-      doseName.add(namee);
-      doseCheck.add(checked);
-      doseUnit.add(unit);
-      print("$description + $amount");
+      if (id_ == doc['caregiverID']) {
+        count++;
+        namee = doc['name'];
+        description = doc['description'];
+        amount = doc['amount'];
+        checked = doc['cheked'];
+        unit = doc['unit'];
+        doseDes.add(description);
+        doseAmount.add(amount);
+        doseName.add(namee);
+        doseCheck.add(checked);
+        doseUnit.add(unit);
+        print("$description + $amount");
+      }
     });
+    // }
   }
 
   intoList() {
@@ -104,9 +107,44 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
       }
     }
   }
+/*
+  Future<bool> getCurrentUser() async {
+    final user = await _auth.currentUser;
+    var isAvailable = user?.uid;
+    if (isAvailable == null) {
+      t = true;
+      id_ = (await st.readSecureData("caregiverID"))!;
+      print("$id_ here 1");
+      t = true;
+
+      return Future<bool>.value(true);
+    } else {
+      t = false;
+      cid_ = user!.uid.toString();
+      print("$cid_ here 2");
+      t = false;
+      return Future<bool>.value(false);
+    }
+  }*/
 
   Future<void> getDataFromFireStore() async {
-    try {
+    final user = await _auth.currentUser;
+    var isAvailable = user?.uid;
+    if (isAvailable == null) {
+      t = true;
+      id_ = (await st.readSecureData("caregiverID"))!;
+      print("$id_ here 1");
+      t = true;
+
+      //return Future<bool>.value(true);
+    } else {
+      t = false;
+      cid_ = user!.uid.toString();
+      print("$cid_ here 2");
+      t = false;
+      //return Future<bool>.value(false);
+    }
+    /*try {
       final user = await _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
@@ -115,29 +153,41 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
     } catch (e) {
       print(e);
     }
+
+    //var id2 = getCurrentUserStorage();
+    //print("$id2 is here");
+    try {
+      final user = await _auth.currentUser;
+      if (user != null) {
+        id_ = (await st.readSecureData("caregiverID"))!;
+        print(id_);
+      }
+    } catch (e) {
+      print(e);
+    }*/
     // print("first" + caregiverID);
     //StreamBuilder(  stream:(
     var snapShotsValue = await FirebaseFirestore.instance
         .collection("doses")
-        .where('caregiverID', isEqualTo: caregiverID)
+        .where('caregiverID', isEqualTo: id_)
         .get();
+    if (snapShotsValue != null) {
+      retrieve(snapShotsValue);
 
-    retrieve(snapShotsValue);
-
-    final Random random = new Random();
-    List<Meeting> list = snapShotsValue.docs
-        .map((e) => Meeting(
-            eventName: e.data()['name'],
-            //freqPerDay: e.data()['freqPerDay'],
-            from: DateTime.parse(e.data()['Time'].toDate().toString()),
-            to: DateTime(e.data()['Year'], e.data()['Month'], e.data()['Day'],
-                23, 59, 00),
-            background: Color(e.data()['color']),
-            isAllDay: false))
-        .toList();
-    setState(() {
-      events = MeetingDataSource(list);
-    });
+      final Random random = new Random();
+      List<Meeting> list = snapShotsValue.docs
+          .map((e) => Meeting(
+              eventName: e.data()['name'],
+              //freqPerDay: e.data()['freqPerDay'],
+              from: DateFormat('dd/MM/yyyy').parse(e.data()['Date']),
+              to: DateFormat('dd/MM/yyyy').parse(e.data()['Date']),
+              background: Color(e.data()['color']),
+              isAllDay: false))
+          .toList();
+      setState(() {
+        events = MeetingDataSource(list);
+      });
+    }
   }
 
   @override
@@ -162,34 +212,13 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
             )),
           ),
           body: SfCalendar(
-            viewHeaderStyle: ViewHeaderStyle(
-              dayTextStyle: TextStyle(
-                  fontFamily: 'Tajawal',
-                  color: Colors.black45,
-                  fontWeight: FontWeight.w700),
-            ),
             view: CalendarView.month,
             initialDisplayDate: DateTime.now(),
             dataSource: events,
-            todayHighlightColor: Color.fromARGB(255, 140, 167, 190),
             onTap: calendarTapped,
             monthViewSettings: MonthViewSettings(
               showAgenda: true,
-              monthCellStyle: MonthCellStyle(
-                textStyle: TextStyle(
-                  fontFamily: 'Tajawal',
-                  color: Color.fromARGB(255, 140, 167, 190),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
             ),
-            scheduleViewSettings: ScheduleViewSettings(),
-            headerStyle: CalendarHeaderStyle(
-                textStyle: TextStyle(
-                    fontFamily: 'Tajawal',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                    color: Colors.black45)),
           )),
     );
   }
@@ -264,44 +293,37 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                         )),
                       ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
                     Row(
                       children: <Widget>[
                         Expanded(
                           child: Text(
                             '$isChecked',
                             style: GoogleFonts.tajawal(
-                              //fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 159, 50, 46),
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 71, 92, 110),
                             ),
                             textAlign: TextAlign.right,
                           ),
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       children: <Widget>[
                         Expanded(
                           child: currCheck
                               ? SizedBox(
-                                  height: 20,
+                                  height: 10,
                                 )
-                              : ElevatedButton.icon(
+                              : ElevatedButton(
                                   onPressed: () {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) => View()));
                                   },
-                                  icon: FaIcon(FontAwesomeIcons.pills),
-                                  label: Text(
-                                    'قائمة الأدوية',
-                                    style: GoogleFonts.tajawal(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
+                                  child: FaIcon(FontAwesomeIcons.pills),
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: const Size(200, 40),
                                     maximumSize: const Size(200, 40),
