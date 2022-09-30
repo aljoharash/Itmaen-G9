@@ -376,55 +376,58 @@ class _medBubbleState extends State<medBubble> {
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Center(
-            child: Text(
-              '  تم تناول الجرعة مسبقا ',
-              style: GoogleFonts.tajawal(
-                  fontSize: 20,
-                  color: ui.Color.fromARGB(255, 24, 25, 25),
-                  fontWeight: FontWeight.bold),
+        return Directionality(
+          textDirection: ui.TextDirection.rtl,
+          child: AlertDialog(
+            title: Center(
+              child: Text(
+                '  تم تناول الجرعة مسبقا ',
+                style: GoogleFonts.tajawal(
+                    fontSize: 20,
+                    color: ui.Color.fromARGB(255, 24, 25, 25),
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Center(
-                  child: Text(
-                      '[' + x! + ' ' + widget.MedAmount + widget.MedUnit + ']',
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Center(
+                    child: Text(
+                        '[' + x! + ' ' + widget.MedAmount + widget.MedUnit + ']',
+                        style: GoogleFonts.tajawal(
+                            fontSize: 18,
+                            color: ui.Color.fromARGB(255, 99, 163, 206),
+                            fontWeight: FontWeight.bold)),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Icon(
+                    Icons.health_and_safety,
+                    size: 35,
+                    color: ui.Color.fromARGB(255, 111, 161, 200),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Directionality(
+                  textDirection: ui.TextDirection.rtl,
+                  child: Text('حسنا',
                       style: GoogleFonts.tajawal(
                           fontSize: 18,
-                          color: ui.Color.fromARGB(255, 99, 163, 206),
+                          color: ui.Color.fromARGB(255, 24, 25, 25),
                           fontWeight: FontWeight.bold)),
                 ),
-                SizedBox(
-                  height: 15,
-                ),
-                Icon(
-                  Icons.health_and_safety,
-                  size: 35,
-                  color: ui.Color.fromARGB(255, 111, 161, 200),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Directionality(
-                textDirection: ui.TextDirection.rtl,
-                child: Text('حسنا',
-                    style: GoogleFonts.tajawal(
-                        fontSize: 18,
-                        color: ui.Color.fromARGB(255, 24, 25, 25),
-                        fontWeight: FontWeight.bold)),
+                onPressed: () {
+                  //Navigator.of(context).pop();
+        
+                  Navigator.of(context).pop();
+                },
               ),
-              onPressed: () {
-                //Navigator.of(context).pop();
-
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+            ],
+          ),
         );
       },
     );
@@ -443,145 +446,148 @@ class _medBubbleState extends State<medBubble> {
         context: context,
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: Center(
-              child: Text(
-                ' تناول الجرعة',
-                style: GoogleFonts.tajawal(
-                    fontSize: 20,
-                    color: ui.Color.fromARGB(255, 24, 25, 25),
-                    fontWeight: FontWeight.bold),
+          return   Directionality(
+            textDirection: ui.TextDirection.rtl,
+            child: AlertDialog(
+              title: Center(
+                child: Text(
+                  ' تناول الجرعة',
+                  style: GoogleFonts.tajawal(
+                      fontSize: 20,
+                      color: ui.Color.fromARGB(255, 24, 25, 25),
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            content: SingleChildScrollView(
-              child: Directionality(
-                textDirection: ui.TextDirection.rtl,
-                child: ListBody(
-                  children: <Widget>[
-                    Center(
-                      child: Text(
-                          '[' +
-                              x! +
-                              ' ' +
-                              widget.MedAmount +
-                              widget.MedUnit +
-                              ']',
-                          style: GoogleFonts.tajawal(
-                              fontSize: 15,
-                              color: ui.Color.fromARGB(255, 99, 163, 206),
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Center(
-                      child: Text(" ${widget.time} الساعة ",
-                          style: GoogleFonts.tajawal(
-                              fontSize: 15,
-                              color: ui.Color.fromARGB(255, 99, 163, 206),
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                   
-                    SizedBox(
-                      height: 18,
-                    ),
-                    Center(
-                      child: Text(
-                        'هل تم أخذ الدواء ؟',
-                        style: GoogleFonts.tajawal(
-                            fontSize: 18,
-                            color: ui.Color.fromARGB(255, 24, 25, 25),
-                            fontWeight: FontWeight.bold),
+              content: SingleChildScrollView(
+                child: Directionality(
+                  textDirection: ui.TextDirection.rtl,
+                  child: ListBody(
+                    children: <Widget>[
+                      Center(
+                        child: Text(
+                            '[' +
+                                x! +
+                                ' ' +
+                                widget.MedAmount +
+                                widget.MedUnit +
+                                ']',
+                            style: GoogleFonts.tajawal(
+                                fontSize: 15,
+                                color: ui.Color.fromARGB(255, 99, 163, 206),
+                                fontWeight: FontWeight.bold)),
                       ),
-                    ),
-                    SizedBox(
-                      height: 18,
-                    ),
-                    Icon(
-                      Icons.health_and_safety,
-                      size: 35,
-                      color: ui.Color.fromARGB(255, 111, 161, 200),
-                    ),
-                  ],
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Center(
+                        child: Text(" ${widget.time} الساعة ",
+                            style: GoogleFonts.tajawal(
+                                fontSize: 15,
+                                color: ui.Color.fromARGB(255, 99, 163, 206),
+                                fontWeight: FontWeight.bold)),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                     
+                      SizedBox(
+                        height: 18,
+                      ),
+                      Center(
+                        child: Text(
+                          'هل تم أخذ الدواء ؟',
+                          style: GoogleFonts.tajawal(
+                              fontSize: 18,
+                              color: ui.Color.fromARGB(255, 24, 25, 25),
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 18,
+                      ),
+                      Icon(
+                        Icons.health_and_safety,
+                        size: 35,
+                        color: ui.Color.fromARGB(255, 111, 161, 200),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            actions: <Widget>[
-              Directionality(
-                textDirection: ui.TextDirection.rtl,
-                child: TextButton(
-                  child: Text('ليس بعد',
-                      style: GoogleFonts.tajawal(
-                          fontSize: 18,
-                          color: ui.Color.fromARGB(255, 24, 25, 25),
-                          fontWeight: FontWeight.bold)),
-                  onPressed: () {
-                    //Navigator.of(context).pop();
-              
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-              Directionality(
-                textDirection: ui.TextDirection.rtl,
-                child: TextButton(
-                    child: Text('نعم',
+              actions: <Widget>[
+                Directionality(
+                  textDirection: ui.TextDirection.rtl,
+                  child: TextButton(
+                    child: Text('ليس بعد',
                         style: GoogleFonts.tajawal(
                             fontSize: 18,
                             color: ui.Color.fromARGB(255, 24, 25, 25),
                             fontWeight: FontWeight.bold)),
-                    // onPressed: () {
-                    //Navigator.of(context).pop();
-                    onPressed: widget.checked
-                        ? null
-                        : () {
-                            FirebaseFirestore.instance
-                                .collection('doses')
-                                .doc(widget.doc)
-                                .update({'cheked': true});
-                            FirebaseFirestore.instance
-                                .collection('doses')
-                                .doc(widget.doc)
-                                .update({'Timecheked': DateTime.now()});
-              
-                            if (diff == 0) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                      ' "تم أخذ الجرعة على الموعد تماما " ',
-                                      style: TextStyle(fontSize: 18),
-                                      textAlign: TextAlign.right),
-                                ),
-                              );
-                            } else if (diff > 0) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      ' " تم أخذ الجرعة قبل الموعد ب ${diff.abs()} دقائق" ',
-                                      style: TextStyle(fontSize: 18),
-                                      textAlign: TextAlign.right),
-                                ),
-                              );
-                            } else if (diff < 0) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      ' " تم أخذ الجرعة بعد الموعد ب ${diff.abs()} دقائق" ',
-                                      style: TextStyle(fontSize: 18),
-                                      textAlign: TextAlign.right),
-                                ),
-                              );
+                    onPressed: () {
+                      //Navigator.of(context).pop();
+                
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ),
+                Directionality(
+                  textDirection: ui.TextDirection.rtl,
+                  child: TextButton(
+                      child: Text('نعم',
+                          style: GoogleFonts.tajawal(
+                              fontSize: 18,
+                              color: ui.Color.fromARGB(255, 24, 25, 25),
+                              fontWeight: FontWeight.bold)),
+                      // onPressed: () {
+                      //Navigator.of(context).pop();
+                      onPressed: widget.checked
+                          ? null
+                          : () {
+                              FirebaseFirestore.instance
+                                  .collection('doses')
+                                  .doc(widget.doc)
+                                  .update({'cheked': true});
+                              FirebaseFirestore.instance
+                                  .collection('doses')
+                                  .doc(widget.doc)
+                                  .update({'Timecheked': DateTime.now()});
+                
+                              if (diff == 0) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        ' "تم أخذ الجرعة على الموعد تماما " ',
+                                        style: TextStyle(fontSize: 18),
+                                        textAlign: TextAlign.right),
+                                  ),
+                                );
+                              } else if (diff > 0) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        ' " تم أخذ الجرعة قبل الموعد ب ${diff.abs()} دقائق" ',
+                                        style: TextStyle(fontSize: 18),
+                                        textAlign: TextAlign.right),
+                                  ),
+                                );
+                              } else if (diff < 0) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        ' " تم أخذ الجرعة بعد الموعد ب ${diff.abs()} دقائق" ',
+                                        style: TextStyle(fontSize: 18),
+                                        textAlign: TextAlign.right),
+                                  ),
+                                );
+                              }
+                              Navigator.of(context).pop();
                             }
-                            Navigator.of(context).pop();
-                          }
-              
-                   
-                    ),
-              ),
-            ],
+                
+                     
+                      ),
+                ),
+              ],
+            ),
           );
         },
       );
