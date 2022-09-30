@@ -239,6 +239,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                       ), textAlign: TextAlign.right,)),
                       ],
                     ),
+                    
                     Row(
                       children: <Widget>[
                       Expanded(child: Text('$isChecked',
@@ -251,10 +252,13 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                     SizedBox(
                       height: 10,
                     ),
+                    
                     Row(
                       children: <Widget>[
                        Expanded(child: 
-                       
+               currCheck? SizedBox(
+                      height: 10,
+                    ):        
             ElevatedButton(
             onPressed: () {
               
