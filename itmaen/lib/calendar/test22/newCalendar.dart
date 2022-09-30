@@ -126,7 +126,8 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
 
     final Random random = new Random();
     List<Meeting> list = snapShotsValue.docs
-        .map((e) => Meeting(
+        .map((e) => 
+        Meeting(
             eventName: e.data()['name'],
             //freqPerDay: e.data()['freqPerDay'],
             from: DateTime.parse(e.data()['Time'].toDate().toString()),
