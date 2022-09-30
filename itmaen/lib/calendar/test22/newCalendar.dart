@@ -4,10 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/secure-storage.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../view.dart';
 
 class LoadDataFromFireStoree extends StatefulWidget {
   @override
@@ -132,7 +136,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
             //freqPerDay: e.data()['freqPerDay'],
             from: DateFormat('dd/MM/yyyy').parse(e.data()['Date']),
             to: DateFormat('dd/MM/yyyy').parse(e.data()['Date']),
-            background: _colorCollection[random.nextInt(9)],
+            background: Color(e.data()['color']),
             isAllDay: false))
         .toList();
     setState(() {
@@ -147,6 +151,12 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 140, 167, 190),
+        title: Center(
+            child: Text(
+          "الصفحة الرئيسية",
+          style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+        )),
             ),
         body: SfCalendar(
           view: CalendarView.month,
@@ -191,46 +201,71 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
           context: this.context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Container(child: new Text('$_subjectText')),
+              title: Container(child: Text('$_subjectText',
+              style: GoogleFonts.tajawal(
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 71, 92, 110),
+              ), textAlign: TextAlign.right,),
+              ),
               content: Container(
-                height: 80,
+                height: 120,
                 child: Column(
                   children: <Widget>[
-                    // Row(
-                    //   children: <Widget>[
-                    //     Text(
-                    //       '$name',
-                    //       style: TextStyle(
-                    //         fontWeight: FontWeight.w400,
-                    //         fontSize: 20,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                     Row(
                       children: <Widget>[
-                        Text('$currDes',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 15)),
+                         Expanded(child:Text('$currDes :الوصف',
+                            style: GoogleFonts.tajawal(
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 71, 92, 110),
+                       ), textAlign: TextAlign.right,),
+                    ),],
+                    ),
+                    Row(
+                      children: <Widget>[
+                      Expanded(child: Text('الكمية:  $currAmount $currUnit', 
+                      style: GoogleFonts.tajawal(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 71, 92, 110),
+                      ), textAlign: TextAlign.right,)),
                       ],
                     ),
                     Row(
-                      children: [Text('$currUnit $currAmount')],
+                      children: <Widget>[
+                      Expanded(child: Text('$isChecked',
+                      style: GoogleFonts.tajawal(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 71, 92, 110),
+                      ), textAlign: TextAlign.right,),
+                    ),],
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     Row(
-                      children: [Text('$isChecked')],
+                      children: <Widget>[
+                       Expanded(child: 
+                       
+            ElevatedButton(
+            onPressed: () {
+              
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => View()));
+            },
+            
+            child: FaIcon(FontAwesomeIcons.pills),
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(200, 40),
+              maximumSize: const Size(200, 40),
+              primary: Color.fromARGB(255, 140, 167, 190),
+            ),
+          ),
+                    ),],
                     ),
                   ],
                 ),
               ),
-              /*
- actions: <Widget>[
- new FlatButton(
- onPressed: () {
- Navigator.of(context).pop();
- },
- child: new Text('close'))
- ],*/
+              
+ 
             );
           });
     }
