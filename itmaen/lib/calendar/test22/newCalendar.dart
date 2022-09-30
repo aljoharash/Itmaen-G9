@@ -132,11 +132,12 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
 
     final Random random = new Random();
     List<Meeting> list = snapShotsValue.docs
-        .map((e) => Meeting(
+        .map((e) => 
+        Meeting(
             eventName: e.data()['name'],
             //freqPerDay: e.data()['freqPerDay'],
-            from: DateFormat('dd/MM/yyyy').parse(e.data()['Date']),
-            to: DateFormat('dd/MM/yyyy').parse(e.data()['Date']),
+            from: DateTime.parse(e.data()['Time'].toDate().toString()),
+            to: DateTime(e.data()['Year'],e.data()['Month'],e.data()['Day'], 23,59,00 ),
             background: Color(e.data()['color']),
             isAllDay: false))
         .toList();
@@ -185,7 +186,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
             
           ),
           headerStyle: CalendarHeaderStyle(
-            textStyle: TextStyle(fontFamily: 'Tajawal' , fontWeight: FontWeight.w600, fontSize: 20, color: Color.fromARGB(255, 140, 167, 190), )
+            textStyle: TextStyle(fontFamily: 'Tajawal' , fontWeight: FontWeight.w600, fontSize: 20, color: Colors.black45  )
           ),
         )),
         );
