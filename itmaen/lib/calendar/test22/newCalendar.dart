@@ -12,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import '../../view.dart';
+import '../../font.dart';
 
 class LoadDataFromFireStoree extends StatefulWidget {
   @override
@@ -168,12 +169,23 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
         )),
             ),
         body: SfCalendar(
+          viewHeaderStyle: ViewHeaderStyle(
+            dayTextStyle: TextStyle(fontFamily: 'Tajawal' , color: Colors.black45, fontWeight: FontWeight.w700  ),
+          ),
           view: CalendarView.month,
           initialDisplayDate: DateTime.now(),
           dataSource: events,
+          todayHighlightColor: Color.fromARGB(255, 140, 167, 190),
           onTap: calendarTapped, 
           monthViewSettings: MonthViewSettings(
             showAgenda: true,
+            monthCellStyle: MonthCellStyle(textStyle: TextStyle(fontFamily:'Tajawal', color:Color.fromARGB(255, 140, 167, 190), fontWeight: FontWeight.w600 ,),  ) ,
+          ),
+          scheduleViewSettings: ScheduleViewSettings(
+            
+          ),
+          headerStyle: CalendarHeaderStyle(
+            textStyle: TextStyle(fontFamily: 'Tajawal' , fontWeight: FontWeight.w600, fontSize: 20, color: Color.fromARGB(255, 140, 167, 190), )
           ),
         )),
         );
@@ -240,33 +252,38 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                       ],
                     ),
                     
-                    Row(
-                      children: <Widget>[
-                      Expanded(child: Text('$isChecked',
-                      style: GoogleFonts.tajawal(
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 71, 92, 110),
-                      ), textAlign: TextAlign.right,),
-                    ),],
-                    ),
                     SizedBox(
                       height: 10,
                     ),
                     
                     Row(
                       children: <Widget>[
+                      Expanded(child: Text('$isChecked',
+                      style: GoogleFonts.tajawal(
+                      //fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 159, 50, 46),
+                      ), textAlign: TextAlign.right,),
+                    ),],
+                    ),
+                    
+                    Row(
+                      children: <Widget>[
                        Expanded(child: 
                currCheck? SizedBox(
-                      height: 10,
+                      height: 20,
                     ):        
-            ElevatedButton(
+            ElevatedButton.icon(
             onPressed: () {
               
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => View()));
             },
             
-            child: FaIcon(FontAwesomeIcons.pills),
+            icon: FaIcon(FontAwesomeIcons.pills),
+            label:Text('قائمة الأدوية', style: GoogleFonts.tajawal(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      ),),
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(200, 40),
               maximumSize: const Size(200, 40),

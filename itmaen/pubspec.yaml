@@ -110,6 +110,10 @@ flutter:
     - family: Madani Arabic Black
       fonts:
       - asset: fonts/Madani Arabic Black.ttf
+
+    - family: Tajawal
+      fonts:
+      - asset: fonts/Tajawal-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
