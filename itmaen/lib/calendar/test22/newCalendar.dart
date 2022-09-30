@@ -34,6 +34,8 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
   LoadDataFromFireStoreeState() {
     LoadDataFromFireStoree();
   }
+  
+
   @override
   void initState() {
     super.initState();
@@ -46,67 +48,63 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
       });
     });
   }
-/*
-  Future<bool> getstatu() async {
-    bool val = await getCurrentUser();
-    bool val2 = val;
-    return val2;
-  }*/
-/*
-  void getCurrentUser() async {
-    //String qrData="";
-    try {
-      final user = await _auth.currentUser;
-      if (user != null) {
-        loggedInUser = user;
-        caregiverID = loggedInUser.uid;
-      }
-    } catch (e) {
-      print(e);
-    }
-  }*/
-
-/*
-
-  Future<bool> getCurrentUser() async {
-    //HomePage();
-    final user = await _auth.currentUser;
-    // st.writeSecureData("caregiverID", "vEvVOOqyORTSyfork3f3rZWnqKb2");
-    //print(user!.uid);
-    var isAvailable = user?.uid;
-    if (isAvailable == null) {
-      t = true;
-      id_ = (await st.readSecureData("caregiverID"))!;
-      print("$id_ here 1");
-      t = true;
-
-      return Future<bool>.value(true);
-    } else {
-      t = false;
-      cid_ = user!.uid.toString();
-      print("$cid_ here 2");
-      t = false;
-      return Future<bool>.value(false);
-    }
-  }*/
-
-/*
-  Future<void> details() async {
-  CollectionReference doses =
-      FirebaseFirestore.instance.collection('doses');
-  FirebaseAuth auth = FirebaseAuth.instance;
-  String? uid = auth.currentUser?.uid.toString();
-  doses.get().['kk'];
-  });
-*/
-/*
-QuerySnapshot snap = await Firestore.instance.collection('collection').getDocuments();
-snap.documents.forEach((document) { 
-  print(document.documentID);
-  });*/
 
    var description;
    var amount;
+   var namee;
+   var checked;
+   var unit;
+   String? _subjectText ;
+   List <String>  doseDes = <String> [];
+   List <String>  doseAmount = <String> [];
+   List <String>  doseName = <String> [];
+   List <bool>  doseCheck = <bool> [];
+   List <String>  doseUnit= <String> [];
+   var currDes;
+   var currAmount;
+   var currCheck;
+   var currUnit;
+   var isChecked;
+   int count = 0;
+
+   retrieve(QuerySnapshot snapshot) {
+          snapshot.docs.forEach((doc) {
+            count++;
+            namee = doc['name'];
+            description = doc['description'];
+            amount = doc['amount'];
+            checked = doc['cheked'];
+            unit = doc['unit'];
+            doseDes.add(description);
+            doseAmount.add(amount);
+            doseName.add(namee);
+            doseCheck.add(checked);
+            doseUnit.add(unit);
+            print("$description + $amount");
+            
+           });
+
+        } 
+
+    intoList(){
+      for(int i = 0 ; i < count; i++){
+        if(doseName[i] == _subjectText ){
+          currDes = doseDes[i];
+          currAmount = doseAmount[i];
+          currCheck = doseCheck[i];
+          currUnit = doseUnit[i];
+        }
+
+        if(currCheck == true){
+          isChecked = "تم أخذ الدواء";
+        }else{
+          isChecked = "لم يتم أخذ الدواء";
+        }
+
+
+      }
+
+    }
 
   Future<void> getDataFromFireStore() async {
     try {
@@ -120,36 +118,13 @@ snap.documents.forEach((document) {
     }
     // print("first" + caregiverID);
     //StreamBuilder(  stream:(
-    var snapShotsValue = await FirebaseFirestore.instance
+       var snapShotsValue = await FirebaseFirestore.instance
         .collection("doses")
         .where('caregiverID', isEqualTo: caregiverID)
         .get();
 
-        retrieve(QuerySnapshot snapshot) {
-          snapshot.docs.forEach((doc) {
-
-            description = doc['description'];
-            amount = doc['amount'];
-            print("$description + $amount");
-
-           });
-
-        } 
-
         retrieve(snapShotsValue);
 
-
-
-
-      // List <Doses> doseList = snapShotsValue.docs.map((e) => Doses(
-      //   description: e.data()["description"],
-      //   amount: e.data()["amount"],
-      // )).toList();
-  
-
-    //if (snapShotsValue != null) {
-    // print("first" + caregiverID);
-//print('testinh'+))
     final Random random = new Random();
     List<Meeting> list = snapShotsValue.docs
         .map((e) => Meeting(
@@ -163,26 +138,7 @@ snap.documents.forEach((document) {
     setState(() {
       events = MeetingDataSource(list);
     });
-    /* } else {
-      var snapShotsValue = await databaseReference
-          .collection("doses")
-          .where('caregiverID', isEqualTo: cid_)
-          .get();
-      print("second" + id_);
-      final Random random = new Random();
-      List<Meeting> list = snapShotsValue.docs
-          .map((e) => Meeting(
-              eventName: e.data()['name'],
-              //freqPerDay: e.data()['freqPerDay'],
-              from: DateFormat('dd/MM/yyyy').parse(e.data()['Date']),
-              to: DateFormat('dd/MM/yyyy').parse(e.data()['EndTime']),
-              background: _colorCollection[random.nextInt(9)],
-              isAllDay: false))
-          .toList();
-      setState(() {
-        events = MeetingDataSource(list);
-      });
-    }*/
+
   }
 
          
@@ -191,36 +147,6 @@ snap.documents.forEach((document) {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            /*
-            leading: PopupMenuButton<String>(
-          icon: Icon(Icons.settings),
-          itemBuilder: (BuildContext context) => options.map((String choice) {
-            return PopupMenuItem<String>(
-              value: choice,
-              child: Text(choice),
-            );
-          }).toList(),
-          onSelected: (String value) {
-            if (value == 'Add') {
-              databaseReference.collection("testCalendar").doc("1").set({
-                'Subject': 'Mastering Flutter',
-                'StartTime': '26/09/2022 06:25:00',
-                'EndTime': '26/09/2022 09:25:00'
-              });
-            } else if (value == "Delete") {
-              try {
-                databaseReference.collection('testCalendar').doc('1').delete();
-              } catch (e) {}
-            } else if (value == "Update") {
-              try {
-                databaseReference
-                    .collection('testCalendar')
-                    .doc('1')
-                    .update({'Subject': 'Meeting'});
-              } catch (e) {}
-            }
-          },
-        )*/
             ),
         body: SfCalendar(
           view: CalendarView.month,
@@ -246,16 +172,18 @@ snap.documents.forEach((document) {
     _colorCollection.add(const Color(0xFF0A8043));
   }
 
-  void calendarTapped(CalendarTapDetails details) {
+  Future<void> calendarTapped(CalendarTapDetails details) async {
     if (details.targetElement == CalendarElement.appointment ||
         details.targetElement == CalendarElement.agenda && details != null) {
       final Meeting appointmentDetails = details.appointments[0];
-      String? _subjectText = appointmentDetails.eventName;
+      _subjectText = appointmentDetails.eventName;
       var date = DateFormat('MMMM dd, yyyy');
       var name = Meeting().eventName;
+      intoList();
       // var description = Doses().description;
       // var amount = Doses().amount;
       // print("$amount + $description");
+       
 
 
 
@@ -268,27 +196,30 @@ snap.documents.forEach((document) {
                 height: 80,
                 child: Column(
                   children: <Widget>[
+                    // Row(
+                    //   children: <Widget>[
+                    //     Text(
+                    //       '$name',
+                    //       style: TextStyle(
+                    //         fontWeight: FontWeight.w400,
+                    //         fontSize: 20,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     Row(
                       children: <Widget>[
-                        Text(
-                          '$name',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text('$description',
+                        Text('$currDes',
                             style: TextStyle(
                                 fontWeight: FontWeight.w400, fontSize: 15)),
                       ],
                     ),
                     Row(
-                      children: [Text('$amount')],
-                    )
+                      children: [Text('$currUnit $currAmount')],
+                    ),
+                    Row(
+                      children: [Text('$isChecked')],
+                    ),
                   ],
                 ),
               ),
