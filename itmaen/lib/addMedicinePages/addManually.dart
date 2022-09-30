@@ -377,22 +377,4 @@ class _addManuallyState extends State<addManually> {
   String? ValidateDose(String? FormDose) {
     if (FormDose == null || FormDose.isEmpty) return 'الرجاء ادخال الجرعة ';
   }
-
-  Future<bool> checkIfDocExists(String docId) async {
-    try {
-      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-          await _firestore.collection('medicines').doc(docId).get();
-
-      // Get reference to Firestore collection
-      // var collectionRef = _firestore.collection('medicines');
-
-      //  var doc = await collectionRef.doc(docId).get();
-      if (documentSnapshot.exists) {
-        return true;
-      } else
-        return false;
-    } catch (e) {
-      throw e;
-    }
-  }
 }

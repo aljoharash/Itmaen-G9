@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/default_transitions.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,9 +18,8 @@ import 'package:intl/intl.dart';
 import 'package:itmaen/navigation.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 //import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:number_inc_dec/number_inc_dec.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
-
+import 'dart:ui' as ui;
 
 class SetDose extends StatefulWidget {
   List<String> toBeTransformed;
@@ -44,19 +44,17 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
   final nameController = TextEditingController();
   final pillAmountController = TextEditingController();
   final TextEditingController description = new TextEditingController();
-  //TextEditingController unit = new TextEditingController();
   DateTime setDate = DateTime.now();
   TimeOfDay setTime = TimeOfDay.now();
-  int _value = 1;
-  //int notifyId = 0;
-  String medType = '';
-  String notes = "";
+  var selectedTime = TimeOfDay.now();
+  String _groupValue = 'تؤخذ الجرعة في أي وقت';
   DateFormat dateFormat = DateFormat('yyyy-MM-dd');
   DateFormat dateFormatDisplayed = DateFormat('dd/MM/yyyy');
   Color onClickDropDown = Colors.black45;
   double dropDownwidth = 2;
   double sliderValue = 1;
   double sliderValue2 = 1;
+  TimeOfDay timeDisplayed = TimeOfDay.now();
   //Medicine? meds;
   late SnackBar snackBar;
   String every_hours = '0';
@@ -68,8 +66,10 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
   DropdownMenuItem<String> buildMenuItem(String item) {
     return DropdownMenuItem(
       value: item,
-      child: Text(
-        item,
+      child: Center(
+        child: Text(
+          item,
+        ),
       ),
     );
   }
@@ -98,6 +98,8 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    
+  
     nameController.text = toBeTransformed[0];
     //  selectType = toBeTransformed[2];
 
@@ -119,25 +121,20 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
               SizedBox(
                 height: 20.0,
               ),
-
-                Padding(
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: 
-                    Text(
-                        ":اسم الدواء",
-                        textAlign: TextAlign.right,
-                        style: GoogleFonts.tajawal(
-                            color: Color.fromARGB(255, 122, 164, 186),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                  
+              Padding(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Text(
+                  ":اسم الدواء",
+                  textAlign: TextAlign.right,
+                  style: GoogleFonts.tajawal(
+                      color: Color.fromARGB(255, 122, 164, 186),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
                 ),
-
-                 SizedBox(
+              ),
+              SizedBox(
                 height: 16.0,
               ),
-
               Padding(
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: TextField(
@@ -171,8 +168,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
               SizedBox(
                 height: 20.0,
               ),
-
-                         Padding(
+              Padding(
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: TextField(
                   controller: description,
@@ -193,39 +189,11 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                   ),
                 ),
               ),
-
-
-               SizedBox(
+              SizedBox(
                 height: 20.0,
               ),
-
-
               Row(
                 children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
-                      child: TextField(
-                        controller: pillAmountController,
-                        textAlign: TextAlign.right,
-                        keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Color.fromARGB(255, 239, 237, 237),
-                          hintText: "الكمية لكل جرعة",
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 236, 231, 231),
-                                  width: 3)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: new BorderSide(
-                                color: Color.fromARGB(79, 255, 255, 255)),
-                            borderRadius: new BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                   Expanded(
                       child: Container(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -250,6 +218,34 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                       value: selectType,
                     ),
                   )),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
+                      child: TextField(
+                        controller: pillAmountController,
+                        textAlign: TextAlign.right,
+                        keyboardType:
+                            TextInputType.numberWithOptions(signed: true),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color.fromARGB(255, 239, 237, 237),
+                          hintText: "الكمية لكل جرعة",
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 236, 231, 231),
+                                  width: 3)),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: new BorderSide(
+                                color: Color.fromARGB(79, 255, 255, 255)),
+                            borderRadius: new BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               SizedBox(
@@ -313,7 +309,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                 child: Text(
-                  "المدة:",
+                  ":المدة",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.tajawal(
                       color: Color.fromARGB(255, 122, 164, 186),
@@ -326,19 +322,22 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                child: Slider(
-                  divisions: 100,
-                  value: sliderValue,
-                  onChanged: (double value) {
-                    setState(() {
-                      sliderValue = value;
-                      sliderValue.toInt();
-                    });
-                  },
-                  inactiveColor: Color.fromARGB(255, 241, 225, 225),
-                  activeColor: Color.fromARGB(255, 122, 164, 186),
-                  min: 1,
-                  max: 30,
+                child: Directionality(
+                  textDirection: ui.TextDirection.rtl,
+                  child: Slider(
+                    divisions: 100,
+                    value: sliderValue,
+                    onChanged: (double value) {
+                      setState(() {
+                        sliderValue = value;
+                        sliderValue.toInt();
+                      });
+                    },
+                    inactiveColor: Color.fromARGB(255, 241, 225, 225),
+                    activeColor: Color.fromARGB(255, 122, 164, 186),
+                    min: 1,
+                    max: 30,
+                  ),
                 ),
               ),
               SizedBox(
@@ -360,11 +359,10 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
               SizedBox(
                 height: 40.0,
               ),
-
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 0, 70, 0),
                 child: Text(
-                  "التكرار:",
+                  ":التكرار",
                   textAlign: TextAlign.right,
                   style: GoogleFonts.tajawal(
                       color: Color.fromARGB(255, 122, 164, 186),
@@ -375,25 +373,72 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
               SizedBox(
                 height: 5.0,
               ),
-              
               Row(
                 children: [
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      margin: EdgeInsets.only(right: 5),
+                      child: TextField(
+                        style: sliderValue2 == 1? TextStyle(color: Color.fromARGB(255, 255, 255, 255)) : TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                        textAlign: TextAlign.right,
+                        // keyboardType: TextInputType.Options(
+                        //     signed: false, decimal: false),
+                        keyboardType:
+                            TextInputType.numberWithOptions(signed: true),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+
+                        decoration: InputDecoration(
+                          filled: sliderValue2 == 1? false : true,
+                          fillColor: Color.fromARGB(255, 239, 237, 237),
+                            hintText: sliderValue2 == 1
+                                ? '-'
+                                : 'عدد الساعات بين كل جرعة',
+                            hintStyle: TextStyle( color: Colors.grey),
+
+                             disabledBorder: InputBorder.none,
+                              enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 236, 231, 231),
+                                  width: 3)),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: new BorderSide(
+                                color: Color.fromARGB(79, 255, 255, 255)),
+                            borderRadius: new BorderRadius.circular(10),
+                          ),
+
+                          ),
+                        enabled: sliderValue2 == 1 ? false : true,
+                        onChanged: (value) {
+                          setState(() {
+                            every_hours = value;
+                            if (sliderValue2 == 1) every_hours = '0';
+                          });
+                        },
+                      ),
+                    ),
+                  ),
                   Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(5, 0, 15, 0),
-                        child: Slider(
-                          divisions: 5,
-                          value: sliderValue2,
-                          onChanged: (value) {
-                            setState(() {
-                              sliderValue2 = value;
-                            });
-                          },
-                          inactiveColor: Color.fromARGB(255, 241, 225, 225),
-                          activeColor: Color.fromARGB(255, 122, 164, 186),
-                          min: 1,
-                          max: 5,
+                        padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
+                        child: Directionality(
+                          textDirection: ui.TextDirection.rtl,
+                          child: Slider(
+                            divisions: 5,
+                            value: sliderValue2,
+                            onChanged: (value) {
+                              setState(() {
+                                sliderValue2 = value;
+                              });
+                            },
+                            inactiveColor: Color.fromARGB(255, 241, 225, 225),
+                            activeColor: Color.fromARGB(255, 122, 164, 186),
+                            min: 1,
+                            max: 5,
+                          ),
                         ),
                       ),
                       Padding(
@@ -416,31 +461,6 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                       ),
                     ],
                   ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(16, 0, 1, 0),
-                      margin: EdgeInsets.only(right: 15),
-                      child: TextField(
-                        textAlign: TextAlign.right,
-                        keyboardType:  TextInputType.numberWithOptions(signed: true, decimal: false),
-                        decoration: InputDecoration(
-                            hintText: sliderValue2 == 1
-                                ? '-'
-                                : 'عدد الساعات بين كل جرعة',
-                            hintStyle: TextStyle(color: Colors.grey),
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)))),
-                        enabled: sliderValue2 == 1 ? false : true,
-                        onChanged: (value) {
-                          setState(() {
-                            every_hours = value;
-                            if (sliderValue2 == 1) every_hours = '0';
-                          });
-                        },
-                      ),
-                    ),
-                  ),
                 ],
               ),
               SizedBox(
@@ -450,7 +470,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    "تاريخ أخذ أول جرعة:",
+                    ":تاريخ أخذ أول جرعة",
                     textAlign: TextAlign.right,
                     style: GoogleFonts.tajawal(
                         color: Color.fromARGB(255, 122, 164, 186),
@@ -462,52 +482,56 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
               SizedBox(
                 height: 10.0,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () async {
-                      final selectedDate = await selectDate(context);
-                      if (selectedDate != null) {
-                        setState(() {
-                          setDate = DateTime(selectedDate.year,
-                              selectedDate.month, selectedDate.day);
-                          // meds?.date = setDate;
-                        });
-                      }
-                    },
-                    child: Container(
-                      decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          // color: Colors.blue,
-                          color: Color.fromRGBO(33, 150, 243, 0.1)),
-                      padding: EdgeInsets.all(10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            dateFormat.format(setDate),
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.grey,
+              Directionality(
+                textDirection: ui.TextDirection.rtl,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        final selectedDate = await selectDate(context);
+                        if (selectedDate != null) {
+                          setState(() {
+                            setDate = DateTime(selectedDate.year,
+                                selectedDate.month, selectedDate.day);
+                            // meds?.date = setDate;
+                          });
+                        }
+                      },
+                      child: Container(
+                        decoration: ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Icon(
-                            Icons.calendar_month,
-                            size: 27,
-                            color: Color.fromARGB(255, 140, 167, 190),
-                          ),
-                        ],
+                            // color: Colors.blue,
+                            color: Color.fromRGBO(33, 150, 243, 0.1)),
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Icon(
+                              Icons.calendar_month,
+                              size: 27,
+                              color: Color.fromARGB(255, 140, 167, 190),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Text(
+                              dateFormat.format(setDate),
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.grey,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(
                 height: 30.0,
@@ -516,7 +540,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    "وقت أخذ أول جرعة في اليوم:",
+                    ":وقت أخذ أول جرعة في اليوم",
                     textAlign: TextAlign.right,
                     style: GoogleFonts.tajawal(
                         color: Color.fromARGB(255, 122, 164, 186),
@@ -531,99 +555,164 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () async {
-                      final selectedTime = await selectTime(context);
-                      if (selectedTime != null) {
-                        setState(() {
-                          setTime = selectedTime;
-                          print(selectedTime);
-                          //     meds?.time = selectedTime;
-                        });
-                      }
-                    },
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(20, 10, 27, 10),
-                      decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          color: Color.fromRGBO(33, 150, 243, 0.1)),
-                      child: Row(
-                        children: [
-                          Text(
-                            setTime.format(context),
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.grey,
-                            ),
-                            textAlign: TextAlign.center,
+                  Center(
+                    child: GestureDetector(
+                      onTap: () async {
+                        Navigator.of(context).push(showPicker(
+                            ltrMode: false,
+                            iosStylePicker: true,
+                            hourLabel: "ساعة",
+                            minuteLabel: "دقيقة",
+                            okText: "حسنًا",
+                            cancelText: "إلغاء",
+                            value: selectedTime,
+                            onChange: (TimeOfDay time) {
+                              selectedTime = time;
+                              if (selectedTime != null) {
+                                setState(() {
+                                  setTime = selectedTime;
+                                  timeDisplayed = setTime;
+                                  print(selectedTime);
+                                  print(setTime);
+                                  print(timeDisplayed);
+                                });
+                              }
+                            }));
+                        // final selectedTime = await selectTime(context);
+                      },
+                      child: Directionality(
+                        textDirection: ui.TextDirection.rtl,
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(20, 10, 27, 10),
+                          decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              color: Color.fromRGBO(33, 150, 243, 0.1)),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.alarm,
+                                color: Color.fromARGB(255, 140, 167, 190),
+                                size: 27,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                // timeDisplayed.format(context),
+                                timeDisplayed.format(context).contains("AM")
+                                    ? timeDisplayed
+                                            .format(context)
+                                            .substring(0, 5) +
+                                        "" +
+                                        "ص"
+                                    : timeDisplayed
+                                            .format(context)
+                                            .contains("PM")
+                                        ? timeDisplayed
+                                                .format(context)
+                                                .substring(0, 5) +
+                                            "" +
+                                            "م"
+                                        : timeDisplayed.format(context),
+
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.grey,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Icon(
-                            Icons.alarm,
-                            color: Color.fromARGB(255, 140, 167, 190),
-                            size: 27,
-                          )
-                        ],
+                        ),
                       ),
                     ),
                   )
                 ],
               ),
               SizedBox(
-                height: 35.0,
+                height: 45.0,
               ),
-              // Column(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     crossAxisAlignment: CrossAxisAlignment.center,
-              //     //  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              //     children: [
-              //       Text(
-              //         "ملاحظات على الجرعة:",
-              //         textAlign: TextAlign.right,
-              //         style: GoogleFonts.tajawal(
-              //             color: Color.fromARGB(255, 122, 164, 186),
-              //             fontWeight: FontWeight.bold,
-              //             fontSize: 20),
-              //       ),
-              //       Row(
-              //         children: [
-              //           Radio(value: 1, groupValue: _value, onChanged: (value) {
-              //             setState(() {
-              //               _value = value;
-              //             });
-              //           }),
-              //           SizedBox(width: 10),
-              //           Text("تؤخذ الجرعة قبل الأكل")
-              //         ],
-              //       ),
-              //       Row(
-              //         children: [
-              //           Radio(value: 2, groupValue: _value, onChanged: (value) {}),
-              //           SizedBox(width: 10),
-              //           Text("تؤخذ الجرعة بعد الأكل")
-              //         ],
-              //       ),
-              //       Row(
-              //         children: [
-              //           Radio(value: 3, groupValue: _value, onChanged: (value) {}),
-              //           SizedBox(width: 10),
-              //           Text("تؤخذ الجرعة قبل أو بعد الأكل")
-              //         ],
-              //       ),
-              //     ]),
-            
-   
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  //  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  children: [
+                    Text(
+                      ":ملاحظات على الجرعة",
+                      textAlign: TextAlign.right,
+                      style: GoogleFonts.tajawal(
+                          color: Color.fromARGB(255, 122, 164, 186),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ]),
+              Center(
+                child: Directionality(
+                  textDirection: ui.TextDirection.rtl,
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 20,
+                      ),
+                      ListTile(
+                        title: Text('تؤخذ الجرعة قبل الأكل',
+                            style: GoogleFonts.tajawal(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18)),
+                        leading: Radio(
+                            value: 'تؤخذ الجرعة قبل الأكل',
+                            groupValue: _groupValue,
+                            onChanged: (value) {
+                              checkRadio(value as String);
+                            }),
+                      ),
+                      ListTile(
+                        title: Text('تؤخذ الجرعة بعد الأكل',
+                            style: GoogleFonts.tajawal(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18)),
+                        leading: Radio(
+                            value: 'تؤخذ الجرعة بعد الأكل',
+                            groupValue: _groupValue,
+                            onChanged: (value) {
+                              checkRadio(value as String);
+                            }),
+                      ),
+                      ListTile(
+                        title: Text('تؤخذ الجرعة في أي وقت',
+                            style: GoogleFonts.tajawal(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18)),
+                        leading: Radio(
+                            value: 'تؤخذ الجرعة في أي وقت',
+                            groupValue: _groupValue,
+                            onChanged: (value) {
+                              checkRadio(value as String);
+                            }),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               SizedBox(
-                height: 20.0,
+                height: 30.0,
               ),
               Container(
                 margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
                   onPressed: () {
                     saveMedicine();
+                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Navigation()));
                   },
                   child: Text(
                     "إضافة",
@@ -648,6 +737,16 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                         context: context,
                         builder: (context) => AlertDialog(
                                 actions: [
+                                  
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      "لا",
+                                    ),
+                                  ),
+
                                   TextButton(
                                     onPressed: () {
                                       _firestore
@@ -665,14 +764,6 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                       "نعم",
                                     ),
                                   ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text(
-                                      "لا",
-                                    ),
-                                  )
                                 ],
                                 content: Text(
                                     "هل أنت متأكد من رغبتك في إلغاء إضافة الدواء وتحديد الجرعة؟")));
@@ -697,6 +788,12 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
     );
   }
 
+  void checkRadio(String value) {
+    setState(() {
+      _groupValue = value;
+    });
+  }
+
   void changeColor(Color color) {
     setState(() {
       pickerColor = color;
@@ -707,18 +804,17 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
 
   Future<DateTime?> selectDate(BuildContext context) {
     return showDatePicker(
-       locale:  Locale('ar', ''),
+        locale: Locale('ar', ''),
         helpText: "          اختيار تاريخ بداية أخذ الجرعات",
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
         lastDate: DateTime(2024));
-        
   }
 
-  Future<TimeOfDay?> selectTime(BuildContext context) {
-    return showTimePicker(context: context, initialTime: TimeOfDay.now());
-  }
+  // Future<TimeOfDay?> selectTime(BuildContext context) {
+  //   return showTimePicker(context: context, initialTime: TimeOfDay.now());
+  // }
 
   // void medTypeClick(MedicineType type) {
   //   setState(() {
@@ -739,15 +835,17 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
       for (int i = 0; i < sliderValue; i++) {
         for (int j = 0; j < sliderValue2; j++) {
           tz.initializeTimeZones();
-          tz.setLocalLocation(tz.getLocation('Asia/Riyadh'));
+          //tz.setLocalLocation(tz.getLocation('Asia/Riyadh'));
           newTime = setTime.replacing(
               hour: setTime.hour + (int.parse(every_hours) * j));
           newTime.format(context);
+          print(newTime.format(context) + "Right here");
 
-          DateTime tempTimeDate = DateFormat("yyyy-MM-dd hh:mm ").parse(
+          DateTime tempTimeDate = DateFormat("yyyy-MM-dd hh:mm a").parse(
               dateFormat.format(newDate).toString() +
                   " " +
                   newTime.format(context).toString());
+          print(tempTimeDate.toString() + "Here is temp DateTime");
 
           _firestore.collection('doses').add({
             'Day': newDate.day,
@@ -755,14 +853,21 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
             'Year': newDate.year,
             'Time': tempTimeDate,
             'Date': dateFormatDisplayed.format(newDate).toString(),
-            'TimeOnly': newTime.format(context).toString(),
+            //  'TimeOnly': newTime.format(context).toString(),
+
+            'TimeOnly': newTime.format(context).contains("AM")
+                ? "ص" + " " + newTime.format(context).substring(0, 5)
+                : newTime.format(context).contains("PM")
+                    ? "م" + " " + newTime.format(context).substring(0, 5)
+                    : newTime.format(context),
+
             'amount': pillAmountController.text,
             'unit': selectType,
             'days': sliderValue.toString(),
             'name': nameController.text,
             //'type': medType,
             'freqPerDay': sliderValue2.toString(),
-            'description': description.text,
+            'description': _groupValue + ", " + description.text,
             'color': int.parse(backColor.toString().substring(6, 16)),
             'cheked': false,
             'caregiverID': caregiverID,
@@ -782,17 +887,20 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
       }
 
       snackBar = SnackBar(
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text('تمت إضافة الدواء وتحديد الجرعة',
-                style: TextStyle(color: Colors.white, fontSize: 15),
-                textAlign: TextAlign.right),
-            Icon(
-              Icons.check,
-              color: Colors.white,
-            )
-          ],
+        content: Directionality(
+          textDirection: ui.TextDirection.rtl,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text('تمت إضافة الدواء وتحديد الجرعة',
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                  textAlign: TextAlign.right),
+              Icon(
+                Icons.check,
+                color: Colors.white,
+              )
+            ],
+          ),
         ),
         // backgroundColor: Color.fromARGB(255, 140, 167, 190),
       );
@@ -801,14 +909,17 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
       Navigator.pop(context);
     } else {
       SnackBar error = SnackBar(
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
-              'قم بالتأكد من التكرار وعدد الساعات بين كل جرعة',
-              style: TextStyle(color: Colors.white, fontSize: 15),
-            ),
-          ],
+        content: Directionality(
+          textDirection: ui.TextDirection.rtl,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text(
+                'قم بالتأكد من التكرار وعدد الساعات بين كل جرعة',
+                style: TextStyle(color: Colors.white, fontSize: 15),
+              ),
+            ],
+          ),
         ),
       );
 
