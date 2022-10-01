@@ -110,7 +110,7 @@ class _NavigationPatientState extends State<NavigationPatient> {
         return;
         break;
       case 1:
-        return PatientCalendar();
+        return ViewD();
         break;
     }
   }
