@@ -20,12 +20,12 @@ import 'addMedicinePages/addmedicine.dart';
 import 'package:itmaen/secure-storage.dart';
 //import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:intl/intl.dart';
-
+ 
 class ViewD extends StatefulWidget {
   @override
   _ViewDPageState createState() => _ViewDPageState();
 }
-
+ 
 class _ViewDPageState extends State<ViewD> {
   String title = 'AlertDialog';
   bool tappedYes = false;
@@ -34,39 +34,39 @@ class _ViewDPageState extends State<ViewD> {
   final _auth = FirebaseAuth.instance;
   //static final storage = FirebaseStorage.instance.ref();
   late User loggedUser;
-
+ 
   //Future<String?> loggedInUser = getCurrentUser();
-
+ 
   late String id = '';
   static var id_ = '';
   //var Cid;
   static String cid_ = '';
   var caregiverID;
-
+ 
   static var t;
-
+ 
   //getCurrentUser();
-
+ 
   _ViewPageState() {
     ViewD();
     //assignboolean();
   }
   //}
-
+ 
   @override
   void initState() {
     super.initState();
     //HomePage();
-
+ 
     getCurrentUser().then((value) => t = value);
   }
-
+ 
   Future<bool> getstatu() async {
     bool val = await getCurrentUser();
     bool val2 = val;
     return val2;
   }
-
+ 
   Future<bool> getCurrentUser() async {
     //HomePage();
     final user = await _auth.currentUser;
@@ -78,7 +78,7 @@ class _ViewDPageState extends State<ViewD> {
       id_ = (await st.readSecureData("caregiverID"))!;
       print("$id_ here 1");
       t = true;
-
+ 
       return Future<bool>.value(true);
     } else {
       t = false;
@@ -88,7 +88,7 @@ class _ViewDPageState extends State<ViewD> {
       return Future<bool>.value(false);
     }
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     var data;
@@ -114,7 +114,7 @@ class _ViewDPageState extends State<ViewD> {
                       style: TextStyle(fontSize: 18),
                     ),
                   );
-
+ 
                   // if we got our data
                 } else if (snapshot.hasData) {
                   // Extracting data from snapshot object
@@ -170,11 +170,11 @@ class _ViewDPageState extends State<ViewD> {
                               List<medBubble> medBubbles = [];
                               String x = DateFormat('dd/MM/yyyy')
                                   .format(DateTime.now());
-
+ 
                               for (var med in medicines!) {
                                 //final medName = med.data();
                                 final medDate = med.get('Date');
-
+ 
                                 if (x == medDate) {
                                   final medName = med.get('name');
                                   final checked = med.get('cheked');
@@ -270,10 +270,10 @@ class _ViewDPageState extends State<ViewD> {
                               List<medBubble> medBubbles = [];
                               String x = DateFormat('dd/MM/yyyy')
                                   .format(DateTime.now());
-
+ 
                               for (var med in medicines!) {
                                 final medDate = med.get('Date');
-
+ 
                                 if (x == medDate) {
                                   final medName = med.get('name');
                                   final checked = med.get('cheked');
@@ -288,9 +288,9 @@ class _ViewDPageState extends State<ViewD> {
                                   final picture = med.get("picture");
                                   // final pic = med.get("picture");
                                   //final timechecked;
-
+ 
                                   // timechecked = med.get('Timecheked');
-
+ 
                                   final MedBubble = medBubble(
                                     medName,
                                     checked,
@@ -308,7 +308,7 @@ class _ViewDPageState extends State<ViewD> {
                                   medBubbles.add(MedBubble);
                                 }
                               }
-
+ 
                               return Expanded(
                                 child: Scrollbar(
                                   child: ListView(
@@ -325,7 +325,7 @@ class _ViewDPageState extends State<ViewD> {
                   }
                 }
               }
-
+ 
               // Displaying LoadingSpinner to indicate waiting state
               return Center(
                 child: CircularProgressIndicator(),
@@ -340,7 +340,7 @@ class _ViewDPageState extends State<ViewD> {
     );
   }
 }
-
+ 
 class medBubble extends StatefulWidget {
   medBubble(
       this.medicName,
@@ -368,18 +368,18 @@ class medBubble extends StatefulWidget {
   var x;
   var m;
   var picture;
-
+ 
   @override
   State<medBubble> createState() => _medBubbleState();
 }
-
+ 
 class _medBubbleState extends State<medBubble> {
   bool _value = false;
   bool _valu = false;
   var msg = "hh";
   //bool yarab = false;
   Color color = Colors.black;
-
+ 
   Future<void> dialog(String? x) async {
     return showDialog<void>(
       context: context,
@@ -399,13 +399,35 @@ class _medBubbleState extends State<medBubble> {
             child: ListBody(
               children: <Widget>[
                 Center(
-                  child: Text(
-                      '[' + x! + ' ' + widget.MedAmount + widget.MedUnit + ']',
-                      style: GoogleFonts.tajawal(
-                          fontSize: 18,
-                          color: ui.Color.fromARGB(255, 99, 163, 206),
-                          fontWeight: FontWeight.bold)),
+                  child:Text(
+                         x! ,
+                        style: GoogleFonts.tajawal(
+                            fontSize: 18,
+                            color: ui.Color.fromARGB(255, 99, 163, 206),
+                            fontWeight: FontWeight.bold)),
                 ),
+                 SizedBox(
+                  height: 15,
+                ),
+                Center(
+                  child:Text(
+                         widget.MedUnit+ ' '+ widget.MedAmount ,
+                        style: GoogleFonts.tajawal(
+                            fontSize: 18,
+                            color:  ui.Color.fromARGB(255, 81, 99, 110),
+                            fontWeight: FontWeight.bold)),
+                ),
+                 SizedBox(
+                  height: 15,
+                ),
+                Center(
+                  child:Text(
+                        '${widget.meddescription}',
+                        style: GoogleFonts.tajawal(
+                            fontSize: 18,
+                            color: ui.Color.fromARGB(255, 81, 99, 110),
+                            fontWeight: FontWeight.bold)),),
+               
                 SizedBox(
                   height: 15,
                 ),
@@ -429,7 +451,7 @@ class _medBubbleState extends State<medBubble> {
               ),
               onPressed: () {
                 //Navigator.of(context).pop();
-
+ 
                 Navigator.of(context).pop();
               },
             ),
@@ -438,7 +460,7 @@ class _medBubbleState extends State<medBubble> {
       },
     );
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     var time = DateTime.now();
@@ -446,7 +468,7 @@ class _medBubbleState extends State<medBubble> {
     final q = widget.m;
     var dosetime = q.toDate();
     var diff = (dosetime).difference(time).inMinutes;
-
+ 
     Future<void> _showMyDialog(String? x) async {
       return showDialog<void>(
         context: context,
@@ -471,14 +493,10 @@ class _medBubbleState extends State<medBubble> {
                     children: <Widget>[
                       Center(
                         child: Text(
-                            '[' +
-                                x! +
-                                ' ' +
-                                widget.MedAmount +
-                                widget.MedUnit +
-                                ']',
+                           
+                                x!,
                             style: GoogleFonts.tajawal(
-                                fontSize: 15,
+                                fontSize: 18,
                                 color: ui.Color.fromARGB(255, 99, 163, 206),
                                 fontWeight: FontWeight.bold)),
                       ),
@@ -486,17 +504,37 @@ class _medBubbleState extends State<medBubble> {
                         height: 15,
                       ),
                       Center(
-                        child: Text(" ${widget.time} الساعة ",
+                        child: Text(
+                                widget.MedAmount + ' '+
+                                widget.MedUnit
+                                ,
                             style: GoogleFonts.tajawal(
                                 fontSize: 15,
-                                color: ui.Color.fromARGB(255, 99, 163, 206),
+                                color:  ui.Color.fromARGB(255, 81, 99, 110),
                                 fontWeight: FontWeight.bold)),
                       ),
                       SizedBox(
                         height: 15,
                       ),
+                      Center(
+                        child: Text(" الساعة ${widget.time}  ",
+                            style: GoogleFonts.tajawal(
+                                fontSize: 15,
+                                color: ui.Color.fromARGB(255, 81, 99, 110),
+                                fontWeight: FontWeight.bold)),
+                      ),
                       SizedBox(
-                        height: 18,
+                        height: 15,
+                      ),
+                       Center(
+                  child:Text(
+                        '${widget.meddescription}',
+                        style: GoogleFonts.tajawal(
+                            fontSize: 15,
+                            color: ui.Color.fromARGB(255, 81, 99, 110),
+                            fontWeight: FontWeight.bold)),),
+                      SizedBox(
+                        height: 22,
                       ),
                       Center(
                         child: Text(
@@ -530,7 +568,7 @@ class _medBubbleState extends State<medBubble> {
                             fontWeight: FontWeight.bold)),
                     onPressed: () {
                       //Navigator.of(context).pop();
-
+ 
                       Navigator.of(context).pop();
                     },
                   ),
@@ -556,7 +594,7 @@ class _medBubbleState extends State<medBubble> {
                                   .collection('doses')
                                   .doc(widget.doc)
                                   .update({'Timecheked': DateTime.now()});
-
+ 
                               if (diff == 0) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
@@ -594,7 +632,7 @@ class _medBubbleState extends State<medBubble> {
         },
       );
     }
-
+ 
     return Padding(
       padding: EdgeInsets.all(3.0),
       child: Material(
@@ -614,7 +652,7 @@ class _medBubbleState extends State<medBubble> {
                         color: Colors.white,
                         child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
+                                vertical: 30, horizontal: 20),
                             child: Row(children: [
                               Container(
                                   child: Column(
@@ -657,20 +695,25 @@ class _medBubbleState extends State<medBubble> {
                                     '${widget.medicName}' +
                                         '\n'
                                             '\n' +
-                                        'الوقت: ' '${widget.time}' +
+                               
+                                        'الوقت: ' +
+                                        '${widget.time}' +
                                         '\n' +
                                         'الكمية: ' +
                                         '${widget.MedAmount}' +
                                         '\n' +
-                                        'الوحدة: ' +
+                                         'الوحدة: ' +
                                         '${widget.MedUnit}' +
-                                        '\n' +
-                                        '',
+                                        '\n'
+                                         ,
                                     style: GoogleFonts.tajawal(
                                         fontSize: 15,
                                         color: Color.fromARGB(255, 0, 0, 0),
                                         fontWeight: FontWeight.w600),
                                   ),
+                                  SizedBox(
+                            height: 10,
+                            ),
                                   widget.checked
                                       ? Text(
                                           '  تم أخذ الدواء  :) ',
@@ -680,24 +723,26 @@ class _medBubbleState extends State<medBubble> {
                                               fontWeight: FontWeight.bold),
                                         )
                                       : Text(''),
+                                     
                                 ],
+                               
                               )),
-
+ 
                               // }
              
-                            SizedBox(
-                            width: 55,
-                            ),
-                              
+                         
                              
-                              SizedBox(
+                             
+                             
+                             SizedBox(
                                   child: Image.asset(widget.picture.toString(),
-                                      height: 70, width: 70),
+                                      height: 65, width: 65),
                                 ),
-                              
-
+                             
                               // image here
-                            ]))),
+                            ]
+                           
+                            ))),
                   ),
                   SizedBox(
                     height: 0,
@@ -733,3 +778,4 @@ class _medBubbleState extends State<medBubble> {
     );
   }
 }
+ 
