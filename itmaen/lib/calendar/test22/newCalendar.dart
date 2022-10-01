@@ -13,6 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import '../../view.dart';
 import '../../font.dart';
+import '../../viewD.dart';
 
 class LoadDataFromFireStoree extends StatefulWidget {
   @override
@@ -242,7 +243,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            '$currDes :الوصف',
+                            'الوصف: $currDes',
                             style: GoogleFonts.tajawal(
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 71, 92, 110),
@@ -275,7 +276,8 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                             '$isChecked',
                             style: GoogleFonts.tajawal(
                               //fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 159, 50, 46),
+                              color: currCheck
+                              ? Color.fromARGB(255, 64, 105, 66) :  Color.fromARGB(255, 159, 50, 46),
                             ),
                             textAlign: TextAlign.right,
                           ),
@@ -293,7 +295,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                                   onPressed: () {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
-                                            builder: (context) => View()));
+                                            builder: (context) => ViewD()));
                                   },
                                   icon: FaIcon(FontAwesomeIcons.pills),
                                   label: Text(

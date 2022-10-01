@@ -247,7 +247,7 @@ class PatientCalendar_ extends State<PatientCalendar> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            '$currDes :الوصف',
+                            'الوصف: $currDes',
                             style: GoogleFonts.tajawal(
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 71, 92, 110),
@@ -280,7 +280,8 @@ class PatientCalendar_ extends State<PatientCalendar> {
                             '$isChecked',
                             style: GoogleFonts.tajawal(
                               //fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 159, 50, 46),
+                              color: currCheck
+                              ? Color.fromARGB(255, 64, 105, 66) :  Color.fromARGB(255, 159, 50, 46),
                             ),
                             textAlign: TextAlign.right,
                           ),

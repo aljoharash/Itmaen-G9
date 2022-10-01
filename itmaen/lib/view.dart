@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/add-patient.dart';
 import 'package:itmaen/patient-login.dart';
+import 'addMedicinePages/adddialog.dart';
 import 'alert_dialog.dart';
 import 'package:itmaen/model/medicines.dart';
 import 'generateqr.dart';
@@ -86,6 +87,21 @@ class _ViewPageState extends State<View> {
 
   @override
   Widget build(BuildContext context) {
+    
+    void showAddDialog() {
+      showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            content: AddMedicine(),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          );
+        },
+      );
+    }
+
     var data;
     return SafeArea(
       top: false,
@@ -95,6 +111,20 @@ class _ViewPageState extends State<View> {
           title: Text("قائمة الأدوية",
               style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
         ),
+        floatingActionButton: ElevatedButton(
+            onPressed: () {
+              showAddDialog();
+            },
+            
+            child: Icon(Icons.add, color: Colors.white,),
+            style: ElevatedButton.styleFrom(
+            shape: CircleBorder(
+            ),
+            padding: EdgeInsets.all(15),
+            backgroundColor: Color.fromARGB(255, 140, 167, 190),
+            foregroundColor: Color.fromARGB(255, 84, 106, 125),
+              ),
+          ),
         body: FutureBuilder(
           builder: (ctx, snapshot) {
             // Checking if future is resolved or not
@@ -145,7 +175,7 @@ class _ViewPageState extends State<View> {
                               ),
                             );
                             // }
-                          })
+                          }),
                     ],
                   ));
                 } else {
@@ -182,7 +212,7 @@ class _ViewPageState extends State<View> {
                               ),
                             );
                             // }
-                          })
+                          }),
                     ],
                   ));
                 }
