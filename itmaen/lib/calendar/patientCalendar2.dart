@@ -13,6 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import '../../view.dart';
 import '../../font.dart';
+import '../viewD.dart';
 
 class PatientCalendar extends StatefulWidget {
   @override
@@ -58,12 +59,15 @@ class PatientCalendar_ extends State<PatientCalendar> {
   var namee;
   var checked;
   var unit;
+  DateTime? theTime;
+  DateTime? currTime;
   String? _subjectText;
   List<String> doseDes = <String>[];
   List<String> doseAmount = <String>[];
   List<String> doseName = <String>[];
   List<bool> doseCheck = <bool>[];
   List<String> doseUnit = <String>[];
+  List<DateTime> doseTime = <DateTime>[];
   var currDes;
   var currAmount;
   var currCheck;
@@ -79,18 +83,19 @@ class PatientCalendar_ extends State<PatientCalendar> {
       amount = doc['amount'];
       checked = doc['cheked'];
       unit = doc['unit'];
+      theTime = DateTime.parse(doc['Time'].toDate().toString());
       doseDes.add(description);
       doseAmount.add(amount);
       doseName.add(namee);
       doseCheck.add(checked);
       doseUnit.add(unit);
-      print("$description + $amount");
+      doseTime.add(theTime!);
     });
   }
 
   intoList() {
     for (int i = 0; i < count; i++) {
-      if (doseName[i] == _subjectText) {
+      if (doseName[i] == _subjectText && doseTime[i] == currTime) {
         currDes = doseDes[i];
         currAmount = doseAmount[i];
         currCheck = doseCheck[i];
@@ -215,9 +220,11 @@ class PatientCalendar_ extends State<PatientCalendar> {
 
   Future<void> calendarTapped(CalendarTapDetails details) async {
     if (details.targetElement == CalendarElement.appointment ||
-        details.targetElement == CalendarElement.agenda && details.appointments!.length > 0) {
+        details.targetElement == CalendarElement.agenda &&
+            details.appointments!.length > 0) {
       final Meeting appointmentDetails = details.appointments![0];
       _subjectText = appointmentDetails.eventName;
+      currTime = appointmentDetails.from;
       var date = DateFormat('MMMM dd, yyyy');
       var name = Meeting().eventName;
       intoList();
@@ -247,7 +254,7 @@ class PatientCalendar_ extends State<PatientCalendar> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            '$currDes :الوصف',
+                            'الوصف: $currDes',
                             style: GoogleFonts.tajawal(
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 71, 92, 110),
@@ -280,7 +287,9 @@ class PatientCalendar_ extends State<PatientCalendar> {
                             '$isChecked',
                             style: GoogleFonts.tajawal(
                               //fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 159, 50, 46),
+                              color: currCheck
+                                  ? Color.fromARGB(255, 64, 105, 66)
+                                  : Color.fromARGB(255, 159, 50, 46),
                             ),
                             textAlign: TextAlign.right,
                           ),
@@ -298,7 +307,7 @@ class PatientCalendar_ extends State<PatientCalendar> {
                                   onPressed: () {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
-                                            builder: (context) => View()));
+                                            builder: (context) => ViewD()));
                                   },
                                   icon: FaIcon(FontAwesomeIcons.pills),
                                   label: Text(

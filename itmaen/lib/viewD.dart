@@ -210,7 +210,7 @@ class _ViewDPageState extends State<ViewD> {
                                 child: Scrollbar(
                                   child: ListView(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 20),
+                                        horizontal: 10, vertical: 10),
                                     children: medBubbles,
                                   ),
                                 ),
@@ -227,7 +227,7 @@ class _ViewDPageState extends State<ViewD> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         Row(
                           children: [
@@ -600,7 +600,7 @@ class _medBubbleState extends State<medBubble> {
       child: Material(
         child: SizedBox(
           width: 130,
-          height: 210,
+          height: 160,
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(0.0),
@@ -684,17 +684,15 @@ class _medBubbleState extends State<medBubble> {
                               )),
 
                               // }
-             
-                            SizedBox(
-                            width: 55,
-                            ),
-                              
-                             
+
                               SizedBox(
-                                  child: Image.asset(widget.picture.toString(),
-                                      height: 70, width: 70),
-                                ),
-                              
+                                width: 10,
+                              ),
+
+                              SizedBox(
+                                child: Image.asset(widget.picture.toString(),
+                                    height: 70, width: 70),
+                              ),
 
                               // image here
                             ]))),

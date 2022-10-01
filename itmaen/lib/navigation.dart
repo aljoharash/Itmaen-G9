@@ -17,6 +17,7 @@ import 'calendar/test22/newCalendar.dart';
 import 'home.dart';
 import 'login.dart';
 import 'notification.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -103,7 +104,7 @@ class _NavigationState extends State<Navigation> {
 //         if (diff == 4) {
 //           Noti.showBigTextNotification(
 //               title: "تذكير بأخذ الجرعة",
-//               body: ''' 
+//               body: '''
 //   [${value.docs[i].get("name")}]
 //  عزيزي, تبقى 5 دقائق على موعد اخذ مستقبلك للرعاية لجرعته''',
 //               fln: flutterLocalNotificationsPlugin);
@@ -126,9 +127,12 @@ class _NavigationState extends State<Navigation> {
         return AddPatient();
         break;
       case 2:
-        return LoadDataFromFireStoree();
+        return View();
         break;
       case 3:
+        return LoadDataFromFireStoree();
+        break;
+      case 4:
         return ViewD();
         break;
     }
@@ -136,20 +140,6 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
-    void showAddDialog() {
-      showDialog(
-        context: context,
-        builder: (_) {
-          return AlertDialog(
-            content: AddMedicine(),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          );
-        },
-      );
-    }
-
     Future<void> logout() async {
       if (caregiverID != null) {
         final action = await AlertDialogs.yesCancelDialog(
@@ -188,9 +178,6 @@ class _NavigationState extends State<Navigation> {
       setState(() {
         _selectedIndex = index;
       });
-      if (index == 2) {
-        showAddDialog();
-      }
       if (index == 0) {
         logout();
       }
@@ -218,8 +205,12 @@ class _NavigationState extends State<Navigation> {
             Icons.person_add,
             color: Colors.white,
           ),
+          FaIcon(
+            FontAwesomeIcons.pills,
+            color: Colors.white,
+          ),
           Icon(
-            Icons.add,
+            Icons.calendar_month,
             color: Colors.white,
           ),
           Icon(

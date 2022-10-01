@@ -134,7 +134,7 @@ class _ViewPageState extends State<View> {
                               //final medName = med.data();
                               final medName = med.get('Trade name');
                               final picture = med.get('picture');
-                              final MedBubble = medBubble(medName,picture);
+                              final MedBubble = medBubble(medName, picture);
                               medBubbles.add(MedBubble);
                             }
                             return Expanded(
@@ -170,8 +170,8 @@ class _ViewPageState extends State<View> {
                               //final medName = med.data();
                               final medName = med.get('Trade name');
                               final picture = med.get('picture');
-                              final MedBubble = medBubble(medName,picture);
-                             
+                              final MedBubble = medBubble(medName, picture);
+
                               medBubbles.add(MedBubble);
                             }
                             return Expanded(
@@ -204,33 +204,72 @@ class _ViewPageState extends State<View> {
 }
 
 class medBubble extends StatelessWidget {
-  medBubble(this.medicName,this.picture);
+  medBubble(this.medicName, this.picture);
   var medicName;
   var picture;
 
   @override
   Widget build(BuildContext context) {
     //HomePage();
-    return Row(
+    return Padding(
+        padding: EdgeInsets.all(3.0),
+        child: Material(
+          child: SizedBox(
+            width: 130,
+            height: 110,
+            //padding: EdgeInsets.all(10.0),
+            child: Material(
+                borderRadius: BorderRadius.circular(20.0),
+                elevation: 7,
+                color: Colors.white,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        child: Image.asset(picture.toString(),
+                            height: 50, width: 50),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text('$medicName',
+                            style: GoogleFonts.tajawal(
+                                fontSize: 20,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                                fontWeight: FontWeight.w600),
+                            textAlign: TextAlign.right),
+                      )
+                    ],
+                  ),
+                )),
+          ),
+        ));
+  }
+}
+
+/*
+
+return Row(
       children: [
-        Padding(
-          padding: EdgeInsets.all(10.0),
+        SizedBox(
+          width: 330,
+          height: 120,
+          //padding: EdgeInsets.all(10.0),
           child: Material(
               borderRadius: BorderRadius.circular(20.0),
               elevation: 7,
               color: Colors.white,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 100),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Row(
                   children: [
-                      SizedBox(
-                                  child: Image.asset(picture.toString(),
-                                      height: 70, width: 70),
-                                ),
-                     SizedBox(
-                                  
-                                      width: 10
-                                ),
+                    //SizedBox(
+                    // child: Image.asset(picture.toString(),
+                    //     height: 50, width: 50),
+                    //),
+                    SizedBox(width: 10),
                     Text(
                       '$medicName',
                       style: GoogleFonts.tajawal(
@@ -238,17 +277,10 @@ class medBubble extends StatelessWidget {
                           color: Color.fromARGB(255, 0, 0, 0),
                           fontWeight: FontWeight.w600),
                     ),
-                    
                   ],
                 ),
               )),
         ),
-
-        
-      
       ],
     );
-
-    
-  }
-}
+*/ 
