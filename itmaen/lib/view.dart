@@ -133,7 +133,8 @@ class _ViewPageState extends State<View> {
                             for (var med in medicines!) {
                               //final medName = med.data();
                               final medName = med.get('Trade name');
-                              final MedBubble = medBubble(medName);
+                              final picture = med.get('picture');
+                              final MedBubble = medBubble(medName,picture);
                               medBubbles.add(MedBubble);
                             }
                             return Expanded(
@@ -168,7 +169,9 @@ class _ViewPageState extends State<View> {
                             for (var med in medicines!) {
                               //final medName = med.data();
                               final medName = med.get('Trade name');
-                              final MedBubble = medBubble(medName);
+                              final picture = med.get('picture');
+                              final MedBubble = medBubble(medName,picture);
+                             
                               medBubbles.add(MedBubble);
                             }
                             return Expanded(
@@ -193,7 +196,7 @@ class _ViewPageState extends State<View> {
           },
           // Future that needs to be resolved
           // inorder to display something on the Canvas
-        future: getCurrentUser(),
+          future: getCurrentUser(),
         ),
       ),
     );
@@ -201,28 +204,51 @@ class _ViewPageState extends State<View> {
 }
 
 class medBubble extends StatelessWidget {
-  medBubble(this.medicName);
+  medBubble(this.medicName,this.picture);
   var medicName;
+  var picture;
 
   @override
   Widget build(BuildContext context) {
     //HomePage();
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Material(
-          borderRadius: BorderRadius.circular(20.0),
-          elevation: 7,
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Text(
-              ' $medicName ',
-              style: GoogleFonts.tajawal(
-                  fontSize: 20,
-                  color: Color.fromARGB(255, 0, 0, 0),
-                  fontWeight: FontWeight.w600),
-            ),
-          )),
+    return Row(
+      children: [
+        Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Material(
+              borderRadius: BorderRadius.circular(20.0),
+              elevation: 7,
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 100),
+                child: Row(
+                  children: [
+                      SizedBox(
+                                  child: Image.asset(picture.toString(),
+                                      height: 70, width: 70),
+                                ),
+                     SizedBox(
+                                  
+                                      width: 10
+                                ),
+                    Text(
+                      '$medicName',
+                      style: GoogleFonts.tajawal(
+                          fontSize: 20,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontWeight: FontWeight.w600),
+                    ),
+                    
+                  ],
+                ),
+              )),
+        ),
+
+        
+      
+      ],
     );
+
+    
   }
 }

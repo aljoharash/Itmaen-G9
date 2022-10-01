@@ -237,6 +237,27 @@ class addByScan extends StatelessWidget {
                                     'barcode': barcode,
                                     'description': description,
                                     'caregiverID': loggedInUser!.uid,
+                                    'picture': tradeName == "جليترا"
+                                        ? "images/" + "جليترا" + ".png"
+                                        : tradeName == "سبراليكس"
+                                            ? "images/" + "سبراليكس" + ".png"
+                                            : tradeName == "سنترم - CENTRUM"
+                                                ? "images/" +
+                                                    "CENTRUM - سنترم" +
+                                                    ".png"
+                                                : tradeName ==
+                                                        "بانادول - PANADOL"
+                                                    ? "images/" +
+                                                        "بانادول ادفانس - PANADOL" +
+                                                        ".png"
+                                                    : tradeName ==
+                                                            "فيدروب - VIDROP"
+                                                        ? "images/" +
+                                                            "VIDROP" +
+                                                            ".png"
+                                                        : "images/" +
+                                                            "no" +
+                                                            ".png"
                                   });
 
                                   Navigator.of(context).push(MaterialPageRoute(
@@ -333,6 +354,27 @@ class addByScan extends StatelessWidget {
                                     'barcode': barcode,
                                     'description': description,
                                     'caregiverID': loggedInUser!.uid,
+                                     'picture': tradeName == "جليترا"
+                                        ? "images/" + "جليترا" + ".png"
+                                        : tradeName == "سبراليكس"
+                                            ? "images/" + "سبراليكس" + ".png"
+                                            : tradeName == "سنترم - CENTRUM"
+                                                ? "images/" +
+                                                    "CENTRUM - سنترم" +
+                                                    ".png"
+                                                : tradeName ==
+                                                        "بانادول - PANADOL"
+                                                    ? "images/" +
+                                                        "بانادول ادفانس - PANADOL" +
+                                                        ".png"
+                                                    : tradeName ==
+                                                            "فيدروب - VIDROP"
+                                                        ? "images/" +
+                                                            "VIDROP" +
+                                                            ".png"
+                                                        : "images/" +
+                                                            "no" +
+                                                            ".png"
                                   });
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => Navigation()));

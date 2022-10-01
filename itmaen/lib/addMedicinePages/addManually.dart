@@ -265,6 +265,29 @@ class _addManuallyState extends State<addManually> {
                                       //'barcode': barcode,
                                       'description': description.text,
                                       'caregiverID': caregiverID,
+                                      'picture': (medName.text == "جليترا"
+                                          ? "images/" + "جليترا" + ".png"
+                                          : medName.text == "سبراليكس"
+                                              ? "images/" + "سبراليكس" + ".png"
+                                              : medName.text ==
+                                                      "سنترم - CENTRUM"
+                                                  ? "images/" +
+                                                      "CENTRUM - سنترم" +
+                                                      ".png"
+                                                  : medName.text ==
+                                                        "بانادول - PANADOL"
+                                                          "PANADOL"
+                                                      ? "images/" +
+                                                          "بانادول ادفانس - PANADOL" +
+                                                          ".png"
+                                                      : medName.text ==
+                                                              "فيدروب - VIDROP"
+                                                          ? "images/" +
+                                                              "VIDROP" +
+                                                              ".png"
+                                                          : "images/" +
+                                                              "no" +
+                                                              ".png"),
                                     });
 
                                     print("Med added");
@@ -329,6 +352,29 @@ class _addManuallyState extends State<addManually> {
                                       //'barcode': barcode,
                                       'description': description.text,
                                       'caregiverID': caregiverID,
+                                       'picture': (medName.text == "جليترا"
+                                          ? "images/" + "جليترا" + ".png"
+                                          : medName.text == "سبراليكس"
+                                              ? "images/" + "سبراليكس" + ".png"
+                                              : medName.text ==
+                                                      "سنترم - CENTRUM"
+                                                  ? "images/" +
+                                                      "CENTRUM - سنترم" +
+                                                      ".png"
+                                                  : medName.text ==
+                                                       "بانادول - PANADOL"
+                                                         
+                                                      ? "images/" +
+                                                          "بانادول ادفانس - PANADOL" +
+                                                          ".png"
+                                                      : medName.text ==
+                                                              "فيدروب - VIDROP"
+                                                          ? "images/" +
+                                                              "VIDROP" +
+                                                              ".png"
+                                                          : "images/" +
+                                                              "no" +
+                                                              ".png"),
                                     });
 
                                     Navigator.of(context)

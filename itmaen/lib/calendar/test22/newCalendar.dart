@@ -210,8 +210,8 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
 
   Future<void> calendarTapped(CalendarTapDetails details) async {
     if (details.targetElement == CalendarElement.appointment ||
-        details.targetElement == CalendarElement.agenda && details.appointments.length > 0) {          
-      final Meeting appointmentDetails = details.appointments[0];
+        details.targetElement == CalendarElement.agenda && details.appointments!.length > 0) {          
+      final Meeting appointmentDetails = details.appointments![0];
       _subjectText = appointmentDetails.eventName;
       var date = DateFormat('MMMM dd, yyyy');
       var name = Meeting().eventName;

@@ -126,7 +126,7 @@ class _NavigationState extends State<Navigation> {
         return AddPatient();
         break;
       case 2:
-        return View();
+        return LoadDataFromFireStoree();
         break;
       case 3:
         return ViewD();
