@@ -100,16 +100,13 @@ class _NavigationState extends State<Navigation> {
         print(diff);
         if (diff == 4) {
           Noti.showBigTextNotification(
-             title: "تذكير بأخذ الجرعة",
+              title: "تذكير بأخذ الجرعة",
               body: ''' 
   [${value.docs[i].get("name")}]
  عزيزي, تبقى 5 دقائق على موعد اخذ مستقبلك للرعاية لجرعته''',
               fln: flutterLocalNotificationsPlugin);
         } else if (diff <= -1440) {
           // passed a day over the medication , it will be removed
-          value.docs[i].reference.delete();
-        }
-        else if(diff <= -1440){ // passed a day over the medication , it will be removed 
           value.docs[i].reference.delete();
         }
       } // end for

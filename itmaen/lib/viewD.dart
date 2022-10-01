@@ -15,7 +15,7 @@ import 'generateqr.dart';
 import 'login.dart';
 import 'scanqr.dart';
 import 'addMedicinePages/addmedicine.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+//import 'package:firebase_storage/firebase_storage.dart';
 //import 'pages/adddialog.dart';
 import 'package:itmaen/secure-storage.dart';
 //import 'package:modal_progress_hud/modal_progress_hud.dart';
