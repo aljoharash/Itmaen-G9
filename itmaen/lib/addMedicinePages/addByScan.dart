@@ -11,23 +11,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:itmaen/home.dart';
 import 'package:itmaen/navigation.dart';
 import 'package:itmaen/secure-storage.dart';
-
+import 'package:itmaen/setDose.dart';
 import 'addmedicine.dart';
+import 'package:itmaen/trySet.dart';
 
 class addByScan extends StatelessWidget {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   late User? loggedInUser = _auth.currentUser;
+  late List<String> toBeTransformed = [];
 
-  String? genericName;
-  String? tradeName;
-  String? strengthValue;
-  String? unitOfStrength;
-  String? volume;
-  String? unitOfVolume;
-  String? packageSize;
-  String? barcode;
-  String? description;
+  late String genericName;
+  late String tradeName = "";
+  late String strengthValue;
+  late String unitOfStrength = "";
+  late String volume = "";
+  late String unitOfVolume = "";
+  late String packageSize = "";
+  late String barcode = "";
+  late String description = "";
 
   @override
   Widget build(BuildContext context) {
@@ -114,10 +116,18 @@ class addByScan extends StatelessWidget {
                                     ),
                                     Divider(),
                                     BuildCard(
-                                      info: 'عدد الحبات',
+                                      info: ' عدد الحبات / الكمية ',
                                       icon: FontAwesomeIcons.pills,
                                       item: packageSize = _
                                           .scannedMedicine[0].packageSize
+                                          .toString(),
+                                    ),
+                                    Divider(),
+                                    BuildCard(
+                                      info: ' الوحدة',
+                                      icon: FontAwesomeIcons.pills,
+                                      item: unitOfVolume = _
+                                          .scannedMedicine[0].unitOfVolume
                                           .toString(),
                                     ),
                                     Divider(),
@@ -168,7 +178,7 @@ class addByScan extends StatelessWidget {
                         width: 200,
                         margin: EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 76, 146, 15),
+                          color: Color.fromARGB(255, 140, 167, 190),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: TextButton(
@@ -181,9 +191,107 @@ class addByScan extends StatelessWidget {
                                   size: 16,
                                   color: Colors.white,
                                 )),
+
+                                // ******* Go to setDose *********
                                 SizedBox(
                                   width: 10,
                                 ),
+                                Text(
+                                  "تحديد جرعة الدواء",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.tajawal(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            onPressed: () async {
+                              var doc = await _firestore
+                                  .collection("medicines")
+                                  .doc(tradeName + loggedInUser!.uid)
+                                  .get();
+                              if (doc.exists) {
+                                print("already exist");
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    // margin: EdgeInsets.only(right: 10),
+
+                                    content: Text('تمت إضافة الدواء مسبقًا',
+                                        style: TextStyle(fontSize: 20),
+                                        textAlign: TextAlign.right),
+                                  ),
+                                );
+                              } else {
+                                if (addMedicineController.notFound == false) {
+                                  _firestore
+                                      .collection('medicines')
+                                      .doc(tradeName + loggedInUser!.uid)
+                                      .set({
+                                    'Generic name': genericName,
+                                    'Trade name': tradeName,
+                                    'Strength value': strengthValue,
+                                    'Unit of strength': unitOfStrength,
+                                    'Volume': volume,
+                                    'Unit of volume': unitOfVolume,
+                                    'Package size': packageSize,
+                                    'barcode': barcode,
+                                    'description': description,
+                                    'caregiverID': loggedInUser!.uid,
+                                  });
+
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => SetDose(
+                                      value: toBeTransformed,
+                                      toBeTransformed: [
+                                        tradeName,
+                                        packageSize,
+                                        unitOfVolume
+                                      ],
+                                    ),
+                                  ));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      // margin: EdgeInsets.only(right: 10),
+
+                                      content: Text(
+                                          'عليك استخدام الماسح الضوئي أولاً ',
+                                          style: TextStyle(fontSize: 20),
+                                          textAlign: TextAlign.right),
+                                    ),
+                                  );
+                                }
+                              }
+                            }),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        height: 60.0,
+                        width: 200,
+                        margin: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 140, 167, 190),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: TextButton(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Center(
+                                    child: Icon(
+                                  FontAwesomeIcons.plus,
+                                  size: 16,
+                                  color: Colors.white,
+                                )),
+
+                                // ******* Go to setDose *********
+
+                                SizedBox(
+                                  width: 10,
+                                ),
+
                                 Text(
                                   "إضافة",
                                   textAlign: TextAlign.center,
@@ -193,36 +301,56 @@ class addByScan extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            onPressed: () {
-                              if (addMedicineController.notFound == false) {
-                                _firestore.collection('medicines').add({
-                                  'Generic name': genericName,
-                                  'Trade name': tradeName,
-                                  'Strength value': strengthValue,
-                                  'Unit of strength': unitOfStrength,
-                                  'Volume': volume,
-                                  'Unit of volume': unitOfVolume,
-                                  'Package size': packageSize,
-                                  'barcode': barcode,
-                                  'description': description,
-                                  'caregiverID': loggedInUser!.uid,
-                                });
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Navigation()));
-                              } else {
+                            onPressed: () async {
+                              var doc = await _firestore
+                                  .collection("medicines")
+                                  .doc(tradeName + loggedInUser!.uid)
+                                  .get();
+                              if (doc.exists) {
+                                print("already exist");
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     // margin: EdgeInsets.only(right: 10),
 
-                                    content: Text(
-                                        'عليك استخدام الماسح الضوئي أولاً ',
+                                    content: Text('تمت إضافة الدواء مسبقًا',
                                         style: TextStyle(fontSize: 20),
                                         textAlign: TextAlign.right),
                                   ),
                                 );
-                              }
+                              } else {
+                                if (addMedicineController.notFound == false) {
+                                  _firestore
+                                      .collection('medicines')
+                                      .doc(tradeName + loggedInUser!.uid)
+                                      .set({
+                                    'Generic name': genericName,
+                                    'Trade name': tradeName,
+                                    'Strength value': strengthValue,
+                                    'Unit of strength': unitOfStrength,
+                                    'Volume': volume,
+                                    'Unit of volume': unitOfVolume,
+                                    'Package size': packageSize,
+                                    'barcode': barcode,
+                                    'description': description,
+                                    'caregiverID': loggedInUser!.uid,
+                                  });
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => Navigation()));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      // margin: EdgeInsets.only(right: 10),
 
-                              _.scannedMedicine.clear();
+                                      content: Text(
+                                          'عليك استخدام الماسح الضوئي أولاً ',
+                                          style: TextStyle(fontSize: 20),
+                                          textAlign: TextAlign.right),
+                                    ),
+                                  );
+                                }
+
+                                _.scannedMedicine.clear();
+                              }
                             }),
                       ),
                     ),

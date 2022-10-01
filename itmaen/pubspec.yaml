@@ -29,7 +29,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  
+  
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -43,6 +44,7 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   local_auth: ^2.1.2
   flutter_secure_storage: ^6.0.0
+  firebase_storage: ^10.3.10
   alert_dialog: ^1.0.1
   google_fonts: ^3.0.1
   qr_code_scanner: ^1.0.1
@@ -60,7 +62,12 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
   flutter_pw_validator: ^1.4.2
- 
+  flutter_colorpicker: ^1.0.3
+  day_night_time_picker: ^1.1.3
+  custom_radio_grouped_button: ^2.1.2+2
+  
+  
+
 
 
 dev_dependencies:
@@ -96,6 +103,13 @@ flutter:
    - images/background.jpg
    - images/itmaenlogo.jpg
    - images/itmaenlogo.png
+   - images/no.png
+   - images/CENTRUM - سنترم.png
+   - images/VIDROP.png
+   - images/بانادول ادفانس - PANADOL.png
+   - images/جليترا.png
+   - images/سبراليكس.png
+
    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
