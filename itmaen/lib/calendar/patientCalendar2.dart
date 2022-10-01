@@ -58,12 +58,15 @@ class PatientCalendar_ extends State<PatientCalendar> {
   var namee;
   var checked;
   var unit;
+  DateTime?theTime;
+  DateTime? currTime;
   String? _subjectText;
   List<String> doseDes = <String>[];
   List<String> doseAmount = <String>[];
   List<String> doseName = <String>[];
   List<bool> doseCheck = <bool>[];
   List<String> doseUnit = <String>[];
+  List<DateTime> doseTime = <DateTime>[];
   var currDes;
   var currAmount;
   var currCheck;
@@ -79,18 +82,19 @@ class PatientCalendar_ extends State<PatientCalendar> {
       amount = doc['amount'];
       checked = doc['cheked'];
       unit = doc['unit'];
+      theTime = DateTime.parse(doc['Time'].toDate().toString());
       doseDes.add(description);
       doseAmount.add(amount);
       doseName.add(namee);
       doseCheck.add(checked);
       doseUnit.add(unit);
-      print("$description + $amount");
+      doseTime.add(theTime!);
     });
   }
 
   intoList() {
     for (int i = 0; i < count; i++) {
-      if (doseName[i] == _subjectText) {
+      if (doseName[i] == _subjectText && doseTime[i] == currTime ) {
         currDes = doseDes[i];
         currAmount = doseAmount[i];
         currCheck = doseCheck[i];
@@ -218,6 +222,7 @@ class PatientCalendar_ extends State<PatientCalendar> {
         details.targetElement == CalendarElement.agenda && details.appointments!.length > 0) {
       final Meeting appointmentDetails = details.appointments![0];
       _subjectText = appointmentDetails.eventName;
+      currTime = appointmentDetails.from;
       var date = DateFormat('MMMM dd, yyyy');
       var name = Meeting().eventName;
       intoList();
