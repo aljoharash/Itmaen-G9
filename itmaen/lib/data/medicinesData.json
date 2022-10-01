@@ -2,12 +2,12 @@
  [
   {
     "Generic name": "VITAMIN D3 (CHOLECALCIFEROL)",
-    "Trade name": "VIDROP ORAL DROPS - فيدروب ",
+    "Trade name": "فيدروب - VIDROP",
     "Strength value": "2800",
     "Unit of strength": "وحدة دولية \\ مل",
     "Volume": "15",
     "Unit of volume": "مل",
-    "Package size": "1",
+    "Package size": "15",
     "barcode": "6221508220422",
     "description":
         "نقط عبر الفم للوقاية والعلاج من الكساح ولين العظام.اطلب استشارة الطبيب.يحفظ بعيدًا عن متناول الأطفال.يحتوى كل 1 مل (28 نقطة) على فيتامين د 3 (كوليكاسيفيرول) 2800 وحدة دولية"
@@ -51,7 +51,7 @@
   },
   {
     "Generic name": "ESCITALOPRAM OXALATE",
-    "Trade name": "CIPRALEX 10 MG F.C. TABLETS - سبرالكس 10 مجم 28 قرص",
+    "Trade name": "سبرالكس ",
     "Strength value": "10",
     "Unit of strength": "مجم",
     "Volume": "-",
@@ -213,7 +213,7 @@
   {
     "Generic name": "PARACETAMOL",
     "Trade name":
-        "PANADOL ADVANCE 500MG FILM COATED TABLET - بانادول ادفانس 500 مجم 24 قرص",
+    "بانادول - PANADOL",
     "Strength value": "500",
     "Unit of strength": "مجم",
     "Volume": "-",
@@ -225,7 +225,7 @@
   },
   {
     "Generic name": "MULTIVITAMINS, MINERALS",
-    "Trade name": "CENTRUM WITH LUTEIN TABLETS - سنترم مع لوتين 100 قرص",
+    "Trade name": "سنترم - CENTRUM",
     "Strength value": "-",
     "Volume": "-",
     "Unit of volume": "حبة",

@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'dart:ffi';
+//import 'dart:html';
 import 'dart:ui' as ui;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,6 +15,7 @@ import 'generateqr.dart';
 import 'login.dart';
 import 'scanqr.dart';
 import 'addMedicinePages/addmedicine.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 //import 'pages/adddialog.dart';
 import 'package:itmaen/secure-storage.dart';
 //import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -30,6 +32,7 @@ class _ViewDPageState extends State<ViewD> {
   StorageService st = StorageService();
   //var caregiverID;
   final _auth = FirebaseAuth.instance;
+  //static final storage = FirebaseStorage.instance.ref();
   late User loggedUser;
 
   //Future<String?> loggedInUser = getCurrentUser();
@@ -155,7 +158,8 @@ class _ViewDPageState extends State<ViewD> {
                         StreamBuilder(
                             stream: FirebaseFirestore.instance
                                 .collection('doses')
-                                .where('caregiverID', isEqualTo: id_).orderBy('Time')
+                                .where('caregiverID', isEqualTo: id_)
+                                .orderBy('Time')
                                 .snapshots(),
                             builder: (BuildContext context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -166,7 +170,7 @@ class _ViewDPageState extends State<ViewD> {
                               List<medBubble> medBubbles = [];
                               String x = DateFormat('dd/MM/yyyy')
                                   .format(DateTime.now());
-                                    
+
                               for (var med in medicines!) {
                                 //final medName = med.data();
                                 final medDate = med.get('Date');
@@ -182,7 +186,9 @@ class _ViewDPageState extends State<ViewD> {
                                   final MedUnit = med.get('unit');
                                   final medColor = med.get('color');
                                   final m = med.get('Time');
-                                 // final timechecked = med.get('Timecheked');
+                                  final picture = med.get('picture');
+                                  // final pic = med.get("picture");
+                                  // final timechecked = med.get('Timecheked');
                                   // var i = 0;
                                   final MedBubble = medBubble(
                                       medName,
@@ -196,7 +202,7 @@ class _ViewDPageState extends State<ViewD> {
                                       medColor,
                                       x,
                                       m,
-                                     );
+                                      picture);
                                   medBubbles.add(MedBubble);
                                 }
                               }
@@ -252,7 +258,8 @@ class _ViewDPageState extends State<ViewD> {
                         StreamBuilder(
                             stream: FirebaseFirestore.instance
                                 .collection('doses')
-                                .where('caregiverID', isEqualTo: cid_).orderBy('Time')
+                                .where('caregiverID', isEqualTo: cid_)
+                                .orderBy('Time')
                                 .snapshots(),
                             builder: (BuildContext context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -263,7 +270,7 @@ class _ViewDPageState extends State<ViewD> {
                               List<medBubble> medBubbles = [];
                               String x = DateFormat('dd/MM/yyyy')
                                   .format(DateTime.now());
-                              
+
                               for (var med in medicines!) {
                                 final medDate = med.get('Date');
 
@@ -278,26 +285,27 @@ class _ViewDPageState extends State<ViewD> {
                                   final MedUnit = med.get('unit');
                                   final medColor = med.get('color');
                                   final m = med.get('Time');
+                                  final picture = med.get("picture");
+                                  // final pic = med.get("picture");
                                   //final timechecked;
 
-                                 // timechecked = med.get('Timecheked');
+                                  // timechecked = med.get('Timecheked');
 
                                   final MedBubble = medBubble(
-                                      medName,
-                                      checked,
-                                      caregiverID,
-                                      doc,
-                                      time,
-                                      MedAmount,
-                                      meddescription,
-                                      MedUnit,
-                                      medColor,
-                                      x,
-                                      m,
-                                      );
+                                    medName,
+                                    checked,
+                                    caregiverID,
+                                    doc,
+                                    time,
+                                    MedAmount,
+                                    meddescription,
+                                    MedUnit,
+                                    medColor,
+                                    x,
+                                    m,
+                                    picture,
+                                  );
                                   medBubbles.add(MedBubble);
-
-                                 
                                 }
                               }
 
@@ -345,8 +353,8 @@ class medBubble extends StatefulWidget {
       this.MedUnit,
       this.medColor,
       this.x,
-      this.m
-     );
+      this.m,
+      this.picture);
   var medicName;
   var checked;
   var ID;
@@ -359,7 +367,8 @@ class medBubble extends StatefulWidget {
   var medColor;
   var x;
   var m;
-  
+  var picture;
+
   @override
   State<medBubble> createState() => _medBubbleState();
 }
@@ -443,7 +452,7 @@ class _medBubbleState extends State<medBubble> {
         context: context,
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
-          return   Directionality(
+          return Directionality(
             textDirection: ui.TextDirection.rtl,
             child: AlertDialog(
               title: Center(
@@ -486,7 +495,6 @@ class _medBubbleState extends State<medBubble> {
                       SizedBox(
                         height: 15,
                       ),
-                     
                       SizedBox(
                         height: 18,
                       ),
@@ -522,7 +530,7 @@ class _medBubbleState extends State<medBubble> {
                             fontWeight: FontWeight.bold)),
                     onPressed: () {
                       //Navigator.of(context).pop();
-                
+
                       Navigator.of(context).pop();
                     },
                   ),
@@ -548,7 +556,7 @@ class _medBubbleState extends State<medBubble> {
                                   .collection('doses')
                                   .doc(widget.doc)
                                   .update({'Timecheked': DateTime.now()});
-                
+
                               if (diff == 0) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
@@ -578,10 +586,7 @@ class _medBubbleState extends State<medBubble> {
                                 );
                               }
                               Navigator.of(context).pop();
-                            }
-                
-                     
-                      ),
+                            }),
                 ),
               ],
             ),
@@ -590,10 +595,8 @@ class _medBubbleState extends State<medBubble> {
       );
     }
 
-    
-
     return Padding(
-      padding: EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(3.0),
       child: Material(
         child: SizedBox(
           width: 130,
@@ -604,7 +607,7 @@ class _medBubbleState extends State<medBubble> {
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(10.0),
+                    padding: EdgeInsets.all(3.0),
                     child: Material(
                         borderRadius: BorderRadius.circular(20.0),
                         elevation: 7,
@@ -628,7 +631,7 @@ class _medBubbleState extends State<medBubble> {
                                     textColor: Colors.white,
                                     child: Icon(
                                       Icons.check,
-                                      size: 24,
+                                      size: 20,
                                       color: Colors.black,
                                     ),
                                     padding: EdgeInsets.all(16),
@@ -664,7 +667,7 @@ class _medBubbleState extends State<medBubble> {
                                         '\n' +
                                         '',
                                     style: GoogleFonts.tajawal(
-                                        fontSize: 18,
+                                        fontSize: 15,
                                         color: Color.fromARGB(255, 0, 0, 0),
                                         fontWeight: FontWeight.w600),
                                   ),
@@ -679,7 +682,19 @@ class _medBubbleState extends State<medBubble> {
                                       : Text(''),
                                 ],
                               )),
+
                               // }
+             
+                            SizedBox(
+                            width: 55,
+                            ),
+                              
+                             
+                              SizedBox(
+                                  child: Image.asset(widget.picture.toString(),
+                                      height: 70, width: 70),
+                                ),
+                              
 
                               // image here
                             ]))),
