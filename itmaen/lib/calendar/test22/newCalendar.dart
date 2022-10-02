@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import '../../navigation.dart';
 import '../../view.dart';
 import '../../font.dart';
 import '../../viewD.dart';
@@ -297,9 +298,10 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                                 )
                               : ElevatedButton.icon(
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) => ViewD()));
+                                     Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Navigation()));
                                   },
                                   icon: FaIcon(FontAwesomeIcons.pills),
                                   label: Text(

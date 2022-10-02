@@ -121,8 +121,9 @@ class _ViewPageState extends State<View> {
             shape: CircleBorder(
             ),
             padding: EdgeInsets.all(15),
-            backgroundColor: Color.fromARGB(255, 140, 167, 190),
-            foregroundColor: Color.fromARGB(255, 84, 106, 125),
+            //backgroundColor: Color.fromARGB(255, 140, 167, 190),
+            primary: Color.fromARGB(255, 140, 167, 190),
+            surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
               ),
           ),
         body: FutureBuilder(

@@ -1,5 +1,5 @@
 import 'dart:async';
- 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,16 +14,17 @@ import 'calendar/patientCalendar2.dart';
 import 'calendar/test22/newCalendar.dart';
 import 'login.dart';
 import 'notification.dart';
+
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
- 
+
 class NavigationPatient extends StatefulWidget {
   const NavigationPatient({Key? key}) : super(key: key);
- 
+
   @override
   State<NavigationPatient> createState() => _NavigationPatientState();
 }
- 
+
 class _NavigationPatientState extends State<NavigationPatient> {
   String title = 'AlertDialog';
   bool tappedYes = false;
@@ -37,31 +38,29 @@ class _NavigationPatientState extends State<NavigationPatient> {
   void initState() {
     super.initState();
     getCurrentUser();
-   
+
     Noti.initialize(flutterLocalNotificationsPlugin);
-    timer = Timer.periodic(const Duration(seconds: 60), (Timer t){sendNotification();
-   
-   
+    timer = Timer.periodic(const Duration(seconds: 60), (Timer t) {
+      sendNotification();
     });
     print('first');
-   
   }
- 
- 
+
   void getCurrentUser() async {
     //String qrData="";
-     id_ = (await st.readSecureData("caregiverID"))!;
+    id_ = (await st.readSecureData("caregiverID"))!;
     try {
       final user = await _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
         caregiverID = loggedInUser.uid;
-     id_ = (await st.readSecureData("caregiverID"))!;
+        id_ = (await st.readSecureData("caregiverID"))!;
       }
     } catch (e) {
       print(e);
     }
   }
+
   void sendNotification() async {
     print('second');
     var _query;
@@ -77,17 +76,18 @@ class _NavigationPatientState extends State<NavigationPatient> {
         print(value.size);
         _query = (value.docs[i].get('Time')).toDate().toString();
         var time_ = DateTime.parse(_query);
- 
-        var time = DateTime.parse(
-            "2022-09-20 19:43:00.999"); // just for test
+
+        var time = DateTime.parse("2022-09-20 19:43:00.999"); // just for test
         var now = DateTime.now(); // today's time
         var currentTime = DateTime.now();
-        var diff = time_.difference(currentTime).inMinutes;// getting the difference in mins
+        var diff = time_
+            .difference(currentTime)
+            .inMinutes; // getting the difference in mins
         print("here is the difference");
         print(diff);
-        if (diff==4) {
+        if (diff == 4) {
           Noti.showBigTextNotification(
-                 title: "تذكير بأخذ الجرعة",
+              title: "تذكير بأخذ الجرعة",
               body: '''
   [${value.docs[i].get("name")}]
  لقد تبقى 5 دقائق على موعد جرعتك''',
@@ -97,24 +97,25 @@ class _NavigationPatientState extends State<NavigationPatient> {
         //   value.docs[i].reference.delete();
         // }
       } // end for
-     
     });
-   // timer?.cancel();
+    // timer?.cancel();
     // }
   }
- 
-  int _selectedIndex = 1;
+
+  int _selectedIndex = 2;
   bodyFunction() {
     switch (_selectedIndex) {
       case 0:
         return;
         break;
       case 1:
-        return ViewD();
+        return PatientCalendar();
         break;
+      case 2:
+        return ViewD();
     }
   }
- 
+
   @override
   Widget build(BuildContext context) {
     Future<void> logout() async {
@@ -124,11 +125,10 @@ class _NavigationPatientState extends State<NavigationPatient> {
         if (action == DialogsAction.yes) {
           timer?.cancel();
           setState(() => tappedYes = true);
-         
+
           await FirebaseAuth.instance.signOut();
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => LoginPage()));
-             
         } else {
           setState(() => tappedYes = false);
           Navigator.pushReplacement(context,
@@ -140,9 +140,9 @@ class _NavigationPatientState extends State<NavigationPatient> {
         if (action == DialogsAction.yes) {
           timer?.cancel();
           setState(() => tappedYes = true);
- 
+
           // await FirebaseAuth.instance.signOut();
-         
+
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => patientScreen()));
         } else {
@@ -152,7 +152,7 @@ class _NavigationPatientState extends State<NavigationPatient> {
         }
       }
     }
- 
+
     void _onItemTapped(int index) {
       setState(() {
         _selectedIndex = index;
@@ -161,7 +161,7 @@ class _NavigationPatientState extends State<NavigationPatient> {
         logout();
       }
     }
- 
+
     return Scaffold(
       body: bodyFunction(),
       backgroundColor: Colors.white,
@@ -175,6 +175,10 @@ class _NavigationPatientState extends State<NavigationPatient> {
             color: Colors.white,
           ),
           Icon(
+            Icons.calendar_month,
+            color: Colors.white,
+          ),
+          Icon(
             Icons.home,
             color: Colors.white,
           ),
@@ -185,4 +189,3 @@ class _NavigationPatientState extends State<NavigationPatient> {
     );
   }
 }
- 

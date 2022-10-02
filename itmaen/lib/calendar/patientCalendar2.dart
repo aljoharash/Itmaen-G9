@@ -13,6 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import '../../view.dart';
 import '../../font.dart';
+import '../navigationPatient.dart';
 import '../viewD.dart';
 
 class PatientCalendar extends StatefulWidget {
@@ -303,9 +304,10 @@ class PatientCalendar_ extends State<PatientCalendar> {
                                 )
                               : ElevatedButton.icon(
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) => ViewD()));
+                                       Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          NavigationPatient()));
                                   },
                                   icon: FaIcon(FontAwesomeIcons.pills),
                                   label: Text(
