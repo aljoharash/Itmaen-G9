@@ -1,25 +1,20 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/navigation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:itmaen/setDose.dart';
-import 'package:itmaen/trySet.dart';
 
-class addManually extends StatefulWidget {
-  const addManually({Key? key}) : super(key: key);
+class setDose extends StatefulWidget {
+  const setDose({Key? key}) : super(key: key);
 
   @override
-  State<addManually> createState() => _addManuallyState();
+  State<setDose> createState() => _setDoseState();
 }
 
-class _addManuallyState extends State<addManually> {
+class _setDoseState extends State<setDose> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
-  late List<String> toBeTransformed = [];
 
   String caregiverID = "";
   late User loggedInUser;
@@ -46,7 +41,6 @@ class _addManuallyState extends State<addManually> {
   TextEditingController doseCount = new TextEditingController();
   TextEditingController description = new TextEditingController();
   TextEditingController packSize = new TextEditingController();
-  bool medExist = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +50,7 @@ class _addManuallyState extends State<addManually> {
           backgroundColor: Color.fromARGB(255, 140, 167, 190),
           elevation: 0,
           title: Text(
-            "إضافة دواء يدويًا",
+            "تحديد جرعة الدواء",
             style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
           ),
         ),
@@ -66,13 +60,10 @@ class _addManuallyState extends State<addManually> {
           SingleChildScrollView(
             child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context)
-                    .size
-                    .height, //للسماوي اللي شلتيه  كان تحت صفحة بيضاء
-
+                height: MediaQuery.of(context).size.height,
                 child: Center(
                   child: Container(
-                    margin: EdgeInsets.all(12), // بعد عن الأطراف لل
+                    margin: EdgeInsets.all(12),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -83,7 +74,7 @@ class _addManuallyState extends State<addManually> {
                               height: 100,
                             ),
                             Text(
-                              "إضافة دواء",
+                              "تحديد جرعة الدواء",
                               style: GoogleFonts.tajawal(
                                 fontSize: 30,
                                 //fontStyle: FontStyle.italic,
@@ -96,21 +87,10 @@ class _addManuallyState extends State<addManually> {
                             ),
                             TextFormField(
                               controller: medName,
-                              validator: (value) {
-                                if (value == null || value.isEmpty)
-                                  return 'الرجاء ادخال اسم الدواء';
-                                String pattern =
-                                    r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
-                                RegExp regex = RegExp(pattern);
-                                if (!regex.hasMatch(value.trim()))
-                                  return 'يجب أن يحتوي اسم الدواء على حرفين على الاقل';
-                                return null;
-                              },
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
-                                hintText: 'اسم الدواء ',
                                 enabled: true,
                                 contentPadding: const EdgeInsets.only(
                                     left: 14.0,
@@ -138,7 +118,7 @@ class _addManuallyState extends State<addManually> {
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
-                                hintText: ' وصف الدواء (اختياري) ',
+                                hintText: ' وصف الجرعة (اختياري) ',
                                 enabled: true,
                                 contentPadding: const EdgeInsets.only(
                                     left: 14.0,
@@ -234,161 +214,25 @@ class _addManuallyState extends State<addManually> {
                                   vertical: 11, horizontal: 122),
                               color: Color.fromARGB(255, 140, 167, 190),
                               onPressed: () async {
-                                var doc = await _firestore
-                                    .collection("medicines")
-                                    .doc(medName.text + caregiverID)
-                                    .get();
-                                if (doc.exists) {
-                                  print("already exist");
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      // margin: EdgeInsets.only(right: 10),
+                                if (_formKey.currentState!.validate()) {
+                                  _firestore.collection('medicines').add({
+                                    //  'Generic name': genericName,
+                                    'Trade name': medName.text,
+                                    'Strength value': doseCount.text,
+                                    //   'Unit of strength': unitOfStrength,
+                                    // 'Volume': volume,
+                                    //'Unit of volume': unitOfVolume,
+                                    'Package size': packSize.text,
+                                    //'barcode': barcode,
+                                    'description': description.text,
+                                    'caregiverID': caregiverID,
+                                  });
 
-                                      content: Text('تمت إضافة الدواء مسبقًا',
-                                          style: TextStyle(fontSize: 20),
-                                          textAlign: TextAlign.right),
-                                    ),
-                                  );
-                                } else {
-                                  if (_formKey.currentState!.validate()) {
-                                    _firestore
-                                        .collection('medicines')
-                                        .doc(medName.text + caregiverID)
-                                        .set({
-                                      //  'Generic name': genericName,
-                                      'Trade name': medName.text,
-                                      'Strength value': doseCount.text,
-                                      //   'Unit of strength': unitOfStrength,
-                                      // 'Volume': volume,
-                                      //'Unit of volume': unitOfVolume,
-                                      'Package size': packSize.text,
-                                      //'barcode': barcode,
-                                      'description': description.text,
-                                      'caregiverID': caregiverID,
-                                      'picture': (medName.text == "جليترا"
-                                          ? "images/" + "جليترا" + ".png"
-                                          : medName.text == "سبراليكس"
-                                              ? "images/" + "سبراليكس" + ".png"
-                                              : medName.text ==
-                                                      "سنترم - CENTRUM"
-                                                  ? "images/" +
-                                                      "CENTRUM - سنترم" +
-                                                      ".png"
-                                                  : medName.text ==
-                                                        "بانادول - PANADOL"
-                                                          "PANADOL"
-                                                      ? "images/" +
-                                                          "بانادول ادفانس - PANADOL" +
-                                                          ".png"
-                                                      : medName.text ==
-                                                              "فيدروب - VIDROP"
-                                                          ? "images/" +
-                                                              "VIDROP" +
-                                                              ".png"
-                                                          : "images/" +
-                                                              "no" +
-                                                              ".png"),
-                                    });
-
-                                    print("Med added");
-
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                Navigation()));
-                                  }
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => Navigation()));
                                 }
                               },
                               child: Text('إضافة',
-                                  style: GoogleFonts.tajawal(
-                                    color: Color.fromARGB(255, 245, 244, 244),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                  // style: TextStyle(fontFamily: 'Madani Arabic Black'),
-                                  ),
-                            ),
-                            SizedBox(
-                              height: 20.0,
-                            ),
-                            MaterialButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0))),
-                              elevation: 5.0,
-                              height: 50,
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 11, horizontal: 76),
-                              color: Color.fromARGB(255, 140, 167, 190),
-                              onPressed: () async {
-                                var doc = await _firestore
-                                    .collection("medicines")
-                                    .doc(medName.text + caregiverID)
-                                    .get();
-                                if (doc.exists) {
-                                  print("already exist");
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      // margin: EdgeInsets.only(right: 10),
-
-                                      content: Text('تمت إضافة الدواء مسبقًا',
-                                          style: TextStyle(fontSize: 20),
-                                          textAlign: TextAlign.right),
-                                    ),
-                                  );
-                                } else {
-                                  if (_formKey.currentState!.validate()) {
-                                    _firestore
-                                        .collection('medicines')
-                                        .doc(medName.text + caregiverID)
-                                        .set({
-                                      //  'Generic name': genericName,
-                                      'Trade name': medName.text,
-                                      'Strength value': doseCount.text,
-                                      //   'Unit of strength': unitOfStrength,
-                                      // 'Volume': volume,
-                                      //'Unit of volume': unitOfVolume,
-                                      'Package size': packSize.text,
-                                      //'barcode': barcode,
-                                      'description': description.text,
-                                      'caregiverID': caregiverID,
-                                       'picture': (medName.text == "جليترا"
-                                          ? "images/" + "جليترا" + ".png"
-                                          : medName.text == "سبراليكس"
-                                              ? "images/" + "سبراليكس" + ".png"
-                                              : medName.text ==
-                                                      "سنترم - CENTRUM"
-                                                  ? "images/" +
-                                                      "CENTRUM - سنترم" +
-                                                      ".png"
-                                                  : medName.text ==
-                                                       "بانادول - PANADOL"
-                                                         
-                                                      ? "images/" +
-                                                          "بانادول ادفانس - PANADOL" +
-                                                          ".png"
-                                                      : medName.text ==
-                                                              "فيدروب - VIDROP"
-                                                          ? "images/" +
-                                                              "VIDROP" +
-                                                              ".png"
-                                                          : "images/" +
-                                                              "no" +
-                                                              ".png"),
-                                    });
-
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => SetDose(
-                                                  value: toBeTransformed,
-                                                  toBeTransformed: [
-                                                    medName.text,
-                                                  ],
-                                                )));
-                                  }
-                                }
-                              },
-                              child: Text('تحديد جرعة الدواء',
                                   style: GoogleFonts.tajawal(
                                     color: Color.fromARGB(255, 245, 244, 244),
                                     fontSize: 20,

@@ -8,10 +8,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:itmaen/patient-login.dart';
 import 'package:itmaen/secure-storage.dart';
 import 'package:itmaen/view.dart';
-//import 'package:itmaen/viewD.dart';
+import 'package:itmaen/viewD.dart';
 import 'alert_dialog.dart';
-//import 'calendar/patientCalendar2.dart';
-//import 'calendar/test22/newCalendar.dart';
+import 'calendar/patientCalendar2.dart';
+import 'calendar/test22/newCalendar.dart';
 import 'login.dart';
 import 'notification.dart';
 
@@ -109,10 +109,10 @@ class _NavigationPatientState extends State<NavigationPatient> {
         return;
         break;
       case 1:
-        //return PatientCalendar();
+        return PatientCalendar();
         break;
       case 2:
-        //return ViewD();
+        return ViewD();
     }
   }
 
