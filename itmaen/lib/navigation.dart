@@ -10,11 +10,15 @@ import 'package:itmaen/generateqr.dart';
 import 'package:itmaen/patient-login.dart';
 import 'package:itmaen/view.dart';
 import 'package:itmaen/viewDailyDoses.dart';
+//import 'package:itmaen/viewD.dart';
+//import 'package:';
 import 'add-patient.dart';
 import 'alert_dialog.dart';
+//import 'calendar/test22/newCalendar.dart';
 import 'home.dart';
 import 'login.dart';
 import 'notification.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -40,12 +44,10 @@ class _NavigationState extends State<Navigation> {
     super.initState();
     getCurrentUser();
     Noti.initialize(flutterLocalNotificationsPlugin);
-    
-    timer = Timer.periodic(const Duration(seconds: 60), (Timer t){sendNotification();
-    
-    
-    });
-  
+
+    // timer = Timer.periodic(const Duration(seconds: 60), (Timer t) {
+    //   sendNotification();
+    // });
   }
 
   void getCurrentUser() async {
@@ -78,44 +80,45 @@ class _NavigationState extends State<Navigation> {
     }
   }
 
-  void sendNotification() async {
-    var _query;
-    await FirebaseFirestore.instance
-        .collection('doses')
-        .where("caregiverID", isEqualTo: caregiverID)
-        .get()
-        .then((value) {
-      for (var i = 0; i < value.size; i++) {
-        print("here is the size");
-        print("caregiver");
-        print(value.size);
-        _query = (value.docs[i].get('Time')).toDate().toString();
-        var time_ = DateTime.parse(_query);
+//   void sendNotification() async {
+//     var _query;
+//     await FirebaseFirestore.instance
+//         .collection('doses')
+//         .where("caregiverID", isEqualTo: caregiverID)
+//         .get()
+//         .then((value) {
+//       for (var i = 0; i < value.size; i++) {
+//         print("here is the size");
+//         print("caregiver");
+//         print(value.size);
+//         _query = (value.docs[i].get('Time')).toDate().toString();
+//         var time_ = DateTime.parse(_query);
 
-        var time = DateTime.parse(
-            "2022-09-20 19:43:00.999"); // just for test
-        var now = DateTime.now(); // today's time
-        var currentTime = DateTime.now();
-        var diff = time_.difference(currentTime).inMinutes;// getting the difference in mins 
-        print("here is the difference");
-        print(diff);
-        if (diff==4) {
-          Noti.showBigTextNotification(
-             title: "تذكير بأخذ الجرعة",
-              body: ''' 
-  [${value.docs[i].get("name")}]
- عزيزي, تبقى 5 دقائق على موعد اخذ مستقبلك للرعاية لجرعته''',
-              fln: flutterLocalNotificationsPlugin);
-        }
-        else if(diff <= -1440){ // passed a day over the medication , it will be removed 
-          value.docs[i].reference.delete();
-        }
-      } // end for
-    });
-    // }
-  }
+//         var time = DateTime.parse("2022-09-20 19:43:00.999"); // just for test
+//         var now = DateTime.now(); // today's time
+//         var currentTime = DateTime.now();
+//         var diff = time_
+//             .difference(currentTime)
+//             .inMinutes; // getting the difference in mins
+//         print("here is the difference");
+//         print(diff);
+//         if (diff == 4) {
+//           Noti.showBigTextNotification(
+//               title: "تذكير بأخذ الجرعة",
+//               body: ''' 
+//   [${value.docs[i].get("name")}]
+//  عزيزي, تبقى 5 دقائق على موعد اخذ مستقبلك للرعاية لجرعته''',
+//               fln: flutterLocalNotificationsPlugin);
+//         } else if (diff <= -1440) {
+//           // passed a day over the medication , it will be removed
+//           value.docs[i].reference.delete();
+//         }
+//       } // end for
+//     });
+//     // }
+//   }
 
-  int _selectedIndex = 3;
+  int _selectedIndex = 4;
   bodyFunction() {
     switch (_selectedIndex) {
       case 0:
@@ -128,6 +131,9 @@ class _NavigationState extends State<Navigation> {
         return View();
         break;
       case 3:
+        //return LoadDataFromFireStoree();
+        break;
+      case 4:
         return ViewD();
         break;
     }
@@ -135,19 +141,7 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
-    void showAddDialog() {
-      showDialog(
-        context: context,
-        builder: (_) {
-          return AlertDialog(
-            content: AddMedicine(),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          );
-        },
-      );
-    }
+ 
 
     Future<void> logout() async {
       if (caregiverID != null) {
@@ -155,9 +149,9 @@ class _NavigationState extends State<Navigation> {
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
           setState(() => tappedYes = true);
-        timer?.cancel();
+          timer?.cancel();
           await FirebaseAuth.instance.signOut();
-          loggedInUser = null ; 
+          loggedInUser = null;
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => LoginPage()));
         } else {
@@ -187,9 +181,6 @@ class _NavigationState extends State<Navigation> {
       setState(() {
         _selectedIndex = index;
       });
-      if (index == 2) {
-        showAddDialog();
-      }
       if (index == 0) {
         logout();
       }
@@ -217,10 +208,14 @@ class _NavigationState extends State<Navigation> {
             Icons.person_add,
             color: Colors.white,
           ),
-          Icon(
-            Icons.add,
+          FaIcon(
+            FontAwesomeIcons.pills,
             color: Colors.white,
           ),
+          Icon(
+            Icons.calendar_month,
+            color: Colors.white,
+            ),
           Icon(
             Icons.home,
             color: Colors.white,

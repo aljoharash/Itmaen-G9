@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/add-patient.dart';
 import 'package:itmaen/patient-login.dart';
+import 'addMedicinePages/adddialog.dart';
 import 'alert_dialog.dart';
 import 'package:itmaen/model/medicines.dart';
 import 'generateqr.dart';
@@ -86,6 +87,21 @@ class _ViewPageState extends State<View> {
 
   @override
   Widget build(BuildContext context) {
+    
+    void showAddDialog() {
+      showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            content: AddMedicine(),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          );
+        },
+      );
+    }
+
     var data;
     return SafeArea(
       top: false,
@@ -95,6 +111,21 @@ class _ViewPageState extends State<View> {
           title: Text("قائمة الأدوية",
               style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
         ),
+        floatingActionButton: ElevatedButton(
+            onPressed: () {
+              showAddDialog();
+            },
+            
+            child: Icon(Icons.add, color: Colors.white,),
+            style: ElevatedButton.styleFrom(
+            shape: CircleBorder(
+            ),
+            padding: EdgeInsets.all(15),
+            //backgroundColor: Color.fromARGB(255, 140, 167, 190),
+            primary: Color.fromARGB(255, 140, 167, 190),
+            surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
+              ),
+          ),
         body: FutureBuilder(
           builder: (ctx, snapshot) {
             // Checking if future is resolved or not
@@ -133,7 +164,12 @@ class _ViewPageState extends State<View> {
                             for (var med in medicines!) {
                               //final medName = med.data();
                               final medName = med.get('Trade name');
-                              final MedBubble = medBubble(medName);
+                              final meddescription = med.get('description');
+                              final package = med.get('Package size');
+                              final picture = med.get('picture');
+                              //final unit = med.get('Unit of volume');
+                              final MedBubble =
+                                  medBubble(medName, meddescription, package,picture);
                               medBubbles.add(MedBubble);
                             }
                             return Expanded(
@@ -144,7 +180,7 @@ class _ViewPageState extends State<View> {
                               ),
                             );
                             // }
-                          })
+                          }),
                     ],
                   ));
                 } else {
@@ -168,7 +204,12 @@ class _ViewPageState extends State<View> {
                             for (var med in medicines!) {
                               //final medName = med.data();
                               final medName = med.get('Trade name');
-                              final MedBubble = medBubble(medName);
+                              final meddescription = med.get('description');
+                              final package = med.get('Package size');
+                              final picture = med.get('picture');
+                              //final unit = med.get('Unit of volume');
+                              final MedBubble =
+                                  medBubble(medName, meddescription, package,picture);
                               medBubbles.add(MedBubble);
                             }
                             return Expanded(
@@ -179,7 +220,7 @@ class _ViewPageState extends State<View> {
                               ),
                             );
                             // }
-                          })
+                          }),
                     ],
                   ));
                 }
@@ -201,8 +242,11 @@ class _ViewPageState extends State<View> {
 }
 
 class medBubble extends StatelessWidget {
-  medBubble(this.medicName);
+  medBubble(this.medicName, this.meddescription, this.package,this.picture);
   var medicName;
+  var meddescription;
+  var package;
+  var picture;
 
   @override
   Widget build(BuildContext context) {
@@ -214,15 +258,56 @@ class medBubble extends StatelessWidget {
           elevation: 7,
           color: Colors.white,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Text(
-              ' $medicName ',
-              style: GoogleFonts.tajawal(
-                  fontSize: 20,
-                  color: Color.fromARGB(255, 0, 0, 0),
-                  fontWeight: FontWeight.w600),
-            ),
-          )),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Column(
+                children: [
+                  Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Row(
+                      children: [
+                        Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: Image.asset(picture.toString(),
+                              height: 65, width: 65),
+                        ),
+                        Text(
+                          ' $medicName ',
+                          style: GoogleFonts.tajawal(
+                              fontSize: 18,
+                              color: Color.fromARGB(255, 55, 89, 122),
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: Text(
+                            '  حجم العبوة $package  ',
+                            style: GoogleFonts.tajawal(
+                                fontSize: 13,
+                                color: Color.fromARGB(255, 109, 140, 147),
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        // here image
+                        //SizedBox(width: 80,),
+                        // Directionality(textDirection: TextDirection.rtl,
+                        //                 child: Image.asset('assets/Images/itmaenlogo.png',
+                        //                   height: 65, width: 65),
+                        // ),
+                      ],
+                    ),
+                  ),
+                  Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Text(
+                      ' $meddescription ',
+                      style: GoogleFonts.tajawal(
+                          fontSize: 13,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ],
+              ))),
     );
   }
 }
