@@ -102,7 +102,7 @@ class _NavigationPatientState extends State<NavigationPatient> {
     // }
   }
 
-  int _selectedIndex = 1;
+  int _selectedIndex = 2;
   bodyFunction() {
     switch (_selectedIndex) {
       case 0:

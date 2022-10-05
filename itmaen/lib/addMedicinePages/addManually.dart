@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -96,14 +95,16 @@ class _addManuallyState extends State<addManually> {
                             ),
                             TextFormField(
                               controller: medName,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               validator: (value) {
                                 if (value == null || value.isEmpty)
                                   return 'الرجاء ادخال اسم الدواء';
                                 String pattern =
-                                    r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
+                                    r'^(?=.{3,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
                                 RegExp regex = RegExp(pattern);
                                 if (!regex.hasMatch(value.trim()))
-                                  return 'يجب أن يحتوي اسم الدواء على حرفين على الاقل';
+                                  return 'يجب أن يحتوي اسم الدواء على ثلاثة أحرف على الاقل';
                                 return null;
                               },
                               textAlign: TextAlign.right,
@@ -163,6 +164,8 @@ class _addManuallyState extends State<addManually> {
                             TextFormField(
                               keyboardType: TextInputType.number,
                               controller: doseCount,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               validator: (value) {
                                 if (value == null || value.isEmpty)
                                   return 'الرجاء ادخال الجرعة ';
@@ -198,11 +201,13 @@ class _addManuallyState extends State<addManually> {
                               keyboardType: TextInputType.number,
                               controller: packSize,
                               validator: ValidatePack,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
-                                hintText: 'عدد الحبات',
+                                hintText: 'حجم العبوة',
                                 enabled: true,
                                 contentPadding: const EdgeInsets.only(
                                     left: 14.0,
@@ -245,7 +250,7 @@ class _addManuallyState extends State<addManually> {
                                       // margin: EdgeInsets.only(right: 10),
 
                                       content: Text('تمت إضافة الدواء مسبقًا',
-                                          style: TextStyle(fontSize: 20),
+                                          style: TextStyle(fontSize: 15),
                                           textAlign: TextAlign.right),
                                     ),
                                   );
@@ -275,8 +280,8 @@ class _addManuallyState extends State<addManually> {
                                                       "CENTRUM - سنترم" +
                                                       ".png"
                                                   : medName.text ==
-                                                        "بانادول - PANADOL"
-                                                          "PANADOL"
+                                                          "بانادول - PANADOL"
+                                                              "PANADOL"
                                                       ? "images/" +
                                                           "بانادول ادفانس - PANADOL" +
                                                           ".png"
@@ -332,7 +337,7 @@ class _addManuallyState extends State<addManually> {
                                       // margin: EdgeInsets.only(right: 10),
 
                                       content: Text('تمت إضافة الدواء مسبقًا',
-                                          style: TextStyle(fontSize: 20),
+                                          style: TextStyle(fontSize: 15),
                                           textAlign: TextAlign.right),
                                     ),
                                   );
@@ -352,7 +357,7 @@ class _addManuallyState extends State<addManually> {
                                       //'barcode': barcode,
                                       'description': description.text,
                                       'caregiverID': caregiverID,
-                                       'picture': (medName.text == "جليترا"
+                                      'picture': (medName.text == "جليترا"
                                           ? "images/" + "جليترا" + ".png"
                                           : medName.text == "سبراليكس"
                                               ? "images/" + "سبراليكس" + ".png"
@@ -362,8 +367,7 @@ class _addManuallyState extends State<addManually> {
                                                       "CENTRUM - سنترم" +
                                                       ".png"
                                                   : medName.text ==
-                                                       "بانادول - PANADOL"
-                                                         
+                                                          "بانادول - PANADOL"
                                                       ? "images/" +
                                                           "بانادول ادفانس - PANADOL" +
                                                           ".png"
@@ -412,9 +416,8 @@ class _addManuallyState extends State<addManually> {
 
   String? ValidateMedName(String? FormName) {
     if (FormName == null || FormName.isEmpty) return 'الرجاء ادخال اسم الدواء';
-    String pattern =
-        r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
-    RegExp regex = RegExp(pattern);
+    String pattern = r'^(?=.{2,20}$)(?![.])(?!.*[.]{2})[a-zA-Z0-9.]+(?<![.])$';
+    RegExp regex = RegExp(pattern, unicode: true);
     if (!regex.hasMatch(FormName.trim()))
       return 'يجب أن يحتوي اسم الدواء على حرفين على الاقل';
     return null;

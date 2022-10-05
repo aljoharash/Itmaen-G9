@@ -117,7 +117,7 @@ class _NavigationState extends State<Navigation> {
 //     // }
 //   }
 
-  int _selectedIndex = 3;
+  int _selectedIndex = 4;
   bodyFunction() {
     switch (_selectedIndex) {
       case 0:

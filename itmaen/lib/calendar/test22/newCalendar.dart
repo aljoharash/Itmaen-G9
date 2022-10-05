@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import '../../navigation.dart';
 import '../../view.dart';
 import '../../font.dart';
 import '../../viewD.dart';
@@ -240,7 +241,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                 ),
               ),
               content: Container(
-                height: 120,
+                height: 150,
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -300,7 +301,8 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                                   onPressed: () {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
-                                            builder: (context) => ViewD()));
+                                            builder: (context) =>
+                                                Navigation()));
                                   },
                                   icon: FaIcon(FontAwesomeIcons.pills),
                                   label: Text(

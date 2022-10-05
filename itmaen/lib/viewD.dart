@@ -210,7 +210,7 @@ class _ViewDPageState extends State<ViewD> {
                                 child: Scrollbar(
                                   child: ListView(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
+                                        horizontal: 10, vertical: 20),
                                     children: medBubbles,
                                   ),
                                 ),
@@ -227,7 +227,7 @@ class _ViewDPageState extends State<ViewD> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         Row(
                           children: [
@@ -399,11 +399,30 @@ class _medBubbleState extends State<medBubble> {
             child: ListBody(
               children: <Widget>[
                 Center(
-                  child: Text(
-                      '[' + x! + ' ' + widget.MedAmount + widget.MedUnit + ']',
+                  child: Text(x!,
                       style: GoogleFonts.tajawal(
                           fontSize: 18,
                           color: ui.Color.fromARGB(255, 99, 163, 206),
+                          fontWeight: FontWeight.bold)),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Center(
+                  child: Text(widget.MedUnit + ' ' + widget.MedAmount,
+                      style: GoogleFonts.tajawal(
+                          fontSize: 18,
+                          color: ui.Color.fromARGB(255, 81, 99, 110),
+                          fontWeight: FontWeight.bold)),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Center(
+                  child: Text('${widget.meddescription}',
+                      style: GoogleFonts.tajawal(
+                          fontSize: 18,
+                          color: ui.Color.fromARGB(255, 81, 99, 110),
                           fontWeight: FontWeight.bold)),
                 ),
                 SizedBox(
@@ -470,15 +489,9 @@ class _medBubbleState extends State<medBubble> {
                   child: ListBody(
                     children: <Widget>[
                       Center(
-                        child: Text(
-                            '[' +
-                                x! +
-                                ' ' +
-                                widget.MedAmount +
-                                widget.MedUnit +
-                                ']',
+                        child: Text(x!,
                             style: GoogleFonts.tajawal(
-                                fontSize: 15,
+                                fontSize: 18,
                                 color: ui.Color.fromARGB(255, 99, 163, 206),
                                 fontWeight: FontWeight.bold)),
                       ),
@@ -486,17 +499,34 @@ class _medBubbleState extends State<medBubble> {
                         height: 15,
                       ),
                       Center(
-                        child: Text(" ${widget.time} الساعة ",
+                        child: Text(widget.MedAmount + ' ' + widget.MedUnit,
                             style: GoogleFonts.tajawal(
                                 fontSize: 15,
-                                color: ui.Color.fromARGB(255, 99, 163, 206),
+                                color: ui.Color.fromARGB(255, 81, 99, 110),
                                 fontWeight: FontWeight.bold)),
                       ),
                       SizedBox(
                         height: 15,
                       ),
+                      Center(
+                        child: Text(" الساعة ${widget.time}  ",
+                            style: GoogleFonts.tajawal(
+                                fontSize: 15,
+                                color: ui.Color.fromARGB(255, 81, 99, 110),
+                                fontWeight: FontWeight.bold)),
+                      ),
                       SizedBox(
-                        height: 18,
+                        height: 15,
+                      ),
+                      Center(
+                        child: Text('${widget.meddescription}',
+                            style: GoogleFonts.tajawal(
+                                fontSize: 15,
+                                color: ui.Color.fromARGB(255, 81, 99, 110),
+                                fontWeight: FontWeight.bold)),
+                      ),
+                      SizedBox(
+                        height: 22,
                       ),
                       Center(
                         child: Text(
@@ -600,7 +630,7 @@ class _medBubbleState extends State<medBubble> {
       child: Material(
         child: SizedBox(
           width: 130,
-          height: 160,
+          height: 230,
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(0.0),
@@ -614,7 +644,7 @@ class _medBubbleState extends State<medBubble> {
                         color: Colors.white,
                         child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
+                                vertical: 30, horizontal: 20),
                             child: Row(children: [
                               Container(
                                   child: Column(
@@ -657,19 +687,22 @@ class _medBubbleState extends State<medBubble> {
                                     '${widget.medicName}' +
                                         '\n'
                                             '\n' +
-                                        'الوقت: ' '${widget.time}' +
+                                        'الوقت: ' +
+                                        '${widget.time}' +
                                         '\n' +
                                         'الكمية: ' +
                                         '${widget.MedAmount}' +
                                         '\n' +
                                         'الوحدة: ' +
                                         '${widget.MedUnit}' +
-                                        '\n' +
-                                        '',
+                                        '\n',
                                     style: GoogleFonts.tajawal(
                                         fontSize: 15,
                                         color: Color.fromARGB(255, 0, 0, 0),
                                         fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
                                   ),
                                   widget.checked
                                       ? Text(
@@ -686,12 +719,8 @@ class _medBubbleState extends State<medBubble> {
                               // }
 
                               SizedBox(
-                                width: 10,
-                              ),
-
-                              SizedBox(
                                 child: Image.asset(widget.picture.toString(),
-                                    height: 70, width: 70),
+                                    height: 65, width: 65),
                               ),
 
                               // image here

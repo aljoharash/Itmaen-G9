@@ -185,13 +185,6 @@ class addByScan extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Center(
-                                    child: Icon(
-                                  FontAwesomeIcons.plus,
-                                  size: 16,
-                                  color: Colors.white,
-                                )),
-
                                 // ******* Go to setDose *********
                                 SizedBox(
                                   width: 10,
@@ -300,13 +293,6 @@ class addByScan extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Center(
-                                    child: Icon(
-                                  FontAwesomeIcons.plus,
-                                  size: 16,
-                                  color: Colors.white,
-                                )),
-
                                 // ******* Go to setDose *********
 
                                 SizedBox(
@@ -354,7 +340,7 @@ class addByScan extends StatelessWidget {
                                     'barcode': barcode,
                                     'description': description,
                                     'caregiverID': loggedInUser!.uid,
-                                     'picture': tradeName == "جليترا"
+                                    'picture': tradeName == "جليترا"
                                         ? "images/" + "جليترا" + ".png"
                                         : tradeName == "سبراليكس"
                                             ? "images/" + "سبراليكس" + ".png"

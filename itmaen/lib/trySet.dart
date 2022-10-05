@@ -271,7 +271,8 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                     decimal: true, signed: true),
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
-                                      RegExp(r'^[0-9]*[.]?[0-9]*')), LengthLimitingTextInputFormatter(4)
+                                      RegExp(r'^[0-9]*[.]?[0-9]*')),
+                                  LengthLimitingTextInputFormatter(4)
                                 ],
                                 decoration: InputDecoration(
                                   filled: true,
@@ -472,7 +473,8 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                 keyboardType: TextInputType.numberWithOptions(
                                     signed: true),
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(2)
                                 ],
 
                                 decoration: InputDecoration(
@@ -528,7 +530,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                     activeColor:
                                         Color.fromARGB(255, 122, 164, 186),
                                     min: 1,
-                                    max: 5,
+                                    max: 6,
                                   ),
                                 ),
                               ),
