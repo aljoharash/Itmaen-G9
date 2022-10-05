@@ -717,67 +717,90 @@ class _medBubbleState extends State<medBubble> {
                     padding: EdgeInsets.all(3.0),
                     
                     child: Material(
+                       borderRadius: BorderRadius.circular(20.0),
+                      //RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
                      
-                    shape: Border(
+                   // shape: Border(
                     
-       // shape: const BorderRadius.all(Radius.circular(20.0)),
-        top: BorderSide(  color: Color(widget.medColor), width: 20 ,),
-      ),
+      //shape: const BorderRadius.all(Radius.circular(20.0)),
+       // top: BorderSide(  color: Color(widget.medColor), width: 20 ,),
+     // ),
                        //borderRadius: BorderRadius.all(Radius.circular(20.0),),
                      
                         elevation: 7,
                         color: Colors.white,
                         child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 30, horizontal: 20),
+                                vertical: 0, horizontal: 0),
                                 
-                            child: Row(children: [
-                              Container(
-                              
-                                  child: Column(
-                                children: [
-                                  MaterialButton(
-                                    onPressed: widget.checked
-                                        ? () {
-                                            dialog(widget.medicName);
-                                          }
-                                        : () {
-                                            _showMyDialog(widget.medicName);
-                                          },
-                                    color: Color.fromARGB(255, 140, 167, 190),
-                                    textColor: Colors.white,
-                                    child: Icon(
-                                      Icons.check,
-                                      size: 20,
-                                      color: Colors.black,
-                                    ),
-                                    padding: EdgeInsets.all(16),
-                                    shape: CircleBorder(),
-                                  ),
-                                  SizedBox(
-                                    height: 10 , 
-                                  ),
-                                  
-                                  // Text(
-                                  //   'أخذ',
-                                  //   style: GoogleFonts.tajawal(
-                                  //       color: ui.Color.fromARGB(
-                                  //           255, 107, 106, 106),
-                                  //       fontWeight: FontWeight.w600),
-                                  // )
-                                  
+                            child: 
+                            Column(
+                              children: [
+                                Container(
+                                  width: 1000,
+                                  height: 10,
+  decoration: BoxDecoration(
+    color: Color(widget.medColor) ,
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(10),
+      topRight: Radius.circular(10),
+    ),
+  ),
+),
+
+SizedBox(
+  height: 10,
+),
+                                Row(children: [
                                  
-                                ],
-                              )),
-                              // if(widget.checked == true){
-                              SizedBox(
-                                    height: 10 , 
-                                  ),
+                                 
+
                                   Container(
+                                  
+                                      child: Column(
+                                    children: [
+                                      MaterialButton(
+                                        onPressed: widget.checked
+                                            ? () {
+                                                dialog(widget.medicName);
+                                              }
+                                            : () {
+                                                _showMyDialog(widget.medicName);
+                                              },
+                                        color: Color.fromARGB(255, 140, 167, 190),
+                                        textColor: Colors.white,
+                                        child: Icon(
+                                          Icons.check,
+                                          size: 20,
+                                          color: Colors.black,
+                                        ),
+                                        padding: EdgeInsets.all(16),
+                                        shape: CircleBorder(),
+                                      ),
+                                      SizedBox(
+                                        height: 10 , 
+                                      ),
+                                      
+                                      // Text(
+                                      //   'أخذ',
+                                      //   style: GoogleFonts.tajawal(
+                                      //       color: ui.Color.fromARGB(
+                                      //           255, 107, 106, 106),
+                                      //       fontWeight: FontWeight.w600),
+                                      // )
+                                      
+                                     
+                                    ],
+                                  )),
+                                  // if(widget.checked == true){
+                                  SizedBox(
+                                        height: 10 , 
+                                      ),
+                                      Container(
+                                        
+                                        
+                                child: Container(
                                     
-                                    
-                            child: Container(
-                                
                     //     decoration: BoxDecoration(
                     //    border: Border(
                     //   top: BorderSide(
@@ -788,68 +811,70 @@ class _medBubbleState extends State<medBubble> {
                   // ),
                   
 
-                                 child: Column(
-                                children: [
-                                 // SizedBox(height: 7,width:30), 
-                                 Text('   ' +
-                                    '${widget.medicName}' ,
-                                     style: GoogleFonts.tajawal(
-                                        fontSize: 17,
-                                        color: Color.fromARGB(255, 0, 0, 0),
-                                        fontWeight: FontWeight.bold),
-                                    ),
+                                     child: Column(
+                                    children: [
+                                     // SizedBox(height: 7,width:30), 
+                                     Text('   ' +
+                                        '${widget.medicName}' ,
+                                         style: GoogleFonts.tajawal(
+                                            fontSize: 17,
+                                            color: Color.fromARGB(255, 0, 0, 0),
+                                            fontWeight: FontWeight.bold),
+                                        ),
                    
-                                  Text('   ' +'\n' +
-                                    ' تفاصيل الجرعة:'+
-                                    
+                                      Text('   ' +'\n' +
+                                        ' تفاصيل الجرعة:'+
+                                        
+                                                '\n' +
+                                   
+                                            '   ' +'الوقت: ' +
+                                            '${widget.time}' +
                                             '\n' +
-                               
-                                        '   ' +'الوقت: ' +
-                                        '${widget.time}' +
-                                        '\n' +
-                                       '   ' + 'الكمية: ' +
-                                        '${widget.MedAmount}' +
-                                        '\n' +
-                                       '   ' +  'الوحدة: ' +
-                                        '${widget.MedUnit}' +
-                                        '\n'
-                                         ,
-                                    style: GoogleFonts.tajawal(
-                                        fontSize: 15,
-                                        color: ui.Color.fromARGB(255, 83, 87, 87),
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  SizedBox(
-                            height: 10,
-                            ),
-                                  widget.checked
-                                      ? Text(
-                                          '  تم أخذ الدواء  :) ',
-                                          style: GoogleFonts.tajawal(
-                                              fontSize: 13,
-                                              color: Colors.green,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      : Text(''),
-                                     
-                                ],
-                               
-                              )),),
+                                           '   ' + 'الكمية: ' +
+                                            '${widget.MedAmount}' +
+                                            '\n' +
+                                           '   ' +  'الوحدة: ' +
+                                            '${widget.MedUnit}' +
+                                            '\n'
+                                             ,
+                                        style: GoogleFonts.tajawal(
+                                            fontSize: 15,
+                                            color: ui.Color.fromARGB(255, 83, 87, 87),
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      SizedBox(
+                                height: 10,
+                                ),
+                                      widget.checked
+                                          ? Text(
+                                              '  تم أخذ الدواء  :) ',
+                                              style: GoogleFonts.tajawal(
+                                                  fontSize: 13,
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          : Text(''),
+                                         
+                                    ],
+                                   
+                                  )),),
  
-                              // }
+                                  // }
              
                          
-                             SizedBox(width:30),
-                             
-                             
-                             SizedBox(
-                                  child: Image.asset(widget.picture.toString(),
-                                      height: 70, width: 70),
-                                ),
-                             
-                              // image here
-                            ]
+                                 SizedBox(width:30),
+                                 
+                                 
+                                 SizedBox(
+                                      child: Image.asset(widget.picture.toString(),
+                                          height: 70, width: 70),
+                                    ),
+                                 
+                                  // image here
+                                ]
                            
+                                ),
+                              ],
                             ))),
                   ),
                   SizedBox(
