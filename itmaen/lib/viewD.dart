@@ -15,6 +15,7 @@ import 'generateqr.dart';
 import 'login.dart';
 import 'scanqr.dart';
 import 'addMedicinePages/addmedicine.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //import 'package:firebase_storage/firebase_storage.dart';
 //import 'pages/adddialog.dart';
 import 'package:itmaen/secure-storage.dart';
@@ -131,6 +132,11 @@ class _ViewDPageState extends State<ViewD> {
                         ),
                         Row(
                           children: [
+                            //   Icon(
+                            //   Icons.waving_hand_outlined,
+                            //   size: 25,
+                            //   color: ui.Color.fromARGB(255, 111, 161, 200),
+                            // ),
                             Text(
                               '    مرحبا بك!   ',
                               style: GoogleFonts.tajawal(
@@ -138,23 +144,27 @@ class _ViewDPageState extends State<ViewD> {
                                   color: ui.Color.fromARGB(255, 88, 133, 151),
                                   fontWeight: FontWeight.bold),
                             ),
-                            Icon(
-                              Icons.waving_hand_outlined,
-                              size: 25,
-                              color: ui.Color.fromARGB(255, 111, 161, 200),
-                            ),
+                          
                           ],
                         ),
                         SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          '     الجرعات لهذا اليوم :',
+                        Row(children: [
+                           Text(
+                          '     الجرعات لهذا اليوم   ',
                           style: GoogleFonts.tajawal(
                               fontSize: 20,
                               color: ui.Color.fromARGB(255, 158, 193, 210),
                               fontWeight: FontWeight.bold),
                         ),
+                          Icon(
+                              FontAwesomeIcons.tablets,
+                              size: 25,
+                              color: ui.Color.fromARGB(255, 111, 161, 200),
+                            ),
+
+                        ],),
                         StreamBuilder(
                             stream: FirebaseFirestore.instance
                                 .collection('doses')
@@ -231,6 +241,11 @@ class _ViewDPageState extends State<ViewD> {
                         ),
                         Row(
                           children: [
+                            // Icon(
+                            //   Icons.waving_hand_outlined,
+                            //   size: 25,
+                            //   color: ui.Color.fromARGB(255, 111, 161, 200),
+                            // ),
                             Text(
                               '    مرحبا بك!   ',
                               style: GoogleFonts.tajawal(
@@ -238,23 +253,28 @@ class _ViewDPageState extends State<ViewD> {
                                   color: ui.Color.fromARGB(255, 88, 133, 151),
                                   fontWeight: FontWeight.bold),
                             ),
-                            Icon(
-                              Icons.waving_hand_outlined,
-                              size: 25,
-                              color: ui.Color.fromARGB(255, 111, 161, 200),
-                            ),
+                          
                           ],
                         ),
                         SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          '     الجرعات لهذا اليوم :',
+                        Row(children: [
+                           Text(
+                          '     الجرعات لهذا اليوم   ',
                           style: GoogleFonts.tajawal(
                               fontSize: 20,
                               color: ui.Color.fromARGB(255, 158, 193, 210),
                               fontWeight: FontWeight.bold),
                         ),
+                          Icon(
+                              FontAwesomeIcons.tablets,
+                              size: 25,
+                              color: ui.Color.fromARGB(255, 111, 161, 200),
+                            ),
+
+                        ],),
+                       
                         StreamBuilder(
                             stream: FirebaseFirestore.instance
                                 .collection('doses')
@@ -398,7 +418,14 @@ class _medBubbleState extends State<medBubble> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Center(
+                  Icon(
+                  Icons.health_and_safety,
+                  size: 35,
+                  color: ui.Color.fromARGB(255, 111, 161, 200),
+                ),
+                SizedBox(height: 15,)
+               , Center(
+                  
                   child:Text(
                          x! ,
                         style: GoogleFonts.tajawal(
@@ -431,11 +458,7 @@ class _medBubbleState extends State<medBubble> {
                 SizedBox(
                   height: 15,
                 ),
-                Icon(
-                  Icons.health_and_safety,
-                  size: 35,
-                  color: ui.Color.fromARGB(255, 111, 161, 200),
-                ),
+              
               ],
             ),
           ),
@@ -474,12 +497,12 @@ class _medBubbleState extends State<medBubble> {
         context: context,
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
-          return Directionality(
-            textDirection: ui.TextDirection.rtl,
-            child: AlertDialog(
+          return 
+           // textDirection: ui.TextDirection.rtl,
+            AlertDialog(
               title: Center(
                 child: Text(
-                  ' تناول الجرعة',
+                  ' أخذ الجرعة',
                   style: GoogleFonts.tajawal(
                       fontSize: 20,
                       color: ui.Color.fromARGB(255, 24, 25, 25),
@@ -487,10 +510,16 @@ class _medBubbleState extends State<medBubble> {
                 ),
               ),
               content: SingleChildScrollView(
-                child: Directionality(
-                  textDirection: ui.TextDirection.rtl,
+               // child: Directionality(
+                 // textDirection: ui.TextDirection.rtl,
                   child: ListBody(
                     children: <Widget>[
+                       Icon(
+                        Icons.health_and_safety,
+                        size: 35,
+                        color: ui.Color.fromARGB(255, 111, 161, 200),
+                      ),
+                      SizedBox(height: 10,),
                       Center(
                         child: Text(
                            
@@ -540,7 +569,7 @@ class _medBubbleState extends State<medBubble> {
                         child: Text(
                           'هل تم أخذ الدواء ؟',
                           style: GoogleFonts.tajawal(
-                              fontSize: 18,
+                              fontSize: 22,
                               color: ui.Color.fromARGB(255, 24, 25, 25),
                               fontWeight: FontWeight.bold),
                         ),
@@ -548,19 +577,15 @@ class _medBubbleState extends State<medBubble> {
                       SizedBox(
                         height: 18,
                       ),
-                      Icon(
-                        Icons.health_and_safety,
-                        size: 35,
-                        color: ui.Color.fromARGB(255, 111, 161, 200),
-                      ),
+                    
                     ],
                   ),
-                ),
+               // ),
               ),
               actions: <Widget>[
-                Directionality(
-                  textDirection: ui.TextDirection.rtl,
-                  child: TextButton(
+              //  Directionality(
+                //  textDirection: ui.TextDirection.rtl,
+                   TextButton(
                     child: Text('ليس بعد',
                         style: GoogleFonts.tajawal(
                             fontSize: 18,
@@ -572,10 +597,10 @@ class _medBubbleState extends State<medBubble> {
                       Navigator.of(context).pop();
                     },
                   ),
-                ),
-                Directionality(
-                  textDirection: ui.TextDirection.rtl,
-                  child: TextButton(
+              //  ),
+              //  Directionality(
+                 // textDirection: ui.TextDirection.rtl,
+                 TextButton(
                       child: Text('نعم',
                           style: GoogleFonts.tajawal(
                               fontSize: 18,
@@ -625,20 +650,41 @@ class _medBubbleState extends State<medBubble> {
                               }
                               Navigator.of(context).pop();
                             }),
-                ),
+                //),
               ],
-            ),
-          );
+           // ),
+        );
         },
       );
     }
  
     return Padding(
+     
       padding: EdgeInsets.all(3.0),
+     child: Container(
+
+       
+       
+         decoration: BoxDecoration(
+          // borderRadius: BorderRadius.circular(5.0),
+                       border: Border(
+                      top: BorderSide(
+                   
+                    style:BorderStyle.solid,
+                    color: Color(widget.medColor),
+                    
+                    width: 15
+                    
+                  )),
+                 
+                  ),
       child: Material(
+        
         child: SizedBox(
+          
+          
           width: 130,
-          height: 210,
+          height: 220,
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(0.0),
@@ -646,15 +692,25 @@ class _medBubbleState extends State<medBubble> {
                 children: [
                   Padding(
                     padding: EdgeInsets.all(3.0),
+                    
                     child: Material(
+                      
+      //               shape: RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.circular(10),
+      //   side: const BorderSide(color: Colors.red, width: 1),
+      // ),
                         borderRadius: BorderRadius.circular(20.0),
+                        
                         elevation: 7,
                         color: Colors.white,
                         child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 30, horizontal: 20),
+                                
                             child: Row(children: [
                               Container(
+                               
+                                 
                                   child: Column(
                                 children: [
                                   MaterialButton(
@@ -665,7 +721,7 @@ class _medBubbleState extends State<medBubble> {
                                         : () {
                                             _showMyDialog(widget.medicName);
                                           },
-                                    color: Color(widget.medColor),
+                                    color: Color.fromARGB(255, 140, 167, 190),
                                     textColor: Colors.white,
                                     child: Icon(
                                       Icons.check,
@@ -676,39 +732,67 @@ class _medBubbleState extends State<medBubble> {
                                     shape: CircleBorder(),
                                   ),
                                   SizedBox(
-                                    height: 10,
+                                    height: 10 , 
                                   ),
-                                  Text(
-                                    'أخذ',
-                                    style: GoogleFonts.tajawal(
-                                        color: ui.Color.fromARGB(
-                                            255, 107, 106, 106),
-                                        fontWeight: FontWeight.w600),
-                                  )
+                                  
+                                  // Text(
+                                  //   'أخذ',
+                                  //   style: GoogleFonts.tajawal(
+                                  //       color: ui.Color.fromARGB(
+                                  //           255, 107, 106, 106),
+                                  //       fontWeight: FontWeight.w600),
+                                  // )
+                                  
+                                 
                                 ],
                               )),
                               // if(widget.checked == true){
-                              Container(
-                                  child: Column(
+                              SizedBox(
+                                    height: 10 , 
+                                  ),
+                                  Container(
+                                    
+                            child: Container(
+                                
+                    //     decoration: BoxDecoration(
+                    //    border: Border(
+                    //   top: BorderSide(
+                    // color: Color(widget.medColor),
+                    // width: 10,
+                    
+                  // )),
+                  // ),
+                  
+
+                                 child: Column(
                                 children: [
-                                  Text(
-                                    '${widget.medicName}' +
-                                        '\n'
+                                 // SizedBox(height: 7,width:30), 
+                                 Text('   ' +
+                                    '${widget.medicName}' ,
+                                     style: GoogleFonts.tajawal(
+                                        fontSize: 17,
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                        fontWeight: FontWeight.bold),
+                                    ),
+                   
+                                  Text('   ' +'\n' +
+                                    ' تفاصيل الجرعة:'+
+                                    
                                             '\n' +
                                
-                                        'الوقت: ' +
+                                        '   ' +'الوقت: ' +
                                         '${widget.time}' +
                                         '\n' +
-                                        'الكمية: ' +
+                                       '   ' + 'الكمية: ' +
                                         '${widget.MedAmount}' +
                                         '\n' +
-                                         'الوحدة: ' +
+                                       '   ' +  'الوحدة: ' +
                                         '${widget.MedUnit}' +
                                         '\n'
                                          ,
                                     style: GoogleFonts.tajawal(
                                         fontSize: 15,
-                                        color: Color.fromARGB(255, 0, 0, 0),
+                                        color: ui.Color.fromARGB(255, 83, 87, 87),
                                         fontWeight: FontWeight.w600),
                                   ),
                                   SizedBox(
@@ -726,17 +810,17 @@ class _medBubbleState extends State<medBubble> {
                                      
                                 ],
                                
-                              )),
+                              )),),
  
                               // }
              
                          
-                             
+                             SizedBox(width:30),
                              
                              
                              SizedBox(
                                   child: Image.asset(widget.picture.toString(),
-                                      height: 65, width: 65),
+                                      height: 70, width: 70),
                                 ),
                              
                               // image here
@@ -749,6 +833,11 @@ class _medBubbleState extends State<medBubble> {
                   ),
                   Container(
                     decoration: BoxDecoration(
+                       border: Border(
+                      right: BorderSide(
+                    color: Colors.green,
+                    width: 5,
+                  )),
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
@@ -775,6 +864,8 @@ class _medBubbleState extends State<medBubble> {
           ), //Center
         ),
       ), //SizedBox
+      ),
+         
     );
   }
 }
