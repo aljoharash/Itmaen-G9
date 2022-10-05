@@ -659,48 +659,72 @@ class _medBubbleState extends State<medBubble> {
     }
  
     return Padding(
-     
+    
       padding: EdgeInsets.all(3.0),
      child: Container(
 
-       
+      //  child: SizedBox(width: 130 ,height:15, child: DecoratedBox(decoration: BoxDecoration(color: Colors.red))),
        
          decoration: BoxDecoration(
           // borderRadius: BorderRadius.circular(5.0),
-                       border: Border(
-                      top: BorderSide(
+                  //      border: Borde
+                        
+                  //     top: BorderSide(
                    
-                    style:BorderStyle.solid,
-                    color: Color(widget.medColor),
+                  //   style:BorderStyle.solid,
+                  //   color: Color(widget.medColor),
                     
-                    width: 15
+                  //   width: 15
                     
-                  )),
-                 
+                  // )),
+                // border: Border.fromBorderSide(BorderSide(color:Color(widget.medColor), strokeAlign: StrokeAlign.inside)),
+                 // borderRadius:BorderRadius.vertical( top:Radius.circular(20.0),
+                 /// ), 
+                  // border: Border( //here
+                        
+                  //     top: BorderSide(
+                   
+                  //   style:BorderStyle.solid,
+                  //   color: Color(widget.medColor),
+                    
+                  //   width: 15
+                    
+                  // )),
                   ),
       child: Material(
+        borderRadius: BorderRadius.circular(20.0),
+        
         
         child: SizedBox(
           
           
           width: 130,
           height: 220,
+          
           child: Center(
+            
             child: Padding(
+
               padding: const EdgeInsets.all(0.0),
+              
               child: Column(
+                
+                
                 children: [
+                 
                   Padding(
+                    
                     padding: EdgeInsets.all(3.0),
                     
                     child: Material(
-                      
-      //               shape: RoundedRectangleBorder(
-      //   borderRadius: BorderRadius.circular(10),
-      //   side: const BorderSide(color: Colors.red, width: 1),
-      // ),
-                        borderRadius: BorderRadius.circular(20.0),
-                        
+                     
+                    shape: Border(
+                    
+       // shape: const BorderRadius.all(Radius.circular(20.0)),
+        top: BorderSide(  color: Color(widget.medColor), width: 20 ,),
+      ),
+                       //borderRadius: BorderRadius.all(Radius.circular(20.0),),
+                     
                         elevation: 7,
                         color: Colors.white,
                         child: Padding(
@@ -709,8 +733,7 @@ class _medBubbleState extends State<medBubble> {
                                 
                             child: Row(children: [
                               Container(
-                               
-                                 
+                              
                                   child: Column(
                                 children: [
                                   MaterialButton(
@@ -751,6 +774,7 @@ class _medBubbleState extends State<medBubble> {
                                     height: 10 , 
                                   ),
                                   Container(
+                                    
                                     
                             child: Container(
                                 
