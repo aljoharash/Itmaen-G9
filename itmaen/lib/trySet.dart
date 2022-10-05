@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -272,7 +271,8 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                     decimal: true, signed: true),
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
-                                      RegExp(r'^[0-9]*[.]?[0-9]*')), LengthLimitingTextInputFormatter(4)
+                                      RegExp(r'^[0-9]*[.]?[0-9]*')),
+                                  LengthLimitingTextInputFormatter(4)
                                 ],
                                 decoration: InputDecoration(
                                   filled: true,
@@ -473,7 +473,8 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                 keyboardType: TextInputType.numberWithOptions(
                                     signed: true),
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(2)
                                 ],
 
                                 decoration: InputDecoration(
@@ -529,7 +530,8 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                     activeColor:
                                         Color.fromARGB(255, 122, 164, 186),
                                     min: 1,
-                                    max: 5,
+                                    max: 6,
+                                  
                                   ),
                                 ),
                               ),
@@ -924,8 +926,14 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
     TimeOfDay newTime = setTime;
 
     if (compareTimeOfDay(setTime) &&
-        pillAmountController.text != "" && (double.parse(pillAmountController.text) < 50 && double.parse(pillAmountController.text) > 0) &&          
-        (sliderValue2 == 1 || (int.parse(every_hours) > 0 && everyH != '' && int.parse(every_hours) < 23 && sliderValue2 != 1))) {
+        pillAmountController.text != "" &&
+        (double.parse(pillAmountController.text) < 50 &&
+            double.parse(pillAmountController.text) > 0) &&
+        (sliderValue2 == 1 ||
+            (int.parse(every_hours) > 0 &&
+                everyH != '' &&
+                int.parse(every_hours) < 23 &&
+                sliderValue2 != 1))) {
       for (int i = 0; i < sliderValue; i++) {
         for (int j = 0; j < sliderValue2; j++) {
           tz.initializeTimeZones();
@@ -1031,18 +1039,18 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
         );
         ScaffoldMessenger.of(context).showSnackBar(error);
       }
-      
 
-         if (pillAmountController.text != "" && (double.parse(pillAmountController.text) > 50 || double.parse(pillAmountController.text) <= 0)) {
-                                        
-                      SnackBar error = SnackBar(
+      if (pillAmountController.text != "" &&
+          (double.parse(pillAmountController.text) > 50 ||
+              double.parse(pillAmountController.text) <= 0)) {
+        SnackBar error = SnackBar(
           content: Directionality(
             textDirection: ui.TextDirection.rtl,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
                 Text(
-                 'نطاق الأرقام المسموح به لكمية الجرعة من 1 إلى 50',
+                  'نطاق الأرقام المسموح به لكمية الجرعة من 1 إلى 50',
                   style: TextStyle(color: Colors.white, fontSize: 15),
                 ),
               ],
@@ -1052,17 +1060,16 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
         ScaffoldMessenger.of(context).showSnackBar(error);
       }
 
-         if (sliderValue2 != 1 && int.parse(every_hours) > 23 ||
-            (sliderValue2 != 1 && int.parse(every_hours) <= 0)) {
-                                        
-                      SnackBar error = SnackBar(
+      if (sliderValue2 != 1 && int.parse(every_hours) > 23 ||
+          (sliderValue2 != 1 && int.parse(every_hours) <= 0)) {
+        SnackBar error = SnackBar(
           content: Directionality(
             textDirection: ui.TextDirection.rtl,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
                 Text(
-                 'نطاق الأرقام المسموح به بين الساعات بين كل جرعة من 1 إلى 23',
+                  'نطاق الأرقام المسموح به بين الساعات بين كل جرعة من 1 إلى 23',
                   style: TextStyle(color: Colors.white, fontSize: 15),
                 ),
               ],
@@ -1071,7 +1078,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
         );
         ScaffoldMessenger.of(context).showSnackBar(error);
       }
-      
+
       if (compareTimeOfDay(setTime) == false) {
         SnackBar error = SnackBar(
           content: Directionality(
@@ -1098,9 +1105,13 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
         (newTime.minute.toDouble() / 60) +
         double.parse(every_hours) * (sliderValue2 - 1);
     if (sliderValue2 == 1) return true;
-    if (_doublenewTime > TimeOfDay.hoursPerDay.toDouble()) return false;
+    if (_doublenewTime > TimeOfDay.hoursPerDay.toDouble()) {
+      print(sliderValue2.toString() + "slider value2");
+      print("double new");
+      print(_doublenewTime);
+      return false;
+    }
 
     return true;
   }
 }
-
