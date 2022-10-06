@@ -137,13 +137,13 @@ class _ViewDPageState extends State<ViewD> {
                             //   size: 25,
                             //   color: ui.Color.fromARGB(255, 111, 161, 200),
                             // ),
-                            Text(
-                              '    مرحبا بك!   ',
-                              style: GoogleFonts.tajawal(
-                                  fontSize: 25,
-                                  color: ui.Color.fromARGB(255, 88, 133, 151),
-                                  fontWeight: FontWeight.bold),
-                            ),
+                            // Text(
+                            //   '    مرحبا بك!   ',
+                            //   style: GoogleFonts.tajawal(
+                            //       fontSize: 25,
+                            //       color: ui.Color.fromARGB(255, 88, 133, 151),
+                            //       fontWeight: FontWeight.bold),
+                            // ),
                           
                           ],
                         ),
@@ -246,13 +246,13 @@ class _ViewDPageState extends State<ViewD> {
                             //   size: 25,
                             //   color: ui.Color.fromARGB(255, 111, 161, 200),
                             // ),
-                            Text(
-                              '    مرحبا بك!   ',
-                              style: GoogleFonts.tajawal(
-                                  fontSize: 25,
-                                  color: ui.Color.fromARGB(255, 88, 133, 151),
-                                  fontWeight: FontWeight.bold),
-                            ),
+                            // Text(
+                            //   '    مرحبا بك!   ',
+                            //   style: GoogleFonts.tajawal(
+                            //       fontSize: 25,
+                            //       color: ui.Color.fromARGB(255, 88, 133, 151),
+                            //       fontWeight: FontWeight.bold),
+                            // ),
                           
                           ],
                         ),
@@ -748,9 +748,9 @@ class _medBubbleState extends State<medBubble> {
   ),
 ),
 
-SizedBox(
-  height: 10,
-),
+// SizedBox(
+//   height: 10,
+// ),
                                 Row(children: [
                                  
                                  
@@ -814,7 +814,7 @@ SizedBox(
                                      child: Column(
                                     children: [
                                      // SizedBox(height: 7,width:30), 
-                                     Text('   ' +
+                                     Text('   ' + '\n'+
                                         '${widget.medicName}' ,
                                          style: GoogleFonts.tajawal(
                                             fontSize: 17,
@@ -847,7 +847,7 @@ SizedBox(
                                 ),
                                       widget.checked
                                           ? Text(
-                                              '  تم أخذ الدواء  :) ',
+                                              '  تم أخذ الدواء  :) ' + '\n',
                                               style: GoogleFonts.tajawal(
                                                   fontSize: 13,
                                                   color: Colors.green,
