@@ -44,9 +44,9 @@ class _NavigationState extends State<Navigation> {
     getCurrentUser();
     Noti.initialize(flutterLocalNotificationsPlugin);
 
-    // timer = Timer.periodic(const Duration(seconds: 60), (Timer t) {
-    //   sendNotification();
-    // });
+    timer = Timer.periodic(const Duration(seconds: 60), (Timer t) {
+      sendNotification();
+    });
   }
 
   void getCurrentUser() async {
@@ -79,43 +79,44 @@ class _NavigationState extends State<Navigation> {
     }
   }
 
-//   void sendNotification() async {
-//     var _query;
-//     await FirebaseFirestore.instance
-//         .collection('doses')
-//         .where("caregiverID", isEqualTo: caregiverID)
-//         .get()
-//         .then((value) {
-//       for (var i = 0; i < value.size; i++) {
-//         print("here is the size");
-//         print("caregiver");
-//         print(value.size);
-//         _query = (value.docs[i].get('Time')).toDate().toString();
-//         var time_ = DateTime.parse(_query);
+  void sendNotification() async {
+    var _query;
+    await FirebaseFirestore.instance
+        .collection('doses')
+        .where("caregiverID", isEqualTo: caregiverID)
+        .get()
+        .then((value) {
+      for (var i = 0; i < value.size; i++) {
+        print("here is the size");
+        print("caregiver");
+        print(value.size);
+        _query = (value.docs[i].get('Time')).toDate().toString();
+        var time_ = DateTime.parse(_query);
 
-//         var time = DateTime.parse("2022-09-20 19:43:00.999"); // just for test
-//         var now = DateTime.now(); // today's time
-//         var currentTime = DateTime.now();
-//         var diff = time_
-//             .difference(currentTime)
-//             .inMinutes; // getting the difference in mins
-//         print("here is the difference");
-//         print(diff);
-//         if (diff == 4) {
-//           Noti.showBigTextNotification(
-//               title: "تذكير بأخذ الجرعة",
-//               body: ''' 
-//   [${value.docs[i].get("name")}]
-//  عزيزي, تبقى 5 دقائق على موعد اخذ مستقبلك للرعاية لجرعته''',
-//               fln: flutterLocalNotificationsPlugin);
-//         } else if (diff <= -1440) {
-//           // passed a day over the medication , it will be removed
-//           value.docs[i].reference.delete();
-//         }
-//       } // end for
-//     });
-//     // }
-//   }
+        var time = DateTime.parse("2022-09-20 19:43:00.999"); // just for test
+        var now = DateTime.now(); // today's time
+        var currentTime = DateTime.now();
+        var diff = time_
+            .difference(currentTime)
+            .inMinutes; // getting the difference in mins
+        print("here is the difference");
+        print(diff);
+        if (diff == 4) {
+          Noti.showBigTextNotification(
+              title: "تذكير بأخذ الجرعة",
+              body: ''' 
+  [${value.docs[i].get("name")}]
+ عزيزي, تبقى 5 دقائق على موعد اخذ مستقبلك للرعاية لجرعته''',
+              fln: flutterLocalNotificationsPlugin);
+         } 
+         //else if (diff <= -1440) {
+        //   // passed a day over the medication , it will be removed
+        //   value.docs[i].reference.delete();
+        // }
+      } // end for
+    });
+    // }
+  }
 
   int _selectedIndex = 4;
   bodyFunction() {
@@ -144,11 +145,13 @@ class _NavigationState extends State<Navigation> {
 
     Future<void> logout() async {
       if (caregiverID != null) {
+         
         final action = await AlertDialogs.yesCancelDialog(
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
+           timer?.cancel(); // stop the timer // no more notification
           setState(() => tappedYes = true);
-          timer?.cancel();
+          timer?.cancel();//
           await FirebaseAuth.instance.signOut();
           loggedInUser = null;
           Navigator.pushReplacement(
@@ -162,6 +165,7 @@ class _NavigationState extends State<Navigation> {
         final action = await AlertDialogs.yesCancelDialog(
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
+           timer?.cancel(); // stop the timer 
           setState(() => tappedYes = true);
           timer?.cancel();
 
