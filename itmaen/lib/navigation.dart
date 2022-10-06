@@ -140,6 +140,8 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
+ 
+
     Future<void> logout() async {
       if (caregiverID != null) {
         final action = await AlertDialogs.yesCancelDialog(
@@ -213,6 +215,10 @@ class _NavigationState extends State<Navigation> {
             Icons.calendar_month,
             color: Colors.white,
           ),
+          Icon(
+            Icons.calendar_month,
+            color: Colors.white,
+            ),
           Icon(
             Icons.home,
             color: Colors.white,

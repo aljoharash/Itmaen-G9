@@ -416,7 +416,8 @@ class _addManuallyState extends State<addManually> {
 
   String? ValidateMedName(String? FormName) {
     if (FormName == null || FormName.isEmpty) return 'الرجاء ادخال اسم الدواء';
-    String pattern = r'^(?=.{2,20}$)(?![.])(?!.*[.]{2})[a-zA-Z0-9.]+(?<![.])$';
+    String pattern =
+        r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
     RegExp regex = RegExp(pattern, unicode: true);
     if (!regex.hasMatch(FormName.trim()))
       return 'يجب أن يحتوي اسم الدواء على حرفين على الاقل';

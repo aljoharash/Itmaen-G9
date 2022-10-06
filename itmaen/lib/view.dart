@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -253,11 +254,11 @@ class medBubble extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Material(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(20.0),
           elevation: 7,
           color: Colors.white,
           child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Column(
                 children: [
                   Directionality(
@@ -267,7 +268,7 @@ class medBubble extends StatelessWidget {
                         Directionality(
                           textDirection: TextDirection.rtl,
                           child: Image.asset(picture.toString(),
-                              height: 65, width: 55),
+                              height: 65, width: 65),
                         ),
                         Text(
                           ' $medicName ',

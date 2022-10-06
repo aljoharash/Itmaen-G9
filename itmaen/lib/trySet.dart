@@ -341,7 +341,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                         )));
                           },
                           child: Text(
-                            "تحديد لون لتمييز الجرعة ",
+                            " (اختياري) تحديد لون لتمييز الجرعة ",
                             style: GoogleFonts.tajawal(
                               color: Color.fromARGB(255, 245, 244, 244),
                               fontSize: 15,
@@ -926,7 +926,13 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
 
     if (compareTimeOfDay(setTime) &&
         pillAmountController.text != "" &&
-        (sliderValue2 == 1 || (everyH != '' && sliderValue2 != 1))) {
+        (double.parse(pillAmountController.text) < 50 &&
+            double.parse(pillAmountController.text) > 0) &&
+        (sliderValue2 == 1 ||
+            (int.parse(every_hours) > 0 &&
+                everyH != '' &&
+                int.parse(every_hours) < 23 &&
+                sliderValue2 != 1))) {
       for (int i = 0; i < sliderValue; i++) {
         for (int j = 0; j < sliderValue2; j++) {
           tz.initializeTimeZones();
@@ -962,7 +968,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
             'name': nameController.text,
             //'type': medType,
             'freqPerDay': sliderValue2.toString(),
-            'description': _groupValue + ", " + description.text,
+            'description': _groupValue + "  " + description.text,
             'color': int.parse(backColor.toString().substring(6, 16)),
             'cheked': false,
             'caregiverID': caregiverID,
@@ -1033,6 +1039,45 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
         ScaffoldMessenger.of(context).showSnackBar(error);
       }
 
+      if (pillAmountController.text != "" &&
+          (double.parse(pillAmountController.text) > 50 ||
+              double.parse(pillAmountController.text) <= 0)) {
+        SnackBar error = SnackBar(
+          content: Directionality(
+            textDirection: ui.TextDirection.rtl,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text(
+                  'نطاق الأرقام المسموح به لكمية الجرعة من 1 إلى 50',
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ),
+              ],
+            ),
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(error);
+      }
+
+      if (sliderValue2 != 1 && int.parse(every_hours) > 23 ||
+          (sliderValue2 != 1 && int.parse(every_hours) <= 0)) {
+        SnackBar error = SnackBar(
+          content: Directionality(
+            textDirection: ui.TextDirection.rtl,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text(
+                  'نطاق الأرقام المسموح به بين الساعات بين كل جرعة من 1 إلى 23',
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ),
+              ],
+            ),
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(error);
+      }
+
       if (compareTimeOfDay(setTime) == false) {
         SnackBar error = SnackBar(
           content: Directionality(
@@ -1041,7 +1086,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
                 Text(
-                  'قم بالتأكد من التكرار وعدد الساعات بين كل جرعة',
+                  'قم بالتأكد من الوقت المدخل والتكرار وعدد الساعات بين كل جرعة',
                   style: TextStyle(color: Colors.white, fontSize: 15),
                 ),
               ],
@@ -1059,7 +1104,12 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
         (newTime.minute.toDouble() / 60) +
         double.parse(every_hours) * (sliderValue2 - 1);
     if (sliderValue2 == 1) return true;
-    if (_doublenewTime > TimeOfDay.hoursPerDay.toDouble()) return false;
+    if (_doublenewTime > TimeOfDay.hoursPerDay.toDouble()) {
+      print(sliderValue2.toString() + "slider value2");
+      print("double new");
+      print(_doublenewTime);
+      return false;
+    }
 
     return true;
   }

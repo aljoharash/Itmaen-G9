@@ -14,6 +14,7 @@ import 'package:itmaen/secure-storage.dart';
 import 'package:itmaen/setDose.dart';
 import 'addmedicine.dart';
 import 'package:itmaen/trySet.dart';
+import 'dart:ui' as ui;
 
 class addByScan extends StatelessWidget {
   final _firestore = FirebaseFirestore.instance;
@@ -76,63 +77,64 @@ class addByScan extends StatelessWidget {
                                           style: GoogleFonts.tajawal(
                                               fontWeight: FontWeight.bold),
                                         ))
-                              : Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                    BuildCard(
-                                      info: 'اسم الدواء',
-                                      icon: FontAwesomeIcons.medkit,
-                                      item: tradeName = _
-                                          .scannedMedicine[0].tradeName
-                                          .toString(),
-                                    ),
-                                    Divider(),
-                                    BuildCard(
-                                      info: 'وصف الدواء ',
-                                      icon: FontAwesomeIcons.list,
-                                      item: description = _
-                                          .scannedMedicine[0].description
-                                          .toString(),
-                                    ),
-                                    Divider(),
-                                    BuildCard(
-                                      info: 'الجرعة ',
-                                      icon: FontAwesomeIcons.diagnoses,
-                                      item: strengthValue = _
-                                          .scannedMedicine[0].strengthValue
-                                          .toString(),
-                                    ),
-                                    Divider(),
-                                    BuildCard(
-                                      info: 'الاسم العلمي ',
-                                      icon: FontAwesomeIcons.stethoscope,
-                                      item: genericName = _
-                                          .scannedMedicine[0].genericName
-                                          .toString(),
-                                    ),
-                                    Divider(),
-                                    BuildCard(
-                                      info: ' عدد الحبات / الكمية ',
-                                      icon: FontAwesomeIcons.pills,
-                                      item: packageSize = _
-                                          .scannedMedicine[0].packageSize
-                                          .toString(),
-                                    ),
-                                    Divider(),
-                                    BuildCard(
-                                      info: ' الوحدة',
-                                      icon: FontAwesomeIcons.pills,
-                                      item: unitOfVolume = _
-                                          .scannedMedicine[0].unitOfVolume
-                                          .toString(),
-                                    ),
-                                    Divider(),
-                                  ],
-                                ),
+                              :  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                      BuildCard(
+                                        info: 'اسم الدواء',
+                                        icon: FontAwesomeIcons.medkit,
+                                        item: tradeName = _
+                                            .scannedMedicine[0].tradeName
+                                            .toString(),
+                                      ),
+                                      Divider(),
+                                      BuildCard(
+                                        info: 'وصف الدواء ',
+                                        icon: FontAwesomeIcons.list,
+                                        item: description = _
+                                            .scannedMedicine[0].description
+                                            .toString(),
+                                      ),
+                                      Divider(),
+                                      BuildCard(
+                                        info: 'الجرعة ',
+                                        icon: FontAwesomeIcons.diagnoses,
+                                        item: strengthValue = _
+                                            .scannedMedicine[0].strengthValue
+                                            .toString(),
+                                      ),
+                                      Divider(),
+                                      BuildCard(
+                                        info: 'الاسم العلمي ',
+                                        icon: FontAwesomeIcons.stethoscope,
+                                        item: genericName = _
+                                            .scannedMedicine[0].genericName
+                                            .toString(),
+                                      ),
+                                      Divider(),
+                                      BuildCard(
+                                        info: ' عدد الحبات / الكمية ',
+                                        icon: FontAwesomeIcons.pills,
+                                        item: packageSize = _
+                                            .scannedMedicine[0].packageSize
+                                            .toString(),
+                                      ),
+                                      Divider(),
+                                      BuildCard(
+                                        info: ' الوحدة',
+                                        icon: FontAwesomeIcons.pills,
+                                        item: unitOfVolume = _
+                                            .scannedMedicine[0].unitOfVolume
+                                            .toString(),
+                                      ),
+                                      Divider(),
+                                    ],
+                                  ),
+                                
                         ),
                       ),
                     ),
