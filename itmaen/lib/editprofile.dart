@@ -85,7 +85,7 @@ class _editProfile extends State<editProfile> {
                               height: 220,
                             ),
                             Text(
-                              "إنشاء حساب",
+                              "حسابي ",
                               style: GoogleFonts.tajawal(
                                 fontSize: 30,
                                 //fontStyle: FontStyle.italic,
@@ -388,7 +388,7 @@ new FlutterPwValidator(
                                 }
                               },
                               child: Text(
-                                'انشاء ',
+                                'حفظ  ',
                                 style: GoogleFonts.tajawal(
                                   fontSize: 20,
                                   color: Colors.white,
@@ -403,7 +403,7 @@ new FlutterPwValidator(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  TextButton(
+                                  /*  TextButton(
                                       onPressed: () {
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
@@ -427,7 +427,7 @@ new FlutterPwValidator(
                                         color:
                                             Color.fromARGB(167, 135, 168, 188),
                                         fontWeight: FontWeight.bold),
-                                  ),
+                                  ),*/
                                 ]),
                           ]),
                     ),
@@ -435,6 +435,22 @@ new FlutterPwValidator(
                 )),
           )
         ]))));
+  }
+
+  Future<void> userUpdate(
+      var username1, var email, var pass, var mobileNum) async {
+    CollectionReference caregivers =
+        FirebaseFirestore.instance.collection('caregivers');
+    FirebaseAuth auth = FirebaseAuth.instance;
+    String? uid = auth.currentUser?.uid.toString();
+    caregivers.update({
+      'user name': username1.text,
+      'email': email.text,
+      'password': pass.text,
+      'mobileNum': mobileNum.text,
+      'uid': uid
+    });
+    return;
   }
 
   String? ValidateEmail(String? formEmail) {
