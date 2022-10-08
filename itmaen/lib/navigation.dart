@@ -16,6 +16,7 @@ import 'alert_dialog.dart';
 import 'calendar/test22/newCalendar.dart';
 import 'home.dart';
 import 'login.dart';
+import 'navigationPatient.dart';
 import 'notification.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -24,7 +25,12 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 class Navigation extends StatefulWidget {
   const Navigation({Key? key}) : super(key: key);
-
+void sendNotificationchecked(String mediName) async {
+    Noti.showBigTextNotification(
+        title: "تم أخذ الجرعة",
+        body: "${mediName} ",
+        fln: flutterLocalNotificationsPlugin);
+  }
   @override
   State<Navigation> createState() => _NavigationState();
 }
@@ -150,12 +156,15 @@ class _NavigationState extends State<Navigation> {
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
            timer?.cancel(); // stop the timer // no more notification
-          setState(() => tappedYes = true);
+         setState(() => timer!.cancel());
+          
           timer?.cancel();//
           await FirebaseAuth.instance.signOut();
+           timer?.cancel();
           loggedInUser = null;
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => LoginPage()));
+              timer?.cancel();
         } else {
           setState(() => tappedYes = false);
           Navigator.pushReplacement(
@@ -166,7 +175,7 @@ class _NavigationState extends State<Navigation> {
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
            timer?.cancel(); // stop the timer 
-          setState(() => tappedYes = true);
+          setState(() => timer!.cancel());
           timer?.cancel();
 
           // await FirebaseAuth.instance.signOut();
@@ -175,7 +184,7 @@ class _NavigationState extends State<Navigation> {
         } else {
           setState(() => tappedYes = false);
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Navigation()));
+              context, MaterialPageRoute(builder: (context) => NavigationPatient()));
         }
       }
     }

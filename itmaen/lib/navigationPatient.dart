@@ -13,6 +13,7 @@ import 'alert_dialog.dart';
 import 'calendar/patientCalendar2.dart';
 import 'calendar/test22/newCalendar.dart';
 import 'login.dart';
+import 'navigation.dart';
 import 'notification.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -20,6 +21,13 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 class NavigationPatient extends StatefulWidget {
   const NavigationPatient({Key? key}) : super(key: key);
+
+  // void sendNotificationchecked(String mediName) async {
+  //   Noti.showBigTextNotification(
+  //       title: "تم أخذ الجرعة",
+  //       body: "${mediName} ",
+  //       fln: flutterLocalNotificationsPlugin);
+  // }
 
   @override
   State<NavigationPatient> createState() => _NavigationPatientState();
@@ -102,6 +110,13 @@ class _NavigationPatientState extends State<NavigationPatient> {
     // }
   }
 
+  void sendNotificationchecked(String mediName) async {
+    Noti.showBigTextNotification(
+        title: "تم أخذ الجرعة",
+        body: "${mediName} ",
+        fln: flutterLocalNotificationsPlugin);
+  }
+
   int _selectedIndex = 2;
   bodyFunction() {
     switch (_selectedIndex) {
@@ -124,11 +139,13 @@ class _NavigationPatientState extends State<NavigationPatient> {
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
           timer?.cancel();
-          setState(() => tappedYes = true);
+          setState(() => timer?.cancel());
 
           await FirebaseAuth.instance.signOut();
+           timer?.cancel();
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => LoginPage()));
+              context, MaterialPageRoute(builder: (context) => patientScreen()));
+               timer?.cancel();
         } else {
           setState(() => tappedYes = false);
           Navigator.pushReplacement(context,

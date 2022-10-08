@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/add-patient.dart';
 import 'package:itmaen/navigation.dart';
+import 'package:itmaen/navigationPatient.dart';
 import 'package:itmaen/patient-login.dart';
 import 'alert_dialog.dart';
 import 'package:itmaen/model/medicines.dart';
@@ -28,6 +29,7 @@ class ViewD extends StatefulWidget {
 }
  
 class _ViewDPageState extends State<ViewD> {
+  final NavigationPatient nv = new NavigationPatient(); // to take notifications method 
   String title = 'AlertDialog';
   bool tappedYes = false;
   StorageService st = StorageService();
@@ -137,13 +139,13 @@ class _ViewDPageState extends State<ViewD> {
                             //   size: 25,
                             //   color: ui.Color.fromARGB(255, 111, 161, 200),
                             // ),
-                            Text(
-                              '    مرحبا بك!   ',
-                              style: GoogleFonts.tajawal(
-                                  fontSize: 25,
-                                  color: ui.Color.fromARGB(255, 88, 133, 151),
-                                  fontWeight: FontWeight.bold),
-                            ),
+                            // Text(
+                            //   '    مرحبا بك!   ',
+                            //   style: GoogleFonts.tajawal(
+                            //       fontSize: 25,
+                            //       color: ui.Color.fromARGB(255, 88, 133, 151),
+                            //       fontWeight: FontWeight.bold),
+                            // ),
                           
                           ],
                         ),
@@ -197,6 +199,7 @@ class _ViewDPageState extends State<ViewD> {
                                   final medColor = med.get('color');
                                   final m = med.get('Time');
                                   final picture = med.get('picture');
+                                  bool send = true;
                                   // final pic = med.get("picture");
                                   // final timechecked = med.get('Timecheked');
                                   // var i = 0;
@@ -212,7 +215,7 @@ class _ViewDPageState extends State<ViewD> {
                                       medColor,
                                       x,
                                       m,
-                                      picture);
+                                      picture, send);
                                   medBubbles.add(MedBubble);
                                 }
                               }
@@ -246,13 +249,13 @@ class _ViewDPageState extends State<ViewD> {
                             //   size: 25,
                             //   color: ui.Color.fromARGB(255, 111, 161, 200),
                             // ),
-                            Text(
-                              '    مرحبا بك!   ',
-                              style: GoogleFonts.tajawal(
-                                  fontSize: 25,
-                                  color: ui.Color.fromARGB(255, 88, 133, 151),
-                                  fontWeight: FontWeight.bold),
-                            ),
+                            // Text(
+                            //   '    مرحبا بك!   ',
+                            //   style: GoogleFonts.tajawal(
+                            //       fontSize: 25,
+                            //       color: ui.Color.fromARGB(255, 88, 133, 151),
+                            //       fontWeight: FontWeight.bold),
+                            // ),
                           
                           ],
                         ),
@@ -306,6 +309,7 @@ class _ViewDPageState extends State<ViewD> {
                                   final medColor = med.get('color');
                                   final m = med.get('Time');
                                   final picture = med.get("picture");
+                                  bool send = false ; 
                                   // final pic = med.get("picture");
                                   //final timechecked;
  
@@ -324,6 +328,7 @@ class _ViewDPageState extends State<ViewD> {
                                     x,
                                     m,
                                     picture,
+                                    send 
                                   );
                                   medBubbles.add(MedBubble);
                                 }
@@ -374,7 +379,8 @@ class medBubble extends StatefulWidget {
       this.medColor,
       this.x,
       this.m,
-      this.picture);
+      this.picture , 
+      this.send );
   var medicName;
   var checked;
   var ID;
@@ -388,6 +394,7 @@ class medBubble extends StatefulWidget {
   var x;
   var m;
   var picture;
+  var send ; 
  
   @override
   State<medBubble> createState() => _medBubbleState();
@@ -397,6 +404,7 @@ class _medBubbleState extends State<medBubble> {
   bool _value = false;
   bool _valu = false;
   var msg = "hh";
+  final Navigation nv = new Navigation();
   //bool yarab = false;
   Color color = Colors.black;
  
@@ -648,7 +656,11 @@ class _medBubbleState extends State<medBubble> {
                                   ),
                                 );
                               }
+                              
                               Navigator.of(context).pop();
+                             if(widget.send==true){
+                              nv.sendNotificationchecked(' ${widget.medicName} جرعة ' ); 
+                              }
                             }),
                 //),
               ],
@@ -748,9 +760,9 @@ class _medBubbleState extends State<medBubble> {
   ),
 ),
 
-SizedBox(
-  height: 10,
-),
+// SizedBox(
+//   height: 10,
+// ),
                                 Row(children: [
                                  
                                  
@@ -814,7 +826,7 @@ SizedBox(
                                      child: Column(
                                     children: [
                                      // SizedBox(height: 7,width:30), 
-                                     Text('   ' +
+                                     Text('   ' + '\n'+
                                         '${widget.medicName}' ,
                                          style: GoogleFonts.tajawal(
                                             fontSize: 17,
@@ -847,7 +859,7 @@ SizedBox(
                                 ),
                                       widget.checked
                                           ? Text(
-                                              '  تم أخذ الدواء  :) ',
+                                              '  تم أخذ الدواء  :) ' + '\n',
                                               style: GoogleFonts.tajawal(
                                                   fontSize: 13,
                                                   color: Colors.green,
