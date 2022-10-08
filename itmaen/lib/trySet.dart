@@ -531,6 +531,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                         Color.fromARGB(255, 122, 164, 186),
                                     min: 1,
                                     max: 6,
+                                  
                                   ),
                                 ),
                               ),

@@ -87,6 +87,7 @@ class _ViewPageState extends State<View> {
 
   @override
   Widget build(BuildContext context) {
+    
     void showAddDialog() {
       showDialog(
         context: context,
@@ -111,21 +112,20 @@ class _ViewPageState extends State<View> {
               style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
         ),
         floatingActionButton: ElevatedButton(
-          onPressed: () {
-            showAddDialog();
-          },
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-          style: ElevatedButton.styleFrom(
-            shape: CircleBorder(),
+            onPressed: () {
+              showAddDialog();
+            },
+            
+            child: Icon(Icons.add, color: Colors.white,),
+            style: ElevatedButton.styleFrom(
+            shape: CircleBorder(
+            ),
             padding: EdgeInsets.all(15),
             //backgroundColor: Color.fromARGB(255, 140, 167, 190),
             primary: Color.fromARGB(255, 140, 167, 190),
             surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
+              ),
           ),
-        ),
         body: FutureBuilder(
           builder: (ctx, snapshot) {
             // Checking if future is resolved or not
@@ -168,8 +168,8 @@ class _ViewPageState extends State<View> {
                               final package = med.get('Package size');
                               final picture = med.get('picture');
                               //final unit = med.get('Unit of volume');
-                              final MedBubble = medBubble(
-                                  medName, meddescription, package, picture);
+                              final MedBubble =
+                                  medBubble(medName, meddescription, package,picture);
                               medBubbles.add(MedBubble);
                             }
                             return Expanded(
@@ -208,8 +208,8 @@ class _ViewPageState extends State<View> {
                               final package = med.get('Package size');
                               final picture = med.get('picture');
                               //final unit = med.get('Unit of volume');
-                              final MedBubble = medBubble(
-                                  medName, meddescription, package, picture);
+                              final MedBubble =
+                                  medBubble(medName, meddescription, package,picture);
                               medBubbles.add(MedBubble);
                             }
                             return Expanded(
@@ -242,7 +242,7 @@ class _ViewPageState extends State<View> {
 }
 
 class medBubble extends StatelessWidget {
-  medBubble(this.medicName, this.meddescription, this.package, this.picture);
+  medBubble(this.medicName, this.meddescription, this.package,this.picture);
   var medicName;
   var meddescription;
   var package;
