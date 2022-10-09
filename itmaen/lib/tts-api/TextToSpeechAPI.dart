@@ -1,13 +1,14 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert' show json, utf8;
-import 'package:flutter_wavenet/voice.dart';
+import 'package:itmaen/tts-api/voice.dart';
+
 
 class TextToSpeechAPI {
 
   static final TextToSpeechAPI _singleton = TextToSpeechAPI._internal();
   final _httpClient = HttpClient();
-  static const _apiKey = "YOUR_API_KEY";
+  static const _apiKey = "AIzaSyAyarQ7wHQ2-I20PexqErzHWwHhjhGB5Ss";
   static const _apiURL = "texttospeech.googleapis.com";
 
 
@@ -43,7 +44,7 @@ class TextToSpeechAPI {
     }
   }
 
-  Future<List<Voice>> getVoices() async {
+  Future<List<Voice>?> getVoices() async {
     try {
       final uri = Uri.https(_apiURL, '/v1beta1/voices');
 
@@ -67,7 +68,7 @@ class TextToSpeechAPI {
 
   }
 
-  Future<Map<String, dynamic>> _postJson(Uri uri, Map jsonMap) async {
+  Future<Map<String, dynamic>?> _postJson(Uri uri, Map jsonMap) async {
     try {
       final httpRequest = await _httpClient.postUrl(uri);
       final jsonData = utf8.encode(json.encode(jsonMap));
@@ -79,10 +80,10 @@ class TextToSpeechAPI {
     }
   }
 
-  Future<Map<String, dynamic>> _getJson(Uri uri) async {
+  Future<Map<String, dynamic>?> _getJson(Uri uri) async {
     try {
       final httpRequest = await _httpClient.getUrl(uri);
-      final jsonResponse = await _processRequestIntoJsonResponse(httpRequest, null);
+      final jsonResponse = await _processRequestIntoJsonResponse(httpRequest, null!);
       return jsonResponse;
     } on Exception catch(e) {
       print("$e");
@@ -90,10 +91,10 @@ class TextToSpeechAPI {
     }
   }
 
-  Future<Map<String, dynamic>> _processRequestIntoJsonResponse(HttpClientRequest httpRequest, List<int> data) async {
+  Future<Map<String, dynamic>?> _processRequestIntoJsonResponse(HttpClientRequest httpRequest, List<int> data) async {
     try {
       httpRequest.headers.add('X-Goog-Api-Key', _apiKey);
-      httpRequest.headers.add(HttpHeaders.CONTENT_TYPE, 'application/json');
+      httpRequest.headers.add(HttpHeaders.allowHeader, 'application/json');
       if (data != null) {
         httpRequest.add(data);
       }

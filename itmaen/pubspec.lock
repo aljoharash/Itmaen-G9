@@ -789,6 +789,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  wavenet:
+    dependency: "direct main"
+    description:
+      name: wavenet
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.5"
   win32:
     dependency: transitive
     description:
