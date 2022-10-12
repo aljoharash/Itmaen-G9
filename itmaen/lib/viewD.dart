@@ -562,11 +562,13 @@ class _medBubbleState extends State<medBubble> {
                     fontWeight: FontWeight.bold),
               ),
             ),
+            
             content: SingleChildScrollView(
               // child: Directionality(
               // textDirection: ui.TextDirection.rtl,
               child: ListBody(
                 children: <Widget>[
+                  
                   Icon(
                     Icons.health_and_safety,
                     size: 35,
@@ -584,6 +586,32 @@ class _medBubbleState extends State<medBubble> {
                   ),
                   SizedBox(
                     height: 15,
+                  ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                     onTap: () {
+                        //  function  to call the api but it in any button action it will work
+                        synthesizeText(
+                         " تفاصيل الجرعة " +
+                           " الكمية " +
+                           widget.MedAmount +
+                           " " +
+                             widget.MedUnit
+                             +
+                             " الوقت " +
+                             " " +
+                           widget.time + " " +
+                          
+                         widget.meddescription );
+                                                  // print("مرحبا بك ");
+                            },
+                           child: Icon(
+                             Icons.volume_up,
+                             color: Color.fromARGB(255, 111, 161, 200),
+                             size: 30,
+                              ),
+                    )
                   ),
                   Center(
                     child: Text(widget.MedAmount + ' ' + widget.MedUnit,
@@ -875,11 +903,12 @@ class _medBubbleState extends State<medBubble> {
                                                       widget.MedUnit);
                                                   // print("مرحبا بك ");
                                                 },
-                                                child: Icon(
-                                                  Icons.volume_up_outlined,
-                                                  color: Colors.blue,
-                                                  size: 25,
+                                                  child: Icon(
+                                                  Icons.volume_up,
+                                                  color: Color.fromARGB(255, 111, 161, 200),
+                                                  size: 30,
                                                 ),
+                                                
                                               )
                                             ],
                                           ),
