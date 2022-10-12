@@ -31,6 +31,12 @@ void sendNotificationchecked(String mediName) async {
         body: "${mediName} ",
         fln: flutterLocalNotificationsPlugin);
   }
+  void sendNotificationchecked2(String mediName) async {
+    Noti.showBigTextNotification(
+        title: "تم أخذ الجرعة",
+        body: " الان${mediName} اطمئن :) قام مسقبل رعايتك بأخذ ",
+        fln: flutterLocalNotificationsPlugin);
+  }
   @override
   State<Navigation> createState() => _NavigationState();
 }
