@@ -72,6 +72,7 @@ dependencies:
   custom_radio_grouped_button: ^2.1.2+2
   url_launcher: any
   flutter_datetime_picker: ^1.5.1
+  flutter_phone_direct_caller: ^2.1.1
   
 
 

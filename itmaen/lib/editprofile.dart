@@ -436,6 +436,7 @@ new FlutterPwValidator(
           )
         ]))));
   }
+//await user?.updateEmail("janeq@example.com");
 
   Future<void> userUpdate(
       var username1, var email, var pass, var mobileNum) async {
@@ -443,7 +444,9 @@ new FlutterPwValidator(
         FirebaseFirestore.instance.collection('caregivers');
     FirebaseAuth auth = FirebaseAuth.instance;
     String? uid = auth.currentUser?.uid.toString();
-    caregivers.update({
+    await auth.currentUser?.updateEmail("janeq@example.com");
+    await auth.currentUser?.updatePassword("");
+    caregivers.doc().update({
       'user name': username1.text,
       'email': email.text,
       'password': pass.text,

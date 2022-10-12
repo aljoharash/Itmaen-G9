@@ -14,6 +14,7 @@ import 'calendar/patientCalendar2.dart';
 import 'calendar/test22/newCalendar.dart';
 import 'login.dart';
 import 'notification.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -44,6 +45,11 @@ class _NavigationPatientState extends State<NavigationPatient> {
       sendNotification();
     });
     print('first');
+  }
+
+  _callNumber() async {
+    const number = '08592119XXXX'; //set the number here
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
   }
 
   void getCurrentUser() async {
@@ -113,6 +119,7 @@ class _NavigationPatientState extends State<NavigationPatient> {
         break;
       case 2:
         return ViewD();
+        break;
     }
   }
 

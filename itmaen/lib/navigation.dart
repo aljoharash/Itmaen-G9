@@ -14,6 +14,7 @@ import 'package:itmaen/viewD.dart';
 import 'add-patient.dart';
 import 'alert_dialog.dart';
 import 'calendar/test22/newCalendar.dart';
+import 'editprofile.dart';
 import 'home.dart';
 import 'login.dart';
 import 'notification.dart';
@@ -124,7 +125,7 @@ class _NavigationState extends State<Navigation> {
         return;
         break;
       case 1:
-        return AddPatient();
+        return editProfile();
         break;
       case 2:
         return View();
@@ -140,8 +141,6 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
- 
-
     Future<void> logout() async {
       if (caregiverID != null) {
         final action = await AlertDialogs.yesCancelDialog(
@@ -218,7 +217,7 @@ class _NavigationState extends State<Navigation> {
           Icon(
             Icons.calendar_month,
             color: Colors.white,
-            ),
+          ),
           Icon(
             Icons.home,
             color: Colors.white,

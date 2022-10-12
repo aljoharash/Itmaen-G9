@@ -98,6 +98,7 @@ class _ViewDPageState extends State<ViewD> {
             backgroundColor: Color.fromARGB(255, 140, 167, 190),
             title: Text("قائمة الأدوية",
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
+          
           ),
           body: FutureBuilder(
             builder: (ctx, snapshot) {

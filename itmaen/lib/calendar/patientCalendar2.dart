@@ -15,7 +15,6 @@ import '../../view.dart';
 import '../../font.dart';
 import '../navigationPatient.dart';
 import '../viewD.dart';
-
 class PatientCalendar extends StatefulWidget {
   @override
   PatientCalendar_ createState() => PatientCalendar_();
