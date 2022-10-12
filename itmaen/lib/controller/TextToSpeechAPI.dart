@@ -12,7 +12,7 @@ class TextToSpeechAPI {
   static const _apiURL = "texttospeech.googleapis.com";
   //language name to send it to the api
   static const _voiceName =
-      "ar-XA-Wavenet-C"; //en-US-Wavenet-D / ar-XA-Wavenet-C
+      "ar-XA-Wavenet-D"; //en-US-Wavenet-D / ar-XA-Wavenet-C
   //language code to sent it to the api
   static const _languageCode = "ar-XA"; //en-US / ar-XA
 
