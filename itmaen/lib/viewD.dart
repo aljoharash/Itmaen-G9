@@ -621,10 +621,12 @@ class _medBubbleState extends State<medBubble> {
                               .collection('doses')
                               .doc(widget.doc)
                               .update({'cheked': true});
+                              if(widget.send){ // if edited by the patient
                           FirebaseFirestore.instance
                               .collection('doses')
                               .doc(widget.doc)
                               .update({'Timecheked': DateTime.now()});
+                              }
 
                           if (diff == 0) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -654,21 +656,10 @@ class _medBubbleState extends State<medBubble> {
                               ),
                             );
                           }
-                    //       if ( widget.send == true) {
-                    //         nv.sendNotificationchecked(
-                    //             ' ${widget.medicName} جرعة ');
-                    //     }
-                    // var x = DateTime.now(); 
-                   // if (widget.send == true && widget.checked == true) {
-//       // here the edit
-     // nv.sendNotificationchecked(' ${widget.medicName} جرعة ');
- // }
+                   
 
                           Navigator.of(context).pop();
-                        //  if ( widget.checked == true) {
-                        //     nv.sendNotificationchecked(
-                        //         ' ${widget.medicName} جرعة ');
-                        // }
+                       
           }),
               //),
             ],
@@ -688,9 +679,9 @@ print(x==widget.timechecked.toDate());
 print(x); 
 print(widget.timechecked.toDate()); 
 print('herree'); 
-if(format==format2 && widget.send){
-    nv.sendNotificationchecked(
-    ' ${widget.medicName} جرعة ');
+if(format==format2 && widget.send==false){
+    nv.sendNotificationchecked2(
+    ' ${widget.medicName} ');
 
 }
 
@@ -700,30 +691,7 @@ if(format==format2 && widget.send){
         //  child: SizedBox(width: 130 ,height:15, child: DecoratedBox(decoration: BoxDecoration(color: Colors.red))),
 
         decoration: BoxDecoration(
-            // borderRadius: BorderRadius.circular(5.0),
-            //      border: Borde
-
-            //     top: BorderSide(
-
-            //   style:BorderStyle.solid,
-            //   color: Color(widget.medColor),
-
-            //   width: 15
-
-            // )),
-            // border: Border.fromBorderSide(BorderSide(color:Color(widget.medColor), strokeAlign: StrokeAlign.inside)),
-            // borderRadius:BorderRadius.vertical( top:Radius.circular(20.0),
-            /// ),
-            // border: Border( //here
-
-            //     top: BorderSide(
-
-            //   style:BorderStyle.solid,
-            //   color: Color(widget.medColor),
-
-            //   width: 15
-
-            // )),
+           
             ),
         child: Material(
           borderRadius: BorderRadius.circular(20.0),
@@ -768,11 +736,7 @@ if(format==format2 && widget.send){
                                       ),
                                     ),
                                   ),
-
-// SizedBox(
-//   height: 10,
-// ),
-                                  Row(children: [
+                         Row(children: [
                                     Container(
                                         child: Column(
                                       children: [
@@ -780,9 +744,7 @@ if(format==format2 && widget.send){
                                           onPressed: widget.checked
                                               ? () {
                                                   dialog(widget.medicName);
-                                          //          nv.sendNotificationchecked(
-                                          //  ' ${widget.medicName} جرعة ');
-                      //  }
+                                      
                                                 }
                                               : () {
                                                   _showMyDialog(
@@ -802,7 +764,7 @@ if(format==format2 && widget.send){
                                                   Icons.check_outlined,
                                                   size: 30,
                                                   color: ui.Color.fromARGB(
-                                                      255, 219, 233, 241),
+                                              255, 218, 239, 251),
                                                 ),
                                           padding: EdgeInsets.all(16),
                                           shape: CircleBorder(
@@ -816,13 +778,7 @@ if(format==format2 && widget.send){
                                           height: 10,
                                         ),
 
-                                        // Text(
-                                        //   'أخذ',
-                                        //   style: GoogleFonts.tajawal(
-                                        //       color: ui.Color.fromARGB(
-                                        //           255, 107, 106, 106),
-                                        //       fontWeight: FontWeight.w600),
-                                        // )
+                                      
                                       ],
                                     )),
                                     // if(widget.checked == true){
@@ -832,14 +788,7 @@ if(format==format2 && widget.send){
                                     Container(
                                       child: Container(
 
-                                          //     decoration: BoxDecoration(
-                                          //    border: Border(
-                                          //   top: BorderSide(
-                                          // color: Color(widget.medColor),
-                                          // width: 10,
-
-                                          // )),
-                                          // ),
+                                          
 
                                           child: Column(
                                         children: [
