@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/add-patient.dart';
 import 'package:itmaen/patient-login.dart';
+import 'package:itmaen/trySet.dart';
+import 'package:itmaen/viewD.dart';
 import 'addMedicinePages/adddialog.dart';
 import 'alert_dialog.dart';
 import 'package:itmaen/model/medicines.dart';
@@ -30,6 +32,7 @@ class _ViewPageState extends State<View> {
   //var caregiverID;
   final _auth = FirebaseAuth.instance;
   late User loggedUser;
+  
 
   //Future<String?> loggedInUser = getCurrentUser();
 
@@ -247,6 +250,7 @@ class medBubble extends StatelessWidget {
   var meddescription;
   var package;
   var picture;
+  late List<String> toBeTransformed = [];
 
   @override
   Widget build(BuildContext context) {
@@ -306,6 +310,75 @@ class medBubble extends StatelessWidget {
                           fontWeight: FontWeight.w600),
                     ),
                   ),
+
+                  SizedBox(
+                    height: 30,
+                  ),
+
+                  Container(
+                    width: 270,
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),),
+
+                      padding: EdgeInsets.fromLTRB(70, 10, 60, 10),
+                       onPressed: () {
+                                              Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (context) => SetDose(
+                                                  value: toBeTransformed,
+                                                  toBeTransformed: [
+                                                    medicName,
+                                                  ],
+                                                )));
+                                      },
+                      // onPressed: widget.checked
+                      //     ? () {
+                      //         dialog(widget.medicName);
+                      //       }
+                      //     : () {
+                      //         _showMyDialog(
+                      //             widget.medicName);
+                      //       },
+                      
+                     color: Color.fromARGB(255, 140, 167, 190),
+                                             
+                                   
+                      child: Row(
+                        children: [
+                            Text(
+                              
+                              "تحديد جرعة الدواء",
+                            
+                              style: GoogleFonts.tajawal(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15),
+                            textAlign: TextAlign.center,
+                            
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                          Icon(
+                            Icons.medication_liquid,
+                            size: 20,
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+
+                        
+                        ],
+                      ),
+                      
+
+                      
+                     
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 20,
+                  )
                 ],
               ))),
     );
