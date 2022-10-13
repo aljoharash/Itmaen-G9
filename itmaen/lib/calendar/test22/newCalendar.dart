@@ -60,7 +60,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
   var namee;
   var checked;
   var unit;
-  DateTime?theTime;
+  DateTime? theTime;
   DateTime? currTime;
   String? _subjectText;
   List<String> doseDes = <String>[];
@@ -96,7 +96,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
 
   intoList() {
     for (int i = 0; i < count; i++) {
-      if (doseName[i] == _subjectText && doseTime[i] == currTime ) {
+      if (doseName[i] == _subjectText && doseTime[i] == currTime) {
         currDes = doseDes[i];
         currAmount = doseAmount[i];
         currCheck = doseCheck[i];
@@ -131,8 +131,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
 
     final Random random = new Random();
     List<Meeting> list = snapShotsValue.docs
-        .map((e) => 
-        Meeting(
+        .map((e) => Meeting(
             eventName: e.data()['name'],
             //freqPerDay: e.data()['freqPerDay'],
             from: DateTime.parse(e.data()['Time'].toDate().toString()),
@@ -215,7 +214,8 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
 
   Future<void> calendarTapped(CalendarTapDetails details) async {
     if (details.targetElement == CalendarElement.appointment ||
-        details.targetElement == CalendarElement.agenda && details.appointments!.length > 0) {          
+        details.targetElement == CalendarElement.agenda &&
+            details.appointments!.length > 0) {
       final Meeting appointmentDetails = details.appointments![0];
       _subjectText = appointmentDetails.eventName;
       currTime = appointmentDetails.from;
@@ -241,7 +241,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                 ),
               ),
               content: Container(
-                height: 120,
+                height: 150,
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -282,7 +282,8 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                             style: GoogleFonts.tajawal(
                               //fontWeight: FontWeight.bold,
                               color: currCheck
-                              ? Color.fromARGB(255, 64, 105, 66) :  Color.fromARGB(255, 159, 50, 46),
+                                  ? Color.fromARGB(255, 64, 105, 66)
+                                  : Color.fromARGB(255, 159, 50, 46),
                             ),
                             textAlign: TextAlign.right,
                           ),
@@ -298,10 +299,10 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                                 )
                               : ElevatedButton.icon(
                                   onPressed: () {
-                                     Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Navigation()));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Navigation()));
                                   },
                                   icon: FaIcon(FontAwesomeIcons.pills),
                                   label: Text(

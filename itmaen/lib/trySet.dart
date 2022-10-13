@@ -531,7 +531,6 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                         Color.fromARGB(255, 122, 164, 186),
                                     min: 1,
                                     max: 6,
-                                  
                                   ),
                                 ),
                               ),
@@ -655,6 +654,8 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                             child: GestureDetector(
                               onTap: () async {
                                 Navigator.of(context).push(showPicker(
+                                    //  disableHour: true,
+                                    // minHour: double.parse(TimeOfDay.now().format(context).toString().substring(0,1)),
                                     ltrMode: false,
                                     iosStylePicker: true,
                                     hourLabel: "ساعة",
@@ -669,8 +670,18 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                           setTime = selectedTime;
                                           timeDisplayed = setTime;
                                           print(selectedTime);
-                                          print(setTime);
-                                          print(timeDisplayed);
+                                        
+                                          // print(setTime);
+                                          //   print(timeDisplayed);
+                                          if ((DateTime.now().toString().substring(0,10) == setDate.toString().substring(0,10)) &&
+                                              (int.parse(setTime
+                                                      .toString()
+                                                      .substring(10, 12)) <
+                                                  int.parse(TimeOfDay.now()
+                                                      .toString()
+                                                      .substring(10, 12)))) {
+                                            print("error in time");
+                                          }
                                         });
                                       }
                                     }));

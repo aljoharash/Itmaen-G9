@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:core';
 import 'dart:ffi';
+import 'dart:io';
 //import 'dart:html';
 import 'dart:ui' as ui;
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +13,13 @@ import 'package:itmaen/add-patient.dart';
 import 'package:itmaen/navigation.dart';
 import 'package:itmaen/navigationPatient.dart';
 import 'package:itmaen/patient-login.dart';
+import 'package:path_provider/path_provider.dart';
 import 'alert_dialog.dart';
 import 'package:itmaen/model/medicines.dart';
+import 'controller/TextToSpeechAPI.dart';
 import 'generateqr.dart';
 import 'login.dart';
+import 'model/Voice.dart';
 import 'scanqr.dart';
 import 'addMedicinePages/addmedicine.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,6 +47,31 @@ class _ViewDPageState extends State<ViewD> {
 
   //Future<String?> loggedInUser = getCurrentUser();
 
+  /*
+    code for voice and google api : start
+  */
+  List<Voice> _voices = [];
+  Voice? _selectedVoice;
+  AudioPlayer audioPlugin = AudioPlayer();
+
+  void synthesizeText(String text) async {
+    if (audioPlugin.state == AudioPlayer().state) {
+      await audioPlugin.stop();
+    }
+    final String audioContent = await TextToSpeechAPI().synthesizeText(text);
+    if (audioContent == null) return;
+    final bytes = Base64Decoder().convert(audioContent, 0, audioContent.length);
+    final dir = await getTemporaryDirectory();
+    final file = File('${dir.path}/wavenet.mp3');
+    await file.writeAsBytes(bytes);
+    UrlSource fileSource = new UrlSource(file.path);
+    await audioPlugin.play(fileSource);
+  }
+
+  /*
+    code for voice and google api : end
+  */
+
   late String id = '';
   static var id_ = '';
   //var Cid;
@@ -61,7 +92,6 @@ class _ViewDPageState extends State<ViewD> {
   void initState() {
     super.initState();
     //HomePage();
-
     getCurrentUser().then((value) => t = value);
   }
 
@@ -501,7 +531,33 @@ class _medBubbleState extends State<medBubble> {
     final q = widget.m;
     var dosetime = q.toDate();
     var diff = (dosetime).difference(time).inMinutes;
+    /*
+    code for voice and google api : start
+  */
+    List<Voice> _voices = [];
+    Voice? _selectedVoice;
+    AudioPlayer audioPlugin = AudioPlayer();
 
+    void synthesizeText(String text) async {
+      if (audioPlugin.state == AudioPlayer().state) {
+        await audioPlugin.stop();
+      }
+      final String audioContent = await TextToSpeechAPI().synthesizeText(text);
+
+      if (audioContent == null) return;
+      final bytes =
+          Base64Decoder().convert(audioContent, 0, audioContent.length);
+
+      final dir = await getTemporaryDirectory();
+      final file = File('${dir.path}/wavenet.mp3');
+      await file.writeAsBytes(bytes);
+      UrlSource fileSource = new UrlSource(file.path);
+      await audioPlugin.play(fileSource);
+    }
+
+    /*
+    code for voice and google api : end
+  */
     Future<void> _showMyDialog(String? x) async {
       return showDialog<void>(
         context: context,
@@ -519,11 +575,13 @@ class _medBubbleState extends State<medBubble> {
                     fontWeight: FontWeight.bold),
               ),
             ),
+            
             content: SingleChildScrollView(
               // child: Directionality(
               // textDirection: ui.TextDirection.rtl,
               child: ListBody(
                 children: <Widget>[
+                  
                   Icon(
                     Icons.health_and_safety,
                     size: 35,
@@ -541,6 +599,32 @@ class _medBubbleState extends State<medBubble> {
                   ),
                   SizedBox(
                     height: 15,
+                  ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                     onTap: () {
+                        //  function  to call the api but it in any button action it will work
+                        synthesizeText(
+                         " تفاصيل الجرعة " +
+                           " الكمية " +
+                           widget.MedAmount +
+                           " " +
+                             widget.MedUnit
+                             +
+                             " الوقت " +
+                             " " +
+                           widget.time + " " +
+                          
+                         widget.meddescription );
+                                                  // print("مرحبا بك ");
+                            },
+                           child: Icon(
+                             Icons.volume_up,
+                             color: Color.fromARGB(255, 111, 161, 200),
+                             size: 30,
+                              ),
+                    )
                   ),
                   Center(
                     child: Text(widget.MedAmount + ' ' + widget.MedUnit,
@@ -793,15 +877,48 @@ if(format==format2 && widget.send==false){
                                           child: Column(
                                         children: [
                                           // SizedBox(height: 7,width:30),
-                                          Text(
-                                            '   ' +
-                                                '\n' +
-                                                '${widget.medicName}',
-                                            style: GoogleFonts.tajawal(
-                                                fontSize: 17,
-                                                color: Color.fromARGB(
-                                                    255, 0, 0, 0),
-                                                fontWeight: FontWeight.bold),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '   ' +
+                                                    '\n' +
+                                                    '${widget.medicName}' +
+                                                    "    ",
+                                                style: GoogleFonts.tajawal(
+                                                    fontSize: 17,
+                                                    color: Color.fromARGB(
+                                                        255, 0, 0, 0),
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              // button for audio google api
+                                              //change the button style to be like the app style
+                                              GestureDetector(
+                                                onTap: () {
+                                                  //  function  to call the api but it in any button action it will work
+                                                  synthesizeText("اسم الدواء " +
+                                                      widget.medicName +
+                                                      " تفاصيل الجرعة " +
+                                                      " الوقت " +
+                                                      widget.time +
+                                                      " الكمية " +
+                                                      widget.MedAmount +
+                                                      " الوحده " +
+                                                      widget.MedUnit);
+                                                  // print("مرحبا بك ");
+                                                },
+                                                  child: Icon(
+                                                  Icons.volume_up,
+                                                  color: Color.fromARGB(255, 111, 161, 200),
+                                                  size: 30,
+                                                ),
+                                                
+                                              )
+                                            ],
                                           ),
 
                                           Text(

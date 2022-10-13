@@ -233,6 +233,10 @@ class _NavigationState extends State<Navigation> {
           Icon(
             Icons.calendar_month,
             color: Colors.white,
+          ),
+          Icon(
+            Icons.calendar_month,
+            color: Colors.white,
             ),
           Icon(
             Icons.home,

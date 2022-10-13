@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -281,8 +280,8 @@ class _addManuallyState extends State<addManually> {
                                                       "CENTRUM - سنترم" +
                                                       ".png"
                                                   : medName.text ==
-                                                        "بانادول - PANADOL"
-                                                          "PANADOL"
+                                                          "بانادول - PANADOL"
+                                                              "PANADOL"
                                                       ? "images/" +
                                                           "بانادول ادفانس - PANADOL" +
                                                           ".png"
@@ -358,7 +357,7 @@ class _addManuallyState extends State<addManually> {
                                       //'barcode': barcode,
                                       'description': description.text,
                                       'caregiverID': caregiverID,
-                                       'picture': (medName.text == "جليترا"
+                                      'picture': (medName.text == "جليترا"
                                           ? "images/" + "جليترا" + ".png"
                                           : medName.text == "سبراليكس"
                                               ? "images/" + "سبراليكس" + ".png"
@@ -368,8 +367,7 @@ class _addManuallyState extends State<addManually> {
                                                       "CENTRUM - سنترم" +
                                                       ".png"
                                                   : medName.text ==
-                                                       "بانادول - PANADOL"
-                                                         
+                                                          "بانادول - PANADOL"
                                                       ? "images/" +
                                                           "بانادول ادفانس - PANADOL" +
                                                           ".png"

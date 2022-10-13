@@ -60,7 +60,7 @@ class PatientCalendar_ extends State<PatientCalendar> {
   var namee;
   var checked;
   var unit;
-  DateTime?theTime;
+  DateTime? theTime;
   DateTime? currTime;
   String? _subjectText;
   List<String> doseDes = <String>[];
@@ -96,7 +96,7 @@ class PatientCalendar_ extends State<PatientCalendar> {
 
   intoList() {
     for (int i = 0; i < count; i++) {
-      if (doseName[i] == _subjectText && doseTime[i] == currTime ) {
+      if (doseName[i] == _subjectText && doseTime[i] == currTime) {
         currDes = doseDes[i];
         currAmount = doseAmount[i];
         currCheck = doseCheck[i];
@@ -221,7 +221,8 @@ class PatientCalendar_ extends State<PatientCalendar> {
 
   Future<void> calendarTapped(CalendarTapDetails details) async {
     if (details.targetElement == CalendarElement.appointment ||
-        details.targetElement == CalendarElement.agenda && details.appointments!.length > 0) {
+        details.targetElement == CalendarElement.agenda &&
+            details.appointments!.length > 0) {
       final Meeting appointmentDetails = details.appointments![0];
       _subjectText = appointmentDetails.eventName;
       currTime = appointmentDetails.from;
@@ -247,7 +248,7 @@ class PatientCalendar_ extends State<PatientCalendar> {
                 ),
               ),
               content: Container(
-                height: 120,
+                height: 150,
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -288,7 +289,8 @@ class PatientCalendar_ extends State<PatientCalendar> {
                             style: GoogleFonts.tajawal(
                               //fontWeight: FontWeight.bold,
                               color: currCheck
-                              ? Color.fromARGB(255, 64, 105, 66) :  Color.fromARGB(255, 159, 50, 46),
+                                  ? Color.fromARGB(255, 64, 105, 66)
+                                  : Color.fromARGB(255, 159, 50, 46),
                             ),
                             textAlign: TextAlign.right,
                           ),
@@ -304,10 +306,10 @@ class PatientCalendar_ extends State<PatientCalendar> {
                                 )
                               : ElevatedButton.icon(
                                   onPressed: () {
-                                       Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          NavigationPatient()));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                NavigationPatient()));
                                   },
                                   icon: FaIcon(FontAwesomeIcons.pills),
                                   label: Text(
