@@ -2,7 +2,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/subjects.dart';
 
 class Noti {
+ 
   static Future initialize(
+    
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var androidInitialize =
         new AndroidInitializationSettings('mipmap/ic_launcher');
@@ -19,6 +21,7 @@ class Noti {
   }
 
   static Future showBigTextNotification(
+   
       {var id = 0,
       required String title,
       required String body,

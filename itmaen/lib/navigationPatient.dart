@@ -18,9 +18,11 @@ import 'notification.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
+   
 
 class NavigationPatient extends StatefulWidget {
   const NavigationPatient({Key? key}) : super(key: key);
+  
 
   // void sendNotificationchecked(String mediName) async {
   //   Noti.showBigTextNotification(
@@ -34,6 +36,9 @@ class NavigationPatient extends StatefulWidget {
 }
 
 class _NavigationPatientState extends State<NavigationPatient> {
+
+
+  
   String title = 'AlertDialog';
   bool tappedYes = false;
   final _auth = FirebaseAuth.instance;

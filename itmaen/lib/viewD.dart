@@ -14,6 +14,7 @@ import 'package:itmaen/navigation.dart';
 import 'package:itmaen/navigationPatient.dart';
 import 'package:itmaen/patient-login.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:workmanager/workmanager.dart';
 import 'alert_dialog.dart';
 import 'package:itmaen/model/medicines.dart';
 import 'controller/TextToSpeechAPI.dart';
@@ -30,6 +31,8 @@ import 'package:itmaen/secure-storage.dart';
 import 'package:intl/intl.dart';
 
 class ViewD extends StatefulWidget {
+  const ViewD({Key? key}) : super(key: key);
+
   @override
   _ViewDPageState createState() => _ViewDPageState();
 }
@@ -232,8 +235,25 @@ class _ViewDPageState extends State<ViewD> {
                                   final picture = med.get('picture');
                                   bool send = true;
                                   // final pic = med.get("picture");
-                                   final timechecked = med.get('Timecheked');
+                                  final timechecked = med.get('Timecheked');
                                   // var i = 0;
+                                   Navigation nv = Navigation();
+                                  var x = DateTime.now();
+                                  String format =
+                                      DateFormat('yyy-MM-dd - kk:mm').format(x);
+                                  String format2 =
+                                      DateFormat('yyy-MM-dd - kk:mm')
+                                          .format(timechecked.toDate());
+                                  print(format);
+                                  print(format2);
+                                  print(x == timechecked.toDate());
+                                  print(x);
+                                  print(timechecked.toDate());
+                                  print('herree');
+                                  if (format == format2 && send == false) {
+                                    nv.sendNotificationchecked2(
+                                        ' جرعة ${medName} ');
+                                  }
                                   final MedBubble = medBubble(
                                       medName,
                                       checked,
@@ -247,7 +267,7 @@ class _ViewDPageState extends State<ViewD> {
                                       x,
                                       m,
                                       picture,
-                                      send, 
+                                      send,
                                       timechecked);
                                   medBubbles.add(MedBubble);
                                 }
@@ -346,6 +366,23 @@ class _ViewDPageState extends State<ViewD> {
                                   //final timechecked;
 
                                   final timechecked = med.get('Timecheked');
+                                  Navigation nv = Navigation();
+                                  var x = DateTime.now();
+                                  String format =
+                                      DateFormat('yyy-MM-dd - kk:mm').format(x);
+                                  String format2 =
+                                      DateFormat('yyy-MM-dd - kk:mm')
+                                          .format(timechecked.toDate());
+                                  print(format);
+                                  print(format2);
+                                  print(x == timechecked.toDate());
+                                  print(x);
+                                  print(timechecked.toDate());
+                                  print('herree');
+                                  if (format == format2 && send == false) {
+                                    nv.sendNotificationchecked2(
+                                        ' جرعة ${medName} ');
+                                  }
 
                                   final MedBubble = medBubble(
                                       medName,
@@ -361,8 +398,7 @@ class _ViewDPageState extends State<ViewD> {
                                       m,
                                       picture,
                                       send,
-                                      timechecked
-                                      );
+                                      timechecked);
                                   medBubbles.add(MedBubble);
                                 }
                               }
@@ -413,8 +449,8 @@ class medBubble extends StatefulWidget {
       this.x,
       this.m,
       this.picture,
-      this.send, 
-      this.timechecked );
+      this.send,
+      this.timechecked);
   var medicName;
   var checked;
   var ID;
@@ -575,13 +611,12 @@ class _medBubbleState extends State<medBubble> {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            
+
             content: SingleChildScrollView(
               // child: Directionality(
               // textDirection: ui.TextDirection.rtl,
               child: ListBody(
                 children: <Widget>[
-                  
                   Icon(
                     Icons.health_and_safety,
                     size: 35,
@@ -601,31 +636,28 @@ class _medBubbleState extends State<medBubble> {
                     height: 15,
                   ),
                   Container(
-                    alignment: Alignment.topLeft,
-                    child: GestureDetector(
-                     onTap: () {
-                        //  function  to call the api but it in any button action it will work
-                        synthesizeText(
-                         " تفاصيل الجرعة " +
-                           " الكمية " +
-                           widget.MedAmount +
-                           " " +
-                             widget.MedUnit
-                             +
-                             " الوقت " +
-                             " " +
-                           widget.time + " " +
-                          
-                         widget.meddescription );
-                                                  // print("مرحبا بك ");
-                            },
-                           child: Icon(
-                             Icons.volume_up,
-                             color: Color.fromARGB(255, 111, 161, 200),
-                             size: 30,
-                              ),
-                    )
-                  ),
+                      alignment: Alignment.topLeft,
+                      child: GestureDetector(
+                        onTap: () {
+                          //  function  to call the api but it in any button action it will work
+                          synthesizeText(" تفاصيل الجرعة " +
+                              " الكمية " +
+                              widget.MedAmount +
+                              " " +
+                              widget.MedUnit +
+                              " الوقت " +
+                              " " +
+                              widget.time +
+                              " " +
+                              widget.meddescription);
+                          // print("مرحبا بك ");
+                        },
+                        child: Icon(
+                          Icons.volume_up,
+                          color: Color.fromARGB(255, 111, 161, 200),
+                          size: 30,
+                        ),
+                      )),
                   Center(
                     child: Text(widget.MedAmount + ' ' + widget.MedUnit,
                         style: GoogleFonts.tajawal(
@@ -705,12 +737,13 @@ class _medBubbleState extends State<medBubble> {
                               .collection('doses')
                               .doc(widget.doc)
                               .update({'cheked': true});
-                              if(widget.send){ // if edited by the patient
-                          FirebaseFirestore.instance
-                              .collection('doses')
-                              .doc(widget.doc)
-                              .update({'Timecheked': DateTime.now()});
-                              }
+                          if (widget.send) {
+                            // if edited by the patient
+                            FirebaseFirestore.instance
+                                .collection('doses')
+                                .doc(widget.doc)
+                                .update({'Timecheked': DateTime.now()});
+                          }
 
                           if (diff == 0) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -740,43 +773,37 @@ class _medBubbleState extends State<medBubble> {
                               ),
                             );
                           }
-                   
 
                           Navigator.of(context).pop();
-                       
-          }),
+                        }),
               //),
             ],
             // ),
-            
           );
         },
       );
-      
     }
-var x = DateTime.now(); 
-String format = DateFormat('yyy-MM-dd - kk:mm').format(x); 
-String format2 = DateFormat('yyy-MM-dd - kk:mm').format(widget.timechecked.toDate());
-print(format) ; 
-print(format2); 
-print(x==widget.timechecked.toDate());
-print(x); 
-print(widget.timechecked.toDate()); 
-print('herree'); 
-if(format==format2 && widget.send==false){
-    nv.sendNotificationchecked2(
-    ' ${widget.medicName} ');
 
-}
+    // var x = DateTime.now();
+    // String format = DateFormat('yyy-MM-dd - kk:mm').format(x);
+    // String format2 =
+    //     DateFormat('yyy-MM-dd - kk:mm').format(widget.timechecked.toDate());
+    // print(format);
+    // print(format2);
+    // print(x == widget.timechecked.toDate());
+    // print(x);
+    // print(widget.timechecked.toDate());
+    // print('herree');
+    // if (format == format2 && widget.send == false) {
+    //   nv.sendNotificationchecked2(' جرعة ${widget.medicName} ');
+    // }
 
     return Padding(
       padding: EdgeInsets.all(3.0),
       child: Container(
         //  child: SizedBox(width: 130 ,height:15, child: DecoratedBox(decoration: BoxDecoration(color: Colors.red))),
 
-        decoration: BoxDecoration(
-           
-            ),
+        decoration: BoxDecoration(),
         child: Material(
           borderRadius: BorderRadius.circular(20.0),
           child: SizedBox(
@@ -820,7 +847,7 @@ if(format==format2 && widget.send==false){
                                       ),
                                     ),
                                   ),
-                         Row(children: [
+                                  Row(children: [
                                     Container(
                                         child: Column(
                                       children: [
@@ -828,7 +855,6 @@ if(format==format2 && widget.send==false){
                                           onPressed: widget.checked
                                               ? () {
                                                   dialog(widget.medicName);
-                                      
                                                 }
                                               : () {
                                                   _showMyDialog(
@@ -848,7 +874,7 @@ if(format==format2 && widget.send==false){
                                                   Icons.check_outlined,
                                                   size: 30,
                                                   color: ui.Color.fromARGB(
-                                              255, 218, 239, 251),
+                                                      255, 218, 239, 251),
                                                 ),
                                           padding: EdgeInsets.all(16),
                                           shape: CircleBorder(
@@ -861,8 +887,6 @@ if(format==format2 && widget.send==false){
                                         SizedBox(
                                           height: 10,
                                         ),
-
-                                      
                                       ],
                                     )),
                                     // if(widget.checked == true){
@@ -871,9 +895,6 @@ if(format==format2 && widget.send==false){
                                     ),
                                     Container(
                                       child: Container(
-
-                                          
-
                                           child: Column(
                                         children: [
                                           // SizedBox(height: 7,width:30),
@@ -907,16 +928,16 @@ if(format==format2 && widget.send==false){
                                                       widget.time +
                                                       " الكمية " +
                                                       widget.MedAmount +
-                                                      " الوحده " +
+                                                      "الوحدة " +
                                                       widget.MedUnit);
                                                   // print("مرحبا بك ");
                                                 },
-                                                  child: Icon(
+                                                child: Icon(
                                                   Icons.volume_up,
-                                                  color: Color.fromARGB(255, 111, 161, 200),
+                                                  color: Color.fromARGB(
+                                                      255, 111, 161, 200),
                                                   size: 30,
                                                 ),
-                                                
                                               )
                                             ],
                                           ),
@@ -963,7 +984,7 @@ if(format==format2 && widget.send==false){
 
                                     // }
 
-                                    SizedBox(width: 30),
+                                    SizedBox(width: 15),
 
                                     SizedBox(
                                       child: Image.asset(

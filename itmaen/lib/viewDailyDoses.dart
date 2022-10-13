@@ -19,12 +19,12 @@ import 'package:itmaen/secure-storage.dart';
 //import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:intl/intl.dart';
 
-class ViewD extends StatefulWidget {
+class ViewDD extends StatefulWidget {
   @override
-  _ViewDPageState createState() => _ViewDPageState();
+  _ViewDDPageState createState() => _ViewDDPageState();
 }
 
-class _ViewDPageState extends State<ViewD> {
+class _ViewDDPageState extends State<ViewDD> {
   String title = 'AlertDialog';
   bool tappedYes = false;
   StorageService st = StorageService();
@@ -45,7 +45,7 @@ class _ViewDPageState extends State<ViewD> {
   //getCurrentUser();
 
   _ViewPageState() {
-    ViewD();
+    ViewDD();
     //assignboolean();
   }
   //}

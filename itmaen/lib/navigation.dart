@@ -34,7 +34,7 @@ void sendNotificationchecked(String mediName) async {
   void sendNotificationchecked2(String mediName) async {
     Noti.showBigTextNotification(
         title: "تم أخذ الجرعة",
-        body: " الان${mediName} اطمئن :) قام مسقبل رعايتك بأخذ ",
+        body: "اطمئن، قام مسقبل رعايتك بأخذ ${mediName}",
         fln: flutterLocalNotificationsPlugin);
   }
   @override
@@ -234,10 +234,7 @@ class _NavigationState extends State<Navigation> {
             Icons.calendar_month,
             color: Colors.white,
           ),
-          Icon(
-            Icons.calendar_month,
-            color: Colors.white,
-            ),
+          
           Icon(
             Icons.home,
             color: Colors.white,
