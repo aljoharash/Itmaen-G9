@@ -10,6 +10,7 @@ import 'package:itmaen/patient-login.dart';
 import 'addMedicinePages/adddialog.dart';
 import 'alert_dialog.dart';
 import 'package:itmaen/model/medicines.dart';
+import 'editMedicine.dart';
 import 'generateqr.dart';
 import 'login.dart';
 import 'scanqr.dart';
@@ -167,9 +168,9 @@ class _ViewPageState extends State<View> {
                               final meddescription = med.get('description');
                               final package = med.get('Package size');
                               final picture = med.get('picture');
+                              final strength = med.get('Strength value');
                               //final unit = med.get('Unit of volume');
-                              final MedBubble = medBubble(
-                                  medName, meddescription, package, picture);
+                              final MedBubble = medBubble(medName, meddescription, package, picture, strength);
                               medBubbles.add(MedBubble);
                             }
                             return Expanded(
@@ -207,9 +208,9 @@ class _ViewPageState extends State<View> {
                               final meddescription = med.get('description');
                               final package = med.get('Package size');
                               final picture = med.get('picture');
+                              final strength = med.get('Strength value');
                               //final unit = med.get('Unit of volume');
-                              final MedBubble = medBubble(
-                                  medName, meddescription, package, picture);
+                              final MedBubble = medBubble(medName, meddescription, package, picture, strength);
                               medBubbles.add(MedBubble);
                             }
                             return Expanded(
@@ -242,11 +243,12 @@ class _ViewPageState extends State<View> {
 }
 
 class medBubble extends StatelessWidget {
-  medBubble(this.medicName, this.meddescription, this.package, this.picture);
+  medBubble(this.medicName, this.meddescription, this.package, this.picture, this.strength);
   var medicName;
   var meddescription;
   var package;
   var picture;
+  var strength;
 
   @override
   Widget build(BuildContext context) {
@@ -265,6 +267,25 @@ class medBubble extends StatelessWidget {
                     textDirection: TextDirection.rtl,
                     child: Row(
                       children: [
+                        Container(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                     onTap: () {
+
+                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditMed(name: medicName, description: meddescription, package: package, strength: strength)));
+                        
+                            },
+                           child: Icon(
+                             Icons.edit,
+                             color: Color.fromARGB(255, 111, 161, 200),
+                             size: 20,
+                              ),
+                    )
+                  ),
+
                         Directionality(
                           textDirection: TextDirection.rtl,
                           child: Image.asset(picture.toString(),
