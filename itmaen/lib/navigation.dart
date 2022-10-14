@@ -14,9 +14,9 @@ import 'package:itmaen/viewD.dart';
 import 'add-patient.dart';
 import 'alert_dialog.dart';
 import 'calendar/test22/newCalendar.dart';
-import 'editprofile.dart';
 import 'home.dart';
 import 'login.dart';
+import 'navigationPatient.dart';
 import 'notification.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -25,6 +25,19 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 class Navigation extends StatefulWidget {
   const Navigation({Key? key}) : super(key: key);
+  void sendNotificationchecked(String mediName) async {
+    Noti.showBigTextNotification(
+        title: "تم أخذ الجرعة",
+        body: "${mediName} ",
+        fln: flutterLocalNotificationsPlugin);
+  }
+
+  void sendNotificationchecked2(String mediName) async {
+    Noti.showBigTextNotification(
+        title: "تم أخذ الجرعة",
+        body: "اطمئن، قام مسقبل رعايتك بأخذ ${mediName}",
+        fln: flutterLocalNotificationsPlugin);
+  }
 
   @override
   State<Navigation> createState() => _NavigationState();
@@ -45,9 +58,9 @@ class _NavigationState extends State<Navigation> {
     getCurrentUser();
     Noti.initialize(flutterLocalNotificationsPlugin);
 
-    // timer = Timer.periodic(const Duration(seconds: 60), (Timer t) {
-    //   sendNotification();
-    // });
+    timer = Timer.periodic(const Duration(seconds: 60), (Timer t) {
+      sendNotification();
+    });
   }
 
   void getCurrentUser() async {
@@ -80,43 +93,44 @@ class _NavigationState extends State<Navigation> {
     }
   }
 
-//   void sendNotification() async {
-//     var _query;
-//     await FirebaseFirestore.instance
-//         .collection('doses')
-//         .where("caregiverID", isEqualTo: caregiverID)
-//         .get()
-//         .then((value) {
-//       for (var i = 0; i < value.size; i++) {
-//         print("here is the size");
-//         print("caregiver");
-//         print(value.size);
-//         _query = (value.docs[i].get('Time')).toDate().toString();
-//         var time_ = DateTime.parse(_query);
+  void sendNotification() async {
+    var _query;
+    await FirebaseFirestore.instance
+        .collection('doses')
+        .where("caregiverID", isEqualTo: caregiverID)
+        .get()
+        .then((value) {
+      for (var i = 0; i < value.size; i++) {
+        print("here is the size");
+        print("caregiver");
+        print(value.size);
+        _query = (value.docs[i].get('Time')).toDate().toString();
+        var time_ = DateTime.parse(_query);
 
-//         var time = DateTime.parse("2022-09-20 19:43:00.999"); // just for test
-//         var now = DateTime.now(); // today's time
-//         var currentTime = DateTime.now();
-//         var diff = time_
-//             .difference(currentTime)
-//             .inMinutes; // getting the difference in mins
-//         print("here is the difference");
-//         print(diff);
-//         if (diff == 4) {
-//           Noti.showBigTextNotification(
-//               title: "تذكير بأخذ الجرعة",
-//               body: '''
-//   [${value.docs[i].get("name")}]
-//  عزيزي, تبقى 5 دقائق على موعد اخذ مستقبلك للرعاية لجرعته''',
-//               fln: flutterLocalNotificationsPlugin);
-//         } else if (diff <= -1440) {
-//           // passed a day over the medication , it will be removed
-//           value.docs[i].reference.delete();
-//         }
-//       } // end for
-//     });
-//     // }
-//   }
+        var time = DateTime.parse("2022-09-20 19:43:00.999"); // just for test
+        var now = DateTime.now(); // today's time
+        var currentTime = DateTime.now();
+        var diff = time_
+            .difference(currentTime)
+            .inMinutes; // getting the difference in mins
+        print("here is the difference");
+        print(diff);
+        if (diff == 4) {
+          Noti.showBigTextNotification(
+              title: "تذكير بأخذ الجرعة",
+              body: ''' 
+  [${value.docs[i].get("name")}]
+ عزيزي, تبقى 5 دقائق على موعد اخذ مستقبلك للرعاية لجرعته''',
+              fln: flutterLocalNotificationsPlugin);
+        }
+        //else if (diff <= -1440) {
+        //   // passed a day over the medication , it will be removed
+        //   value.docs[i].reference.delete();
+        // }
+      } // end for
+    });
+    // }
+  }
 
   int _selectedIndex = 4;
   bodyFunction() {
@@ -125,7 +139,7 @@ class _NavigationState extends State<Navigation> {
         return;
         break;
       case 1:
-        return editProfile();
+        return AddPatient();
         break;
       case 2:
         return View();
@@ -146,12 +160,16 @@ class _NavigationState extends State<Navigation> {
         final action = await AlertDialogs.yesCancelDialog(
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
-          setState(() => tappedYes = true);
-          timer?.cancel();
+          timer?.cancel(); // stop the timer // no more notification
+          setState(() => timer!.cancel());
+
+          timer?.cancel(); //
           await FirebaseAuth.instance.signOut();
+          timer?.cancel();
           loggedInUser = null;
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => LoginPage()));
+          timer?.cancel();
         } else {
           setState(() => tappedYes = false);
           Navigator.pushReplacement(
@@ -161,7 +179,8 @@ class _NavigationState extends State<Navigation> {
         final action = await AlertDialogs.yesCancelDialog(
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
-          setState(() => tappedYes = true);
+          timer?.cancel(); // stop the timer
+          setState(() => timer!.cancel());
           timer?.cancel();
 
           // await FirebaseAuth.instance.signOut();
@@ -169,8 +188,8 @@ class _NavigationState extends State<Navigation> {
               MaterialPageRoute(builder: (context) => patientScreen()));
         } else {
           setState(() => tappedYes = false);
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Navigation()));
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => NavigationPatient()));
         }
       }
     }
@@ -208,10 +227,6 @@ class _NavigationState extends State<Navigation> {
           ),
           FaIcon(
             FontAwesomeIcons.pills,
-            color: Colors.white,
-          ),
-          Icon(
-            Icons.calendar_month,
             color: Colors.white,
           ),
           Icon(

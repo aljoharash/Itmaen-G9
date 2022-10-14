@@ -6,8 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/add-patient.dart';
+import 'package:itmaen/editprofile.dart';
 import 'package:itmaen/navigation.dart';
 import 'package:itmaen/patient-login.dart';
 import 'alert_dialog.dart';
@@ -116,7 +118,31 @@ class _ViewDPageState extends State<ViewD> {
                     _callNumber();
                   },
                 ),
+                IconButton(
+                  icon: Icon(Icons.person),
+                  color: ui.Color.fromARGB(255, 255, 2, 2),
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => editProfile()));
+                  },
+                ),
               ]),
+          floatingActionButton: ElevatedButton(
+            onPressed: () {
+              _callNumber();
+            },
+            child: Icon(
+              Icons.call,
+              color: Colors.white,
+            ),
+            style: ElevatedButton.styleFrom(
+              shape: CircleBorder(),
+              padding: EdgeInsets.all(15),
+              //backgroundColor: Color.fromARGB(255, 140, 167, 190),
+              primary: Color.fromARGB(255, 140, 167, 190),
+              surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
+            ),
+          ),
           body: FutureBuilder(
             builder: (ctx, snapshot) {
               // Checking if future is resolved or not

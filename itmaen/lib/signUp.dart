@@ -3,9 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:itmaen/constant.dart';
+import 'package:itmaen/editprofile.dart';
 import 'package:itmaen/home.dart';
 import 'package:itmaen/login.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'data.dart';
 import 'navigation.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 
@@ -17,6 +19,7 @@ class SignUpScreen extends StatefulWidget {
   @override
   _SignUpScreen createState() => _SignUpScreen();
 }
+
 //userSetup
 class _SignUpScreen extends State<SignUpScreen> {
   final _auth = FirebaseAuth.instance;
@@ -379,6 +382,7 @@ new FlutterPwValidator(
                                     //updateUser?.updateDisplayName(username);
                                     userSetup(
                                         username, email, password, phoneNum);
+                                    data(username, email, password, phoneNum);
                                   } on FirebaseAuthException catch (error) {
                                     errorMessage = error.message!;
                                     errorMessage =
@@ -406,9 +410,12 @@ new FlutterPwValidator(
                                   TextButton(
                                       onPressed: () {
                                         Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LoginPage()));
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()),
+
+                                          // editProfile(name: medicName, description: meddescription, package: package, strength: strength)));
+                                        );
                                       },
                                       child: const Text('تسجيل الدخول',
                                           style: TextStyle(
