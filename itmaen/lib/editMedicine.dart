@@ -46,14 +46,18 @@ class _EditMedState extends State<EditMed> {
   }
 
   final _formKey = GlobalKey<FormState>();
-  TextEditingController medName = new TextEditingController();
-  TextEditingController doseCount = new TextEditingController();
-  TextEditingController description = new TextEditingController();
-  TextEditingController packSize = new TextEditingController();
+  // TextEditingController medName = new TextEditingController(text: name);
+  // TextEditingController doseCount = new TextEditingController(text:);
+  // TextEditingController description = new TextEditingController(text:);
+  // TextEditingController packSize = new TextEditingController(text:);
   bool medExist = false;
 
   @override
   Widget build(BuildContext context) {
+  TextEditingController medName = new TextEditingController(text: widget.name);
+  TextEditingController doseCount = new TextEditingController(text:widget.strength);
+  TextEditingController description = new TextEditingController(text:widget.description);
+  TextEditingController packSize = new TextEditingController(text:widget.package);
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
