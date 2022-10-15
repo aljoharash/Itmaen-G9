@@ -584,11 +584,23 @@ class _medBubbleState extends State<medBubble> {
       final bytes =
           Base64Decoder().convert(audioContent, 0, audioContent.length);
 
-      final dir = await getTemporaryDirectory();
-      final file = File('${dir.path}/wavenet.mp3');
-      await file.writeAsBytes(bytes);
-      UrlSource fileSource = new UrlSource(file.path);
-      await audioPlugin.play(fileSource);
+   //print(bytes);
+
+      if (Platform.isAndroid) {
+        final dir = await getTemporaryDirectory();
+        final file = File('${dir.path}/wavenet.mp3');
+        await file.writeAsBytes(bytes);
+        UrlSource fileSource = new UrlSource(file.path);
+        await audioPlugin.play(fileSource);
+      } else if (Platform.isIOS) {
+        final dir = await getApplicationDocumentsDirectory();
+        final file = File('${dir.path}/wavenet.mp3');
+        await file.writeAsBytes(bytes);
+        print(file.path);
+        UrlSource fileSource = new UrlSource(file.path);
+        DeviceFileSource deviceFileSource = new DeviceFileSource(file.path);
+        await audioPlugin.play(deviceFileSource);
+      }
     }
 
     /*
