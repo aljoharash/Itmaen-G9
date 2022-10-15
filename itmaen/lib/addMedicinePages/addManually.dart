@@ -260,6 +260,7 @@ class _addManuallyState extends State<addManually> {
                                         .collection('medicines')
                                         .doc(medName.text + caregiverID)
                                         .set({
+                                      'docName': medName.text,
                                       //  'Generic name': genericName,
                                       'Trade name': medName.text,
                                       'Strength value': doseCount.text,

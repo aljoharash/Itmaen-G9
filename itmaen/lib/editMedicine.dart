@@ -14,6 +14,7 @@ class EditMed extends StatefulWidget {
   final String package;
   const EditMed({Key? key, required this.name , required this.description , required this.package , required this.strength}) : super(key: key);
 
+
   @override
   State<EditMed> createState() => _EditMedState();
 }
@@ -25,15 +26,47 @@ class _EditMedState extends State<EditMed> {
 
   String caregiverID = "";
   late User loggedInUser;
-  String prevMed = "";
-  
+
+static String medname = "";
+static String description = "";
+static String package = "";
+static String strength = "";
 
   @override
   void initState() {
+    medname = widget.name;
+    description = widget.description;
+    package = widget.package;
+    strength = widget.strength;
     getCurrentUser();
   }
 
+var oldname;
+
+
+  // retrieve(QuerySnapshot snapshot) {
+  //   print("here");
+  //   snapshot.docs.forEach((doc) {
+  //     oldname = doc['docName'];
+  //     print("name: $oldname");
+  //   });
+  // }
+
   void getCurrentUser() async {
+
+    retrieve(QuerySnapshot snapshot) {
+    print("here");
+    snapshot.docs.forEach((doc) {
+      oldname = doc['docName'];
+      // medname = doc['Trade name'];
+      // description = doc['description'];
+      // package = doc['Package size'];
+      // strength = doc['Strength value'];
+      print("name: $oldname " + medname + description + package + strength);
+    });
+
+  }
+
     try {
       final user = await _auth.currentUser;
       if (user != null) {
@@ -43,7 +76,22 @@ class _EditMedState extends State<EditMed> {
     } catch (e) {
       print(e);
     }
+
+    var snapShotsValue = await FirebaseFirestore.instance
+        .collection("medicines")
+        .where('caregiverID', isEqualTo: caregiverID)
+        .where('Trade name', isEqualTo: widget.name)
+        // .where('description', isEqualTo: widget.description)
+        // .where('Package size', isEqualTo: widget.package)
+        // .where('Strength value', isEqualTo: widget.strength)
+        .get();
+
+
+        retrieve(snapShotsValue);
   }
+
+
+   
 
   final _formKey = GlobalKey<FormState>();
   // TextEditingController medName = new TextEditingController(text: name);
@@ -51,13 +99,16 @@ class _EditMedState extends State<EditMed> {
   // TextEditingController description = new TextEditingController(text:);
   // TextEditingController packSize = new TextEditingController(text:);
   bool medExist = false;
+  
+   TextEditingController medName = TextEditingController(text: medname);
+   TextEditingController doseCount = TextEditingController(text: strength);
+   TextEditingController meddescription = TextEditingController(text: description);
+   TextEditingController packSize = TextEditingController(text: package);
+  
 
   @override
   Widget build(BuildContext context) {
-  TextEditingController medName = new TextEditingController(text: widget.name);
-  TextEditingController doseCount = new TextEditingController(text:widget.strength);
-  TextEditingController description = new TextEditingController(text:widget.description);
-  TextEditingController packSize = new TextEditingController(text:widget.package);
+
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -145,7 +196,7 @@ class _EditMedState extends State<EditMed> {
                             ),
                             TextFormField(
                               // initialValue: widget.description,
-                              controller: description,
+                              controller: meddescription,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,
@@ -271,7 +322,7 @@ class _EditMedState extends State<EditMed> {
                                   if (_formKey.currentState!.validate()) {
                                     _firestore
                                         .collection('medicines')
-                                        .doc(widget.name + caregiverID)
+                                        .doc(oldname + caregiverID)
                                         .update({
                                       //  'Generic name': genericName,
                                       'Trade name': medName.text,
@@ -281,7 +332,7 @@ class _EditMedState extends State<EditMed> {
                                       //'Unit of volume': unitOfVolume,
                                       'Package size': packSize.text,
                                       //'barcode': barcode,
-                                      'description': description.text,
+                                      'description': meddescription.text,
                                       'caregiverID': caregiverID,
                                       'picture': (medName.text == "جليترا"
                                           ? "images/" + "جليترا" + ".png"
