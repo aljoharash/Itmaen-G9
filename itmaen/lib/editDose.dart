@@ -22,7 +22,19 @@ import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'dart:ui' as ui;
 
 class editDose extends StatefulWidget {
-  List<String> toBeTransformed;
+  List<String> toBeTransformed = [
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " "
+  ];
+
   editDose(
       {Key? key, required this.toBeTransformed, required List<String> value})
       : super(key: key);
@@ -61,7 +73,7 @@ class _editDoseState extends State<editDose>
   String every_hours = '0';
   String everyH = "";
   get onChanged => null;
-  String? selectType = "مل";
+  String? selectType;
   List<String> list = ['مل', 'مجم', 'حبة'];
   Color backColor = Color.fromARGB(255, 225, 225, 225);
   Color pickerColor = Color.fromARGB(255, 140, 167, 190);
@@ -76,24 +88,25 @@ class _editDoseState extends State<editDose>
     );
   }
 
-  var editAmount;
-  var editDescription;
-  var editDays;
-  var editFreq;
-  var editHoursBetween;
-  var selectedDescription;
-  var selectedUnit;
-  var editColor;
-
   @override
   void initState() {
     super.initState();
     getCurrentUser();
-    retrieveInfo("aq1");
-
-    // print(TimeOfDay.now());
-
-    //Notificationapi.init();
+    nameController.text = toBeTransformed[0];
+    description.text = toBeTransformed[1];
+    pillAmountController.text = toBeTransformed[2];
+    selectType = toBeTransformed[3];
+    pickerColor = Color(int.parse(toBeTransformed[4]));
+    sliderValue = double.parse(toBeTransformed[5]);
+    sliderValue2 = double.parse(toBeTransformed[6]);
+    hoursController.text = toBeTransformed[7];
+    _groupValue = toBeTransformed[8];
+    setTime = selectedTime = timeDisplayed = TimeOfDay(
+        hour: int.parse((toBeTransformed[9].substring(10, 15)).split(":")[0]),
+        minute:
+            int.parse((toBeTransformed[9].substring(10, 15)).split(":")[1]));
+    setDate = DateTime.parse(
+        DateFormat("yyyy-MM-dd").format(DateTime.parse(toBeTransformed[10])));
   }
 
   void getCurrentUser() async {
@@ -108,25 +121,28 @@ class _editDoseState extends State<editDose>
     }
   }
 
-  void retrieveInfo(String name) => _firestore
-          .collection('dosesEdit')
-          .where("name", isEqualTo: name)
-          .get()
-          .then((value) {
-        pillAmountController.text = editAmount = (value.docs[0].get('amount'));
-        description.text = editDescription = (value.docs[0].get('description'));
-        editDays = (value.docs[0].get('days'));
-        editFreq = (value.docs[0].get('freqPerDay'));
-        editHoursBetween = (value.docs[0].get('hoursBetweenDoses'));
-        selectedDescription = (value.docs[0].get('selectedDescription'));
-        selectType = selectedUnit = (value.docs[0].get('unit'));
-        editColor = (value.docs[0].get('color'));
-      });
+  // void retrieveInfo(String name) => _firestore
+  //         .collection('dosesEdit')
+  //         .where("name", isEqualTo: name)
+  //         .get()
+  //         .then((value) {
+  //       pillAmountController.text = editAmount = (value.docs[0].get('amount'));
+  //       description.text = editDescription = (value.docs[0].get('description'));
+  //       sliderValue = editDays = (value.docs[0].get('days'));
+  //       sliderValue2 = editFreq = (value.docs[0].get('freqPerDay'));
+  //       editHoursBetween = (value.docs[0].get('hoursBetweenDoses'));
+  //       _groupValue =
+  //           selectedDescription = (value.docs[0].get('selectedDescription'));
+  //       selectType = selectedUnit = (value.docs[0].get('unit'));
+  //       pickerColor = editColor = Color(int.parse(value.docs[0].get('color')));
+  //     });
 
   @override
   Widget build(BuildContext context) {
-    nameController.text = toBeTransformed[0];
-    //  selectType = toBeTransformed[2];
+    //******* retrieveing data of dose *********
+
+    //******* retrieveing data of dose *********
+
     return new Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -947,7 +963,7 @@ class _editDoseState extends State<editDose>
         locale: Locale('ar', ''),
         helpText: "          اختيار تاريخ بداية أخذ الجرعات",
         context: context,
-        initialDate: DateTime.now(),
+        initialDate: setDate.isBefore(DateTime.now())? DateTime.now() : setDate,
         firstDate: DateTime.now(),
         lastDate: DateTime(2024));
   }
@@ -966,7 +982,7 @@ class _editDoseState extends State<editDose>
   //   });
   // }
 
-  void saveMedicine() {
+  Future<void> saveMedicine() async {
     bool correctRepetiveTime = true;
     DateTime newDate = setDate;
     TimeOfDay newTime = setTime;
@@ -980,6 +996,69 @@ class _editDoseState extends State<editDose>
                 everyH != '' &&
                 int.parse(every_hours) < 23 &&
                 sliderValue2 != 1))) {
+//  Future<QuerySnapshot<Map<String, dynamic>>> _querySnapshot = _firestore
+//         .collection("dosesEdit")
+//         .where("name", isEqualTo: nameController.text).get();
+
+//         _querySnapshot.docs[0]
+//        .reference
+//        .update('YourUpdateData');
+
+      _firestore
+          .collection('dosesEdit')
+          .where("name", isEqualTo: nameController.text)
+          .get()
+          .then((value) {
+        value.docs[0].reference.update({
+          'name': nameController.text,
+          'selectedDescription': _groupValue,
+          'description': description.text,
+          'amount': pillAmountController.text,
+          'unit': selectType,
+          'days': sliderValue.toString(),
+          'freqPerDay': sliderValue2.toString(),
+          'hoursBetweenDoses': every_hours,
+          'color': int.parse(backColor.toString().substring(6, 16)),
+          'firstDate': setDate,
+          'firstTime': setTime.toString(),
+          'Time': setTime.toString().substring(10, 15),
+          'Date': DateFormat("yyyy-MM-dd").format(newDate).toString(),
+          'caregiverID': caregiverID,
+        });
+      });
+
+      var collection = FirebaseFirestore.instance.collection('doses');
+      var snapshot =
+          await collection.where("name", isEqualTo: nameController.text).get();
+      for (var doc in snapshot.docs) {
+
+        bool after =  DateTime.now().toUtc().isAfter(
+        DateTime.fromMillisecondsSinceEpoch(
+            doc.get('Time').millisecondsSinceEpoch,
+            isUtc: false,
+        ).toUtc(),
+    );
+
+        if(!after) {
+         await doc.reference.delete(); }
+        // if ((doc.get('Time').toDate()).compareTo(DateTime.now()) > 0) {
+        //   await doc.reference.delete();
+        // }
+      }
+
+//       var query = _firestore.collection('doses').where("name", isEqualTo: nameController.text);
+// query.get().then((querySnapshot) {
+//   querySnapshot.
+
+//   forEach((doc) {
+//     doc.ref.delete();
+//   });
+// });
+
+//       if(dt1.compareTo(DateTime.now()) > 0){
+//     print("DT1 is after DT2");
+// }
+
       for (int i = 0; i < sliderValue; i++) {
         for (int j = 0; j < sliderValue2; j++) {
           tz.initializeTimeZones();
@@ -994,6 +1073,8 @@ class _editDoseState extends State<editDose>
                   " " +
                   newTime.format(context).toString());
           print(tempTimeDate.toString() + "Here is temp DateTime");
+
+          DateTime oldDate = DateTime.utc(2022);
 
           _firestore.collection('doses').add({
             'Day': newDate.day,
@@ -1018,6 +1099,7 @@ class _editDoseState extends State<editDose>
             'description': _groupValue + "  " + description.text,
             'color': int.parse(backColor.toString().substring(6, 16)),
             'cheked': false,
+            "Timecheked": oldDate,
             'caregiverID': caregiverID,
             'picture': nameController.text == "جليترا"
                 ? "images/" + "جليترا" + ".png"
