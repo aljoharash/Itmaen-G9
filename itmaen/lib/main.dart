@@ -22,6 +22,7 @@ void callbackDispatcher(){
   
 	Navigation();
   ViewD(); 
+ 
 	return Future.value(true);
 });
 
@@ -33,7 +34,7 @@ void main() async {
 	
 	// The top level function, aka callbackDispatcher
 	callbackDispatcher); 
-  Workmanager().registerOneOffTask('task','number1'); 
+  Workmanager().registerPeriodicTask('task','number1' , frequency: const Duration(seconds: 60)); 
   runApp(MyApp());
 }
 
@@ -43,16 +44,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
 
-      localizationsDelegates: [
-    GlobalMaterialLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-  ],
-  supportedLocales: [
-    Locale('ar', ''),
-    Locale('en', ''), // English, no country code
-  ],
-  locale: Locale('en', ''),
+  //     localizationsDelegates: [
+  //   GlobalMaterialLocalizations.delegate,
+  //   GlobalWidgetsLocalizations.delegate,
+  //   GlobalCupertinoLocalizations.delegate,
+  // ],
+  // supportedLocales: [
+  //   Locale('ar', ''),
+  //   Locale('en', ''), // English, no country code
+  // ],
+  // locale: Locale('en', ''),
       //Given Title
       title: 'إطمئن',
       debugShowCheckedModeBanner: false,
