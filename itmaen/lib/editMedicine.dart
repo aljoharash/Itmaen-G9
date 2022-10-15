@@ -32,12 +32,21 @@ static String description = "";
 static String package = "";
 static String strength = "";
 
+   TextEditingController medName = TextEditingController();
+   TextEditingController doseCount = TextEditingController();
+   TextEditingController meddescription = TextEditingController();
+   TextEditingController packSize = TextEditingController();
+
   @override
   void initState() {
     medname = widget.name;
     description = widget.description;
     package = widget.package;
     strength = widget.strength;
+    medName.text = medname;
+    doseCount.text = strength;
+    meddescription.text = description;
+    packSize.text = package;
     getCurrentUser();
   }
 
@@ -100,10 +109,7 @@ var oldname;
   // TextEditingController packSize = new TextEditingController(text:);
   bool medExist = false;
   
-   TextEditingController medName = TextEditingController(text: medname);
-   TextEditingController doseCount = TextEditingController(text: strength);
-   TextEditingController meddescription = TextEditingController(text: description);
-   TextEditingController packSize = TextEditingController(text: package);
+
   
 
   @override
