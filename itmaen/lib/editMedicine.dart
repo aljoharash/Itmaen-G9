@@ -56,6 +56,8 @@ var oldname;
 var dosename;
 var doses;
 var dosesEdit;
+List<String> doseName = <String>[];
+var namee;
 int count = 0;
 
   // retrieve(QuerySnapshot snapshot) {
@@ -113,6 +115,21 @@ int count = 0;
 
   }
 
+  var snapShotsValueCheck;
+
+    retrieveCheck(QuerySnapshot snapshot) {
+    print("here");
+    snapshot.docs.forEach((doc) {
+      // medname = doc['Trade name'];
+      // description = doc['description'];
+      // package = doc['Package size'];
+      // strength = doc['Strength value'];
+      namee = doc['Trade name'];
+      doseName.add(namee);
+      print(namee);
+    });
+
+  }
 
 
   void getCurrentUser() async {
@@ -163,6 +180,11 @@ int count = 0;
              .where('caregiverID', isEqualTo: caregiverID)
              .where('name', isEqualTo: widget.name)
              .get();
+
+         snapShotsValueCheck = await FirebaseFirestore.instance
+        .collection("medicines")
+        .where('caregiverID', isEqualTo: caregiverID)
+        .get();
 
 
 
@@ -385,7 +407,22 @@ int count = 0;
                                     .collection("medicines")
                                     .doc( medName.text + caregiverID)
                                     .get();
-                                if (doc.exists) {
+
+                                    var exist = false;
+                                    retrieveCheck(snapShotsValueCheck);
+
+                                    for(int i = 0 ; i < doseName.length ; i++){
+                                      print(doseName[i]);
+                                      print(medName.text);
+                                      if(doseName[i] == medName.text){
+                                        print('exist');
+                                        print(doseName[i]);
+                                        exist= true;
+                                      }
+
+                                    }
+
+                                if (exist) {
                                   print("already exist");
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
