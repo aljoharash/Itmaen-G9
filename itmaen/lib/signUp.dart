@@ -382,7 +382,6 @@ new FlutterPwValidator(
                                     //updateUser?.updateDisplayName(username);
                                     userSetup(
                                         username, email, password, phoneNum);
-                                    data(username, email, password, phoneNum);
                                   } on FirebaseAuthException catch (error) {
                                     errorMessage = error.message!;
                                     errorMessage =
@@ -409,6 +408,8 @@ new FlutterPwValidator(
                                 children: [
                                   TextButton(
                                       onPressed: () {
+                                        data(username, email, password,
+                                            phoneNum);
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (context) =>

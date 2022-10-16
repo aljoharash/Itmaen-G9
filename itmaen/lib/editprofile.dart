@@ -3,20 +3,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/routes/default_transitions.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:itmaen/login.dart';
 import 'dart:ui' as ui;
 import 'package:itmaen/data.dart';
+import 'package:itmaen/successSave.dart';
+import 'package:itmaen/view.dart';
+import 'package:itmaen/viewDailyDoses.dart';
+
+import 'navigation.dart';
 
 class editProfile extends StatefulWidget {
   editProfile({Key? key}) : super(key: key);
-
-  get nameO => null;
-  /*editProfile({Key? key, username, email, password, phoneNum}) {
-    var nameO = username;
-    var emailO = email;
-    var PassO = password;
-    var MobileO = phoneNum;
-  }*/
 
   @override
   _editProfile createState() => _editProfile();
@@ -28,13 +26,13 @@ class _editProfile extends State<editProfile> {
   final _auth = FirebaseAuth.instance;
   String caregiverID = "";
   late User loggedInUser;
-  var newPassword = "";
-  var newEmail = "";
-
-  static String nameO = data.user1;
-  static String emailO = data.email1;
-  static String PassO = data.password1;
-  static String MobileO = data.phoneNum1;
+  var newPassword = ""; //auth updates
+  var newEmail = ""; //auth updates
+  String caregiverID2 = '';
+  static String nameO = "";
+  static String emailO = "";
+  static String PassO = "";
+  static String MobileO = "";
 
   void getCurrentUser() async {
     try {
@@ -46,41 +44,54 @@ class _editProfile extends State<editProfile> {
     } catch (e) {
       print(e);
     }
-    /* var snapShotsValue = await FirebaseFirestore.instance
-        .collection("doses")
-        .where('caregiverID', isEqualTo: caregiverID)
-        .get();
-    retrieve(snapShotsValue);*/
   }
 
-/*
-  retrieve(QuerySnapshot snapshot) {
-    snapshot.docs.forEach((doc) {
-      nameO = doc['user name'];
-      emailO = doc['email'];
-      PassO = doc['password'];
-      MobileO = doc['mobileNum'];
-    });
-  }
-*/
+  final newPasswordController = TextEditingController(text: PassO);
+  final newEmailController = TextEditingController(text: emailO);
+  TextEditingController username = TextEditingController(text: nameO);
+  TextEditingController phoneNum = new TextEditingController(text: MobileO);
+
   @override
   void initState() {
+    retrieve2();
+
     super.initState();
-    //HomePage();
-    data;
+    getCurrentUser();
+    retrieve2();
+    print("here");
   }
 
-  final newPasswordController = TextEditingController();
-  final newEmailController = TextEditingController(text: "j");
-  TextEditingController username = TextEditingController(text: nameO);
-  TextEditingController phoneNum = new TextEditingController();
+  Future retrieve2() async {
+    final user = await _auth.currentUser;
+    if (user != null) {
+      loggedInUser = user;
+      caregiverID2 = loggedInUser.uid;
+      //print("yyy");
+      //print(caregiverID2);
+      //print("enterd");
+      //StreamBuilder(
+      //  stream:FirebaseFirestore.instance.collection('caregivers')
+      var collection = FirebaseFirestore.instance.collection('caregivers');
+      var docSnapshot = await collection.doc(caregiverID2).get();
+      if (!docSnapshot.exists) {
+        print("ops");
+      } else if (docSnapshot.exists) {
+        Map<String, dynamic> data = docSnapshot.data()!;
+        // You can then retrieve the value from the Map like this:
+        nameO = data['user name'];
+        emailO = data['email'];
+        PassO = data['password'];
+        MobileO = data['mobileNum'];
+      }
+    }
+  }
 
   //TextEditingController email = new TextEditingController();
   //TextEditingController password = new TextEditingController();
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    newPasswordController.dispose();
+    // newPasswordController.dispose();
     super.dispose();
   }
 
@@ -90,15 +101,12 @@ class _editProfile extends State<editProfile> {
       await currentUser!.updateEmail(newEmail);
       await currentUser!.updatePassword(newPassword);
       //FirebaseAuth.instance.signOut();
-      //Navigator.pushReplacement(
-      //  context,
-      //  MaterialPageRoute(builder: (context) => LoginPage()),
-      //);
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.orangeAccent,
           content: Text(
-            'Your Password has been Changed. Login again !',
+            ' تم حفظ التغيرات بنجاح',
             style: TextStyle(fontSize: 18.0),
           ),
         ),
@@ -108,32 +116,39 @@ class _editProfile extends State<editProfile> {
 
   @override
   Widget build(BuildContext context) {
+    retrieve2();
+    print("goal");
+    print(emailO);
+    print(nameO);
+    print(PassO);
+    print(MobileO);
+    final newPasswordController = TextEditingController(text: PassO);
+    final newEmailController = TextEditingController(text: emailO);
+    TextEditingController username = TextEditingController(text: nameO);
+    TextEditingController phoneNum = new TextEditingController(text: MobileO);
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 140, 167, 190),
           title: Center(
               child: Text(
-            "الملف الشخصي",
+            "         الملف الشخصي                      ",
+            textAlign: TextAlign.left,
             style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
           )),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            color: Color.fromARGB(255, 107, 137, 162),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => Navigation()));
+            },
+          ),
         ),
         body: SingleChildScrollView(
             child: Container(
                 child: Column(children: <Widget>[
           SingleChildScrollView(
-              /* child: Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                     /    image: AssetImage('images/background.jpg'),
-                          fit: BoxFit.fill)
-                      ////حطي هنا البوكس شادو
-                      ),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context)
-                      .size
-                      .height, //للسماوي اللي شلتيه  كان تحت صفحة بيضاء
-*/
               child: Center(
                   child: Container(
             margin: EdgeInsets.all(12), // بعد عن الأطراف لل
@@ -144,7 +159,7 @@ class _editProfile extends State<editProfile> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 220,
+                    height: 180,
                   ),
                   /* Text(
                     "مرحبا",
@@ -156,17 +171,18 @@ class _editProfile extends State<editProfile> {
                     ), 
                   ),*/
                   SizedBox(
-                    height: 20,
+                    height: 19,
                   ),
 
                   Text(
-                    "الاسم ",
+                    "الاسم                                                                                     ",
+                    textAlign: TextAlign.right,
                     style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-                    textDirection: ui.TextDirection.rtl,
                   ),
                   TextFormField(
                     autofocus: false,
                     textAlign: TextAlign.right,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       floatingLabelAlignment: FloatingLabelAlignment.start,
                       filled: true,
@@ -186,60 +202,69 @@ class _editProfile extends State<editProfile> {
                     ),
                     controller: username,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Enter email';
-                      }
+                      if (value == null || value.isEmpty)
+                        return "يجب ملء هذا الحقل";
+                      String pattern =
+                          r'^(?=.{2,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
+                      RegExp regex = RegExp(pattern);
+                      if (!regex.hasMatch(value.trim()))
+                        return '  يجب أن يحتوي اسم المستخدم على حرفين على الاقل وأن لايتجاوز ٢٠حرف ';
                       return null;
                     },
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 19,
                   ),
                   Text(
-                    "البريد الالكتروني ",
+                    "البريد الالكتروني                                                                          ",
                     style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
                     textDirection: ui.TextDirection.rtl,
                   ),
                   TextFormField(
-                    autofocus: false,
-                    textAlign: TextAlign.right,
-                    decoration: InputDecoration(
-                      floatingLabelAlignment: FloatingLabelAlignment.start,
-                      filled: true,
-                      fillColor: Color.fromARGB(255, 239, 237, 237),
-                      enabled: true,
-                      contentPadding: const EdgeInsets.only(
-                          left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(255, 236, 231, 231),
-                              width: 3)),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: new BorderSide(
-                            color: Color.fromARGB(79, 255, 255, 255)),
-                        borderRadius: new BorderRadius.circular(10),
+                      autofocus: false,
+                      textAlign: TextAlign.right,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      decoration: InputDecoration(
+                        floatingLabelAlignment: FloatingLabelAlignment.start,
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 239, 237, 237),
+                        enabled: true,
+                        contentPadding: const EdgeInsets.only(
+                            left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 236, 231, 231),
+                                width: 3)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: new BorderSide(
+                              color: Color.fromARGB(79, 255, 255, 255)),
+                          borderRadius: new BorderRadius.circular(10),
+                        ),
                       ),
-                    ),
-                    controller: newEmailController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Enter email';
-                      }
-                      return null;
-                    },
-                  ),
+                      controller: newEmailController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty)
+                          return "يجب ملء هذا الحقل";
+                        String pattern = r'\w+@\w+\.\w+';
+                        RegExp regex = RegExp(pattern);
+                        if (!regex.hasMatch(value.trim()))
+                          return 'البريد الاكتروني المدخل غير صحيح';
+                        return null;
+                      }),
                   SizedBox(
-                    height: 10,
+                    height: 19,
                   ),
 
                   Text(
-                    "الرقم السري",
+                    "الرقم السري                                                                               ",
                     style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
                     textDirection: ui.TextDirection.rtl,
                   ),
                   TextFormField(
                     autofocus: false,
-                    //obscureText: true,
+                    obscureText: true,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+
                     // ignore: prefer_const_constructors
                     textDirection: TextDirection.rtl,
                     decoration: InputDecoration(
@@ -263,22 +288,31 @@ class _editProfile extends State<editProfile> {
                     ),
                     controller: newPasswordController,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Enter Password';
-                      }
+                      if (value == null || value.isEmpty)
+                        return "يجب ملء هذا الحقل";
+                      String pattern =
+                          r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$';
+                      RegExp regex = RegExp(pattern);
+                      if (!regex.hasMatch(value.trim()))
+                        return ('يجب أن تتكون كلمة المرور على ٨ رموز(منها حرف ورقم على الاقل) ');
+                      ; // check arabic formation
                       return null;
                     },
                   ),
 
                   SizedBox(
-                    height: 10,
+                    height: 19,
                   ),
                   Text(
-                    "رقم الجوال ",
-                    style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-                    textDirection: ui.TextDirection.rtl,
-                  ),
+                      "                                       رقم الجوال                                      ",
+                      style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                      //textDirection: ui.TextDirection.rtl,
+                      textAlign: TextAlign.right),
+                  //textAlign=TextAlign.right,
+
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+
                     autofocus: false,
                     //obscureText: true,
                     // ignore: prefer_const_constructors
@@ -304,9 +338,14 @@ class _editProfile extends State<editProfile> {
                     ),
                     controller: phoneNum,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Enter Password';
-                      }
+                      if (value == null || value.isEmpty)
+                        return "يجب ملء هذا الحقل";
+                      /*String pattern =
+        r'[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$';
+    RegExp regex = RegExp(pattern)*/
+                      //value.length != 10
+                      if (value.length != 10)
+                        return ' رقم الهاتف يجب أن يتكون من ١٠ أرقام';
                       return null;
                     },
                   ),
@@ -314,7 +353,14 @@ class _editProfile extends State<editProfile> {
                     height: 40,
                   ),
                   //),
-                  ElevatedButton(
+
+                  MaterialButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                    elevation: 5.0,
+                    height: 50,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 11, horizontal: 122),
                     onPressed: () {
                       // Validate returns true if the form is valid, otherwise false.
                       if (_formKey.currentState!.validate()) {
@@ -330,17 +376,51 @@ class _editProfile extends State<editProfile> {
                           'mobileNum': phoneNum.text,
                           'uid': caregiverID
                         });
+
                         setState(() {
+                          retrieve2();
+
                           newPassword = newPasswordController.text;
                           newEmail = newEmailController.text;
                         });
                         changePassword();
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const success(
+                                      title: '',
+                                    )));
                       }
+                      print("goal");
+                      print(emailO);
+                      print(nameO);
+                      print(PassO);
+                      print(MobileO);
                     },
                     child: Text(
                       'حفظ ',
-                      style: TextStyle(fontSize: 18.0),
+                      style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
                     ),
+                    color: Color.fromARGB(255, 140, 167, 190),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  MaterialButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                    elevation: 5.0,
+                    height: 50,
+                    padding: EdgeInsets.symmetric(vertical: 11, horizontal: 90),
+                    onPressed: () async {
+                      //  final user = await _auth.currentUser;
+                      //  await user?.delete();
+                    },
+                    child: Text(
+                      'حذف الحساب ',
+                      style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                    ),
+                    color: Color.fromARGB(255, 255, 0, 0),
                   ),
                 ],
               ),

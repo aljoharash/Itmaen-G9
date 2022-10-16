@@ -9,6 +9,7 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/add-patient.dart';
+import 'package:itmaen/callP.dart';
 import 'package:itmaen/editprofile.dart';
 import 'package:itmaen/navigation.dart';
 import 'package:itmaen/patient-login.dart';
@@ -111,16 +112,16 @@ class _ViewDPageState extends State<ViewD> {
               title: Text("قائمة الأدوية",
                   style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
               actions: [
-                IconButton(
+                /*  IconButton(
                   icon: Icon(Icons.call),
                   color: ui.Color.fromARGB(255, 255, 2, 2),
                   onPressed: () {
                     _callNumber();
                   },
-                ),
+                ),*/
                 IconButton(
                   icon: Icon(Icons.person),
-                  color: ui.Color.fromARGB(255, 255, 2, 2),
+                  color: ui.Color.fromARGB(255, 255, 255, 255),
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (context) => editProfile()));
@@ -129,11 +130,12 @@ class _ViewDPageState extends State<ViewD> {
               ]),
           floatingActionButton: ElevatedButton(
             onPressed: () {
-              _callNumber();
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => callP()));
             },
             child: Icon(
               Icons.call,
-              color: Colors.white,
+              color: ui.Color.fromARGB(255, 168, 42, 42),
             ),
             style: ElevatedButton.styleFrom(
               shape: CircleBorder(),

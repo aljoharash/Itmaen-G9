@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:itmaen/callP.dart';
 import 'package:itmaen/patient-login.dart';
 import 'package:itmaen/secure-storage.dart';
 import 'package:itmaen/view.dart';
@@ -107,16 +108,19 @@ class _NavigationPatientState extends State<NavigationPatient> {
     // }
   }
 
-  int _selectedIndex = 2;
+  int _selectedIndex = 3;
   bodyFunction() {
     switch (_selectedIndex) {
       case 0:
         return;
         break;
       case 1:
-        return PatientCalendar();
+        return callP();
         break;
       case 2:
+        return PatientCalendar();
+        break;
+      case 3:
         return ViewD();
         break;
     }
@@ -178,6 +182,10 @@ class _NavigationPatientState extends State<NavigationPatient> {
         items: [
           Icon(
             Icons.logout,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.call,
             color: Colors.white,
           ),
           Icon(
