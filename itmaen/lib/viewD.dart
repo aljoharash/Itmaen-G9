@@ -13,6 +13,7 @@ import 'package:itmaen/callP.dart';
 import 'package:itmaen/editprofile.dart';
 import 'package:itmaen/navigation.dart';
 import 'package:itmaen/patient-login.dart';
+import 'package:itmaen/setting.dart';
 import 'alert_dialog.dart';
 import 'package:itmaen/model/medicines.dart';
 import 'generateqr.dart';
@@ -107,6 +108,7 @@ class _ViewDPageState extends State<ViewD> {
       child: Directionality(
         textDirection: ui.TextDirection.rtl,
         child: Scaffold(
+          drawer: NavBar(),
           appBar: AppBar(
               backgroundColor: Color.fromARGB(255, 140, 167, 190),
               title: Text("قائمة الأدوية",
@@ -119,14 +121,14 @@ class _ViewDPageState extends State<ViewD> {
                     _callNumber();
                   },
                 ),*/
-                IconButton(
-                  icon: Icon(Icons.person),
+                /*   IconButton(
+                  icon: Icon(Icons.settings),
                   color: ui.Color.fromARGB(255, 255, 255, 255),
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => editProfile()));
+                        MaterialPageRoute(builder: (context) => NavBar()));
                   },
-                ),
+                ),*/
               ]),
           floatingActionButton: ElevatedButton(
             onPressed: () {

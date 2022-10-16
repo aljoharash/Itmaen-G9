@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'dart:ffi';
+import 'dart:ui' as ui;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/add-patient.dart';
 import 'package:itmaen/patient-login.dart';
+import 'package:itmaen/setting.dart';
 import 'addMedicinePages/adddialog.dart';
 import 'alert_dialog.dart';
 import 'package:itmaen/model/medicines.dart';
@@ -87,7 +89,6 @@ class _ViewPageState extends State<View> {
 
   @override
   Widget build(BuildContext context) {
-    
     void showAddDialog() {
       showDialog(
         context: context,
@@ -104,145 +105,149 @@ class _ViewPageState extends State<View> {
 
     var data;
     return SafeArea(
-      top: false,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 140, 167, 190),
-          title: Text("قائمة الأدوية",
-              style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
-        ),
-        floatingActionButton: ElevatedButton(
-            onPressed: () {
-              showAddDialog();
-            },
-            
-            child: Icon(Icons.add, color: Colors.white,),
-            style: ElevatedButton.styleFrom(
-            shape: CircleBorder(
+        top: false,
+        child: Directionality(
+          textDirection: ui.TextDirection.rtl,
+          child: Scaffold(
+            drawer: NavBar(),
+            appBar: AppBar(
+              backgroundColor: Color.fromARGB(255, 140, 167, 190),
+              title: Text("قائمة الأدوية",
+                  style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
             ),
-            padding: EdgeInsets.all(15),
-            //backgroundColor: Color.fromARGB(255, 140, 167, 190),
-            primary: Color.fromARGB(255, 140, 167, 190),
-            surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
+            floatingActionButton: ElevatedButton(
+              onPressed: () {
+                showAddDialog();
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
               ),
-          ),
-        body: FutureBuilder(
-          builder: (ctx, snapshot) {
-            // Checking if future is resolved or not
-            if (snapshot.connectionState == ConnectionState.done) {
-              // If we got an error
-              if (snapshot.hasError) {
-                return Center(
-                  child: Text(
-                    '${snapshot.error} occurred',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                );
+              style: ElevatedButton.styleFrom(
+                shape: CircleBorder(),
+                padding: EdgeInsets.all(15),
+                //backgroundColor: Color.fromARGB(255, 140, 167, 190),
+                primary: Color.fromARGB(255, 140, 167, 190),
+                surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
+              ),
+            ),
+            body: FutureBuilder(
+              builder: (ctx, snapshot) {
+                // Checking if future is resolved or not
+                if (snapshot.connectionState == ConnectionState.done) {
+                  // If we got an error
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text(
+                        '${snapshot.error} occurred',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    );
 
-                // if we got our data
-              } else if (snapshot.hasData) {
-                // Extracting data from snapshot object
-                data = snapshot.data as bool;
-                if (data == true) {
-                  return SafeArea(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      StreamBuilder(
-                          stream: FirebaseFirestore.instance
-                              .collection('medicines')
-                              .where('caregiverID', isEqualTo: id_)
-                              .snapshots(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (!snapshot.hasData) {
-                              return Text("Loading...");
-                            } //else {
-                            final medicines = snapshot.data?.docs;
-                            List<medBubble> medBubbles = [];
-                            for (var med in medicines!) {
-                              //final medName = med.data();
-                              final medName = med.get('Trade name');
-                              final meddescription = med.get('description');
-                              final package = med.get('Package size');
-                              final picture = med.get('picture');
-                              //final unit = med.get('Unit of volume');
-                              final MedBubble =
-                                  medBubble(medName, meddescription, package,picture);
-                              medBubbles.add(MedBubble);
-                            }
-                            return Expanded(
-                              child: ListView(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 20),
-                                children: medBubbles,
-                              ),
-                            );
-                            // }
-                          }),
-                    ],
-                  ));
-                } else {
-                  return SafeArea(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      StreamBuilder(
-                          stream: FirebaseFirestore.instance
-                              .collection('medicines')
-                              .where('caregiverID', isEqualTo: cid_)
-                              .snapshots(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (!snapshot.hasData) {
-                              return Text("Loading...");
-                            } //else {
-                            final medicines = snapshot.data?.docs;
-                            List<medBubble> medBubbles = [];
-                            for (var med in medicines!) {
-                              //final medName = med.data();
-                              final medName = med.get('Trade name');
-                              final meddescription = med.get('description');
-                              final package = med.get('Package size');
-                              final picture = med.get('picture');
-                              //final unit = med.get('Unit of volume');
-                              final MedBubble =
-                                  medBubble(medName, meddescription, package,picture);
-                              medBubbles.add(MedBubble);
-                            }
-                            return Expanded(
-                              child: ListView(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 20),
-                                children: medBubbles,
-                              ),
-                            );
-                            // }
-                          }),
-                    ],
-                  ));
+                    // if we got our data
+                  } else if (snapshot.hasData) {
+                    // Extracting data from snapshot object
+                    data = snapshot.data as bool;
+                    if (data == true) {
+                      return SafeArea(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          StreamBuilder(
+                              stream: FirebaseFirestore.instance
+                                  .collection('medicines')
+                                  .where('caregiverID', isEqualTo: id_)
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (!snapshot.hasData) {
+                                  return Text("Loading...");
+                                } //else {
+                                final medicines = snapshot.data?.docs;
+                                List<medBubble> medBubbles = [];
+                                for (var med in medicines!) {
+                                  //final medName = med.data();
+                                  final medName = med.get('Trade name');
+                                  final meddescription = med.get('description');
+                                  final package = med.get('Package size');
+                                  final picture = med.get('picture');
+                                  //final unit = med.get('Unit of volume');
+                                  final MedBubble = medBubble(medName,
+                                      meddescription, package, picture);
+                                  medBubbles.add(MedBubble);
+                                }
+                                return Expanded(
+                                  child: ListView(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 20),
+                                    children: medBubbles,
+                                  ),
+                                );
+                                // }
+                              }),
+                        ],
+                      ));
+                    } else {
+                      return SafeArea(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          StreamBuilder(
+                              stream: FirebaseFirestore.instance
+                                  .collection('medicines')
+                                  .where('caregiverID', isEqualTo: cid_)
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (!snapshot.hasData) {
+                                  return Text("Loading...");
+                                } //else {
+                                final medicines = snapshot.data?.docs;
+                                List<medBubble> medBubbles = [];
+                                for (var med in medicines!) {
+                                  //final medName = med.data();
+                                  final medName = med.get('Trade name');
+                                  final meddescription = med.get('description');
+                                  final package = med.get('Package size');
+                                  final picture = med.get('picture');
+                                  //final unit = med.get('Unit of volume');
+                                  final MedBubble = medBubble(medName,
+                                      meddescription, package, picture);
+                                  medBubbles.add(MedBubble);
+                                }
+                                return Expanded(
+                                  child: ListView(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 20),
+                                    children: medBubbles,
+                                  ),
+                                );
+                                // }
+                              }),
+                        ],
+                      ));
+                    }
+                  }
                 }
-              }
-            }
 
-            // Displaying LoadingSpinner to indicate waiting state
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-          // Future that needs to be resolved
-          // inorder to display something on the Canvas
-          future: getCurrentUser(),
-        ),
-      ),
-    );
+                // Displaying LoadingSpinner to indicate waiting state
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+              // Future that needs to be resolved
+              // inorder to display something on the Canvas
+              future: getCurrentUser(),
+            ),
+          ),
+        ));
   }
 }
 
 class medBubble extends StatelessWidget {
-  medBubble(this.medicName, this.meddescription, this.package,this.picture);
+  medBubble(this.medicName, this.meddescription, this.package, this.picture);
   var medicName;
   var meddescription;
   var package;

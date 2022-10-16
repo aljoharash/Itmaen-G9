@@ -9,6 +9,7 @@ import 'package:itmaen/addMedicinePages/adddialog.dart';
 import 'package:itmaen/callP.dart';
 import 'package:itmaen/generateqr.dart';
 import 'package:itmaen/patient-login.dart';
+import 'package:itmaen/setting.dart';
 import 'package:itmaen/view.dart';
 import 'package:itmaen/viewD.dart';
 //import 'package:';
@@ -199,9 +200,9 @@ class _NavigationState extends State<Navigation> {
       setState(() {
         _selectedIndex = index;
       });
-      if (index == 0) {
-        logout();
-      }
+      //  if (index == 0) {
+      //  logout();
+      //}
       if (index == 1) {
         if (await _isCollectionExits() == true) {
           Navigator.of(context)
@@ -212,6 +213,7 @@ class _NavigationState extends State<Navigation> {
 
     return Scaffold(
       body: bodyFunction(),
+      //drawer: NavBar(),
       backgroundColor: Colors.white,
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.white,
@@ -219,7 +221,7 @@ class _NavigationState extends State<Navigation> {
         animationDuration: Duration(milliseconds: 300),
         items: [
           Icon(
-            Icons.logout,
+            Icons.settings,
             color: Colors.white,
           ),
           Icon(

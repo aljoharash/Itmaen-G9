@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -413,8 +415,12 @@ class _editProfile extends State<editProfile> {
                     height: 50,
                     padding: EdgeInsets.symmetric(vertical: 11, horizontal: 90),
                     onPressed: () async {
-                      //  final user = await _auth.currentUser;
-                      //  await user?.delete();
+                      showAlertDialog(context);
+                      /*
+                      final user = await _auth.currentUser;
+                      await user?.delete();
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => LoginPage()));*/
                     },
                     child: Text(
                       'حذف الحساب ',
@@ -427,5 +433,53 @@ class _editProfile extends State<editProfile> {
             ),
           )))
         ]))));
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text(
+        "لا",
+        style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+      ),
+      onPressed: () {
+        Navigator.pop(context, false);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "نعم متأكد",
+        style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+        textAlign: TextAlign.right,
+      ),
+      onPressed: () async {
+        final user = await _auth.currentUser;
+        await user?.delete();
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(""),
+      content: Text(
+        "هل أنت متأكد من حذف الحساب؟ ",
+        style: GoogleFonts.tajawal(
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.right,
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
