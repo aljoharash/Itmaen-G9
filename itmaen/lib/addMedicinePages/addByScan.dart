@@ -222,6 +222,7 @@ class addByScan extends StatelessWidget {
                                       .collection('medicines')
                                       .doc(tradeName + loggedInUser!.uid)
                                       .set({
+                                    'docName': tradeName,
                                     'Generic name': genericName,
                                     'Trade name': tradeName,
                                     'Strength value': strengthValue,
@@ -332,6 +333,7 @@ class addByScan extends StatelessWidget {
                                       .collection('medicines')
                                       .doc(tradeName + loggedInUser!.uid)
                                       .set({
+                                    'docName': tradeName,
                                     'Generic name': genericName,
                                     'Trade name': tradeName,
                                     'Strength value': strengthValue,

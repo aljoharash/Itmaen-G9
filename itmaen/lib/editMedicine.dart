@@ -5,30 +5,149 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/navigation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:itmaen/setDose.dart';
-import 'package:itmaen/trySet.dart';
 
-class addManually extends StatefulWidget {
-  const addManually({Key? key}) : super(key: key);
+
+class EditMed extends StatefulWidget {
+  final String name;
+  final String description;
+  final String strength;
+  final String package;
+  const EditMed({Key? key, required this.name , required this.description , required this.package , required this.strength}) : super(key: key);
+
 
   @override
-  State<addManually> createState() => _addManuallyState();
+  State<EditMed> createState() => _EditMedState();
 }
 
-class _addManuallyState extends State<addManually> {
+class _EditMedState extends State<EditMed> {
   final _firestore = FirebaseFirestore.instance;
+  final _doseFirestore = FirebaseFirestore.instance;
+  final _doseEditFirestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   late List<String> toBeTransformed = [];
 
   String caregiverID = "";
   late User loggedInUser;
 
+static String medname = "";
+static String description = "";
+static String package = "";
+static String strength = "";
+
+   TextEditingController medName = TextEditingController();
+   TextEditingController doseCount = TextEditingController();
+   TextEditingController meddescription = TextEditingController();
+   TextEditingController packSize = TextEditingController();
+
   @override
   void initState() {
+    medname = widget.name;
+    description = widget.description;
+    package = widget.package;
+    strength = widget.strength;
+    medName.text = medname;
+    doseCount.text = strength;
+    meddescription.text = description;
+    packSize.text = package;
     getCurrentUser();
   }
 
+var oldname;
+var dosename;
+var doses;
+var dosesEdit;
+List<String> doseName = <String>[];
+var namee;
+int count = 0;
+
+  // retrieve(QuerySnapshot snapshot) {
+  //   print("here");
+  //   snapshot.docs.forEach((doc) {
+  //     oldname = doc['docName'];
+  //     print("name: $oldname");
+  //   });
+  // }
+
+
+////////update dose edit
+  updateDoseEdit(QuerySnapshot snapshot) {
+    print("here doseEdit");
+    snapshot.docs.forEach((doc) {
+      count++;
+      if(doc['name'] == widget.name){
+         _doseEditFirestore
+        .collection('dosesEdit')
+        .where('name', isEqualTo: widget.name)
+        .get()
+        .then((value){
+          value.docs[0].reference.update({
+            'name': medName.text
+          });
+        });
+      }
+      else{
+        print('dose not found');
+      }
+    });
+
+  }
+
+////////update dose
+  updateDose(QuerySnapshot snapshot) {
+    print("here dose");
+    snapshot.docs.forEach((doc) {
+      int countdose = 0;
+      if(doc['name'] == widget.name){
+         _doseFirestore
+        .collection('doses')
+        .where('name', isEqualTo: widget.name)
+        .get()
+        .then((value){
+          value.docs[countdose].reference.update({
+            'name': medName.text
+          });
+        });
+      }
+      else{
+        print('dose not found');
+      }
+    });
+
+  }
+
+  var snapShotsValueCheck;
+
+    retrieveCheck(QuerySnapshot snapshot) {
+    print("here");
+    snapshot.docs.forEach((doc) {
+      // medname = doc['Trade name'];
+      // description = doc['description'];
+      // package = doc['Package size'];
+      // strength = doc['Strength value'];
+      namee = doc['Trade name'];
+      doseName.add(namee);
+      print(namee);
+    });
+
+  }
+
+
   void getCurrentUser() async {
+
+    retrieve(QuerySnapshot snapshot) {
+    print("here");
+    snapshot.docs.forEach((doc) {
+      oldname = doc['docName'];
+      // medname = doc['Trade name'];
+      // description = doc['description'];
+      // package = doc['Package size'];
+      // strength = doc['Strength value'];
+      print("name: $oldname " + medname + description + package + strength);
+    });
+
+  }
+
+
     try {
       final user = await _auth.currentUser;
       if (user != null) {
@@ -38,24 +157,65 @@ class _addManuallyState extends State<addManually> {
     } catch (e) {
       print(e);
     }
+
+    var snapShotsValue = await FirebaseFirestore.instance
+        .collection("medicines")
+        .where('caregiverID', isEqualTo: caregiverID)
+        .where('Trade name', isEqualTo: widget.name)
+        // .where('description', isEqualTo: widget.description)
+        // .where('Package size', isEqualTo: widget.package)
+        // .where('Strength value', isEqualTo: widget.strength)
+        .get();
+
+
+         dosesEdit = await FirebaseFirestore.instance
+             .collection('dosesEdit')
+             .where('caregiverID', isEqualTo: caregiverID)
+             .where('name', isEqualTo: widget.name)
+             .get();
+
+
+         doses = await FirebaseFirestore.instance
+             .collection('doses')
+             .where('caregiverID', isEqualTo: caregiverID)
+             .where('name', isEqualTo: widget.name)
+             .get();
+
+         snapShotsValueCheck = await FirebaseFirestore.instance
+        .collection("medicines")
+        .where('caregiverID', isEqualTo: caregiverID)
+        .get();
+
+
+
+
+
+        retrieve(snapShotsValue);
   }
 
+
+   
+
   final _formKey = GlobalKey<FormState>();
-  TextEditingController medName = new TextEditingController();
-  TextEditingController doseCount = new TextEditingController();
-  TextEditingController description = new TextEditingController();
-  TextEditingController packSize = new TextEditingController();
+  // TextEditingController medName = new TextEditingController(text: name);
+  // TextEditingController doseCount = new TextEditingController(text:);
+  // TextEditingController description = new TextEditingController(text:);
+  // TextEditingController packSize = new TextEditingController(text:);
   bool medExist = false;
+  
+
+  
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 140, 167, 190),
           elevation: 0,
           title: Text(
-            "إضافة دواء يدويًا",
+            "تعديل دواء",
             style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
           ),
         ),
@@ -82,7 +242,7 @@ class _addManuallyState extends State<addManually> {
                               height: 100,
                             ),
                             Text(
-                              "إضافة دواء",
+                              "تعديل دواء",
                               style: GoogleFonts.tajawal(
                                 fontSize: 30,
                                 //fontStyle: FontStyle.italic,
@@ -94,6 +254,7 @@ class _addManuallyState extends State<addManually> {
                               height: 40,
                             ),
                             TextFormField(
+                              // initialValue: widget.name ,
                               controller: medName,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
@@ -134,7 +295,8 @@ class _addManuallyState extends State<addManually> {
                               height: 16.0,
                             ),
                             TextFormField(
-                              controller: description,
+                              // initialValue: widget.description,
+                              controller: meddescription,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,
@@ -162,6 +324,7 @@ class _addManuallyState extends State<addManually> {
                               height: 16.0,
                             ),
                             TextFormField(
+                              // initialValue: widget.strength,
                               keyboardType: TextInputType.number,
                               controller: doseCount,
                               autovalidateMode:
@@ -198,6 +361,7 @@ class _addManuallyState extends State<addManually> {
                               height: 16.0,
                             ),
                             TextFormField(
+                              // initialValue: widget.package,
                               keyboardType: TextInputType.number,
                               controller: packSize,
                               validator: ValidatePack,
@@ -241,9 +405,24 @@ class _addManuallyState extends State<addManually> {
                               onPressed: () async {
                                 var doc = await _firestore
                                     .collection("medicines")
-                                    .doc(medName.text + caregiverID)
+                                    .doc( medName.text + caregiverID)
                                     .get();
-                                if (doc.exists) {
+
+                                    var exist = false;
+                                    retrieveCheck(snapShotsValueCheck);
+
+                                    for(int i = 0 ; i < doseName.length ; i++){
+                                      print(doseName[i]);
+                                      print(medName.text);
+                                      if(doseName[i] == medName.text){
+                                        print('exist');
+                                        print(doseName[i]);
+                                        exist= true;
+                                      }
+
+                                    }
+
+                                if (exist) {
                                   print("already exist");
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
@@ -258,9 +437,8 @@ class _addManuallyState extends State<addManually> {
                                   if (_formKey.currentState!.validate()) {
                                     _firestore
                                         .collection('medicines')
-                                        .doc(medName.text + caregiverID)
-                                        .set({
-                                      'docName': medName.text,
+                                        .doc(oldname + caregiverID)
+                                        .update({
                                       //  'Generic name': genericName,
                                       'Trade name': medName.text,
                                       'Strength value': doseCount.text,
@@ -269,7 +447,7 @@ class _addManuallyState extends State<addManually> {
                                       //'Unit of volume': unitOfVolume,
                                       'Package size': packSize.text,
                                       //'barcode': barcode,
-                                      'description': description.text,
+                                      'description': meddescription.text,
                                       'caregiverID': caregiverID,
                                       'picture': (medName.text == "جليترا"
                                           ? "images/" + "جليترا" + ".png"
@@ -296,7 +474,12 @@ class _addManuallyState extends State<addManually> {
                                                               ".png"),
                                     });
 
-                                    print("Med added");
+                                    updateDose(doses);
+                                    updateDoseEdit(dosesEdit);
+                                    
+
+
+                                    print("Med updated");
 
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -305,7 +488,7 @@ class _addManuallyState extends State<addManually> {
                                   }
                                 }
                               },
-                              child: Text('إضافة',
+                              child: Text('تعديل',
                                   style: GoogleFonts.tajawal(
                                     color: Color.fromARGB(255, 245, 244, 244),
                                     fontSize: 20,
@@ -317,91 +500,91 @@ class _addManuallyState extends State<addManually> {
                             SizedBox(
                               height: 20.0,
                             ),
-                            MaterialButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0))),
-                              elevation: 5.0,
-                              height: 50,
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 11, horizontal: 76),
-                              color: Color.fromARGB(255, 140, 167, 190),
-                              onPressed: () async {
-                                var doc = await _firestore
-                                    .collection("medicines")
-                                    .doc(medName.text + caregiverID)
-                                    .get();
-                                if (doc.exists) {
-                                  print("already exist");
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      // margin: EdgeInsets.only(right: 10),
+                            // MaterialButton(
+                            //   shape: RoundedRectangleBorder(
+                            //       borderRadius:
+                            //           BorderRadius.all(Radius.circular(10.0))),
+                            //   elevation: 5.0,
+                            //   height: 50,
+                            //   padding: EdgeInsets.symmetric(
+                            //       vertical: 11, horizontal: 76),
+                            //   color: Color.fromARGB(255, 140, 167, 190),
+                            //   onPressed: () async {
+                            //     var doc = await _firestore
+                            //         .collection("medicines")
+                            //         .doc(medName.text + caregiverID)
+                            //         .get();
+                            //     if (doc.exists) {
+                            //       print("already exist");
+                            //       ScaffoldMessenger.of(context).showSnackBar(
+                            //         const SnackBar(
+                            //           // margin: EdgeInsets.only(right: 10),
 
-                                      content: Text('تمت إضافة الدواء مسبقًا',
-                                          style: TextStyle(fontSize: 15),
-                                          textAlign: TextAlign.right),
-                                    ),
-                                  );
-                                } else {
-                                  if (_formKey.currentState!.validate()) {
-                                    _firestore
-                                        .collection('medicines')
-                                        .doc(medName.text + caregiverID)
-                                        .set({
-                                      //  'Generic name': genericName,
-                                      'Trade name': medName.text,
-                                      'Strength value': doseCount.text,
-                                      //   'Unit of strength': unitOfStrength,
-                                      // 'Volume': volume,
-                                      //'Unit of volume': unitOfVolume,
-                                      'Package size': packSize.text,
-                                      //'barcode': barcode,
-                                      'description': description.text,
-                                      'caregiverID': caregiverID,
-                                      'picture': (medName.text == "جليترا"
-                                          ? "images/" + "جليترا" + ".png"
-                                          : medName.text == "سبراليكس"
-                                              ? "images/" + "سبراليكس" + ".png"
-                                              : medName.text ==
-                                                      "سنترم - CENTRUM"
-                                                  ? "images/" +
-                                                      "CENTRUM - سنترم" +
-                                                      ".png"
-                                                  : medName.text ==
-                                                          "بانادول - PANADOL"
-                                                      ? "images/" +
-                                                          "بانادول ادفانس - PANADOL" +
-                                                          ".png"
-                                                      : medName.text ==
-                                                              "فيدروب - VIDROP"
-                                                          ? "images/" +
-                                                              "VIDROP" +
-                                                              ".png"
-                                                          : "images/" +
-                                                              "no" +
-                                                              ".png"),
-                                    });
+                            //           content: Text('تمت إضافة الدواء مسبقًا',
+                            //               style: TextStyle(fontSize: 15),
+                            //               textAlign: TextAlign.right),
+                            //         ),
+                            //       );
+                            //     } else {
+                            //       if (_formKey.currentState!.validate()) {
+                            //         _firestore
+                            //             .collection('medicines')
+                            //             .doc(medName.text + caregiverID)
+                            //             .set({
+                            //           //  'Generic name': genericName,
+                            //           'Trade name': medName.text,
+                            //           'Strength value': doseCount.text,
+                            //           //   'Unit of strength': unitOfStrength,
+                            //           // 'Volume': volume,
+                            //           //'Unit of volume': unitOfVolume,
+                            //           'Package size': packSize.text,
+                            //           //'barcode': barcode,
+                            //           'description': description.text,
+                            //           'caregiverID': caregiverID,
+                            //           'picture': (medName.text == "جليترا"
+                            //               ? "images/" + "جليترا" + ".png"
+                            //               : medName.text == "سبراليكس"
+                            //                   ? "images/" + "سبراليكس" + ".png"
+                            //                   : medName.text ==
+                            //                           "سنترم - CENTRUM"
+                            //                       ? "images/" +
+                            //                           "CENTRUM - سنترم" +
+                            //                           ".png"
+                            //                       : medName.text ==
+                            //                               "بانادول - PANADOL"
+                            //                           ? "images/" +
+                            //                               "بانادول ادفانس - PANADOL" +
+                            //                               ".png"
+                            //                           : medName.text ==
+                            //                                   "فيدروب - VIDROP"
+                            //                               ? "images/" +
+                            //                                   "VIDROP" +
+                            //                                   ".png"
+                            //                               : "images/" +
+                            //                                   "no" +
+                            //                                   ".png"),
+                            //         });
 
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => SetDose(
-                                                  value: toBeTransformed,
-                                                  toBeTransformed: [
-                                                    medName.text,
-                                                  ],
-                                                )));
-                                  }
-                                }
-                              },
-                              child: Text('تحديد جرعة الدواء',
-                                  style: GoogleFonts.tajawal(
-                                    color: Color.fromARGB(255, 245, 244, 244),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                  // style: TextStyle(fontFamily: 'Madani Arabic Black'),
-                                  ),
-                            ),
+                            //         Navigator.of(context)
+                            //             .push(MaterialPageRoute(
+                            //                 builder: (context) => SetDose(
+                            //                       value: toBeTransformed,
+                            //                       toBeTransformed: [
+                            //                         medName.text,
+                            //                       ],
+                            //                     )));
+                            //       }
+                            //     }
+                            //   },
+                            //   child: Text('تحديد جرعة الدواء',
+                            //       style: GoogleFonts.tajawal(
+                            //         color: Color.fromARGB(255, 245, 244, 244),
+                            //         fontSize: 20,
+                            //         fontWeight: FontWeight.bold,
+                            //       )
+                            //       // style: TextStyle(fontFamily: 'Madani Arabic Black'),
+                            //       ),
+                            // ),
                           ]),
                     ),
                   ),
