@@ -143,8 +143,7 @@ class PatientCalendar_ extends State<PatientCalendar> {
             eventName: e.data()['name'],
             //freqPerDay: e.data()['freqPerDay'],
             from: DateTime.parse(e.data()['Time'].toDate().toString()),
-            to: DateTime(e.data()['Year'], e.data()['Month'], e.data()['Day'],
-                23, 59, 00),
+            to: DateFormat('dd/MM/yyy').parse(e.data()['Date']),
             background: Color(e.data()['color']),
             isAllDay: false))
         .toList();
