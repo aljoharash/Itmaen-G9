@@ -15,6 +15,7 @@ import '../../navigation.dart';
 import '../../view.dart';
 import '../../font.dart';
 import '../../viewD.dart';
+import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
 class LoadDataFromFireStoree extends StatefulWidget {
   @override
@@ -152,6 +153,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        SfGlobalLocalizations.delegate
       ],
       supportedLocales: [
         const Locale('ar'),
@@ -179,6 +181,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
             todayHighlightColor: Color.fromARGB(255, 140, 167, 190),
             onTap: calendarTapped,
             monthViewSettings: MonthViewSettings(
+              appointmentDisplayCount: 1,
               showAgenda: true,
               monthCellStyle: MonthCellStyle(
                 textStyle: TextStyle(

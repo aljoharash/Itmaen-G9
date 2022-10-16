@@ -15,6 +15,7 @@ import '../../view.dart';
 import '../../font.dart';
 import '../navigationPatient.dart';
 import '../viewD.dart';
+import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
 class PatientCalendar extends StatefulWidget {
   @override
@@ -159,6 +160,7 @@ class PatientCalendar_ extends State<PatientCalendar> {
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        SfGlobalLocalizations.delegate
       ],
       supportedLocales: [
         const Locale('ar'),
@@ -186,6 +188,7 @@ class PatientCalendar_ extends State<PatientCalendar> {
             todayHighlightColor: Color.fromARGB(255, 140, 167, 190),
             onTap: calendarTapped,
             monthViewSettings: MonthViewSettings(
+              appointmentDisplayCount: 1,
               showAgenda: true,
               monthCellStyle: MonthCellStyle(
                 textStyle: TextStyle(

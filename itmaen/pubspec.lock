@@ -747,6 +747,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "20.3.47"
+  syncfusion_localizations:
+    dependency: "direct main"
+    description:
+      name: syncfusion_localizations
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "20.3.47"
   term_glyph:
     dependency: transitive
     description:
