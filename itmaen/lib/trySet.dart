@@ -41,6 +41,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   final nameController = TextEditingController();
+  final hoursController = TextEditingController();
   final pillAmountController = TextEditingController();
   final TextEditingController description = new TextEditingController();
   DateTime setDate = DateTime.now();
@@ -432,6 +433,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                               padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                               margin: EdgeInsets.only(right: 5),
                               child: TextField(
+                                controller: hoursController,
                                 onSubmitted: (value) {
                                   SnackBar error = SnackBar(
                                     content: Directionality(
@@ -518,19 +520,31 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                 child: Directionality(
                                   textDirection: ui.TextDirection.rtl,
                                   child: Slider(
-                                    divisions: 5,
+                                    divisions: 4,
                                     value: sliderValue2,
                                     onChanged: (value) {
                                       setState(() {
                                         sliderValue2 = value;
                                       });
+
+                                      sliderValue2 == 2
+                                          ? hoursController.text = "12"
+                                          : sliderValue2 == 3
+                                              ? hoursController.text = "8"
+                                              : sliderValue2 == 4
+                                                  ? hoursController.text = "6"
+                                                  : sliderValue2 == 5
+                                                      ? hoursController.text =
+                                                          "4"
+                                                      : hoursController.text =
+                                                          "";
                                     },
                                     inactiveColor:
                                         Color.fromARGB(255, 241, 225, 225),
                                     activeColor:
                                         Color.fromARGB(255, 122, 164, 186),
                                     min: 1,
-                                    max: 6,
+                                    max: 5,
                                   ),
                                 ),
                               ),
@@ -670,17 +684,37 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                           setTime = selectedTime;
                                           timeDisplayed = setTime;
                                           print(selectedTime);
-                                        
+
                                           // print(setTime);
                                           //   print(timeDisplayed);
-                                          if ((DateTime.now().toString().substring(0,10) == setDate.toString().substring(0,10)) &&
+                                          if ((DateTime.now()
+                                                      .toString()
+                                                      .substring(0, 10) ==
+                                                  setDate
+                                                      .toString()
+                                                      .substring(0, 10)) &&
                                               (int.parse(setTime
                                                       .toString()
-                                                      .substring(10, 12)) <
+                                                      .substring(10, 12)) <=
                                                   int.parse(TimeOfDay.now()
                                                       .toString()
                                                       .substring(10, 12)))) {
-                                            print("error in time");
+                                            if (int.parse(setTime
+                                                    .toString()
+                                                    .substring(10, 12)) ==
+                                                int.parse(TimeOfDay.now()
+                                                    .toString()
+                                                    .substring(10, 12))) {
+                                              if (int.parse(setTime
+                                                      .toString()
+                                                      .substring(13, 15)) <
+                                                  int.parse(TimeOfDay.now()
+                                                      .toString()
+                                                      .substring(13, 15))) {
+                                                print("error in minutes");
+                                              }
+                                            } else
+                                              print("error in time");
                                           }
                                         });
                                       }
@@ -945,6 +979,27 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                 everyH != '' &&
                 int.parse(every_hours) < 23 &&
                 sliderValue2 != 1))) {
+      // editing purpose
+      _firestore.collection('dosesEdit').add({
+        'name': nameController.text,
+        'selectedDescription': _groupValue,
+        'description': description.text,
+        'amount': pillAmountController.text,
+        'unit': selectType,
+        'days': sliderValue.toString(),
+        'freqPerDay': sliderValue2.toString(),
+        'hoursBetweenDoses': every_hours,
+        //'colors': backColor,
+        'color': int.parse(backColor.toString().substring(6, 16)),
+        'firstDate': setDate,
+        'firstTime': setTime.toString(),
+        'Time': setTime.toString().substring(10, 15),
+        'Date': DateFormat("yyyy-MM-dd").format(newDate).toString(),
+        'caregiverID': caregiverID,
+      });
+
+      // editing purpose
+
       for (int i = 0; i < sliderValue; i++) {
         for (int j = 0; j < sliderValue2; j++) {
           tz.initializeTimeZones();
@@ -959,6 +1014,8 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                   " " +
                   newTime.format(context).toString());
           print(tempTimeDate.toString() + "Here is temp DateTime");
+
+          DateTime oldDate = DateTime.utc(2022);
 
           _firestore.collection('doses').add({
             'Day': newDate.day,
@@ -982,6 +1039,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
             'freqPerDay': sliderValue2.toString(),
             'description': _groupValue + "  " + description.text,
             'color': int.parse(backColor.toString().substring(6, 16)),
+            "Timecheked": oldDate,
             'cheked': false,
             'caregiverID': caregiverID,
             'picture': nameController.text == "جليترا"
