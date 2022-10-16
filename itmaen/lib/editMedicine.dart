@@ -21,6 +21,8 @@ class EditMed extends StatefulWidget {
 
 class _EditMedState extends State<EditMed> {
   final _firestore = FirebaseFirestore.instance;
+  final _doseFirestore = FirebaseFirestore.instance;
+  final _doseEditFirestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   late List<String> toBeTransformed = [];
 
@@ -51,7 +53,10 @@ static String strength = "";
   }
 
 var oldname;
-
+var dosename;
+var doses;
+var dosesEdit;
+int count = 0;
 
   // retrieve(QuerySnapshot snapshot) {
   //   print("here");
@@ -60,6 +65,55 @@ var oldname;
   //     print("name: $oldname");
   //   });
   // }
+
+
+////////update dose edit
+  updateDoseEdit(QuerySnapshot snapshot) {
+    print("here doseEdit");
+    snapshot.docs.forEach((doc) {
+      count++;
+      if(doc['name'] == widget.name){
+         _doseEditFirestore
+        .collection('dosesEdit')
+        .where('name', isEqualTo: widget.name)
+        .get()
+        .then((value){
+          value.docs[0].reference.update({
+            'name': medName.text
+          });
+        });
+      }
+      else{
+        print('dose not found');
+      }
+    });
+
+  }
+
+////////update dose
+  updateDose(QuerySnapshot snapshot) {
+    print("here dose");
+    snapshot.docs.forEach((doc) {
+      int countdose = 0;
+      if(doc['name'] == widget.name){
+         _doseFirestore
+        .collection('doses')
+        .where('name', isEqualTo: widget.name)
+        .get()
+        .then((value){
+          value.docs[countdose].reference.update({
+            'name': medName.text
+          });
+        });
+      }
+      else{
+        print('dose not found');
+      }
+    });
+
+  }
+
+
 
   void getCurrentUser() async {
 
@@ -75,6 +129,7 @@ var oldname;
     });
 
   }
+
 
     try {
       final user = await _auth.currentUser;
@@ -94,6 +149,23 @@ var oldname;
         // .where('Package size', isEqualTo: widget.package)
         // .where('Strength value', isEqualTo: widget.strength)
         .get();
+
+
+         dosesEdit = await FirebaseFirestore.instance
+             .collection('dosesEdit')
+             .where('caregiverID', isEqualTo: caregiverID)
+             .where('name', isEqualTo: widget.name)
+             .get();
+
+
+         doses = await FirebaseFirestore.instance
+             .collection('doses')
+             .where('caregiverID', isEqualTo: caregiverID)
+             .where('name', isEqualTo: widget.name)
+             .get();
+
+
+
 
 
         retrieve(snapShotsValue);
@@ -365,7 +437,12 @@ var oldname;
                                                               ".png"),
                                     });
 
-                                    print("Med added");
+                                    updateDose(doses);
+                                    updateDoseEdit(dosesEdit);
+                                    
+
+
+                                    print("Med updated");
 
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
