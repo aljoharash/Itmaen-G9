@@ -142,109 +142,111 @@ class _callP extends State<callP> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 140, 167, 190),
-        title: Center(
-            child: Text(
-          " الاتصال",
-          style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-        )),
-      ),
-      floatingActionButton: ElevatedButton(
-        onPressed: () {
-          _callNumber();
-        },
-        child: Icon(
-          Icons.call,
-          color: Colors.white,
-        ),
-        style: ElevatedButton.styleFrom(
-          shape: CircleBorder(),
-          padding: EdgeInsets.all(15),
-          //backgroundColor: Color.fromARGB(255, 140, 167, 190),
-          primary: Color.fromARGB(255, 47, 212, 32),
-          surfaceTintColor: Color.fromARGB(255, 114, 238, 43),
-        ),
-      ),
-      body: SafeArea(
-        child: Directionality(
-            textDirection: ui.TextDirection.rtl,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                CircleAvatar(
-                  radius: 50.0,
-                  backgroundImage: AssetImage('images/profile.png'),
-                ),
-                Text(
-                  'deem',
-                  style: TextStyle(
-                    fontFamily: 'Pacifico',
-                    fontSize: 40.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '',
-                  style: TextStyle(
-                    fontFamily: 'Source Sans Pro',
-                    color: Colors.teal.shade100,
-                    fontSize: 20.0,
-                    letterSpacing: 2.5,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                  width: 150.0,
-                  child: Divider(
-                    color: Colors.teal.shade100,
-                  ),
-                ),
-                Card(
-                    margin:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                    child: ListTile(
-                      title: Text(
-                        nameO,
-                        style: TextStyle(
-                          color: Colors.teal.shade900,
-                          fontFamily: 'Source Sans Pro',
-                          fontSize: 20.0,
-                        ),
-                        textAlign: TextAlign.right,
-                      ),
-                      leading: Icon(
-                        Icons.person,
-                        color: Color.fromARGB(255, 140, 167, 190),
-                        //    textDirection= TextDirection.RTL
-                      ),
-                    )),
-                Card(
-                    margin:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                    child: Expanded(
-                        child: ListTile(
-                      // ignore: prefer_const_constructors
-                      leading: Icon(Icons.email,
-                          color: Color.fromARGB(255, 140, 167, 190),
-                          textDirection: ui.TextDirection.rtl),
-                      title: Text(
-                        emailO,
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.teal.shade900,
-                            fontFamily: 'Source Sans Pro'),
-                        textDirection: ui.TextDirection.rtl,
-                        textAlign: TextAlign.right,
-                      ),
-                    ))),
-              ],
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          appBar: AppBar(
+            backgroundColor: Color.fromARGB(255, 140, 167, 190),
+            title: Center(
+                child: Text(
+              " الاتصال",
+              style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
             )),
-      ),
-    ));
+          ),
+          floatingActionButton: ElevatedButton(
+            onPressed: () {
+              _callNumber();
+            },
+            child: Icon(
+              Icons.call,
+              color: Colors.white,
+            ),
+            style: ElevatedButton.styleFrom(
+              shape: CircleBorder(),
+              padding: EdgeInsets.all(15),
+              //backgroundColor: Color.fromARGB(255, 140, 167, 190),
+              primary: Color.fromARGB(255, 47, 212, 32),
+              surfaceTintColor: Color.fromARGB(255, 114, 238, 43),
+            ),
+          ),
+          body: SafeArea(
+            child: Directionality(
+                textDirection: ui.TextDirection.rtl,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CircleAvatar(
+                      radius: 50.0,
+                      backgroundImage: AssetImage('images/profile.png'),
+                    ),
+                    Text(
+                      'deem',
+                      style: TextStyle(
+                        fontFamily: 'Pacifico',
+                        fontSize: 40.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '',
+                      style: TextStyle(
+                        fontFamily: 'Source Sans Pro',
+                        color: Colors.teal.shade100,
+                        fontSize: 20.0,
+                        letterSpacing: 2.5,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                      width: 150.0,
+                      child: Divider(
+                        color: Colors.teal.shade100,
+                      ),
+                    ),
+                    Card(
+                        margin: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 25.0),
+                        child: ListTile(
+                          title: Text(
+                            nameO,
+                            style: TextStyle(
+                              color: Colors.teal.shade900,
+                              fontFamily: 'Source Sans Pro',
+                              fontSize: 20.0,
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                          leading: Icon(
+                            Icons.person,
+                            color: Color.fromARGB(255, 140, 167, 190),
+                            //    textDirection= TextDirection.RTL
+                          ),
+                        )),
+                    Card(
+                        margin: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 25.0),
+                        //  elevation()
+                        child: Expanded(
+                            child: ListTile(
+                          // ignore: prefer_const_constructors
+                          leading: Icon(Icons.email,
+                              color: Color.fromARGB(255, 140, 167, 190),
+                              textDirection: ui.TextDirection.rtl),
+                          title: Text(
+                            emailO,
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.teal.shade900,
+                                fontFamily: 'Source Sans Pro'),
+                            textDirection: ui.TextDirection.rtl,
+                            textAlign: TextAlign.right,
+                          ),
+                        ))),
+                  ],
+                )),
+          ),
+        ));
   }
 }

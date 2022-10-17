@@ -11,10 +11,12 @@ import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 import '../../view.dart';
 import '../../font.dart';
 import '../navigationPatient.dart';
 import '../viewD.dart';
+
 class PatientCalendar extends StatefulWidget {
   @override
   PatientCalendar_ createState() => PatientCalendar_();

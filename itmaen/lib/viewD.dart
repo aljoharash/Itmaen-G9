@@ -166,23 +166,6 @@ class _ViewDPageState extends State<ViewD> {
                   },
                 ),*/
               ]),
-          floatingActionButton: ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => callP()));
-            },
-            child: Icon(
-              Icons.call,
-              color: ui.Color.fromARGB(255, 168, 42, 42),
-            ),
-            style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-              padding: EdgeInsets.all(15),
-              //backgroundColor: Color.fromARGB(255, 140, 167, 190),
-              primary: Color.fromARGB(255, 140, 167, 190),
-              surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
-            ),
-          ),
           body: FutureBuilder(
             builder: (ctx, snapshot) {
               // Checking if future is resolved or not
@@ -281,7 +264,7 @@ class _ViewDPageState extends State<ViewD> {
                                   // final pic = med.get("picture");
                                   final timechecked = med.get('Timecheked');
                                   // var i = 0;
-                                   Navigation nv = Navigation();
+                                  Navigation nv = Navigation();
                                   var x = DateTime.now();
                                   String format =
                                       DateFormat('yyy-MM-dd - kk:mm').format(x);
@@ -628,7 +611,7 @@ class _medBubbleState extends State<medBubble> {
       final bytes =
           Base64Decoder().convert(audioContent, 0, audioContent.length);
 
-   //print(bytes);
+      //print(bytes);
 
       if (Platform.isAndroid) {
         final dir = await getTemporaryDirectory();

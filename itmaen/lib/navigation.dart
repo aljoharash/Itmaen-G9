@@ -33,12 +33,14 @@ class Navigation extends StatefulWidget {
         body: "${mediName} ",
         fln: flutterLocalNotificationsPlugin);
   }
+
   void sendNotificationchecked2(String mediName) async {
     Noti.showBigTextNotification(
         title: "تم أخذ الجرعة",
         body: "اطمئن، قام مسقبل رعايتك بأخذ ${mediName}",
         fln: flutterLocalNotificationsPlugin);
   }
+
   @override
   State<Navigation> createState() => _NavigationState();
 }
@@ -154,7 +156,6 @@ class _NavigationState extends State<Navigation> {
   Widget build(BuildContext context) {
     Future<void> logout() async {
       if (caregiverID != null) {
-         
         final action = await AlertDialogs.yesCancelDialog(
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
@@ -196,10 +197,10 @@ class _NavigationState extends State<Navigation> {
       setState(() {
         _selectedIndex = index;
       });
-      if (index == 0) {
+      /* if (index == 0) {
         logout();
-      }
-      if (index == 1) {
+      }*/
+      if (index == 0) {
         if (await _isCollectionExits() == true) {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => GenerateQR()));
