@@ -12,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import '../../navigation.dart';
+import '../../setting.dart';
 import '../../view.dart';
 import '../../font.dart';
 import '../../viewD.dart';
@@ -159,6 +160,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
       ],
       locale: const Locale('ar'),
       home: Scaffold(
+          drawer: NavBar(),
           appBar: AppBar(
             backgroundColor: Color.fromARGB(255, 140, 167, 190),
             title: Center(

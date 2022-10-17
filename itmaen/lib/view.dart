@@ -33,7 +33,6 @@ class _ViewPageState extends State<View> {
   //var caregiverID;
   final _auth = FirebaseAuth.instance;
   late User loggedUser;
-  
 
   //Future<String?> loggedInUser = getCurrentUser();
 
@@ -173,7 +172,8 @@ class _ViewPageState extends State<View> {
                               final picture = med.get('picture');
                               final strength = med.get('Strength value');
                               //final unit = med.get('Unit of volume');
-                              final MedBubble = medBubble(medName, meddescription, package, picture, strength);
+                              final MedBubble = medBubble(medName,
+                                  meddescription, package, picture, strength);
                               medBubbles.add(MedBubble);
                             }
                             return Expanded(
@@ -213,7 +213,8 @@ class _ViewPageState extends State<View> {
                               final picture = med.get('picture');
                               final strength = med.get('Strength value');
                               //final unit = med.get('Unit of volume');
-                              final MedBubble = medBubble(medName, meddescription, package, picture, strength);
+                              final MedBubble = medBubble(medName,
+                                  meddescription, package, picture, strength);
                               medBubbles.add(MedBubble);
                             }
                             return Expanded(
@@ -246,7 +247,8 @@ class _ViewPageState extends State<View> {
 }
 
 class medBubble extends StatelessWidget {
-  medBubble(this.medicName, this.meddescription, this.package, this.picture, this.strength);
+  medBubble(this.medicName, this.meddescription, this.package, this.picture,
+      this.strength);
   var medicName;
   var meddescription;
   var package;
@@ -272,23 +274,22 @@ class medBubble extends StatelessWidget {
                     child: Row(
                       children: [
                         Container(
-                    alignment: Alignment.topLeft,
-                    child: GestureDetector(
-                     onTap: () {
-
-                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditMed(name: medicName, description: meddescription, package: package, strength: strength)));
-                        
-                            },
-                           child: Icon(
-                             Icons.edit,
-                             color: Color.fromARGB(255, 111, 161, 200),
-                             size: 20,
+                            alignment: Alignment.topLeft,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => EditMed(
+                                        name: medicName,
+                                        description: meddescription,
+                                        package: package,
+                                        strength: strength)));
+                              },
+                              child: Icon(
+                                Icons.edit,
+                                color: Color.fromARGB(255, 111, 161, 200),
+                                size: 20,
                               ),
-                    )
-                  ),
+                            )),
 
                         Directionality(
                           textDirection: TextDirection.rtl,
@@ -331,28 +332,26 @@ class medBubble extends StatelessWidget {
                           fontWeight: FontWeight.w600),
                     ),
                   ),
-
                   SizedBox(
                     height: 30,
                   ),
-
                   Container(
                     width: 270,
                     child: MaterialButton(
                       shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
 
                       padding: EdgeInsets.fromLTRB(70, 10, 60, 10),
-                       onPressed: () {
-                                              Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => SetDose(
-                                                  value: toBeTransformed,
-                                                  toBeTransformed: [
-                                                    medicName,
-                                                  ],
-                                                )));
-                                      },
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => SetDose(
+                                  value: toBeTransformed,
+                                  toBeTransformed: [
+                                    medicName,
+                                  ],
+                                )));
+                      },
                       // onPressed: widget.checked
                       //     ? () {
                       //         dialog(widget.medicName);
@@ -361,42 +360,31 @@ class medBubble extends StatelessWidget {
                       //         _showMyDialog(
                       //             widget.medicName);
                       //       },
-                      
-                     color: Color.fromARGB(255, 140, 167, 190),
-                                             
-                                   
+
+                      color: Color.fromARGB(255, 140, 167, 190),
+
                       child: Row(
                         children: [
-                            Text(
-                              
-                              "تحديد جرعة الدواء",
-                            
-                              style: GoogleFonts.tajawal(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15),
+                          Text(
+                            "تحديد جرعة الدواء",
+                            style: GoogleFonts.tajawal(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
                             textAlign: TextAlign.center,
-                            
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
                           Icon(
                             Icons.medication_liquid,
                             size: 20,
                             color: Color.fromARGB(255, 255, 255, 255),
                           ),
-
-                        
                         ],
                       ),
-                      
-
-                      
-                     
                     ),
                   ),
-
                   SizedBox(
                     height: 20,
                   )

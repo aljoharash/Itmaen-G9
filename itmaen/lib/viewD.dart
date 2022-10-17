@@ -8,13 +8,18 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/add-patient.dart';
+import 'package:itmaen/callP.dart';
+import 'package:itmaen/editprofile.dart';
 import 'package:itmaen/navigation.dart';
 import 'package:itmaen/navigationPatient.dart';
 import 'package:itmaen/patient-login.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:itmaen/setting.dart';
 import 'alert_dialog.dart';
 import 'package:itmaen/model/medicines.dart';
 import 'controller/TextToSpeechAPI.dart';
@@ -104,6 +109,11 @@ class _ViewDPageState extends State<ViewD> {
     return val2;
   }
 
+  _callNumber() async {
+    const number = '08592119XXXX'; //set the number here
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
   Future<bool> getCurrentUser() async {
     //HomePage();
     final user = await _auth.currentUser;
@@ -134,10 +144,44 @@ class _ViewDPageState extends State<ViewD> {
       child: Directionality(
         textDirection: ui.TextDirection.rtl,
         child: Scaffold(
+          drawer: NavBar(),
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 140, 167, 190),
-            title: Text("قائمة الأدوية",
-                style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
+              backgroundColor: Color.fromARGB(255, 140, 167, 190),
+              title: Text("قائمة الأدوية",
+                  style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
+              actions: [
+                /*  IconButton(
+                  icon: Icon(Icons.call),
+                  color: ui.Color.fromARGB(255, 255, 2, 2),
+                  onPressed: () {
+                    _callNumber();
+                  },
+                ),*/
+                /*   IconButton(
+                  icon: Icon(Icons.settings),
+                  color: ui.Color.fromARGB(255, 255, 255, 255),
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => NavBar()));
+                  },
+                ),*/
+              ]),
+          floatingActionButton: ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => callP()));
+            },
+            child: Icon(
+              Icons.call,
+              color: ui.Color.fromARGB(255, 168, 42, 42),
+            ),
+            style: ElevatedButton.styleFrom(
+              shape: CircleBorder(),
+              padding: EdgeInsets.all(15),
+              //backgroundColor: Color.fromARGB(255, 140, 167, 190),
+              primary: Color.fromARGB(255, 140, 167, 190),
+              surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
+            ),
           ),
           body: FutureBuilder(
             builder: (ctx, snapshot) {

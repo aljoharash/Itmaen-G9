@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:itmaen/constant.dart';
+import 'package:itmaen/editprofile.dart';
 import 'package:itmaen/home.dart';
 import 'package:itmaen/login.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,6 +19,7 @@ class SignUpScreen extends StatefulWidget {
   _SignUpScreen createState() => _SignUpScreen();
 }
 
+//userSetup
 class _SignUpScreen extends State<SignUpScreen> {
   final _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
@@ -405,10 +407,15 @@ new FlutterPwValidator(
                                 children: [
                                   TextButton(
                                       onPressed: () {
+                                        /*  data(username, email, password,
+                                            phoneNum);*/
                                         Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LoginPage()));
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()),
+
+                                          // editProfile(name: medicName, description: meddescription, package: package, strength: strength)));
+                                        );
                                       },
                                       child: const Text('تسجيل الدخول',
                                           style: TextStyle(

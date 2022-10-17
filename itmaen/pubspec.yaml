@@ -76,6 +76,7 @@ dependencies:
   audioplayers: ^1.1.1
   workmanager: ^0.5.0
   
+  flutter_phone_direct_caller: ^2.1.1
   
 
 
@@ -118,6 +119,8 @@ flutter:
    - images/بانادول ادفانس - PANADOL.png
    - images/جليترا.png
    - images/سبراليكس.png
+   - images/check2.png
+   - images/profile.png
 
    
   # An image asset can refer to one or more resolution-specific "variants", see

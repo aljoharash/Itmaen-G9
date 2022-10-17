@@ -15,8 +15,6 @@ import '../../view.dart';
 import '../../font.dart';
 import '../navigationPatient.dart';
 import '../viewD.dart';
-import 'package:syncfusion_localizations/syncfusion_localizations.dart';
-
 class PatientCalendar extends StatefulWidget {
   @override
   PatientCalendar_ createState() => PatientCalendar_();

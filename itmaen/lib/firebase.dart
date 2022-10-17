@@ -7,7 +7,7 @@ Future<void> userSetup(
       FirebaseFirestore.instance.collection('caregivers');
   FirebaseAuth auth = FirebaseAuth.instance;
   String? uid = auth.currentUser?.uid.toString();
-  caregivers.add({
+  caregivers.doc(uid).set({
     'user name': username1.text,
     'email': email.text,
     'password': pass.text,

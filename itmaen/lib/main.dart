@@ -42,17 +42,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       localizationsDelegates: [
-    GlobalMaterialLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-  ],
-  supportedLocales: [
-    Locale('ar', ''),
-    Locale('en', ''), // English, no country code
-  ],
-  locale: Locale('en', ''),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('ar', ''),
+        Locale('en', ''), // English, no country code
+      ],
+      locale: Locale('en', ''),
       //Given Title
       title: 'إطمئن',
       debugShowCheckedModeBanner: false,

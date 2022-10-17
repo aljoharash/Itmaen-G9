@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:itmaen/addMedicinePages/adddialog.dart';
+import 'package:itmaen/callP.dart';
 import 'package:itmaen/generateqr.dart';
 import 'package:itmaen/patient-login.dart';
+import 'package:itmaen/setting.dart';
 import 'package:itmaen/view.dart';
 import 'package:itmaen/viewD.dart';
 //import 'package:';
@@ -25,7 +27,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 class Navigation extends StatefulWidget {
   const Navigation({Key? key}) : super(key: key);
-void sendNotificationchecked(String mediName) async {
+  void sendNotificationchecked(String mediName) async {
     Noti.showBigTextNotification(
         title: "تم أخذ الجرعة",
         body: "${mediName} ",
@@ -120,8 +122,8 @@ class _NavigationState extends State<Navigation> {
   [${value.docs[i].get("name")}]
  عزيزي, تبقى 5 دقائق على موعد اخذ مستقبلك للرعاية لجرعته''',
               fln: flutterLocalNotificationsPlugin);
-         } 
-         //else if (diff <= -1440) {
+        }
+        //else if (diff <= -1440) {
         //   // passed a day over the medication , it will be removed
         //   value.docs[i].reference.delete();
         // }
@@ -130,22 +132,19 @@ class _NavigationState extends State<Navigation> {
     // }
   }
 
-  int _selectedIndex = 4;
+  int _selectedIndex = 3;
   bodyFunction() {
     switch (_selectedIndex) {
       case 0:
-        return;
-        break;
-      case 1:
         return AddPatient();
         break;
-      case 2:
+      case 1:
         return View();
         break;
-      case 3:
+      case 2:
         return LoadDataFromFireStoree();
         break;
-      case 4:
+      case 3:
         return ViewD();
         break;
     }
@@ -153,24 +152,22 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
- 
-
     Future<void> logout() async {
       if (caregiverID != null) {
          
         final action = await AlertDialogs.yesCancelDialog(
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
-           timer?.cancel(); // stop the timer // no more notification
-         setState(() => timer!.cancel());
-          
-          timer?.cancel();//
+          timer?.cancel(); // stop the timer // no more notification
+          setState(() => timer!.cancel());
+
+          timer?.cancel(); //
           await FirebaseAuth.instance.signOut();
-           timer?.cancel();
+          timer?.cancel();
           loggedInUser = null;
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => LoginPage()));
-              timer?.cancel();
+          timer?.cancel();
         } else {
           setState(() => tappedYes = false);
           Navigator.pushReplacement(
@@ -180,7 +177,7 @@ class _NavigationState extends State<Navigation> {
         final action = await AlertDialogs.yesCancelDialog(
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
-           timer?.cancel(); // stop the timer 
+          timer?.cancel(); // stop the timer
           setState(() => timer!.cancel());
           timer?.cancel();
 
@@ -189,8 +186,8 @@ class _NavigationState extends State<Navigation> {
               MaterialPageRoute(builder: (context) => patientScreen()));
         } else {
           setState(() => tappedYes = false);
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => NavigationPatient()));
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => NavigationPatient()));
         }
       }
     }
@@ -212,16 +209,13 @@ class _NavigationState extends State<Navigation> {
 
     return Scaffold(
       body: bodyFunction(),
+      //drawer: NavBar(),
       backgroundColor: Colors.white,
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.white,
         color: Color.fromARGB(255, 140, 167, 190),
         animationDuration: Duration(milliseconds: 300),
         items: [
-          Icon(
-            Icons.logout,
-            color: Colors.white,
-          ),
           Icon(
             Icons.person_add,
             color: Colors.white,
@@ -234,7 +228,6 @@ class _NavigationState extends State<Navigation> {
             Icons.calendar_month,
             color: Colors.white,
           ),
-          
           Icon(
             Icons.home,
             color: Colors.white,

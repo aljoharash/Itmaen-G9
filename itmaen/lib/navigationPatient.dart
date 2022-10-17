@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:itmaen/callP.dart';
 import 'package:itmaen/patient-login.dart';
 import 'package:itmaen/secure-storage.dart';
 import 'package:itmaen/view.dart';
@@ -18,11 +19,9 @@ import 'notification.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
-   
 
 class NavigationPatient extends StatefulWidget {
   const NavigationPatient({Key? key}) : super(key: key);
-  
 
   // void sendNotificationchecked(String mediName) async {
   //   Noti.showBigTextNotification(
@@ -36,9 +35,6 @@ class NavigationPatient extends StatefulWidget {
 }
 
 class _NavigationPatientState extends State<NavigationPatient> {
-
-
-  
   String title = 'AlertDialog';
   bool tappedYes = false;
   final _auth = FirebaseAuth.instance;
@@ -58,6 +54,11 @@ class _NavigationPatientState extends State<NavigationPatient> {
     });
     print('first');
   }
+/*
+  _callNumber() async {
+    const number = '08592119XXXX'; //set the number here
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+  }*/
 
   void getCurrentUser() async {
     //String qrData="";
@@ -115,24 +116,21 @@ class _NavigationPatientState extends State<NavigationPatient> {
     // }
   }
 
-  void sendNotificationchecked(String mediName) async {
-    Noti.showBigTextNotification(
-        title: "تم أخذ الجرعة",
-        body: "${mediName} ",
-        fln: flutterLocalNotificationsPlugin);
-  }
-
-  int _selectedIndex = 2;
+  int _selectedIndex = 3;
   bodyFunction() {
     switch (_selectedIndex) {
       case 0:
         return;
         break;
       case 1:
-        return PatientCalendar();
+        return callP();
         break;
       case 2:
+        return PatientCalendar();
+        break;
+      case 3:
         return ViewD();
+        break;
     }
   }
 
@@ -147,10 +145,10 @@ class _NavigationPatientState extends State<NavigationPatient> {
           setState(() => timer?.cancel());
 
           await FirebaseAuth.instance.signOut();
-           timer?.cancel();
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => patientScreen()));
-               timer?.cancel();
+          timer?.cancel();
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => patientScreen()));
+          timer?.cancel();
         } else {
           setState(() => tappedYes = false);
           Navigator.pushReplacement(context,
@@ -194,6 +192,10 @@ class _NavigationPatientState extends State<NavigationPatient> {
         items: [
           Icon(
             Icons.logout,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.call,
             color: Colors.white,
           ),
           Icon(
