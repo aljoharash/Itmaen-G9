@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:itmaen/login.dart';
-import 'package:itmaen/data.dart';
 import 'package:itmaen/secure-storage.dart';
 import 'package:itmaen/successSave.dart';
 import 'package:itmaen/view.dart';
@@ -88,12 +87,13 @@ class _callP extends State<callP> {
 
     super.initState();
     getCurrentUser();
+    retrieve2();
     //retrieve();
     print("here");
     // setState(() {});
   }
 
-  Future retrieve2() async {
+  Future<void> retrieve2() async {
     final user = await _auth.currentUser;
     var isAvailable = user?.uid;
     if (isAvailable == null) {

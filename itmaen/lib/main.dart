@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:itmaen/setting.dart';
 
 //Just For Testing that your database works ! Remove the code below after testing (Windows Usesrs)
 import 'directLogin.dart';

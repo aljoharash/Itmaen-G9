@@ -7,7 +7,6 @@ import 'package:itmaen/editprofile.dart';
 import 'package:itmaen/home.dart';
 import 'package:itmaen/login.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'data.dart';
 import 'navigation.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 
@@ -408,8 +407,8 @@ new FlutterPwValidator(
                                 children: [
                                   TextButton(
                                       onPressed: () {
-                                        data(username, email, password,
-                                            phoneNum);
+                                        /*  data(username, email, password,
+                                            phoneNum);*/
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (context) =>

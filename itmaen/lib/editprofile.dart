@@ -8,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:itmaen/login.dart';
 import 'dart:ui' as ui;
-import 'package:itmaen/data.dart';
 import 'package:itmaen/successSave.dart';
 import 'package:itmaen/view.dart';
 import 'package:itmaen/viewDailyDoses.dart';

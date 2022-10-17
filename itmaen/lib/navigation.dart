@@ -134,22 +134,19 @@ class _NavigationState extends State<Navigation> {
     // }
   }
 
-  int _selectedIndex = 4;
+  int _selectedIndex = 3;
   bodyFunction() {
     switch (_selectedIndex) {
       case 0:
-        return;
-        break;
-      case 1:
         return AddPatient();
         break;
-      case 2:
+      case 1:
         return View();
         break;
-      case 3:
+      case 2:
         return LoadDataFromFireStoree();
         break;
-      case 4:
+      case 3:
         return ViewD();
         break;
     }
@@ -200,9 +197,9 @@ class _NavigationState extends State<Navigation> {
       setState(() {
         _selectedIndex = index;
       });
-      //  if (index == 0) {
-      //  logout();
-      //}
+      if (index == 0) {
+        logout();
+      }
       if (index == 1) {
         if (await _isCollectionExits() == true) {
           Navigator.of(context)
@@ -220,10 +217,6 @@ class _NavigationState extends State<Navigation> {
         color: Color.fromARGB(255, 140, 167, 190),
         animationDuration: Duration(milliseconds: 300),
         items: [
-          Icon(
-            Icons.settings,
-            color: Colors.white,
-          ),
           Icon(
             Icons.person_add,
             color: Colors.white,
