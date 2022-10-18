@@ -114,6 +114,7 @@ class _ViewPageState extends State<View> {
         child: Scaffold(
           drawer: NavBar(),
           appBar: AppBar(
+             automaticallyImplyLeading: false,
             backgroundColor: Color.fromARGB(255, 140, 167, 190),
             title: Text("قائمة الأدوية",
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
