@@ -149,14 +149,15 @@ class _NavigationState extends State<Navigation> {
         return AddPatient();}
         
         break;
+
       case 2:
       
         return View();
         break;
-      case 2:
+      case 3:
         return LoadDataFromFireStoree();
         break;
-      case 3:
+      case 4:
         return ViewD();
         break;
        
@@ -221,7 +222,7 @@ class _NavigationState extends State<Navigation> {
       setState(() {
         _selectedIndex = index;
       });
-      // if (index == 0) {
+      if (index == 0) {
         logout();
       }
       // if (index == 1) {
@@ -230,7 +231,7 @@ class _NavigationState extends State<Navigation> {
       //         .push(MaterialPageRoute(builder: (context) => GenerateQR()));
       //   }
       // }
-   // }
+    }
 
     return Scaffold(
       body:FutureBuilder<Widget>(
@@ -248,6 +249,10 @@ class _NavigationState extends State<Navigation> {
         color: Color.fromARGB(255, 140, 167, 190),
         animationDuration: Duration(milliseconds: 300),
         items: [
+          Icon(
+            Icons.logout,
+            color: Colors.white,
+          ),
           Icon(
             Icons.person_add,
             color: Colors.white,
