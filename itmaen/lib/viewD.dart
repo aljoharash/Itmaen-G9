@@ -271,9 +271,9 @@ Timer? timer;
         child: Scaffold(
           drawer: NavBar(),
           appBar: AppBar(
-              automaticallyImplyLeading: false,
+           //   automaticallyImplyLeading: false,
             backgroundColor: Color.fromARGB(255, 140, 167, 190),
-            title: Text("قائمة الأدوية",
+            title: Text("قائمة الجرعات اليومية",
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
           ),
           body: FutureBuilder(
