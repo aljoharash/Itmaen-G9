@@ -51,6 +51,7 @@ class _editDoseState extends State<editDose>
   String caregiverID = "";
   late User loggedInUser;
 
+  bool changed = false;
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   final nameController = TextEditingController();
@@ -99,7 +100,7 @@ class _editDoseState extends State<editDose>
     pickerColor = Color(int.parse(toBeTransformed[4]));
     sliderValue = double.parse(toBeTransformed[5]);
     sliderValue2 = double.parse(toBeTransformed[6]);
-    hoursController.text = toBeTransformed[7];
+    every_hours = everyH = hoursController.text = toBeTransformed[7];
     _groupValue = toBeTransformed[8];
     setTime = selectedTime = timeDisplayed = TimeOfDay(
         hour: int.parse((toBeTransformed[9].substring(10, 15)).split(":")[0]),
@@ -121,28 +122,8 @@ class _editDoseState extends State<editDose>
     }
   }
 
-  // void retrieveInfo(String name) => _firestore
-  //         .collection('dosesEdit')
-  //         .where("name", isEqualTo: name)
-  //         .get()
-  //         .then((value) {
-  //       pillAmountController.text = editAmount = (value.docs[0].get('amount'));
-  //       description.text = editDescription = (value.docs[0].get('description'));
-  //       sliderValue = editDays = (value.docs[0].get('days'));
-  //       sliderValue2 = editFreq = (value.docs[0].get('freqPerDay'));
-  //       editHoursBetween = (value.docs[0].get('hoursBetweenDoses'));
-  //       _groupValue =
-  //           selectedDescription = (value.docs[0].get('selectedDescription'));
-  //       selectType = selectedUnit = (value.docs[0].get('unit'));
-  //       pickerColor = editColor = Color(int.parse(value.docs[0].get('color')));
-  //     });
-
   @override
   Widget build(BuildContext context) {
-    //******* retrieveing data of dose *********
-
-    //******* retrieveing data of dose *********
-
     return new Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -459,7 +440,9 @@ class _editDoseState extends State<editDose>
                   Row(
                     children: [
                       Expanded(
-                        child: Container(
+                        child: Column (
+                        children: [
+                          Container(
                           padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                           margin: EdgeInsets.only(right: 5),
                           child: TextField(
@@ -538,6 +521,32 @@ class _editDoseState extends State<editDose>
                             },
                           ),
                         ),
+
+                                                SizedBox(
+                       height: 10,
+                        ),
+
+                                  Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            child: Text(
+                              sliderValue2 == 2
+                                  ? "الساعات المقترحة:       12 ساعة"
+                                  : sliderValue2 == 3
+                                      ? "الساعات المقترحة:       8 ساعات" 
+                                      : sliderValue2 == 4
+                                      ? "الساعات المقترحة:       6 ساعات"
+                                      : sliderValue2 == 5
+                                      ? "الساعات المقترحة:       4 ساعات" : "",
+                                      
+                              style: GoogleFonts.tajawal(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+
+                    ])
                       ),
                       Column(
                         children: [
@@ -553,15 +562,7 @@ class _editDoseState extends State<editDose>
                                     sliderValue2 = value;
                                   });
 
-                                  sliderValue2 == 2
-                                      ? hoursController.text = "12"
-                                      : sliderValue2 == 3
-                                          ? hoursController.text = "8"
-                                          : sliderValue2 == 4
-                                              ? hoursController.text = "6"
-                                              : sliderValue2 == 5
-                                                  ? hoursController.text = "4"
-                                                  : hoursController.text = "";
+                                  
                                 },
                                 inactiveColor:
                                     Color.fromARGB(255, 241, 225, 225),
@@ -620,6 +621,7 @@ class _editDoseState extends State<editDose>
                         GestureDetector(
                           onTap: () async {
                             final selectedDate = await selectDate(context);
+                            changed = true;
                             if (selectedDate != null) {
                               setState(() {
                                 setDate = DateTime(selectedDate.year,
@@ -700,6 +702,7 @@ class _editDoseState extends State<editDose>
                                 value: selectedTime,
                                 onChange: (TimeOfDay time) {
                                   selectedTime = time;
+                                  changed = true;
                                   if (selectedTime != null) {
                                     setState(() {
                                       setTime = selectedTime;
@@ -732,10 +735,53 @@ class _editDoseState extends State<editDose>
                                               int.parse(TimeOfDay.now()
                                                   .toString()
                                                   .substring(13, 15))) {
-                                            print("error in minutes");
+                                            SnackBar error = SnackBar(
+                                              content: Directionality(
+                                                textDirection:
+                                                    ui.TextDirection.rtl,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: const [
+                                                    Text(
+                                                      'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 14),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(error);
                                           }
-                                        } else
-                                          print("error in time");
+                                        } else {
+                                          SnackBar error = SnackBar(
+                                            content: Directionality(
+                                              textDirection:
+                                                  ui.TextDirection.rtl,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: const [
+                                                  Text(
+                                                    'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(error);
+                                        }
                                       }
                                     });
                                   }
@@ -873,7 +919,7 @@ class _editDoseState extends State<editDose>
                         saveMedicine();
                       },
                       child: Text(
-                        "إضافة",
+                        "تعديل",
                         style: GoogleFonts.tajawal(
                           color: Color.fromARGB(255, 245, 244, 244),
                           fontSize: 15,
@@ -905,12 +951,6 @@ class _editDoseState extends State<editDose>
                                       ),
                                       TextButton(
                                         onPressed: () {
-                                          _firestore
-                                              .collection('medicines')
-                                              .doc(nameController.text +
-                                                  caregiverID)
-                                              .delete();
-
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -922,7 +962,7 @@ class _editDoseState extends State<editDose>
                                       ),
                                     ],
                                     content: Text(
-                                        "هل أنت متأكد من رغبتك في إلغاء إضافة الدواء وتحديد الجرعة؟")));
+                                        "هل أنت متأكد من رغبتك في إلغاء تعديل الجرعة؟")));
                       },
                       child: Text(
                         "إلغاء",
@@ -963,7 +1003,8 @@ class _editDoseState extends State<editDose>
         locale: Locale('ar', ''),
         helpText: "          اختيار تاريخ بداية أخذ الجرعات",
         context: context,
-        initialDate: setDate.isBefore(DateTime.now())? DateTime.now() : setDate,
+        initialDate:
+            setDate.isBefore(DateTime.now()) ? DateTime.now() : setDate,
         firstDate: DateTime.now(),
         lastDate: DateTime(2024));
   }
@@ -995,7 +1036,19 @@ class _editDoseState extends State<editDose>
             (int.parse(every_hours) > 0 &&
                 everyH != '' &&
                 int.parse(every_hours) < 23 &&
-                sliderValue2 != 1))) {
+                sliderValue2 != 1)) &&
+        ((setDate.isAfter(DateTime.now())) ||
+            (setDate.isBefore(DateTime.now()) && changed == false) ||
+            ((DateTime.now().toString().substring(0, 10) ==
+                    setDate.toString().substring(0, 10)) &&
+                (int.parse(setTime.toString().substring(10, 12)) >
+                    int.parse(TimeOfDay.now().toString().substring(10, 12)))) ||
+            ((DateTime.now().toString().substring(0, 10) ==
+                    setDate.toString().substring(0, 10)) &&
+                (int.parse(setTime.toString().substring(10, 12)) ==
+                    int.parse(TimeOfDay.now().toString().substring(10, 12))) &&
+                int.parse(setTime.toString().substring(13, 15)) >=
+                    int.parse(TimeOfDay.now().toString().substring(13, 15))))) {
 //  Future<QuerySnapshot<Map<String, dynamic>>> _querySnapshot = _firestore
 //         .collection("dosesEdit")
 //         .where("name", isEqualTo: nameController.text).get();
@@ -1031,33 +1084,17 @@ class _editDoseState extends State<editDose>
       var snapshot =
           await collection.where("name", isEqualTo: nameController.text).get();
       for (var doc in snapshot.docs) {
+        bool after = DateTime.now().toUtc().isAfter(
+              DateTime.fromMillisecondsSinceEpoch(
+                doc.get('Time').millisecondsSinceEpoch,
+                isUtc: false,
+              ).toUtc(),
+            );
 
-        bool after =  DateTime.now().toUtc().isAfter(
-        DateTime.fromMillisecondsSinceEpoch(
-            doc.get('Time').millisecondsSinceEpoch,
-            isUtc: false,
-        ).toUtc(),
-    );
-
-        if(!after) {
-         await doc.reference.delete(); }
-        // if ((doc.get('Time').toDate()).compareTo(DateTime.now()) > 0) {
-        //   await doc.reference.delete();
-        // }
+        if (!after) {
+          await doc.reference.delete();
+        }
       }
-
-//       var query = _firestore.collection('doses').where("name", isEqualTo: nameController.text);
-// query.get().then((querySnapshot) {
-//   querySnapshot.
-
-//   forEach((doc) {
-//     doc.ref.delete();
-//   });
-// });
-
-//       if(dt1.compareTo(DateTime.now()) > 0){
-//     print("DT1 is after DT2");
-// }
 
       for (int i = 0; i < sliderValue; i++) {
         for (int j = 0; j < sliderValue2; j++) {
@@ -1075,44 +1112,46 @@ class _editDoseState extends State<editDose>
           print(tempTimeDate.toString() + "Here is temp DateTime");
 
           DateTime oldDate = DateTime.utc(2022);
+          if (tempTimeDate.isAfter(DateTime.now())) {
+            _firestore.collection('doses').add({
+              'Day': newDate.day,
+              'Month': newDate.month,
+              'Year': newDate.year,
+              'Time': tempTimeDate,
+              'Date': dateFormatDisplayed.format(newDate).toString(),
+              //  'TimeOnly': newTime.format(context).toString(),
 
-          _firestore.collection('doses').add({
-            'Day': newDate.day,
-            'Month': newDate.month,
-            'Year': newDate.year,
-            'Time': tempTimeDate,
-            'Date': dateFormatDisplayed.format(newDate).toString(),
-            //  'TimeOnly': newTime.format(context).toString(),
+              'TimeOnly': newTime.format(context).contains("AM")
+                  ? newTime.format(context).substring(0, 5) + "ص"
+                  : newTime.format(context).contains("PM")
+                      ? newTime.format(context).substring(0, 5) + "م"
+                      : newTime.format(context),
 
-            'TimeOnly': newTime.format(context).contains("AM")
-                ? newTime.format(context).substring(0, 5) + "ص"
-                : newTime.format(context).contains("PM")
-                    ? newTime.format(context).substring(0, 5) + "م"
-                    : newTime.format(context),
-
-            'amount': pillAmountController.text,
-            'unit': selectType,
-            'days': sliderValue.toString(),
-            'name': nameController.text,
-            //'type': medType,
-            'freqPerDay': sliderValue2.toString(),
-            'description': _groupValue + "  " + description.text,
-            'color': int.parse(backColor.toString().substring(6, 16)),
-            'cheked': false,
-            "Timecheked": oldDate,
-            'caregiverID': caregiverID,
-            'picture': nameController.text == "جليترا"
-                ? "images/" + "جليترا" + ".png"
-                : nameController.text == "سبراليكس"
-                    ? "images/" + "سبراليكس" + ".png"
-                    : nameController.text == "سنترم - CENTRUM"
-                        ? "images/" + "CENTRUM - سنترم" + ".png"
-                        : nameController.text == "بانادول - PANADOL"
-                            ? "images/" + "بانادول ادفانس - PANADOL" + ".png"
-                            : nameController.text == "فيدروب - VIDROP"
-                                ? "images/" + "VIDROP" + ".png"
-                                : "images/" + "no" + ".png"
-          });
+              'amount': pillAmountController.text,
+              'unit': selectType,
+              'days': sliderValue.toString(),
+              'name': nameController.text,
+              //'type': medType,
+              'freqPerDay': sliderValue2.toString(),
+              'description': _groupValue + "  " + description.text,
+              'color': int.parse(backColor.toString().substring(6, 16)),
+              'cheked': false,
+              "Timecheked": oldDate,
+              'caregiverID': caregiverID,
+              'picture': nameController.text == "جليترا"
+                  ? "images/" + "جليترا" + ".png"
+                  : nameController.text == "سبراليكس"
+                      ? "images/" + "سبراليكس" + ".png"
+                      : nameController.text == "سنترم - CENTRUM"
+                          ? "images/" + "CENTRUM - سنترم" + ".png"
+                          : nameController.text == "بانادول - PANADOL"
+                              ? "images/" + "بانادول ادفانس - PANADOL" + ".png"
+                              : nameController.text == "فيدروب - VIDROP"
+                                  ? "images/" + "VIDROP" + ".png"
+                                  : "images/" + "no" + ".png"
+            });
+          }
+          ;
 
           //  Notificationapi.showScheduledNotification(
           //    scheduledDate: DateTime(newDate.year, newDate.month, newDate.day,
@@ -1133,7 +1172,7 @@ class _editDoseState extends State<editDose>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              Text('تمت إضافة الدواء وتحديد الجرعة',
+              Text('تم تعديل الجرعة بنجاح',
                   style: TextStyle(color: Colors.white, fontSize: 15),
                   textAlign: TextAlign.right),
               Icon(
@@ -1149,6 +1188,52 @@ class _editDoseState extends State<editDose>
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => Navigation()));
     } else {
+      if (changed == true &&
+          (DateTime.now().toString().substring(0, 10) ==
+              setDate.toString().substring(0, 10)) &&
+          (int.parse(setTime.toString().substring(10, 12)) <=
+              int.parse(TimeOfDay.now().toString().substring(10, 12)))) {
+        if (int.parse(setTime.toString().substring(10, 12)) ==
+            int.parse(TimeOfDay.now().toString().substring(10, 12))) {
+          if (int.parse(setTime.toString().substring(13, 15)) <
+              int.parse(TimeOfDay.now().toString().substring(13, 15))) {
+            SnackBar error = SnackBar(
+              content: Directionality(
+                textDirection: ui.TextDirection.rtl,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
+                      style: TextStyle(color: Colors.white, fontSize: 13),
+                    ),
+                  ],
+                ),
+              ),
+            );
+
+            ScaffoldMessenger.of(context).showSnackBar(error);
+          }
+        } else {
+          SnackBar error = SnackBar(
+            content: Directionality(
+              textDirection: ui.TextDirection.rtl,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                  ),
+                ],
+              ),
+            ),
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(error);
+        }
+      }
+
       if (pillAmountController.text == "" ||
           (everyH == '' && sliderValue2 != 1)) {
         SnackBar error = SnackBar(
