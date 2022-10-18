@@ -17,24 +17,25 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'navigation.dart';
 import 'viewD.dart';
 
-void callbackDispatcher(){
-  Workmanager().executeTask((task, inputData) {
+// void callbackDispatcher(){
+//   Workmanager().executeTask((task, inputData) {
   
-	Navigation();
-  ViewD(); 
+// 	Navigation();
+//   ViewD(); 
  
-	return Future.value(true);
-});
+// 	return Future.value(true);
+// });
 
-}
+// }
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-   Workmanager().initialize(
+//    Workmanager().initialize(
 	
-	// The top level function, aka callbackDispatcher
-	callbackDispatcher); 
-  Workmanager().registerPeriodicTask('task','number1' , frequency: const Duration(seconds: 60)); 
+// 	// The top level function, aka callbackDispatcher
+// 	callbackDispatcher); 
+//  // Workmanager().registerPeriodicTask('task','number1' , frequency: const Duration(seconds: 60));
+//    Workmanager().registerOneOffTask('task','number1');
   runApp(MyApp());
 }
 

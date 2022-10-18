@@ -83,7 +83,7 @@ class _GenerateQRState extends State<GenerateQR> {
                 style: GoogleFonts.tajawal(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 140, 167, 190)),
+                    color: Colors.black),
                 textAlign: TextAlign.center,
               ),
               Padding(
@@ -110,6 +110,7 @@ class _GenerateQRState extends State<GenerateQR> {
                             SizedBox(width: 120),
                             IconButton(
                               icon: const Icon(Icons.edit),
+                              color: Color.fromARGB(255, 140, 167, 190),
                               //tooltip: 'Increase volume by 10',
                               onPressed: () {
                                 Navigator.pushReplacement(
@@ -124,7 +125,7 @@ class _GenerateQRState extends State<GenerateQR> {
                               style: GoogleFonts.tajawal(
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 140, 167, 190)),
+                                  color: Colors.black),
                               textAlign: TextAlign.right,
                             ),
                           ],

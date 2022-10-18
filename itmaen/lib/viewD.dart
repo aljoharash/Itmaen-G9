@@ -98,9 +98,9 @@ Timer? timer;
     super.initState();
     //HomePage();
     getCurrentUser().then((value) => t = value);
-    timer = Timer.periodic(const Duration(seconds: 50), (Timer t) {
-      callbackDispatcher();
-  });
+  //   timer = Timer.periodic(const Duration(seconds: 50), (Timer t) {
+  //     callbackDispatcher();
+  // });
   }
   void callbackDispatcher()async  {
  
@@ -424,11 +424,11 @@ Timer? timer;
                                  // print(x == timechecked.toDate());
                                  // print(x);
                                  // print(timechecked.toDate());
-                                 // print('herree');
-                                  // if (format == format2 && send == false) {
-                                  //   nv.sendNotificationchecked2(
-                                  //       ' جرعة ${medName} ');
-                                  // }
+                                 print('herree');
+                                  if (format == format2 && send == false) {
+                                    nv.sendNotificationchecked2(
+                                        ' جرعة ${medName} ');
+                                  }
 
                                   final MedBubble = medBubble(
                                       medName,
