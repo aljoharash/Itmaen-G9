@@ -271,7 +271,7 @@ int count = 0;
                                     r'^(?=.{3,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
                                 RegExp regex = RegExp(pattern);
                                 if (!regex.hasMatch(value.trim()))
-                                  return 'يجب أن يحتوي اسم الدواء على ثلاثة أحرف على الأقل وأن يكون خالي من الرموز';
+                                  return 'يجب أن يحتوي اسم الدواء من 3 إلى 20 حرف وأن يكون خالي من الرموز';
                                 return null;
                               },
                               textAlign: TextAlign.right,
@@ -345,11 +345,7 @@ int count = 0;
                               controller: packSize,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
-                              validator: (value) {
-                                if (value == null || value.isEmpty)
-                                  return 'الرجاء ادخال حجم العبوة';
-                                return null;
-                              },
+                              validator: ValidatePack,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,
@@ -391,7 +387,7 @@ int count = 0;
                                             r'^(?=.{2,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
                                         RegExp regex = RegExp(pattern);
                                         if (!regex.hasMatch(value.trim()))
-                                          return 'يجب أن يحتوي اسم الوحدة على حرفين على الاقل';
+                                        return 'يجب أن يحتوي اسم الوحدة من 2 إلى 20 حرف وأن يكون خالي من الرموز';
                                         return null;
                                       },
                               autovalidateMode:
@@ -625,7 +621,7 @@ int count = 0;
 
   String? ValidatePack(String? formPack) {
     if (formPack == null || formPack.isEmpty) return ' الرجاء ادخال حجم العبوة';
-    if (int.parse(formPack) > 9999) return 'لا يمكنك إدخال اكثر من 4 خانات';
+    if (double.parse(formPack) > 9999) return 'لا يمكنك إدخال اكثر من 4 خانات';
   }
 
   String? ValidateMedName(String? FormName) {
