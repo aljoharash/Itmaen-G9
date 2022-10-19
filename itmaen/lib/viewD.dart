@@ -136,6 +136,7 @@ class _ViewDPageState extends State<ViewD> {
     }
   }
 
+  late User? loggedInUser = _auth.currentUser;
   @override
   Widget build(BuildContext context) {
     var data;
@@ -145,6 +146,8 @@ class _ViewDPageState extends State<ViewD> {
         textDirection: ui.TextDirection.rtl,
         child: Scaffold(
           drawer: NavBar(),
+          // drawer: loggedInUser != null ? NavBar() : Text(""),
+
           appBar: AppBar(
               backgroundColor: Color.fromARGB(255, 140, 167, 190),
               title: Text("قائمة الأدوية",

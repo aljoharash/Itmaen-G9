@@ -15,7 +15,13 @@ import 'dart:ui' as ui;
 import 'navigation.dart';
 
 class callP extends StatefulWidget {
-  callP({Key? key}) : super(key: key);
+  final String name;
+  final String email;
+  final String mobile;
+
+  const callP(
+      {Key? key, required this.name, required this.email, required this.mobile})
+      : super(key: key);
 
   /*
   static String nameO = data.user1;
@@ -69,22 +75,15 @@ class _callP extends State<callP> {
       print("$cid_ here 2");
       t = false;
     }
-
-    //retrieve2();
-    /*
-    
-    var snapShotsValue = await FirebaseFirestore.instance
-        .collection("caregivers")
-        .where('caregiverID', isEqualTo: caregiverID)
-        .get();
-   // retrieve(snapShotsValue);
-    print("test enter");*/
   }
 
   @override
   void initState() {
-    retrieve2();
-
+    // retrieve2();
+    nameO = widget.name;
+    print(nameO + "نن");
+    emailO = widget.email;
+    MobileO = widget.mobile;
     super.initState();
     getCurrentUser();
     retrieve2();
@@ -122,16 +121,6 @@ class _callP extends State<callP> {
     // Clean up the controller when the widget is disposed.
     // newPasswordController.dispose();
     super.dispose();
-  }
-
-  final currentUser = FirebaseAuth.instance.currentUser;
-  changePassword() async {
-    try {
-      await currentUser!.updateEmail(newEmail);
-      await currentUser!.updatePassword(newPassword);
-      //FirebaseAuth.instance.signOut();
-
-    } catch (e) {}
   }
 
   _callNumber() async {
@@ -189,13 +178,13 @@ class _callP extends State<callP> {
                       ),
                     ),
                     Text(
-                      '',
-                      style: TextStyle(
-                        fontFamily: 'Source Sans Pro',
-                        color: Colors.teal.shade100,
-                        fontSize: 20.0,
-                        letterSpacing: 2.5,
+                      '  المشرف على العلاج ',
+                      style: GoogleFonts.tajawal(
                         fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 40, 114, 148),
+                        fontSize: 20.0,
+                        //letterSpacing: 2.5,
+                        // fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(
@@ -211,9 +200,9 @@ class _callP extends State<callP> {
                         child: ListTile(
                           title: Text(
                             nameO,
-                            style: TextStyle(
+                            style: GoogleFonts.tajawal(
                               color: Colors.teal.shade900,
-                              fontFamily: 'Source Sans Pro',
+                              // fontFamily: 'Source Sans Pro',
                               fontSize: 20.0,
                             ),
                             textAlign: TextAlign.right,
@@ -236,10 +225,11 @@ class _callP extends State<callP> {
                               textDirection: ui.TextDirection.rtl),
                           title: Text(
                             emailO,
-                            style: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.teal.shade900,
-                                fontFamily: 'Source Sans Pro'),
+                            style: GoogleFonts.tajawal(
+                              fontSize: 20.0,
+                              color: Colors.teal.shade900,
+                              // fontFamily: 'Source Sans Pro'
+                            ),
                             textDirection: ui.TextDirection.rtl,
                             textAlign: TextAlign.right,
                           ),
