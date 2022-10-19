@@ -931,7 +931,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      Navigation()));
+                                                      Navigation(2)));
                                         },
                                         child: Text(
                                           "نعم",
@@ -1138,7 +1138,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Navigation()));
+          .push(MaterialPageRoute(builder: (context) => Navigation(4)));
     } else {
       if ((DateTime.now().toString().substring(0, 10) ==
               setDate.toString().substring(0, 10)) &&

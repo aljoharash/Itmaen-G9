@@ -26,7 +26,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 class Navigation extends StatefulWidget {
-  const Navigation({Key? key}) : super(key: key);
+  const Navigation(int,  {Key? key}) : super(key: key);
   void sendNotificationchecked(String mediName) async {
     Noti.showBigTextNotification(
         title: "تم أخذ الجرعة",
@@ -194,7 +194,7 @@ class _NavigationState extends State<Navigation> {
         } else {
           setState(() => tappedYes = false);
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Navigation()));
+              context, MaterialPageRoute(builder: (context) => Navigation(4)));
         }
       } else {
         final action = await AlertDialogs.yesCancelDialog(

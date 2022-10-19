@@ -83,7 +83,7 @@ class _NavBar extends State<NavBar> {
         } else {
           setState(() => tappedYes = false);
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Navigation()));
+              context, MaterialPageRoute(builder: (context) => Navigation(4)));
         }
       } else {
         final action = await AlertDialogs.yesCancelDialog(

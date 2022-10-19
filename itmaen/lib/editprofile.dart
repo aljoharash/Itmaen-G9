@@ -159,10 +159,10 @@ class _editProfile extends State<editProfile> {
           )),
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
-            color: Color.fromARGB(255, 107, 137, 162),
+            color: Color.fromARGB(255, 255, 255, 255),
             onPressed: () {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => Navigation()));
+                  MaterialPageRoute(builder: (context) => Navigation(4)));
             },
           ),
         ),
@@ -421,6 +421,7 @@ class _editProfile extends State<editProfile> {
                     child: Text(
                       'حفظ ',
                       style: GoogleFonts.tajawal(
+                        fontSize: 18,
                           fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                     color: Color.fromARGB(255, 140, 167, 190),
@@ -445,6 +446,7 @@ class _editProfile extends State<editProfile> {
                     child: Text(
                       'حذف الحساب ',
                       style: GoogleFonts.tajawal(
+                          fontSize: 18,
                           fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                     color: Color.fromARGB(255, 212, 17, 17),
@@ -469,7 +471,7 @@ class _editProfile extends State<editProfile> {
     );
     Widget continueButton = TextButton(
       child: Text(
-        "نعم متأكد",
+        "نعم ",
         style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
         textAlign: TextAlign.right,
       ),

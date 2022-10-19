@@ -371,7 +371,7 @@ new FlutterPwValidator(
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => Navigation(),
+                                          builder: (context) => Navigation(4),
                                         ),
                                       );
                                     }

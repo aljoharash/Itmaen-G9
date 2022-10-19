@@ -69,7 +69,7 @@ import 'package:intl/intl.dart';
 
 class ViewD extends StatefulWidget {
   const ViewD({Key? key}) : super(key: key);
-  
+
   @override
   _ViewDPageState createState() => _ViewDPageState();
 }
@@ -97,7 +97,6 @@ class _ViewDPageState extends State<ViewD> {
   AudioPlayer audioPlayer = AudioPlayer();
 
   //Future<String?> loggedInUser = getCurrentUser();
-  
 
   /*
 
@@ -120,7 +119,7 @@ class _ViewDPageState extends State<ViewD> {
     code for voice and google api : end
 
   */
-Timer? timer;
+  Timer? timer;
   late String id = '';
 
   static var id_ = '';
@@ -170,50 +169,45 @@ Timer? timer;
     }
 
     getCurrentUser().then((value) => t = value);
-  //   timer = Timer.periodic(const Duration(seconds: 50), (Timer t) {
-  //     callbackDispatcher();
-  // });
+    //   timer = Timer.periodic(const Duration(seconds: 50), (Timer t) {
+    //     callbackDispatcher();
+    // });
   }
-  void callbackDispatcher()async  {
- 
+
+  void callbackDispatcher() async {
     print("it is working in the background");
-  Navigation nv = new Navigation();
-  final _auth = FirebaseAuth.instance;
-  late User? loggedInUser = _auth.currentUser;
- if(loggedInUser==null){
-  print("stpped");
-  timer = null; 
-  timer?.cancel();
-  return;
- }
- print('2');
+    Navigation nv = new Navigation(4);
+    final _auth = FirebaseAuth.instance;
+    late User? loggedInUser = _auth.currentUser;
+    if (loggedInUser == null) {
+      print("stpped");
+      timer = null;
+      timer?.cancel();
+      return;
+    }
+    print('2');
     await FirebaseFirestore.instance
         .collection('doses')
         .where("caregiverID", isEqualTo: loggedInUser.uid)
         .get()
         .then((value) {
-          for(var i = 0 ; i<value.size ;i++){
-            var _query;
-      var medName;
-      _query = value.docs[i].get('Timecheked');
-      medName = value.docs[i].get('name');
-      var x = DateTime.now();
-      String format = DateFormat('yyy-MM-dd - kk:mm').format(x);
-      String format2 = DateFormat('yyy-MM-dd - kk:mm').format(_query.toDate());
-      print(format==format2);
+      for (var i = 0; i < value.size; i++) {
+        var _query;
+        var medName;
+        _query = value.docs[i].get('Timecheked');
+        medName = value.docs[i].get('name');
+        var x = DateTime.now();
+        String format = DateFormat('yyy-MM-dd - kk:mm').format(x);
+        String format2 =
+            DateFormat('yyy-MM-dd - kk:mm').format(_query.toDate());
+        print(format == format2);
 
-      if (format == format2) {
-        nv.sendNotificationchecked2(' جرعة ${medName} ');
+        if (format == format2) {
+          nv.sendNotificationchecked2(' جرعة ${medName} ');
+        }
       }
-
-          }
-      
     });
-   
-  
-
-}
-
+  }
 
   Future<bool> getstatu() async {
     bool val = await getCurrentUser();
@@ -267,14 +261,19 @@ Timer? timer;
   Widget build(BuildContext context) {
     var data;
 
+    void dispose() {
+      audioPlayer.stop();
+      audioPlayer.dispose();
+    }
+
     return SafeArea(
       top: false,
       child: Directionality(
         textDirection: ui.TextDirection.rtl,
         child: Scaffold(
-          drawer: loggedInUser==null? null : NavBar(),
+          drawer: loggedInUser == null ? null : NavBar(),
           appBar: AppBar(
-           automaticallyImplyLeading: loggedInUser==null? false : true ,
+            automaticallyImplyLeading: loggedInUser == null ? false : true,
             backgroundColor: Color.fromARGB(255, 140, 167, 190),
             title: Text("قائمة الجرعات اليومية",
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
@@ -367,7 +366,7 @@ Timer? timer;
                             builder: (BuildContext context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
                               if (!snapshot.hasData) {
-                                return Text("Loading...");
+                                return Text("");
                               } //else {
 
                               final medicines = snapshot.data?.docs;
@@ -413,7 +412,7 @@ Timer? timer;
 
                                   // var i = 0;
 
-                                  Navigation nv = Navigation();
+                                  Navigation nv = Navigation(4);
 
                                   var x = DateTime.now();
 
@@ -542,7 +541,7 @@ Timer? timer;
                             builder: (BuildContext context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
                               if (!snapshot.hasData) {
-                                return Text("Loading...");
+                                return Text("");
                               } //else {
 
                               final medicines = snapshot.data?.docs;
@@ -586,7 +585,7 @@ Timer? timer;
 
                                   final timechecked = med.get('Timecheked');
 
-                                  Navigation nv = Navigation();
+                                  Navigation nv = Navigation(4);
 
                                   var x = DateTime.now();
 
@@ -596,12 +595,12 @@ Timer? timer;
                                   String format2 =
                                       DateFormat('yyy-MM-dd - kk:mm')
                                           .format(timechecked.toDate());
-                                //  print(format);
-                                 // print(format2);
-                                 // print(x == timechecked.toDate());
-                                 // print(x);
-                                 // print(timechecked.toDate());
-                                 print('herree');
+                                  //  print(format);
+                                  // print(format2);
+                                  // print(x == timechecked.toDate());
+                                  // print(x);
+                                  // print(timechecked.toDate());
+                                  print('herree');
                                   if (format == format2 && send == false) {
                                     nv.sendNotificationchecked2(
                                         ' جرعة ${medName} ');
@@ -627,14 +626,6 @@ Timer? timer;
                                   medBubbles.add(MedBubble);
                                 }
                               }
-
-                              //جربي شغلي اثنين مع بعض
-
-                              // متداخل الى الان
-
-                              //??
-
-                              // متداخل
 
                               return Expanded(
                                 child: Scrollbar(
@@ -736,7 +727,7 @@ class _medBubbleState extends State<medBubble> {
 
   var msg = "hh";
 
-  final Navigation nv = new Navigation();
+  final Navigation nv = new Navigation(4);
 
   //bool yarab = false;
 
@@ -961,71 +952,82 @@ class _medBubbleState extends State<medBubble> {
                   SizedBox(
                     height: 15,
                   ),
-                  // Container(
-                  //     alignment: Alignment.topLeft,
-                  //     child: GestureDetector(
-                  //       onTap: () async {
-                  //         //??
+//                   Container(
+//                       alignment: Alignment.topLeft,
+//                       child: GestureDetector(
+//                         onTap: () async {
+//                           //??
 
-                  //         // متداخل
+//                          
+//                           if (widget.audioPlayer.state == PlayerState.playing) {
+//                             TextToSpeechAPI().AppShowToast(
+//                                 text: "يرجى الانتضار حتى انتهاء الامر السابق");
+//                             return;
+//                           }
+//                           //  function  to call the api but it in any button action it will work
+//                           setState(() {
+//                             TextToSpeechAPI().isPlaying = widget.doc;
+//                           });
 
-                  //         //  function  to call the api but it in any button action it will work
-                  //         setState(() {
-                  //           TextToSpeechAPI().isPlaying = widget.doc;
-                  //         });
+//                           TextToSpeechAPI().playVoice(
+//                               widget.doc,
+//                               " تفاصيل الجرعة " +
+//                                   " الكمية " +
+//                                   widget.MedAmount +
+//                                   " " +
+//                                   widget.MedUnit +
+//                                   " الوقت " +
+//                                   " " +
+//                                   widget.time +
+//                                   " " +
+//                                   widget.meddescription,
+//                               widget.audioPlayer);
+//                           // .then((value) => {
+//                           //       widget.audioPlayer.onPlayerComplete
+//                           //           .listen((event) {
+//                           //         setState(() {
+//                           //           TextToSpeechAPI().isPlaying = "";
+//                           //         });
+//                           //       })
+//                           //     });
+//                           widget.audioPlayer.onPlayerComplete.listen((event) {
+//                             setState(() {
+//                               TextToSpeechAPI().isPlaying = "";
+//                             });
+//                           });
+//                          
+//                            */
 
-                  //         TextToSpeechAPI()
-                  //             .playVoice(
-                  //                 " تفاصيل الجرعة " +
-                  //                     " الكمية " +
-                  //                     widget.MedAmount +
-                  //                     " " +
-                  //                     widget.MedUnit +
-                  //                     " الوقت " +
-                  //                     " " +
-                  //                     widget.time +
-                  //                     " " +
-                  //                     widget.meddescription,
-                  //                 widget.audioPlayer)
-                  //             .then((value) => {
-                  //                   widget.audioPlayer.onPlayerComplete
-                  //                       .listen((event) {
-                  //                     setState(() {
-                  //                       TextToSpeechAPI().isPlaying = "";
-                  //                     });
-                  //                   })
-                  //                 });
+//                           //         /*٫playVoice(" تفاصيل الجرعة " +
 
-                  //         /*٫playVoice(" تفاصيل الجرعة " +
+//                           //             " الكمية " +
 
-                  //             " الكمية " +
+//                           //             widget.MedAmount +
 
-                  //             widget.MedAmount +
+//                           //             " " +
 
-                  //             " " +
+//                           //             widget.MedUnit +
 
-                  //             widget.MedUnit +
+//                           //             " الوقت " +
 
-                  //             " الوقت " +
+//                           //             " " +
 
-                  //             " " +
+//                           //             widget.time +
 
-                  //             widget.time +
+//                           //             " " +
 
-                  //             " " +
+//                           //             widget.meddescription, AudioPlayer());*/
 
-                  //             widget.meddescription, AudioPlayer());*/
-
-                  //         // print("مرحبا بك ");
-                  //       },
-                  //       child: Icon(
-                  //         TextToSpeechAPI().isPlaying != widget.doc
-                  //             ? Icons.volume_mute
-                  //             : Icons.volume_up,
-                  //         color: Color.fromARGB(255, 111, 161, 200),
-                  //         size: 30,
-                  //       ),
-                  //     )),
+//                           //         // print("مرحبا بك ");
+//                         },
+//                         child: Icon(
+//                           TextToSpeechAPI().isPlaying != widget.doc
+//                               ? Icons.volume_mute
+//                               : Icons.volume_up,
+//                           color: Color.fromARGB(255, 111, 161, 200),
+//                           size: 30,
+//                         ),
+//                       )),
                   Center(
                     child: Text(widget.MedAmount + ' ' + widget.MedUnit,
                         style: GoogleFonts.tajawal(
@@ -1268,7 +1270,8 @@ class _medBubbleState extends State<medBubble> {
                                               ? Icon(
                                                   Icons.check_outlined,
                                                   size: 30,
-                                                  color: ui.Color.fromARGB(255, 81, 212, 81),
+                                                  color: ui.Color.fromARGB(
+                                                      255, 81, 212, 81),
                                                 )
                                               : Icon(
                                                   Icons.check_outlined,
@@ -1328,37 +1331,65 @@ class _medBubbleState extends State<medBubble> {
                                               GestureDetector(
                                                 onTap: () async {
                                                   //  function  to call the api but it in any button action it will work
+                                                  if (widget
+                                                          .audioPlayer.state ==
+                                                      PlayerState.playing) {
+                                                    TextToSpeechAPI().AppShowToast(
+                                                        text:
+                                                            "يرجى الانتضار حتى انتهاء الامر السابق");
+                                                    return;
+                                                  }
+                                                  //  function  to call the api but it in any button action it will work
                                                   setState(() {
                                                     TextToSpeechAPI()
                                                         .isPlaying = widget.doc;
                                                   });
 
-                                                  TextToSpeechAPI()
-                                                      .playVoice(
-                                                          " اسم الدواء " +
-                                                              widget.medicName +
-                                                              " " +
-                                                              " تفاصيل الجرعة " +
-                                                              " " +
-                                                              " الوقت " +
-                                                              widget.time +
-                                                              " " +
-                                                              " الكمية " +
-                                                              widget.MedAmount +
-                                                              " الوحدة " +
-                                                              widget.MedUnit,
-                                                          widget.audioPlayer)
-                                                      .then((value) => {
-                                                            widget.audioPlayer
-                                                                .onPlayerComplete
-                                                                .listen(
-                                                                    (event) {
-                                                              setState(() {
-                                                                TextToSpeechAPI()
-                                                                    .isPlaying = "";
-                                                              });
-                                                            })
-                                                          });
+                                                  print(widget.medicName);
+                                                  TextToSpeechAPI().playVoice(
+                                                      widget.doc,
+                                                      " اسم الدواء " +
+                                                          widget.medicName +
+                                                          " " +
+                                                          " تفاصيل الجرعة " +
+                                                          " " +
+                                                          " الوقت " +
+                                                          widget.time +
+                                                          " " +
+                                                          " الكمية " +
+                                                          widget.MedAmount +
+                                                          " الوحدة " +
+                                                          widget.MedUnit,
+                                                      widget.audioPlayer);
+                                                  //test ok I am testing no
+                                                  //your text not what you want to read
+                                                  //just check
+                                                  //do you have telegram ? yes this is my account
+                                                  // https://t.me/DEV847 ok
+                                                  // sometimes it pronounce something  else and sometimes it shows me the toast now
+                                                  //yes it will wait until the player stop completlly then it will allow you to play another voice
+                                                  // the toast works but it pronounce something else
+                                                  // .then((value) => {
+                                                  //       widget.audioPlayer
+                                                  //           .onPlayerComplete
+                                                  //           .listen(
+                                                  //               (event) {
+                                                  //         setState(() {
+                                                  //           TextToSpeechAPI()
+                                                  //               .isPlaying = "";
+                                                  //         });
+                                                  //       })
+                                                  //     });
+                                                  // test ok
+                                                  //if it read somthing wrong check your text input
+                                                  widget.audioPlayer
+                                                      .onPlayerComplete
+                                                      .listen((event) {
+                                                    setState(() {
+                                                      TextToSpeechAPI()
+                                                          .isPlaying = "";
+                                                    });
+                                                  });
 
                                                   // print("مرحبا بك ");
                                                 },

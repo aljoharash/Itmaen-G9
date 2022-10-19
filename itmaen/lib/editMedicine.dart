@@ -510,7 +510,7 @@ int count = 0;
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Navigation()));
+                                                Navigation(2)));
                                   }
                                 }
                               },

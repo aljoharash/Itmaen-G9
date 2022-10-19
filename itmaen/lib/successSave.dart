@@ -78,7 +78,7 @@ class _success extends State<success> {
                 title: 'اغلاق',
                 onTap: () {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Navigation()));
+                      MaterialPageRoute(builder: (context) => Navigation(4)));
                 },
               ),
             ),
