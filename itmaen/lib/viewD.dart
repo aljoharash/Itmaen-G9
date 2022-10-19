@@ -83,14 +83,16 @@ class _ViewDPageState extends State<ViewD> {
   bool tappedYes = false;
 
   StorageService st = StorageService();
+  //late User? loggedInUser = _auth.currentUser;
 
   //var caregiverID;
 
   final _auth = FirebaseAuth.instance;
+  late User? loggedInUser = _auth.currentUser;
 
   //static final storage = FirebaseStorage.instance.ref();
 
-  late User loggedUser;
+  //late User loggedUser;
 
   AudioPlayer audioPlayer = AudioPlayer();
 
@@ -260,6 +262,7 @@ Timer? timer;
     }
   }
 
+  //late User? loggedInUser = _auth.currentUser;
   @override
   Widget build(BuildContext context) {
     var data;
@@ -269,9 +272,9 @@ Timer? timer;
       child: Directionality(
         textDirection: ui.TextDirection.rtl,
         child: Scaffold(
-          drawer: NavBar(),
+          drawer: loggedInUser==null? null : NavBar(),
           appBar: AppBar(
-           //   automaticallyImplyLeading: false,
+           automaticallyImplyLeading: loggedInUser==null? false : true ,
             backgroundColor: Color.fromARGB(255, 140, 167, 190),
             title: Text("قائمة الجرعات اليومية",
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),

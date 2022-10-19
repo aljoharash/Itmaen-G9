@@ -9,6 +9,7 @@ import 'alert_dialog.dart';
 import 'login.dart';
 import 'navigation.dart';
 import 'navigationPatient.dart';
+import 'dart:ui' as ui;
 
 class NavBar extends StatefulWidget {
   static const String id = 'SignUpScreen';
@@ -114,33 +115,44 @@ class _NavBar extends State<NavBar> {
 
     retrieve2();
     return Drawer(
+      // child: Directionality(
+      //textDirection: ui.TextDirection.rtl,
       child: ListView(
         // Remove padding
         padding: EdgeInsets.zero,
+
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text(nameO),
-            accountEmail: Text(emailO),
-            currentAccountPicture: CircleAvatar(
-              child: ClipOval(
-                child: Icon(
+            accountName: Text(""),
+            accountEmail: Text(""),
+            /*      currentAccountPicture: CircleAvatar(
+                child: ClipOval(
+                   child: Icon(
                   Icons.person,
                   size: 50,
                   color: Color.fromARGB(255, 255, 255, 255),
                 ),
-              ),
-            ),
+                  ),
+                ),*/
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 140, 167, 190),
-            ),
+                // color: Color.fromARGB(255, 57, 110, 151),
+                image: DecorationImage(
+                    image: AssetImage('images/logoSide.JPG'),
+                    fit: BoxFit.fitWidth)),
           ),
           ListTile(
             leading: Icon(Icons.person, textDirection: TextDirection.rtl),
             title: Text('حسابي', style: GoogleFonts.tajawal()),
-            onTap: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => editProfile()));
-            },
+            onTap: () => loggedInUser != null
+                ? {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => editProfile(
+                            name: nameO,
+                            email: emailO,
+                            pass: PassO,
+                            mobile: MobileO)))
+                  }
+                : Text(""),
           ),
           ListTile(
             leading: Icon(Icons.logout),

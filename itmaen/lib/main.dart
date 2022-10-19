@@ -20,13 +20,13 @@ import 'viewD.dart';
 // void callbackDispatcher(){
 //   Workmanager().executeTask((task, inputData) {
   
-// 	Navigation();
+// 	Navigation(); // the timer which call the notification is here 
 //   ViewD(); 
  
 // 	return Future.value(true);
 // });
 
-// }
+//}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
