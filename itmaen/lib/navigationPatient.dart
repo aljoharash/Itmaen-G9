@@ -56,9 +56,9 @@ class _NavigationPatientState extends State<NavigationPatient> {
     print(nameO + "inside");
 
     Noti.initialize(flutterLocalNotificationsPlugin);
-    timer = Timer.periodic(const Duration(seconds: 60), (Timer t) {
-      sendNotification();
-    });
+    // timer = Timer.periodic(const Duration(seconds: 60), (Timer t) {
+    //   sendNotification();
+    // });
     print('first');
   }
 

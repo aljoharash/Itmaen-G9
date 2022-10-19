@@ -1,12 +1,12 @@
 import 'dart:core';
 import 'dart:ffi';
 import 'dart:ui' as ui;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/add-patient.dart';
+import 'package:itmaen/editDose.dart';
 import 'package:itmaen/patient-login.dart';
 import 'package:itmaen/setting.dart';
 import 'package:itmaen/trySet.dart';
@@ -114,6 +114,7 @@ class _ViewPageState extends State<View> {
         child: Scaffold(
           drawer: NavBar(),
           appBar: AppBar(
+            // automaticallyImplyLeading: false,
             backgroundColor: Color.fromARGB(255, 140, 167, 190),
             title: Text("قائمة الأدوية",
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
@@ -175,7 +176,7 @@ class _ViewPageState extends State<View> {
                                 final meddescription = med.get('description');
                                 final package = med.get('Package size');
                                 final picture = med.get('picture');
-                                final strength = med.get('Strength value');
+                                final strength = med.get('Unit of volume');
                                 //final unit = med.get('Unit of volume');
                                 final MedBubble = medBubble(medName,
                                     meddescription, package, picture, strength);
@@ -216,7 +217,7 @@ class _ViewPageState extends State<View> {
                                 final meddescription = med.get('description');
                                 final package = med.get('Package size');
                                 final picture = med.get('picture');
-                                final strength = med.get('Strength value');
+                                final strength = med.get('Unit of volume');
                                 //final unit = med.get('Unit of volume');
                                 final MedBubble = medBubble(medName,
                                     meddescription, package, picture, strength);
@@ -253,18 +254,34 @@ class _ViewPageState extends State<View> {
 }
 
 class medBubble extends StatelessWidget {
-  medBubble(this.medicName, this.meddescription, this.package, this.picture,
-      this.strength);
+  medBubble(this.medicName, this.meddescription, this.package, this.picture, this.strength);
   var medicName;
   var meddescription;
   var package;
   var picture;
+
   late List<String> toBeTransformed = [];
   var strength;
 
+  // ********** editing purposes ***********
+
+  var editAmount;
+  var editDescription;
+  var editDays;
+  var editFreq;
+  var editHoursBetween;
+  var selectedNote;
+  var selectedUnit;
+  var editColor;
+  var editTime;
+  var editDate;
+
+  //********** editing purposes ***********
+
   @override
   Widget build(BuildContext context) {
-    //HomePage();
+    retrieveInfo(medicName);
+
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Material(
@@ -328,6 +345,9 @@ class medBubble extends StatelessWidget {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Directionality(
                     textDirection: TextDirection.rtl,
                     child: Text(
@@ -341,55 +361,236 @@ class medBubble extends StatelessWidget {
                   SizedBox(
                     height: 30,
                   ),
-                  Container(
-                    width: 270,
-                    child: MaterialButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  Row(
+                    children: [
+                      Container(
+                          padding: EdgeInsets.fromLTRB(12, 10, 0, 10),
+                          alignment: Alignment.bottomLeft,
+                          child: GestureDetector(
+                            onTap: () async {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text(
+                                                "لا",
+                                                style: GoogleFonts.tajawal(),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                Navigator.pop(context);
+                                                var collectionDoses =
+                                                    FirebaseFirestore.instance
+                                                        .collection('doses');
+                                                var snapshotDoses =
+                                                    await collectionDoses
+                                                        .where("name",
+                                                            isEqualTo:
+                                                                medicName)
+                                                        .get();
+                                                for (var doc
+                                                    in snapshotDoses.docs) {
+                                                  Timestamp doseTime =
+                                                      doc.get("Time");
+                                                  print(doseTime);
+
+                                                  if (doseTime.compareTo(
+                                                          Timestamp.now()) >
+                                                      0) {
+                                                    await doc.reference
+                                                        .delete();
+                                                  }
+                                                }
+
+                                                ;
+
+                                                var collectionDoseEdit =
+                                                    FirebaseFirestore.instance
+                                                        .collection(
+                                                            'dosesEdit');
+                                                var snapshotoseEdit =
+                                                    await collectionDoseEdit
+                                                        .where("name",
+                                                            isEqualTo:
+                                                                medicName)
+                                                        .get();
+                                                for (var doc
+                                                    in snapshotoseEdit.docs) {
+                                                  await doc.reference.delete();
+                                                }
+                                                ;
+
+                                                var collectionMed =
+                                                    FirebaseFirestore.instance
+                                                        .collection(
+                                                            'medicines');
+                                                var snapshotMed =
+                                                    await collectionMed
+                                                        .where("Trade name",
+                                                            isEqualTo:
+                                                                medicName)
+                                                        .get();
+                                                for (var doc
+                                                    in snapshotMed.docs) {
+                                                  await doc.reference.delete();
+                                                }
+                                                ;
+                                              },
+                                              child: Text(
+                                                "نعم",
+                                                style: GoogleFonts.tajawal(),
+                                              ),
+                                            ),
+                                          ],
+                                          content: Text(
+                                            "هل أنت متأكد من رغبتك في حذف الدواء وما يتبعه من جرعات؟",
+                                            style: GoogleFonts.tajawal(),
+                                          )));
+                            },
+                            child: Icon(
+                              Icons.delete,
+                              color: Color.fromARGB(255, 111, 161, 200),
+                              size: 30,
+                            ),
+                          )),
+                      SizedBox(
+                        width: 15,
                       ),
+                      Container(
+                        // ******************
 
-                      padding: EdgeInsets.fromLTRB(70, 10, 60, 10),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => SetDose(
-                                  value: toBeTransformed,
-                                  toBeTransformed: [
-                                    medicName,
-                                  ],
-                                )));
-                      },
-                      // onPressed: widget.checked
-                      //     ? () {
-                      //         dialog(widget.medicName);
-                      //       }
-                      //     : () {
-                      //         _showMyDialog(
-                      //             widget.medicName);
-                      //       },
+                        child: FutureBuilder(
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              // If we got an error
+                              if (snapshot.hasError) {
+                                return Center(
+                                  child: Text(
+                                    '${snapshot.error} occurred',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                );
 
-                      color: Color.fromARGB(255, 140, 167, 190),
+                                // if we got our data
+                              } else if (snapshot.hasData) {
+                                // Extracting data from snapshot object
+                                final data = snapshot.data as bool;
+                                return Container(
+                                    width: 220,
+                                    child: data == true
+                                        ? (MaterialButton(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
 
-                      child: Row(
-                        children: [
-                          Text(
-                            "تحديد جرعة الدواء",
-                            style: GoogleFonts.tajawal(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Icon(
-                            Icons.medication_liquid,
-                            size: 20,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
-                        ],
+                                            padding: EdgeInsets.fromLTRB(
+                                                47, 10, 50, 10),
+                                            onPressed: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          editDose(
+                                                            value:
+                                                                toBeTransformed,
+                                                            toBeTransformed: [
+                                                              medicName,
+                                                              editDescription,
+                                                              editAmount,
+                                                              selectedUnit,
+                                                              editColor,
+                                                              editDays,
+                                                              editFreq,
+                                                              editHoursBetween,
+                                                              selectedNote,
+                                                              editTime
+                                                                  .toString(),
+                                                              editDate
+                                                            ],
+                                                          )));
+                                            },
+
+                                            color: Color.fromARGB(
+                                                255, 248, 149, 121),
+                                            //    Color.fromARGB(255, 216, 94, 13),
+
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "تعديل جرعة الدواء",
+                                                  style: GoogleFonts.tajawal(
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                              ],
+                                            ),
+                                          ))
+                                        : (MaterialButton(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            padding: EdgeInsets.fromLTRB(
+                                                47, 10, 50, 10),
+                                            onPressed: () {
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(
+                                                builder: (context) => SetDose(
+                                                  value: toBeTransformed,
+                                                  toBeTransformed: [
+                                                    medicName,
+                                                  ],
+                                                ),
+                                              ));
+                                            },
+                                            color: Color.fromARGB(
+                                                255, 140, 167, 190),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "تحديد جرعة الدواء",
+                                                  style: GoogleFonts.tajawal(
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                              ],
+                                            ),
+                                          )));
+                              }
+                            }
+
+                            // Displaying LoadingSpinner to indicate waiting state
+                            return SizedBox();
+                          },
+
+                          // Future that needs to be resolved
+                          // inorder to display something on the Canvas
+                          future: checkHasValue(medicName),
+                        ),
+
+                        //*******************
                       ),
-                    ),
+                    ],
                   ),
                   SizedBox(
                     height: 20,
@@ -398,4 +599,39 @@ class medBubble extends StatelessWidget {
               ))),
     );
   }
+
+  Future<bool> checkHasValue(String name) async {
+    bool hasV = false;
+
+    await FirebaseFirestore.instance
+        .collection('dosesEdit')
+        .where("name", isEqualTo: name)
+        .get()
+        .then((value) {
+      hasV = value.docs.isNotEmpty;
+      // hasV = value.docs[0].exists;
+    });
+
+    return hasV;
+  }
+
+  void retrieveInfo(String name) => FirebaseFirestore.instance
+          .collection('dosesEdit')
+          .where("name", isEqualTo: name)
+          .get()
+          .then((value) {
+        //hasValue = value.docs[0].exists;
+        if(value.docs.length>0){
+        editDescription = (value.docs[0].get('description'));
+        editAmount = (value.docs[0].get('amount'));
+        editDays = (value.docs[0].get('days'));
+        editFreq = (value.docs[0].get('freqPerDay'));
+        editHoursBetween = (value.docs[0].get('hoursBetweenDoses'));
+        selectedNote = (value.docs[0].get('selectedDescription'));
+        selectedUnit = (value.docs[0].get('unit'));
+        editColor = (value.docs[0].get('color')).toString();
+        editTime = (value.docs[0].get('firstTime'));
+        editDate = (value.docs[0].get('Date'));
+        }
+      });
 }

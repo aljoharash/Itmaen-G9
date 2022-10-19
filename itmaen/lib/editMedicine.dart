@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/navigation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:ui' as ui;
 
 
 class EditMed extends StatefulWidget {
@@ -242,7 +243,7 @@ int count = 0;
                               height: 100,
                             ),
                             Text(
-                              "تعديل دواء",
+                              "بيانات الدواء",
                               style: GoogleFonts.tajawal(
                                 fontSize: 30,
                                 //fontStyle: FontStyle.italic,
@@ -252,6 +253,11 @@ int count = 0;
                             ),
                             SizedBox(
                               height: 40,
+                            ),
+                            Text(
+                            "اسم الدواء                                                                               ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
                             ),
                             TextFormField(
                               // initialValue: widget.name ,
@@ -265,7 +271,7 @@ int count = 0;
                                     r'^(?=.{3,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
                                 RegExp regex = RegExp(pattern);
                                 if (!regex.hasMatch(value.trim()))
-                                  return 'يجب أن يحتوي اسم الدواء على ثلاثة أحرف على الاقل';
+                                  return 'يجب أن يحتوي اسم الدواء على ثلاثة أحرف على الأقل وأن يكون خالي من الرموز';
                                 return null;
                               },
                               textAlign: TextAlign.right,
@@ -293,6 +299,11 @@ int count = 0;
                             ),
                             SizedBox(
                               height: 16.0,
+                            ),
+                             Text(
+                            "وصف الدواء                                                                               ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
                             ),
                             TextFormField(
                               // initialValue: widget.description,
@@ -323,22 +334,27 @@ int count = 0;
                             SizedBox(
                               height: 16.0,
                             ),
+                             Text(
+                            "حجم العبوة                                                                               ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
+                            ),
                             TextFormField(
                               // initialValue: widget.strength,
                               keyboardType: TextInputType.number,
-                              controller: doseCount,
+                              controller: packSize,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               validator: (value) {
                                 if (value == null || value.isEmpty)
-                                  return 'الرجاء ادخال الجرعة ';
+                                  return 'الرجاء ادخال حجم العبوة';
                                 return null;
                               },
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
-                                hintText: 'الجرعة',
+                                hintText: 'حجم العبوة',
                                 enabled: true,
                                 contentPadding: const EdgeInsets.only(
                                     left: 14.0,
@@ -360,18 +376,31 @@ int count = 0;
                             SizedBox(
                               height: 16.0,
                             ),
+                             Text(
+                            " الوحدة                                                                                       ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
+                            ),
                             TextFormField(
                               // initialValue: widget.package,
-                              keyboardType: TextInputType.number,
-                              controller: packSize,
-                              validator: ValidatePack,
+                              controller: doseCount,
+                              validator: (value) {
+                                        if (value == null || value.isEmpty)
+                                          return 'الرجاء إدخال الوحدة';
+                                        String pattern =
+                                            r'^(?=.{2,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
+                                        RegExp regex = RegExp(pattern);
+                                        if (!regex.hasMatch(value.trim()))
+                                          return 'يجب أن يحتوي اسم الوحدة على حرفين على الاقل';
+                                        return null;
+                                      },
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
-                                hintText: 'حجم العبوة',
+                                hintText: 'الوحدة',
                                 enabled: true,
                                 contentPadding: const EdgeInsets.only(
                                     left: 14.0,
@@ -410,11 +439,12 @@ int count = 0;
 
                                     var exist = false;
                                     retrieveCheck(snapShotsValueCheck);
+                                    
 
                                     for(int i = 0 ; i < doseName.length ; i++){
                                       print(doseName[i]);
                                       print(medName.text);
-                                      if(doseName[i] == medName.text){
+                                      if(doseName[i] == medName.text && doseName[i] != widget.name ){
                                         print('exist');
                                         print(doseName[i]);
                                         exist= true;
@@ -441,7 +471,7 @@ int count = 0;
                                         .update({
                                       //  'Generic name': genericName,
                                       'Trade name': medName.text,
-                                      'Strength value': doseCount.text,
+                                      'Unit of volume': doseCount.text,
                                       //   'Unit of strength': unitOfStrength,
                                       // 'Volume': volume,
                                       //'Unit of volume': unitOfVolume,
@@ -488,7 +518,7 @@ int count = 0;
                                   }
                                 }
                               },
-                              child: Text('تعديل',
+                              child: Text('حفظ',
                                   style: GoogleFonts.tajawal(
                                     color: Color.fromARGB(255, 245, 244, 244),
                                     fontSize: 20,

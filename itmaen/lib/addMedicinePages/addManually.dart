@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:itmaen/setDose.dart';
 import 'package:itmaen/trySet.dart';
+import 'dart:ui' as ui;
 
 class addManually extends StatefulWidget {
   const addManually({Key? key}) : super(key: key);
@@ -93,6 +94,11 @@ class _addManuallyState extends State<addManually> {
                             SizedBox(
                               height: 40,
                             ),
+                            Text(
+                            "اسم الدواء                                                                               ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
+                            ),
                             TextFormField(
                               controller: medName,
                               autovalidateMode:
@@ -133,6 +139,11 @@ class _addManuallyState extends State<addManually> {
                             SizedBox(
                               height: 16.0,
                             ),
+                            Text(
+                            "وصف الدواء                                                                               ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
+                            ),
                             TextFormField(
                               controller: description,
                               textAlign: TextAlign.right,
@@ -161,21 +172,22 @@ class _addManuallyState extends State<addManually> {
                             SizedBox(
                               height: 16.0,
                             ),
+                            Text(
+                            "حجم العبوة                                                                               ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
+                            ),
                             TextFormField(
                               keyboardType: TextInputType.number,
-                              controller: doseCount,
+                              controller: packSize,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
-                              validator: (value) {
-                                if (value == null || value.isEmpty)
-                                  return 'الرجاء ادخال الجرعة ';
-                                return null;
-                              },
+                              validator: ValidatePack,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
-                                hintText: 'الجرعة',
+                                hintText: 'حجم العبوة',
                                 enabled: true,
                                 contentPadding: const EdgeInsets.only(
                                     left: 14.0,
@@ -197,17 +209,30 @@ class _addManuallyState extends State<addManually> {
                             SizedBox(
                               height: 16.0,
                             ),
+                            Text(
+                            " الوحدة                                                                                       ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
+                            ),
                             TextFormField(
-                              keyboardType: TextInputType.number,
-                              controller: packSize,
-                              validator: ValidatePack,
+                              controller: doseCount,
+                              validator: (value) {
+                                        if (value == null || value.isEmpty)
+                                          return 'الرجاء إدخال الوحدة';
+                                        String pattern =
+                                            r'^(?=.{2,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
+                                        RegExp regex = RegExp(pattern);
+                                        if (!regex.hasMatch(value.trim()))
+                                          return 'يجب أن يحتوي اسم الوحدة على حرفين على الاقل';
+                                        return null;
+                                      },
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
-                                hintText: 'حجم العبوة',
+                                hintText: 'الوحدة',
                                 enabled: true,
                                 contentPadding: const EdgeInsets.only(
                                     left: 14.0,
@@ -263,7 +288,7 @@ class _addManuallyState extends State<addManually> {
                                       'docName': medName.text,
                                       //  'Generic name': genericName,
                                       'Trade name': medName.text,
-                                      'Strength value': doseCount.text,
+                                      'Unit of volume': doseCount.text,
                                       //   'Unit of strength': unitOfStrength,
                                       // 'Volume': volume,
                                       //'Unit of volume': unitOfVolume,
@@ -316,91 +341,6 @@ class _addManuallyState extends State<addManually> {
                             ),
                             SizedBox(
                               height: 20.0,
-                            ),
-                            MaterialButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0))),
-                              elevation: 5.0,
-                              height: 50,
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 11, horizontal: 76),
-                              color: Color.fromARGB(255, 140, 167, 190),
-                              onPressed: () async {
-                                var doc = await _firestore
-                                    .collection("medicines")
-                                    .doc(medName.text + caregiverID)
-                                    .get();
-                                if (doc.exists) {
-                                  print("already exist");
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      // margin: EdgeInsets.only(right: 10),
-
-                                      content: Text('تمت إضافة الدواء مسبقًا',
-                                          style: TextStyle(fontSize: 15),
-                                          textAlign: TextAlign.right),
-                                    ),
-                                  );
-                                } else {
-                                  if (_formKey.currentState!.validate()) {
-                                    _firestore
-                                        .collection('medicines')
-                                        .doc(medName.text + caregiverID)
-                                        .set({
-                                      //  'Generic name': genericName,
-                                      'Trade name': medName.text,
-                                      'Strength value': doseCount.text,
-                                      //   'Unit of strength': unitOfStrength,
-                                      // 'Volume': volume,
-                                      //'Unit of volume': unitOfVolume,
-                                      'Package size': packSize.text,
-                                      //'barcode': barcode,
-                                      'description': description.text,
-                                      'caregiverID': caregiverID,
-                                      'picture': (medName.text == "جليترا"
-                                          ? "images/" + "جليترا" + ".png"
-                                          : medName.text == "سبراليكس"
-                                              ? "images/" + "سبراليكس" + ".png"
-                                              : medName.text ==
-                                                      "سنترم - CENTRUM"
-                                                  ? "images/" +
-                                                      "CENTRUM - سنترم" +
-                                                      ".png"
-                                                  : medName.text ==
-                                                          "بانادول - PANADOL"
-                                                      ? "images/" +
-                                                          "بانادول ادفانس - PANADOL" +
-                                                          ".png"
-                                                      : medName.text ==
-                                                              "فيدروب - VIDROP"
-                                                          ? "images/" +
-                                                              "VIDROP" +
-                                                              ".png"
-                                                          : "images/" +
-                                                              "no" +
-                                                              ".png"),
-                                    });
-
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => SetDose(
-                                                  value: toBeTransformed,
-                                                  toBeTransformed: [
-                                                    medName.text,
-                                                  ],
-                                                )));
-                                  }
-                                }
-                              },
-                              child: Text('تحديد جرعة الدواء',
-                                  style: GoogleFonts.tajawal(
-                                    color: Color.fromARGB(255, 245, 244, 244),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                  // style: TextStyle(fontFamily: 'Madani Arabic Black'),
-                                  ),
                             ),
                           ]),
                     ),

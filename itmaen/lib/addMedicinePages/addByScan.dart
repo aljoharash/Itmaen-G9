@@ -22,9 +22,14 @@ class addByScan extends StatelessWidget {
   late User? loggedInUser = _auth.currentUser;
   late List<String> toBeTransformed = [];
 
-  late String genericName;
+  TextEditingController medName = new TextEditingController();
+  TextEditingController doseUnit = new TextEditingController();
+  TextEditingController descriptionControl = new TextEditingController();
+  TextEditingController packSize = new TextEditingController();
+  bool medExist = false;
+  late String genericName = "";
   late String tradeName = "";
-  late String strengthValue;
+  late String strengthValue = "";
   late String unitOfStrength = "";
   late String volume = "";
   late String unitOfVolume = "";
@@ -51,6 +56,13 @@ class addByScan extends StatelessWidget {
           child: GetBuilder<addMedicineController>(
               init: addMedicineController(),
               builder: (_) {
+                if (_.scannedMedicine.isNotEmpty) {
+                  medName.text = _.scannedMedicine[0].tradeName.toString();
+                  descriptionControl.text =
+                      _.scannedMedicine[0].description.toString();
+                  packSize.text = _.scannedMedicine[0].packageSize.toString();
+                  doseUnit.text = _.scannedMedicine[0].unitOfVolume.toString();
+                }
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -77,64 +89,170 @@ class addByScan extends StatelessWidget {
                                           style: GoogleFonts.tajawal(
                                               fontWeight: FontWeight.bold),
                                         ))
-                              :  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      SizedBox(
-                                        height: 30,
+                              : Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    SizedBox(
+                                      height: 30,
+                                    ),
+                                    TextFormField(
+                                      controller: medName,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty)
+                                          return 'الرجاء ادخال اسم الدواء';
+                                        String pattern =
+                                            r'^(?=.{3,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
+                                        RegExp regex = RegExp(pattern);
+                                        if (!regex.hasMatch(value.trim()))
+                                          return 'يجب أن يحتوي اسم الدواء على ثلاثة أحرف على الأقل وأن يكون خالي من الرموز';
+                                        return null;
+                                      },
+                                      textAlign: TextAlign.right,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor:
+                                            Color.fromARGB(255, 239, 237, 237),
+                                        hintText: 'اسم الدواء ',
+                                        enabled: true,
+                                        contentPadding: const EdgeInsets.only(
+                                            left: 14.0,
+                                            right: 12.0,
+                                            bottom: 8.0,
+                                            top: 8.0),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 236, 231, 231),
+                                                width: 3)),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color: Color.fromARGB(
+                                                  79, 255, 255, 255)),
+                                          borderRadius:
+                                              new BorderRadius.circular(10),
+                                        ),
                                       ),
-                                      BuildCard(
-                                        info: 'اسم الدواء',
-                                        icon: FontAwesomeIcons.medkit,
-                                        item: tradeName = _
-                                            .scannedMedicine[0].tradeName
-                                            .toString(),
+                                    ),
+                                    SizedBox(
+                                      height: 16.0,
+                                    ),
+                                    TextFormField(
+                                      controller: descriptionControl,
+                                      keyboardType: TextInputType.multiline,
+                                      minLines: 1,
+                                      maxLines: 6,
+                                      textAlign: TextAlign.right,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor:
+                                            Color.fromARGB(255, 239, 237, 237),
+                                        hintText: ' وصف الدواء (اختياري) ',
+                                        enabled: true,
+                                        contentPadding: const EdgeInsets.only(
+                                            left: 14.0,
+                                            right: 12.0,
+                                            bottom: 8.0,
+                                            top: 8.0),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 236, 231, 231),
+                                                width: 3)),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color: Color.fromARGB(
+                                                  79, 255, 255, 255)),
+                                          borderRadius:
+                                              new BorderRadius.circular(10),
+                                        ),
                                       ),
-                                      Divider(),
-                                      BuildCard(
-                                        info: 'وصف الدواء ',
-                                        icon: FontAwesomeIcons.list,
-                                        item: description = _
-                                            .scannedMedicine[0].description
-                                            .toString(),
+                                    ),
+                                    SizedBox(
+                                      height: 16.0,
+                                    ),
+                                    TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      controller: packSize,
+                                      validator: ValidatePack,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      textAlign: TextAlign.right,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor:
+                                            Color.fromARGB(255, 239, 237, 237),
+                                        hintText: 'عدد الحبات / الكمية ',
+                                        enabled: true,
+                                        contentPadding: const EdgeInsets.only(
+                                            left: 14.0,
+                                            right: 12.0,
+                                            bottom: 8.0,
+                                            top: 8.0),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 236, 231, 231),
+                                                width: 3)),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color: Color.fromARGB(
+                                                  79, 255, 255, 255)),
+                                          borderRadius:
+                                              new BorderRadius.circular(10),
+                                        ),
                                       ),
-                                      Divider(),
-                                      BuildCard(
-                                        info: 'الجرعة ',
-                                        icon: FontAwesomeIcons.diagnoses,
-                                        item: strengthValue = _
-                                            .scannedMedicine[0].strengthValue
-                                            .toString(),
+                                    ),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    TextFormField(
+                                      controller: doseUnit,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty)
+                                          return 'الرجاء إدخال الوحدة';
+                                        String pattern =
+                                            r'^(?=.{2,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
+                                        RegExp regex = RegExp(pattern);
+                                        if (!regex.hasMatch(value.trim()))
+                                          return 'يجب أن يحتوي اسم الوحدة على حرفين على الاقل';
+                                        return null;
+                                      },
+                                      textAlign: TextAlign.right,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor:
+                                            Color.fromARGB(255, 239, 237, 237),
+                                        hintText: 'الوحدة',
+                                        enabled: true,
+                                        contentPadding: const EdgeInsets.only(
+                                            left: 14.0,
+                                            right: 12.0,
+                                            bottom: 8.0,
+                                            top: 8.0),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 236, 231, 231),
+                                                width: 3)),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color: Color.fromARGB(
+                                                  79, 255, 255, 255)),
+                                          borderRadius:
+                                              new BorderRadius.circular(10),
+                                        ),
                                       ),
-                                      Divider(),
-                                      BuildCard(
-                                        info: 'الاسم العلمي ',
-                                        icon: FontAwesomeIcons.stethoscope,
-                                        item: genericName = _
-                                            .scannedMedicine[0].genericName
-                                            .toString(),
-                                      ),
-                                      Divider(),
-                                      BuildCard(
-                                        info: ' عدد الحبات / الكمية ',
-                                        icon: FontAwesomeIcons.pills,
-                                        item: packageSize = _
-                                            .scannedMedicine[0].packageSize
-                                            .toString(),
-                                      ),
-                                      Divider(),
-                                      BuildCard(
-                                        info: ' الوحدة',
-                                        icon: FontAwesomeIcons.pills,
-                                        item: unitOfVolume = _
-                                            .scannedMedicine[0].unitOfVolume
-                                            .toString(),
-                                      ),
-                                      Divider(),
-                                    ],
-                                  ),
-                                
+                                    ),
+                                    SizedBox(
+                                      height: 24.0,
+                                    ),
+                                  ],
+                                ),
                         ),
                       ),
                     ),
@@ -149,137 +267,31 @@ class addByScan extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: TextButton(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Center(
-                                    child: Icon(
-                                  FontAwesomeIcons.barcode,
-                                  size: 16,
-                                  color: Colors.white,
-                                )),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "الماسح الضوئي",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.tajawal(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              ],
-                            ),
-                            onPressed: () => _.scanBarcode()),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        height: 60.0,
-                        width: 200,
-                        margin: EdgeInsets.all(10.0),
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 140, 167, 190),
-                          borderRadius: BorderRadius.circular(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Center(
+                                  child: Icon(
+                                FontAwesomeIcons.barcode,
+                                size: 16,
+                                color: Colors.white,
+                              )),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "الماسح الضوئي",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.tajawal(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ],
+                          ),
+                          onPressed: () {
+                            _.scanBarcode();
+                          },
                         ),
-                        child: TextButton(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                // ******* Go to setDose *********
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "تحديد جرعة الدواء",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.tajawal(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              ],
-                            ),
-                            onPressed: () async {
-                              var doc = await _firestore
-                                  .collection("medicines")
-                                  .doc(tradeName + loggedInUser!.uid)
-                                  .get();
-                              if (doc.exists) {
-                                print("already exist");
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    // margin: EdgeInsets.only(right: 10),
-
-                                    content: Text('تمت إضافة الدواء مسبقًا',
-                                        style: TextStyle(fontSize: 20),
-                                        textAlign: TextAlign.right),
-                                  ),
-                                );
-                              } else {
-                                if (addMedicineController.notFound == false) {
-                                  _firestore
-                                      .collection('medicines')
-                                      .doc(tradeName + loggedInUser!.uid)
-                                      .set({
-                                    'docName': tradeName,
-                                    'Generic name': genericName,
-                                    'Trade name': tradeName,
-                                    'Strength value': strengthValue,
-                                    'Unit of strength': unitOfStrength,
-                                    'Volume': volume,
-                                    'Unit of volume': unitOfVolume,
-                                    'Package size': packageSize,
-                                    'barcode': barcode,
-                                    'description': description,
-                                    'caregiverID': loggedInUser!.uid,
-                                    'picture': tradeName == "جليترا"
-                                        ? "images/" + "جليترا" + ".png"
-                                        : tradeName == "سبراليكس"
-                                            ? "images/" + "سبراليكس" + ".png"
-                                            : tradeName == "سنترم - CENTRUM"
-                                                ? "images/" +
-                                                    "CENTRUM - سنترم" +
-                                                    ".png"
-                                                : tradeName ==
-                                                        "بانادول - PANADOL"
-                                                    ? "images/" +
-                                                        "بانادول ادفانس - PANADOL" +
-                                                        ".png"
-                                                    : tradeName ==
-                                                            "فيدروب - VIDROP"
-                                                        ? "images/" +
-                                                            "VIDROP" +
-                                                            ".png"
-                                                        : "images/" +
-                                                            "no" +
-                                                            ".png"
-                                  });
-
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => SetDose(
-                                      value: toBeTransformed,
-                                      toBeTransformed: [
-                                        tradeName,
-                                        packageSize,
-                                        unitOfVolume
-                                      ],
-                                    ),
-                                  ));
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      // margin: EdgeInsets.only(right: 10),
-
-                                      content: Text(
-                                          'عليك استخدام الماسح الضوئي أولاً ',
-                                          style: TextStyle(fontSize: 20),
-                                          textAlign: TextAlign.right),
-                                    ),
-                                  );
-                                }
-                              }
-                            }),
                       ),
                     ),
                     Align(
@@ -314,7 +326,7 @@ class addByScan extends StatelessWidget {
                             onPressed: () async {
                               var doc = await _firestore
                                   .collection("medicines")
-                                  .doc(tradeName + loggedInUser!.uid)
+                                  .doc(medName.text + loggedInUser!.uid)
                                   .get();
                               if (doc.exists) {
                                 print("already exist");
@@ -331,33 +343,33 @@ class addByScan extends StatelessWidget {
                                 if (addMedicineController.notFound == false) {
                                   _firestore
                                       .collection('medicines')
-                                      .doc(tradeName + loggedInUser!.uid)
+                                      .doc(medName.text + loggedInUser!.uid)
                                       .set({
-                                    'docName': tradeName,
+                                    'docName': medName.text,
                                     'Generic name': genericName,
-                                    'Trade name': tradeName,
+                                    'Trade name': medName.text,
                                     'Strength value': strengthValue,
                                     'Unit of strength': unitOfStrength,
                                     'Volume': volume,
-                                    'Unit of volume': unitOfVolume,
-                                    'Package size': packageSize,
+                                    'Unit of volume': doseUnit.text,
+                                    'Package size': packSize.text,
                                     'barcode': barcode,
-                                    'description': description,
+                                    'description': descriptionControl.text,
                                     'caregiverID': loggedInUser!.uid,
-                                    'picture': tradeName == "جليترا"
+                                    'picture': medName.text == "جليترا"
                                         ? "images/" + "جليترا" + ".png"
-                                        : tradeName == "سبراليكس"
+                                        : medName.text == "سبراليكس"
                                             ? "images/" + "سبراليكس" + ".png"
-                                            : tradeName == "سنترم - CENTRUM"
+                                            : medName.text == "سنترم - CENTRUM"
                                                 ? "images/" +
                                                     "CENTRUM - سنترم" +
                                                     ".png"
-                                                : tradeName ==
+                                                : medName.text ==
                                                         "بانادول - PANADOL"
                                                     ? "images/" +
                                                         "بانادول ادفانس - PANADOL" +
                                                         ".png"
-                                                    : tradeName ==
+                                                    : medName.text ==
                                                             "فيدروب - VIDROP"
                                                         ? "images/" +
                                                             "VIDROP" +
@@ -392,5 +404,24 @@ class addByScan extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String? ValidatePack(String? formPack) {
+    if (formPack == null || formPack.isEmpty) return ' الرجاء ادخال حجم العبوة';
+    if (int.parse(formPack) > 9999) return 'لا يمكنك إدخال اكثر من 4 خانات';
+  }
+
+  String? ValidateMedName(String? FormName) {
+    if (FormName == null || FormName.isEmpty) return 'الرجاء ادخال اسم الدواء';
+    String pattern =
+        r'^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
+    RegExp regex = RegExp(pattern, unicode: true);
+    if (!regex.hasMatch(FormName.trim()))
+      return 'يجب أن يحتوي اسم الدواء على حرفين على الاقل';
+    return null;
+  }
+
+  String? ValidateDose(String? FormDose) {
+    if (FormDose == null || FormDose.isEmpty) return 'الرجاء ادخال الجرعة ';
   }
 }

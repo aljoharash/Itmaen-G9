@@ -101,831 +101,869 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     nameController.text = toBeTransformed[0];
     //  selectType = toBeTransformed[2];
-    return new WillPopScope(
-        onWillPop: () async {
-          _firestore
-              .collection('medicines')
-              .doc(nameController.text + caregiverID)
-              .delete();
-          Navigator.of(context).pop(true);
-          return false;
-        },
-        child: new Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 140, 167, 190),
-            elevation: 0,
-            title: Text(
-              "تحديد جرعة الدواء",
-              style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-            ),
-          ),
-          body: SingleChildScrollView(
-            child: Form(
-                key: _formKey,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: Text(
-                          ":اسم الدواء",
-                          textAlign: TextAlign.right,
-                          style: GoogleFonts.tajawal(
-                              color: Color.fromARGB(255, 122, 164, 186),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 16.0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: TextField(
-                          readOnly: true,
-                          controller: nameController,
-                          textAlign: TextAlign.right,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Color.fromARGB(255, 239, 237, 237),
-                            hintText: 'اسم الدواء',
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 236, 231, 231),
-                                    width: 3)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: new BorderSide(
-                                  color: Color.fromARGB(79, 255, 255, 255)),
-                              borderRadius: new BorderRadius.circular(10),
-                            ),
-                            // border: OutlineInputBorder(
-                            //     borderSide: BorderSide(
-                            //         color: Color.fromARGB(79, 255, 255, 255), width: 3)),
-                            // focusedBorder: OutlineInputBorder(
-                            //   borderSide: new BorderSide(
-                            //       color: Color.fromARGB(79, 255, 255, 255)),
-                            //   borderRadius: new BorderRadius.circular(10),
-                            // ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: TextField(
-                          inputFormatters: [
-                            new LengthLimitingTextInputFormatter(100),
-                          ],
-                          controller: description,
-                          textAlign: TextAlign.right,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Color.fromARGB(255, 239, 237, 237),
-                            hintText: 'وصف الجرعة (اختياري)',
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 236, 231, 231),
-                                    width: 3)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: new BorderSide(
-                                  color: Color.fromARGB(79, 255, 255, 255)),
-                              borderRadius: new BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                              child: Container(
-                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            margin: EdgeInsets.only(left: 15),
-                            decoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    side: BorderSide(
-                                        width: dropDownwidth,
-                                        color: onClickDropDown))),
-                            child: DropdownButton<String>(
-                              isExpanded: true,
-                              items: list.map(buildMenuItem).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  selectType = value;
 
-                                  dropDownwidth = 2;
-                                  onClickDropDown =
-                                      Color.fromARGB(79, 255, 255, 255);
-                                });
-                              },
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
-                              value: selectType,
-                            ),
-                          )),
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
-                              child: TextField(
-                                onSubmitted: (value) {
-                                  SnackBar error = SnackBar(
-                                    content: Directionality(
-                                      textDirection: ui.TextDirection.rtl,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: const [
-                                          Text(
-                                            'نطاق الأرقام المسموح به لكمية الجرعة من 1 إلى 50',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
+    return new Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 140, 167, 190),
+        elevation: 0,
+        title: Text(
+          "تحديد جرعة الدواء",
+          style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Form(
+            key: _formKey,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Text(
+                      ":اسم الدواء",
+                      textAlign: TextAlign.right,
+                      style: GoogleFonts.tajawal(
+                          color: Color.fromARGB(255, 122, 164, 186),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16.0,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: TextField(
+                      readOnly: true,
+                      controller: nameController,
+                      textAlign: TextAlign.right,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 239, 237, 237),
+                        hintText: 'اسم الدواء',
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 236, 231, 231),
+                                width: 3)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: new BorderSide(
+                              color: Color.fromARGB(79, 255, 255, 255)),
+                          borderRadius: new BorderRadius.circular(10),
+                        ),
+                        // border: OutlineInputBorder(
+                        //     borderSide: BorderSide(
+                        //         color: Color.fromARGB(79, 255, 255, 255), width: 3)),
+                        // focusedBorder: OutlineInputBorder(
+                        //   borderSide: new BorderSide(
+                        //       color: Color.fromARGB(79, 255, 255, 255)),
+                        //   borderRadius: new BorderRadius.circular(10),
+                        // ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: TextField(
+                      inputFormatters: [
+                        new LengthLimitingTextInputFormatter(100),
+                      ],
+                      controller: description,
+                      textAlign: TextAlign.right,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 239, 237, 237),
+                        hintText: 'وصف الجرعة (اختياري)',
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 236, 231, 231),
+                                width: 3)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: new BorderSide(
+                              color: Color.fromARGB(79, 255, 255, 255)),
+                          borderRadius: new BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Container(
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        margin: EdgeInsets.only(left: 15),
+                        decoration: ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                side: BorderSide(
+                                    width: dropDownwidth,
+                                    color: onClickDropDown))),
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          items: list.map(buildMenuItem).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectType = value;
 
-                                  if (value != "") {
-                                    if (double.parse(value) > 50 ||
-                                        double.parse(value) <= 0) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(error);
-                                    }
-                                  }
-                                  ;
-                                },
-                                controller: pillAmountController,
-                                textAlign: TextAlign.right,
-                                keyboardType: TextInputType.numberWithOptions(
-                                    decimal: true, signed: true),
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp(r'^[0-9]*[.]?[0-9]*')),
-                                  LengthLimitingTextInputFormatter(4)
-                                ],
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color.fromARGB(255, 239, 237, 237),
-                                  hintText: "الكمية لكل جرعة",
-                                  enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Color.fromARGB(
-                                              255, 236, 231, 231),
-                                          width: 3)),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: new BorderSide(
-                                        color:
-                                            Color.fromARGB(79, 255, 255, 255)),
-                                    borderRadius: new BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Container(
-                        height: 65,
-                        width: double.infinity,
-                        padding: const EdgeInsets.only(
-                            top: 5, bottom: 20, left: 17, right: 11),
-                        child: MaterialButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          color: pickerColor,
-                          // color: selectedColor == null
-                          //     ? Color.fromARGB(255, 140, 167, 190)
-                          //     : selectedColor,
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              changeColor(pickerColor);
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text(
-                                              "اختيار اللون",
-                                              style: GoogleFonts.tajawal(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromARGB(
-                                                    255, 140, 167, 190),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                        content: SingleChildScrollView(
-                                          child: MaterialPicker(
-                                            onColorChanged: changeColor,
-                                            pickerColor:
-                                                pickerColor, //default color
-                                          ),
-                                        )));
+                              dropDownwidth = 2;
+                              onClickDropDown =
+                                  Color.fromARGB(79, 255, 255, 255);
+                            });
                           },
-                          child: Text(
-                            " (اختياري) تحديد لون لتمييز الجرعة ",
-                            style: GoogleFonts.tajawal(
-                              color: Color.fromARGB(255, 245, 244, 244),
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          value: selectType,
                         ),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                        child: Text(
-                          ":المدة",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.tajawal(
-                              color: Color.fromARGB(255, 122, 164, 186),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                        child: Directionality(
-                          textDirection: ui.TextDirection.rtl,
-                          child: Slider(
-                            divisions: 100,
-                            value: sliderValue,
-                            onChanged: (double value) {
-                              setState(() {
-                                sliderValue = value;
-                                sliderValue.toInt();
-                              });
-                            },
-                            inactiveColor: Color.fromARGB(255, 241, 225, 225),
-                            activeColor: Color.fromARGB(255, 122, 164, 186),
-                            min: 1,
-                            max: 30,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                        child: Text(
-                          " ـ " +
-                              sliderValue.toStringAsFixed(0) +
-                              " ـ " +
-                              " " +
-                              "يوم",
-                          style: GoogleFonts.tajawal(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                          ),
-                          //TextStyle(fontSize: 20),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 40.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 0, 70, 0),
-                        child: Text(
-                          ":التكرار",
-                          textAlign: TextAlign.right,
-                          style: GoogleFonts.tajawal(
-                              color: Color.fromARGB(255, 122, 164, 186),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                              margin: EdgeInsets.only(right: 5),
-                              child: TextField(
-                                controller: hoursController,
-                                onSubmitted: (value) {
-                                  SnackBar error = SnackBar(
-                                    content: Directionality(
-                                      textDirection: ui.TextDirection.rtl,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: const [
-                                          Text(
-                                            'نطاق الأرقام المسموح به بين الساعات بين كل جرعة من 1 إلى 23',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-
-                                  if (value != "") {
-                                    if (int.parse(value) > 23 ||
-                                        int.parse(value) <= 0) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(error);
-                                    }
-                                  }
-                                  ;
-                                },
-
-                                style: sliderValue2 == 1
-                                    ? TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255))
-                                    : TextStyle(
-                                        color: Color.fromARGB(255, 0, 0, 0)),
-                                textAlign: TextAlign.right,
-                                // keyboardType: TextInputType.Options(
-                                //     signed: false, decimal: false),
-                                keyboardType: TextInputType.numberWithOptions(
-                                    signed: true),
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  LengthLimitingTextInputFormatter(2)
-                                ],
-
-                                decoration: InputDecoration(
-                                  filled: sliderValue2 == 1 ? false : true,
-                                  fillColor: Color.fromARGB(255, 239, 237, 237),
-                                  hintText: sliderValue2 == 1
-                                      ? ''
-                                      : 'عدد الساعات بين كل جرعة',
-                                  hintStyle: TextStyle(color: Colors.grey),
-                                  disabledBorder: InputBorder.none,
-                                  enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Color.fromARGB(
-                                              255, 236, 231, 231),
-                                          width: 3)),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: new BorderSide(
-                                        color:
-                                            Color.fromARGB(79, 255, 255, 255)),
-                                    borderRadius: new BorderRadius.circular(10),
-                                  ),
-                                ),
-                                enabled: sliderValue2 == 1 ? false : true,
-                                onChanged: (value) {
-                                  setState(() {
-                                    every_hours = value;
-                                    everyH = value;
-                                    if (sliderValue2 == 1) {
-                                      every_hours = '0';
-                                      everyH = '0';
-                                    }
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
-                                child: Directionality(
+                      )),
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
+                          child: TextField(
+                            onSubmitted: (value) {
+                              SnackBar error = SnackBar(
+                                content: Directionality(
                                   textDirection: ui.TextDirection.rtl,
-                                  child: Slider(
-                                    divisions: 4,
-                                    value: sliderValue2,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        sliderValue2 = value;
-                                      });
-
-                                      sliderValue2 == 2
-                                          ? hoursController.text = "12"
-                                          : sliderValue2 == 3
-                                              ? hoursController.text = "8"
-                                              : sliderValue2 == 4
-                                                  ? hoursController.text = "6"
-                                                  : sliderValue2 == 5
-                                                      ? hoursController.text =
-                                                          "4"
-                                                      : hoursController.text =
-                                                          "";
-                                    },
-                                    inactiveColor:
-                                        Color.fromARGB(255, 241, 225, 225),
-                                    activeColor:
-                                        Color.fromARGB(255, 122, 164, 186),
-                                    min: 1,
-                                    max: 6,
-                                  
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                child: Text(
-                                  sliderValue2 == 1
-                                      ? "جرعة لكل يوم"
-                                      : sliderValue2 < 3
-                                          ? 'جرعتين لكل يوم'
-                                          : " ـ " +
-                                              sliderValue2.toStringAsFixed(0) +
-                                              " ـ " +
-                                              ' جرعات لكل يوم',
-                                  style: GoogleFonts.tajawal(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                  textAlign: TextAlign.right,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 40.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            ":تاريخ أخذ أول جرعة",
-                            textAlign: TextAlign.right,
-                            style: GoogleFonts.tajawal(
-                                color: Color.fromARGB(255, 122, 164, 186),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Directionality(
-                        textDirection: ui.TextDirection.rtl,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () async {
-                                final selectedDate = await selectDate(context);
-                                if (selectedDate != null) {
-                                  setState(() {
-                                    setDate = DateTime(selectedDate.year,
-                                        selectedDate.month, selectedDate.day);
-                                    // meds?.date = setDate;
-                                  });
-                                }
-                              },
-                              child: Container(
-                                decoration: ShapeDecoration(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                    ),
-                                    // color: Colors.blue,
-                                    color: Color.fromRGBO(33, 150, 243, 0.1)),
-                                padding: EdgeInsets.all(10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(
-                                      Icons.calendar_month,
-                                      size: 27,
-                                      color: Color.fromARGB(255, 140, 167, 190),
-                                    ),
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Text(
-                                      dateFormat.format(setDate),
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        color: Colors.grey,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            ":وقت أخذ أول جرعة في اليوم",
-                            textAlign: TextAlign.right,
-                            style: GoogleFonts.tajawal(
-                                color: Color.fromARGB(255, 122, 164, 186),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: GestureDetector(
-                              onTap: () async {
-                                Navigator.of(context).push(showPicker(
-                                    //  disableHour: true,
-                                    // minHour: double.parse(TimeOfDay.now().format(context).toString().substring(0,1)),
-                                    ltrMode: false,
-                                    iosStylePicker: true,
-                                    hourLabel: "ساعة",
-                                    minuteLabel: "دقيقة",
-                                    okText: "حسنًا",
-                                    cancelText: "إلغاء",
-                                    value: selectedTime,
-                                    onChange: (TimeOfDay time) {
-                                      selectedTime = time;
-                                      if (selectedTime != null) {
-                                        setState(() {
-                                          setTime = selectedTime;
-                                          timeDisplayed = setTime;
-                                          print(selectedTime);
-
-                                          // print(setTime);
-                                          //   print(timeDisplayed);
-                                          if ((DateTime.now()
-                                                      .toString()
-                                                      .substring(0, 10) ==
-                                                  setDate
-                                                      .toString()
-                                                      .substring(0, 10)) &&
-                                              (int.parse(setTime
-                                                      .toString()
-                                                      .substring(10, 12)) <=
-                                                  int.parse(TimeOfDay.now()
-                                                      .toString()
-                                                      .substring(10, 12)))) {
-                                            if (int.parse(setTime
-                                                    .toString()
-                                                    .substring(10, 12)) ==
-                                                int.parse(TimeOfDay.now()
-                                                    .toString()
-                                                    .substring(10, 12))) {
-                                              if (int.parse(setTime
-                                                      .toString()
-                                                      .substring(13, 15)) <
-                                                  int.parse(TimeOfDay.now()
-                                                      .toString()
-                                                      .substring(13, 15))) {
-                                                print("error in minutes");
-                                              }
-                                            } else
-                                              print("error in time");
-                                          }
-                                        });
-                                      }
-                                    }));
-                                // final selectedTime = await selectTime(context);
-                              },
-                              child: Directionality(
-                                textDirection: ui.TextDirection.rtl,
-                                child: Container(
-                                  padding: EdgeInsets.fromLTRB(20, 10, 27, 10),
-                                  decoration: ShapeDecoration(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      color: Color.fromRGBO(33, 150, 243, 0.1)),
                                   child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.alarm,
-                                        color:
-                                            Color.fromARGB(255, 140, 167, 190),
-                                        size: 27,
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: const [
                                       Text(
-                                        // timeDisplayed.format(context),
-                                        timeDisplayed
-                                                .format(context)
-                                                .contains("AM")
-                                            ? timeDisplayed
-                                                    .format(context)
-                                                    .substring(0, 5) +
-                                                "" +
-                                                "ص"
-                                            : timeDisplayed
-                                                    .format(context)
-                                                    .contains("PM")
-                                                ? timeDisplayed
-                                                        .format(context)
-                                                        .substring(0, 5) +
-                                                    "" +
-                                                    "م"
-                                                : timeDisplayed.format(context),
-
+                                        'نطاق الأرقام المسموح به لكمية الجرعة من 1 إلى 50',
                                         style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.grey,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      SizedBox(
-                                        width: 20,
+                                            color: Colors.white, fontSize: 15),
                                       ),
                                     ],
                                   ),
                                 ),
+                              );
+
+                              if (value != "") {
+                                if (double.parse(value) > 50 ||
+                                    double.parse(value) <= 0) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(error);
+                                }
+                              }
+                              ;
+                            },
+                            controller: pillAmountController,
+                            textAlign: TextAlign.right,
+                            keyboardType: TextInputType.numberWithOptions(
+                                decimal: true, signed: true),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'^[0-9]*[.]?[0-9]*')),
+                              LengthLimitingTextInputFormatter(4)
+                            ],
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 239, 237, 237),
+                              hintText: "الكمية لكل جرعة",
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 236, 231, 231),
+                                      width: 3)),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: new BorderSide(
+                                    color: Color.fromARGB(79, 255, 255, 255)),
+                                borderRadius: new BorderRadius.circular(10),
                               ),
                             ),
-                          )
-                        ],
+                          ),
+                        ),
                       ),
-                      SizedBox(
-                        height: 45.0,
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Container(
+                    height: 65,
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(
+                        top: 5, bottom: 20, left: 17, right: 11),
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      color: pickerColor,
+                      // color: selectedColor == null
+                      //     ? Color.fromARGB(255, 140, 167, 190)
+                      //     : selectedColor,
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          changeColor(pickerColor);
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          "اختيار اللون",
+                                          style: GoogleFonts.tajawal(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(
+                                                255, 140, 167, 190),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                    content: SingleChildScrollView(
+                                      child: MaterialPicker(
+                                        onColorChanged: changeColor,
+                                        pickerColor:
+                                            pickerColor, //default color
+                                      ),
+                                    )));
+                      },
+                      child: Text(
+                        " (اختياري) تحديد لون لتمييز الجرعة ",
+                        style: GoogleFonts.tajawal(
+                          color: Color.fromARGB(255, 245, 244, 244),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    child: Text(
+                      ":المدة",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.tajawal(
+                          color: Color.fromARGB(255, 122, 164, 186),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    child: Directionality(
+                      textDirection: ui.TextDirection.rtl,
+                      child: Slider(
+                        divisions: 100,
+                        value: sliderValue,
+                        onChanged: (double value) {
+                          setState(() {
+                            sliderValue = value;
+                            sliderValue.toInt();
+                          });
+                        },
+                        inactiveColor: Color.fromARGB(255, 241, 225, 225),
+                        activeColor: Color.fromARGB(255, 122, 164, 186),
+                        min: 1,
+                        max: 30,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    child: Text(
+                      " ـ " +
+                          sliderValue.toStringAsFixed(0) +
+                          " ـ " +
+                          " " +
+                          "يوم",
+                      style: GoogleFonts.tajawal(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                      ),
+                      //TextStyle(fontSize: 20),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 40.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 0, 70, 0),
+                    child: Text(
+                      ":التكرار",
+                      textAlign: TextAlign.right,
+                      style: GoogleFonts.tajawal(
+                          color: Color.fromARGB(255, 122, 164, 186),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Row(
+                    children: [
+                      
+                      Expanded(
+                        child:
+                        Column(
+                          children: [
+                                
+
+                         Container(
+                          
+                          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          margin: EdgeInsets.only(right: 5),
+                          child: TextField(
+                            controller: hoursController,
+                            onSubmitted: (value) {
+                              SnackBar error = SnackBar(
+                                content: Directionality(
+                                  textDirection: ui.TextDirection.rtl,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: const [
+                                      Text(
+                                        'نطاق الأرقام المسموح به بين الساعات بين كل جرعة من 1 إلى 23',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 15),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+
+                              if (value != "") {
+                                if (int.parse(value) > 23 ||
+                                    int.parse(value) <= 0) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(error);
+                                }
+                              }
+                              ;
+                            },
+
+                            style: sliderValue2 == 1
+                                ? TextStyle(
+                                    color: Color.fromARGB(255, 255, 255, 255))
+                                : TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0)),
+                            textAlign: TextAlign.right,
+                            // keyboardType: TextInputType.Options(
+                            //     signed: false, decimal: false),
+                            keyboardType:
+                                TextInputType.numberWithOptions(signed: true),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(2)
+                            ],
+
+                            decoration: InputDecoration(
+                              filled: sliderValue2 == 1 ? false : true,
+                              fillColor: Color.fromARGB(255, 239, 237, 237),
+                              hintText: sliderValue2 == 1
+                                  ? ''
+                                  : 'عدد الساعات بين كل جرعة',
+                              hintStyle: TextStyle(color: Colors.grey),
+                              disabledBorder: InputBorder.none,
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 236, 231, 231),
+                                      width: 3)),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: new BorderSide(
+                                    color: Color.fromARGB(79, 255, 255, 255)),
+                                borderRadius: new BorderRadius.circular(10),
+                              ),
+                            ),
+                            enabled: sliderValue2 == 1 ? false : true,
+                            onChanged: (value) {
+                              setState(() {
+                                every_hours = value;
+                                everyH = value;
+                                if (sliderValue2 == 1) {
+                                  every_hours = '0';
+                                  everyH = '0';
+                                }
+                              });
+                            },
+                          ),
+                        ),
+
+                        SizedBox(
+                       height: 10,
+                        ),
+
+                                  Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            child: Text(
+                              sliderValue2 == 2
+                                  ? "الساعات المقترحة:       12 ساعة"
+                                  : sliderValue2 == 3
+                                      ? "الساعات المقترحة:       8 ساعات" 
+                                      : sliderValue2 == 4
+                                      ? "الساعات المقترحة:       6 ساعات"
+                                      : sliderValue2 == 5
+                                      ? "الساعات المقترحة:       4 ساعات" : "",
+                                      
+                              style: GoogleFonts.tajawal(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        
+                        ])
                       ),
                       Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          //  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                          children: [
-                            Text(
-                              ":ملاحظات على الجرعة",
-                              textAlign: TextAlign.right,
-                              style: GoogleFonts.tajawal(
-                                  color: Color.fromARGB(255, 122, 164, 186),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-                            ),
-                          ]),
-                      Center(
-                        child: Directionality(
-                          textDirection: ui.TextDirection.rtl,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 20,
-                              ),
-                              ListTile(
-                                title: Text('تؤخذ الجرعة قبل الأكل',
-                                    style: GoogleFonts.tajawal(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
-                                leading: Radio(
-                                    value: 'تؤخذ الجرعة قبل الأكل',
-                                    groupValue: _groupValue,
-                                    onChanged: (value) {
-                                      checkRadio(value as String);
-                                    }),
-                              ),
-                              ListTile(
-                                title: Text('تؤخذ الجرعة بعد الأكل',
-                                    style: GoogleFonts.tajawal(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
-                                leading: Radio(
-                                    value: 'تؤخذ الجرعة بعد الأكل',
-                                    groupValue: _groupValue,
-                                    onChanged: (value) {
-                                      checkRadio(value as String);
-                                    }),
-                              ),
-                              ListTile(
-                                title: Text('تؤخذ الجرعة في أي وقت',
-                                    style: GoogleFonts.tajawal(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
-                                leading: Radio(
-                                    value: 'تؤخذ الجرعة في أي وقت',
-                                    groupValue: _groupValue,
-                                    onChanged: (value) {
-                                      checkRadio(value as String);
-                                    }),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            saveMedicine();
-                          },
-                          child: Text(
-                            "إضافة",
-                            style: GoogleFonts.tajawal(
-                              color: Color.fromARGB(255, 245, 244, 244),
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 140, 167, 190),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10))),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text(
-                                              "لا",
-                                            ),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              _firestore
-                                                  .collection('medicines')
-                                                  .doc(nameController.text +
-                                                      caregiverID)
-                                                  .delete();
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
+                            child: Directionality(
+                              textDirection: ui.TextDirection.rtl,
+                              child: Slider(
+                                divisions: 4,
+                                value: sliderValue2,
+                                onChanged: (value) {
+                                  setState(() {
+                                    sliderValue2 = value;
+                                  });
 
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Navigation()));
-                                            },
-                                            child: Text(
-                                              "نعم",
-                                            ),
-                                          ),
-                                        ],
-                                        content: Text(
-                                            "هل أنت متأكد من رغبتك في إلغاء إضافة الدواء وتحديد الجرعة؟")));
-                          },
-                          child: Text(
-                            "إلغاء",
-                            style: GoogleFonts.tajawal(
-                              color: Color.fromARGB(255, 245, 244, 244),
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+
+                                },
+                                inactiveColor:
+                                    Color.fromARGB(255, 241, 225, 225),
+                                activeColor: Color.fromARGB(255, 122, 164, 186),
+                                min: 1,
+                                max: 5,
+                              ),
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                          style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 140, 167, 190),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10))),
-                        ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            child: Text(
+                              sliderValue2 == 1
+                                  ? "جرعة لكل يوم"
+                                  : sliderValue2 < 3
+                                      ? 'جرعتين لكل يوم'
+                                      : " ـ " +
+                                          sliderValue2.toStringAsFixed(0) +
+                                          " ـ " +
+                                          ' جرعات لكل يوم',
+                              style: GoogleFonts.tajawal(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                              textAlign: TextAlign.right,
+                            ),
+                          ),
+                        ],
                       ),
-                    ])),
-          ),
-        ));
+                    ],
+                  ),
+                  SizedBox(
+                    height: 40.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        ":تاريخ أخذ أول جرعة",
+                        textAlign: TextAlign.right,
+                        style: GoogleFonts.tajawal(
+                            color: Color.fromARGB(255, 122, 164, 186),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Directionality(
+                    textDirection: ui.TextDirection.rtl,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            final selectedDate = await selectDate(context);
+                            if (selectedDate != null) {
+                              setState(() {
+                                setDate = DateTime(selectedDate.year,
+                                    selectedDate.month, selectedDate.day);
+                                // meds?.date = setDate;
+                              });
+                            }
+                          },
+                          child: Container(
+                            decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                ),
+                                // color: Colors.blue,
+                                color: Color.fromRGBO(33, 150, 243, 0.1)),
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Icon(
+                                  Icons.calendar_month,
+                                  size: 27,
+                                  color: Color.fromARGB(255, 140, 167, 190),
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  dateFormat.format(setDate),
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.grey,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        ":وقت أخذ أول جرعة في اليوم",
+                        textAlign: TextAlign.right,
+                        style: GoogleFonts.tajawal(
+                            color: Color.fromARGB(255, 122, 164, 186),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: GestureDetector(
+                          onTap: () async {
+                            Navigator.of(context).push(showPicker(
+                                //  disableHour: true,
+                                // minHour: double.parse(TimeOfDay.now().format(context).toString().substring(0,1)),
+                                ltrMode: false,
+                                iosStylePicker: true,
+                                hourLabel: "ساعة",
+                                minuteLabel: "دقيقة",
+                                okText: "حسنًا",
+                                cancelText: "إلغاء",
+                                value: selectedTime,
+                                onChange: (TimeOfDay time) {
+                                  selectedTime = time;
+                                  if (selectedTime != null) {
+                                    setState(() {
+                                      setTime = selectedTime;
+                                      timeDisplayed = setTime;
+                                      print(selectedTime);
+
+                                      // print(setTime);
+                                      //   print(timeDisplayed);
+
+                                      if ((DateTime.now()
+                                                  .toString()
+                                                  .substring(0, 10) ==
+                                              setDate
+                                                  .toString()
+                                                  .substring(0, 10)) &&
+                                          (int.parse(setTime
+                                                  .toString()
+                                                  .substring(10, 12)) <=
+                                              int.parse(TimeOfDay.now()
+                                                  .toString()
+                                                  .substring(10, 12)))) {
+                                        if (int.parse(setTime
+                                                .toString()
+                                                .substring(10, 12)) ==
+                                            int.parse(TimeOfDay.now()
+                                                .toString()
+                                                .substring(10, 12))) {
+                                          if (int.parse(setTime
+                                                  .toString()
+                                                  .substring(13, 15)) <
+                                              int.parse(TimeOfDay.now()
+                                                  .toString()
+                                                  .substring(13, 15))) {
+                                            SnackBar error = SnackBar(
+                                              content: Directionality(
+                                                textDirection:
+                                                    ui.TextDirection.rtl,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: const [
+                                                    Text(
+                                                      'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 14),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(error);
+                                          }
+                                        } else {
+                                          SnackBar error = SnackBar(
+                                            content: Directionality(
+                                              textDirection:
+                                                  ui.TextDirection.rtl,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: const [
+                                                  Text(
+                                                    'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(error);
+                                        }
+                                      }
+                                    });
+                                  }
+                                }));
+                            // final selectedTime = await selectTime(context);
+                          },
+                          child: Directionality(
+                            textDirection: ui.TextDirection.rtl,
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(20, 10, 27, 10),
+                              decoration: ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  color: Color.fromRGBO(33, 150, 243, 0.1)),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.alarm,
+                                    color: Color.fromARGB(255, 140, 167, 190),
+                                    size: 27,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    // timeDisplayed.format(context),
+                                    timeDisplayed.format(context).contains("AM")
+                                        ? timeDisplayed
+                                                .format(context)
+                                                .substring(0, 5) +
+                                            "" +
+                                            "ص"
+                                        : timeDisplayed
+                                                .format(context)
+                                                .contains("PM")
+                                            ? timeDisplayed
+                                                    .format(context)
+                                                    .substring(0, 5) +
+                                                "" +
+                                                "م"
+                                            : timeDisplayed.format(context),
+
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.grey,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 45.0,
+                  ),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      //  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      children: [
+                        Text(
+                          ":ملاحظات على الجرعة",
+                          textAlign: TextAlign.right,
+                          style: GoogleFonts.tajawal(
+                              color: Color.fromARGB(255, 122, 164, 186),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ]),
+                  Center(
+                    child: Directionality(
+                      textDirection: ui.TextDirection.rtl,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 20,
+                          ),
+                          ListTile(
+                            title: Text('تؤخذ الجرعة قبل الأكل',
+                                style: GoogleFonts.tajawal(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18)),
+                            leading: Radio(
+                                value: 'تؤخذ الجرعة قبل الأكل',
+                                groupValue: _groupValue,
+                                onChanged: (value) {
+                                  checkRadio(value as String);
+                                }),
+                          ),
+                          ListTile(
+                            title: Text('تؤخذ الجرعة بعد الأكل',
+                                style: GoogleFonts.tajawal(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18)),
+                            leading: Radio(
+                                value: 'تؤخذ الجرعة بعد الأكل',
+                                groupValue: _groupValue,
+                                onChanged: (value) {
+                                  checkRadio(value as String);
+                                }),
+                          ),
+                          ListTile(
+                            title: Text('تؤخذ الجرعة في أي وقت',
+                                style: GoogleFonts.tajawal(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18)),
+                            leading: Radio(
+                                value: 'تؤخذ الجرعة في أي وقت',
+                                groupValue: _groupValue,
+                                onChanged: (value) {
+                                  checkRadio(value as String);
+                                }),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        saveMedicine();
+                      },
+                      child: Text(
+                        "إضافة",
+                        style: GoogleFonts.tajawal(
+                          color: Color.fromARGB(255, 245, 244, 244),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(255, 140, 167, 190),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          "لا",
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Navigation()));
+                                        },
+                                        child: Text(
+                                          "نعم",
+                                        ),
+                                      ),
+                                    ],
+                                    content: Text(
+                                        "هل أنت متأكد من رغبتك في إلغاء تحديد الجرعة؟")));
+                      },
+                      child: Text(
+                        "إلغاء",
+                        style: GoogleFonts.tajawal(
+                          color: Color.fromARGB(255, 245, 244, 244),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(255, 140, 167, 190),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
+                  ),
+                ])),
+      ),
+    );
   }
 
   void checkRadio(String value) {
@@ -979,7 +1017,18 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
             (int.parse(every_hours) > 0 &&
                 everyH != '' &&
                 int.parse(every_hours) < 23 &&
-                sliderValue2 != 1))) {
+                sliderValue2 != 1)) &&
+        ((setDate.isAfter(DateTime.now())) ||
+            ((DateTime.now().toString().substring(0, 10) ==
+                    setDate.toString().substring(0, 10)) &&
+                (int.parse(setTime.toString().substring(10, 12)) >
+                    int.parse(TimeOfDay.now().toString().substring(10, 12)))) ||
+            ((DateTime.now().toString().substring(0, 10) ==
+                    setDate.toString().substring(0, 10)) &&
+                (int.parse(setTime.toString().substring(10, 12)) ==
+                    int.parse(TimeOfDay.now().toString().substring(10, 12))) &&
+                int.parse(setTime.toString().substring(13, 15)) >=
+                    int.parse(TimeOfDay.now().toString().substring(13, 15))))) {
       // editing purpose
       _firestore.collection('dosesEdit').add({
         'name': nameController.text,
@@ -1075,7 +1124,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              Text('تمت إضافة الدواء وتحديد الجرعة',
+              Text('تم تحديد الجرعة بنجاح',
                   style: TextStyle(color: Colors.white, fontSize: 15),
                   textAlign: TextAlign.right),
               Icon(
@@ -1091,6 +1140,51 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => Navigation()));
     } else {
+      if ((DateTime.now().toString().substring(0, 10) ==
+              setDate.toString().substring(0, 10)) &&
+          (int.parse(setTime.toString().substring(10, 12)) <=
+              int.parse(TimeOfDay.now().toString().substring(10, 12)))) {
+        if (int.parse(setTime.toString().substring(10, 12)) ==
+            int.parse(TimeOfDay.now().toString().substring(10, 12))) {
+          if (int.parse(setTime.toString().substring(13, 15)) <
+              int.parse(TimeOfDay.now().toString().substring(13, 15))) {
+            SnackBar error = SnackBar(
+              content: Directionality(
+                textDirection: ui.TextDirection.rtl,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
+                      style: TextStyle(color: Colors.white, fontSize: 13),
+                    ),
+                  ],
+                ),
+              ),
+            );
+
+            ScaffoldMessenger.of(context).showSnackBar(error);
+          }
+        } else {
+          SnackBar error = SnackBar(
+            content: Directionality(
+              textDirection: ui.TextDirection.rtl,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                  ),
+                ],
+              ),
+            ),
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(error);
+        }
+      }
+
       if (pillAmountController.text == "" ||
           (everyH == '' && sliderValue2 != 1)) {
         SnackBar error = SnackBar(

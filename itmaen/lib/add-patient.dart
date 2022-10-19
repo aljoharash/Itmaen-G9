@@ -150,7 +150,8 @@ class _AddPatient extends State<AddPatient> {
                   else{
                     FirebaseFirestore.instance.collection('patients').add({
                       'name': nameController.text,
-                      'caregiverID': caregiverID
+                      'caregiverID': caregiverID,
+                      'age':'',
                     });
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
