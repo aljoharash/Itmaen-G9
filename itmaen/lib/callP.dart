@@ -125,7 +125,7 @@ class _callP extends State<callP> {
 
   _callNumber() async {
     //const number = nameO ; //set the number here
-    bool? res = await FlutterPhoneDirectCaller.callNumber(nameO);
+    bool? res = await FlutterPhoneDirectCaller.callNumber(MobileO);
   }
 
   @override
