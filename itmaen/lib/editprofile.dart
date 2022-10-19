@@ -361,10 +361,10 @@ class _editProfile extends State<editProfile> {
                     validator: (value) {
                       if (value == null || value.isEmpty)
                         return "يجب ملء هذا الحقل";
-                      /*String pattern =
-        r'[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$';
-    RegExp regex = RegExp(pattern)*/
-                      //value.length != 10
+                      String pattern = r'^(?:[+0]9)?[0-9]{10}$';
+                      RegExp regex = RegExp(pattern);
+                      if (!regex.hasMatch(value.trim()))
+                        return '  رقم الهاتف يجب أن يتكون من أرقام فقط';
                       if (value.length != 10)
                         return ' رقم الهاتف يجب أن يتكون من ١٠ أرقام';
                       return null;
