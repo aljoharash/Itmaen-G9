@@ -1015,7 +1015,7 @@ class _medBubbleState extends State<medBubble> {
 
                           // print("مرحبا بك ");
                         },
-                        child: Icon(
+                        child:Icon(
                           TextToSpeechAPI().isPlaying != widget.doc
                               ? Icons.volume_mute
                               : Icons.volume_up,

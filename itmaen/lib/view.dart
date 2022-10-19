@@ -623,6 +623,7 @@ class medBubble extends StatelessWidget {
           .get()
           .then((value) {
         //hasValue = value.docs[0].exists;
+        if(value.docs.length>0){
         editDescription = (value.docs[0].get('description'));
         editAmount = (value.docs[0].get('amount'));
         editDays = (value.docs[0].get('days'));
@@ -632,6 +633,6 @@ class medBubble extends StatelessWidget {
         selectedUnit = (value.docs[0].get('unit'));
         editColor = (value.docs[0].get('color')).toString();
         editTime = (value.docs[0].get('firstTime'));
-        editDate = (value.docs[0].get('Date'));
+        editDate = (value.docs[0].get('Date'));}
       });
 }
