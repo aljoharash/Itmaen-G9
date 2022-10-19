@@ -1,7 +1,6 @@
 import 'dart:core';
 import 'dart:ffi';
 import 'dart:ui' as ui;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -177,7 +176,7 @@ class _ViewPageState extends State<View> {
                                 final meddescription = med.get('description');
                                 final package = med.get('Package size');
                                 final picture = med.get('picture');
-                                final strength = med.get('Strength value');
+                                final strength = med.get('Unit of volume');
                                 //final unit = med.get('Unit of volume');
                                 final MedBubble = medBubble(medName,
                                     meddescription, package, picture, strength);
@@ -218,7 +217,7 @@ class _ViewPageState extends State<View> {
                                 final meddescription = med.get('description');
                                 final package = med.get('Package size');
                                 final picture = med.get('picture');
-                                final strength = med.get('Strength value');
+                                final strength = med.get('Unit of volume');
                                 //final unit = med.get('Unit of volume');
                                 final MedBubble = medBubble(medName,
                                     meddescription, package, picture, strength);
@@ -255,8 +254,7 @@ class _ViewPageState extends State<View> {
 }
 
 class medBubble extends StatelessWidget {
-  medBubble(this.medicName, this.meddescription, this.package, this.picture,
-      this.strength);
+  medBubble(this.medicName, this.meddescription, this.package, this.picture, this.strength);
   var medicName;
   var meddescription;
   var package;
@@ -633,6 +631,7 @@ class medBubble extends StatelessWidget {
         selectedUnit = (value.docs[0].get('unit'));
         editColor = (value.docs[0].get('color')).toString();
         editTime = (value.docs[0].get('firstTime'));
-        editDate = (value.docs[0].get('Date'));}
+        editDate = (value.docs[0].get('Date'));
+        }
       });
 }
