@@ -86,7 +86,7 @@ class _GenerateQRState extends State<GenerateQR> {
                   QrImage(data: loggedInUser!.uid),
                   SizedBox(height: 20),
                   Text(
-                    " :كود تسجيل الدخول الخاص ب ",
+                    " كود تسجيل الدخول الخاص ب: ",
                     style: GoogleFonts.tajawal(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
