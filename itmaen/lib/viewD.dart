@@ -262,7 +262,7 @@ Timer? timer;
     }
   }
 
-  late User? loggedInUser = _auth.currentUser;
+  //late User? loggedInUser = _auth.currentUser;
   @override
   Widget build(BuildContext context) {
     var data;
