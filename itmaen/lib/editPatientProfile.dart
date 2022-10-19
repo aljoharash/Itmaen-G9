@@ -114,6 +114,11 @@ class _EditPatientProfile extends State<EditPatientProfile> {
                 fontWeight: FontWeight.bold,),
         )),
       SizedBox(height: 20),
+      Text('الاسم                                                                                             ',
+                   //labelStyle: TextStyle,
+                    style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                    textDirection: TextDirection.rtl,
+                  ),
         Container(
          // height: 110,
           width: 400,
@@ -129,10 +134,17 @@ class _EditPatientProfile extends State<EditPatientProfile> {
                 
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'الاسم ',
-                  labelStyle: TextStyle(
-                    fontSize: 20,
-                  ),
+                 floatingLabelAlignment: FloatingLabelAlignment.start,
+                      filled: true,
+                      fillColor: Color.fromARGB(255, 239, 237, 237),
+                      enabled: true,
+                      contentPadding: const EdgeInsets.only(
+                          left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 236, 231, 231),
+                              width: 3)),
+                 // border: OutlineInputBorder(),
                 ),
 
                 //textAlign: TextAlign.center,
@@ -142,6 +154,11 @@ class _EditPatientProfile extends State<EditPatientProfile> {
           ),
        ),
        SizedBox(height:30),
+       Text('العمر  (اختياري)                                                                                 ',
+                   //labelStyle: TextStyle,
+                    style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                    textDirection: TextDirection.rtl,
+                  ),
         Container(
          // height: 110,
           width: 400,
@@ -150,12 +167,23 @@ class _EditPatientProfile extends State<EditPatientProfile> {
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: TextFormField(
+                
                keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
                 controller: ageController,
                 decoration: const InputDecoration(
+                  floatingLabelAlignment: FloatingLabelAlignment.start,
+                      filled: true,
+                      fillColor: Color.fromARGB(255, 239, 237, 237),
+                      enabled: true,
+                      contentPadding: const EdgeInsets.only(
+                          left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 236, 231, 231),
+                              width: 3)),
                   border: OutlineInputBorder(),
-                  labelText: '  العمر  (اختياري)',
+                 // labelText: '  العمر  (اختياري)',
                   labelStyle: TextStyle(
                     fontSize: 20,
                   ),
