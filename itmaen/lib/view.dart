@@ -166,7 +166,7 @@ class _ViewPageState extends State<View> {
                             builder: (BuildContext context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
                               if (!snapshot.hasData) {
-                                return Text("Loading...");
+                                return Text("");
                               } //else {
                               final medicines = snapshot.data?.docs;
                               List<medBubble> medBubbles = [];
@@ -207,7 +207,7 @@ class _ViewPageState extends State<View> {
                             builder: (BuildContext context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
                               if (!snapshot.hasData) {
-                                return Text("Loading...");
+                                return Text("");
                               } //else {
                               final medicines = snapshot.data?.docs;
                               List<medBubble> medBubbles = [];
@@ -449,7 +449,8 @@ class medBubble extends StatelessWidget {
                                           ],
                                           content: Text(
                                             "هل أنت متأكد من رغبتك في حذف الدواء وما يتبعه من جرعات؟",
-                                            style: GoogleFonts.tajawal(),
+                                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold,),
+                                             textAlign: TextAlign.right,
                                           )));
                             },
                             child: Icon(

@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,6 +38,7 @@ class addByScan extends StatelessWidget {
   late String packageSize = "";
   late String barcode = "";
   late String description = "";
+  
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class addByScan extends StatelessWidget {
         backgroundColor: Color.fromARGB(255, 140, 167, 190),
         title: Center(
             child: Text(
-          "الماسح الضوئي",
+          "الماسح الضوئي         ",
           style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
         )),
       ),
@@ -67,28 +70,48 @@ class addByScan extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(
+                              height: 40,
+                            ),
+                            Text(
+                              "إضافة دواء",
+                              style: GoogleFonts.tajawal(
+                                fontSize: 28,
+                                //fontStyle: FontStyle.italic,
+                                color: Color.fromARGB(255, 122, 164, 186),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
                     Container(
                       padding: EdgeInsets.all(8),
                       width: double.infinity,
-                      child: Card(
-                        elevation: 5,
+                     //child: Card(
+                     // elevation: 5,
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: _.scannedMedicine.isEmpty
                               ? Container(
                                   alignment: Alignment.center,
                                   height: 100,
+                                  child: Card (
+                                    elevation: 5,
                                   child: addMedicineController.notFound
-                                      ? Text(
-                                          'لم يتم المسح حتى الان أو لم يتم العثور على الدواء',
-                                          style: GoogleFonts.tajawal(
-                                              fontWeight: FontWeight.bold),
-                                        )
+                                      ? Padding(
+                                        padding: const EdgeInsets.all(30),
+                                        child: Text(
+                                            'لم يتم المسح حتى الان أو لم يتم العثور على الدواء',
+                                            style: GoogleFonts.tajawal(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                      )
                                       : Text(
                                           'اقرأ الباركود',
                                           style: GoogleFonts.tajawal(
                                               fontWeight: FontWeight.bold),
-                                        ))
+                                        )))
                               : Column(
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
@@ -96,6 +119,11 @@ class addByScan extends StatelessWidget {
                                     SizedBox(
                                       height: 30,
                                     ),
+                                    Text(
+                            "اسم الدواء                                                                               ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
+                            ),
                                     TextFormField(
                                       controller: medName,
                                       autovalidateMode:
@@ -139,6 +167,13 @@ class addByScan extends StatelessWidget {
                                     SizedBox(
                                       height: 16.0,
                                     ),
+
+                                        Text(
+                            "وصف الدواء                                                                               ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
+                            ),
+
                                     TextFormField(
                                       controller: descriptionControl,
                                       keyboardType: TextInputType.multiline,
@@ -173,6 +208,12 @@ class addByScan extends StatelessWidget {
                                     SizedBox(
                                       height: 16.0,
                                     ),
+
+                                        Text(
+                            "حجم العبوة                                                                               ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
+                            ),
                                     TextFormField(
                                       keyboardType: TextInputType.number,
                                       controller: packSize,
@@ -184,7 +225,7 @@ class addByScan extends StatelessWidget {
                                         filled: true,
                                         fillColor:
                                             Color.fromARGB(255, 239, 237, 237),
-                                        hintText: 'عدد الحبات / الكمية ',
+                                        hintText: 'حجم العبوة',
                                         enabled: true,
                                         contentPadding: const EdgeInsets.only(
                                             left: 14.0,
@@ -208,6 +249,11 @@ class addByScan extends StatelessWidget {
                                     SizedBox(
                                       height: 16,
                                     ),
+                                      Text(
+                            " الوحدة                                                                                       ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
+                            ),
                                     TextFormField(
                                       controller: doseUnit,
                                       autovalidateMode:
@@ -254,7 +300,7 @@ class addByScan extends StatelessWidget {
                                   ],
                                 ),
                         ),
-                      ),
+                    // ),
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
@@ -378,6 +424,19 @@ class addByScan extends StatelessWidget {
                                                             "no" +
                                                             ".png"
                                   });
+                                       ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        // margin: EdgeInsets.only(right: 10),
+
+                        content: Text(
+                            'تمت إضافة الدواء بنجاح',
+                            style: TextStyle(fontSize: 20),
+                            textAlign: TextAlign.right),
+                            
+                      ),
+                      
+                    );
+                      _.scannedMedicine.clear();
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => Navigation()));
                                 } else {
@@ -425,3 +484,4 @@ class addByScan extends StatelessWidget {
     if (FormDose == null || FormDose.isEmpty) return 'الرجاء ادخال الجرعة ';
   }
 }
+

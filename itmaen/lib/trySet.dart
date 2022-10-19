@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new
+
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -173,7 +175,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: TextField(
                       inputFormatters: [
-                        new LengthLimitingTextInputFormatter(100),
+                        new LengthLimitingTextInputFormatter(40),
                       ],
                       controller: description,
                       textAlign: TextAlign.right,
@@ -229,23 +231,24 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                       Expanded(
                         child: Container(
                           padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
-                          child: TextField(
+                           child: TextField(
                             onSubmitted: (value) {
                               SnackBar error = SnackBar(
-                                content: Directionality(
-                                  textDirection: ui.TextDirection.rtl,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: const [
-                                      Text(
-                                        'نطاق الأرقام المسموح به لكمية الجرعة من 1 إلى 50',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 15),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                 duration: Duration(seconds: 8),
+              content: Directionality(
+             textDirection: ui.TextDirection.rtl,
+                child: Container(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        'نطاق الأرقام المسموح به لكمية الجرعة من 1 إلى 50',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
                               );
 
                               if (value != "") {
@@ -417,35 +420,30 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                   ),
                   Row(
                     children: [
-                      
                       Expanded(
-                        child:
-                        Column(
-                          children: [
-                                
-
-                         Container(
-                          
+                          child: Column(children: [
+                        Container(
                           padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                           margin: EdgeInsets.only(right: 5),
-                          child: TextField(
+                                child: TextField(
                             controller: hoursController,
                             onSubmitted: (value) {
                               SnackBar error = SnackBar(
-                                content: Directionality(
-                                  textDirection: ui.TextDirection.rtl,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: const [
-                                      Text(
-                                        'نطاق الأرقام المسموح به بين الساعات بين كل جرعة من 1 إلى 23',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 15),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                   duration: Duration(seconds: 8),
+              content: Directionality(
+             textDirection: ui.TextDirection.rtl,
+                child: Container(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        'نطاق الأرقام المسموح به لعدد الساعات بين كل جرعة من 1 إلى 23',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
                               );
 
                               if (value != "") {
@@ -504,33 +502,29 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                             },
                           ),
                         ),
-
                         SizedBox(
-                       height: 10,
+                          height: 10,
                         ),
-
-                                  Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            child: Text(
-                              sliderValue2 == 2
-                                  ? "الساعات المقترحة:       12 ساعة"
-                                  : sliderValue2 == 3
-                                      ? "الساعات المقترحة:       8 ساعات" 
-                                      : sliderValue2 == 4
-                                      ? "الساعات المقترحة:       6 ساعات"
-                                      : sliderValue2 == 5
-                                      ? "الساعات المقترحة:       4 ساعات" : "",
-                                      
-                              style: GoogleFonts.tajawal(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17),
-                              textAlign: TextAlign.center,
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                          child: Text(
+                            sliderValue2 == 2
+                                ? "الساعات المقترحة:       12 ساعة"
+                                : sliderValue2 == 3
+                                    ? "الساعات المقترحة:       8 ساعات"
+                                    : sliderValue2 == 4
+                                        ? "الساعات المقترحة:       6 ساعات"
+                                        : sliderValue2 == 5
+                                            ? "الساعات المقترحة:       4 ساعات"
+                                            : "",
+                            style: GoogleFonts.tajawal(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17),
+                            textAlign: TextAlign.center,
                           ),
-                        
-                        ])
-                      ),
+                        ),
+                      ])),
                       Column(
                         children: [
                           Padding(
@@ -544,8 +538,6 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                   setState(() {
                                     sliderValue2 = value;
                                   });
-
-
                                 },
                                 inactiveColor:
                                     Color.fromARGB(255, 241, 225, 225),
@@ -718,23 +710,25 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                                   .toString()
                                                   .substring(13, 15))) {
                                             SnackBar error = SnackBar(
+                                              duration: Duration(seconds: 10),
                                               content: Directionality(
                                                 textDirection:
                                                     ui.TextDirection.rtl,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: const [
+                                              child: Container(
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: <Widget>[
                                                     Text(
                                                       'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
                                                       style: TextStyle(
                                                           color: Colors.white,
-                                                          fontSize: 14),
+                                                          fontSize: 20),
                                                     ),
                                                   ],
                                                 ),
                                               ),
+                                            ),
+                                      
                                             );
 
                                             ScaffoldMessenger.of(context)
@@ -742,21 +736,22 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                           }
                                         } else {
                                           SnackBar error = SnackBar(
-                                            content: Directionality(
-                                              textDirection:
-                                                  ui.TextDirection.rtl,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: const [
-                                                  Text(
-                                                    'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 14),
-                                                  ),
-                                                ],
+                                            duration: Duration(seconds: 10),
+                                            content:Directionality(
+                                                textDirection:
+                                                    ui.TextDirection.rtl,
+                                              child: Container(
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 20),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           );
@@ -944,7 +939,12 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                       ),
                                     ],
                                     content: Text(
-                                        "هل أنت متأكد من رغبتك في إلغاء تحديد الجرعة؟")));
+                                      "هل أنت متأكد من رغبتك في إلغاء تحديد الجرعة؟",
+                                      style: GoogleFonts.tajawal(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.right,
+                                    )));
                       },
                       child: Text(
                         "إلغاء",
@@ -1125,7 +1125,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
               Text('تم تحديد الجرعة بنجاح',
-                  style: TextStyle(color: Colors.white, fontSize: 15),
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                   textAlign: TextAlign.right),
               Icon(
                 Icons.check,
@@ -1149,16 +1149,19 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
           if (int.parse(setTime.toString().substring(13, 15)) <
               int.parse(TimeOfDay.now().toString().substring(13, 15))) {
             SnackBar error = SnackBar(
+              duration: Duration(seconds: 8),
               content: Directionality(
-                textDirection: ui.TextDirection.rtl,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
-                      style: TextStyle(color: Colors.white, fontSize: 13),
-                    ),
-                  ],
+             textDirection: ui.TextDirection.rtl,
+                child: Container(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -1167,16 +1170,19 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
           }
         } else {
           SnackBar error = SnackBar(
+            duration: Duration(seconds: 8),
             content: Directionality(
-              textDirection: ui.TextDirection.rtl,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                  ),
-                ],
+                                                textDirection: ui.TextDirection.rtl,
+              child: Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -1188,16 +1194,19 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
       if (pillAmountController.text == "" ||
           (everyH == '' && sliderValue2 != 1)) {
         SnackBar error = SnackBar(
+          duration: Duration(seconds: 5),
           content: Directionality(
-            textDirection: ui.TextDirection.rtl,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "الرجاء ملء الحقول الفارغة الإجبارية",
-                  style: TextStyle(color: Colors.white, fontSize: 15),
-                ),
-              ],
+                                                textDirection: ui.TextDirection.rtl,
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'الرجاء ملء الحقول الفارغة الإجبارية',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -1222,7 +1231,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
           ),
         );
         ScaffoldMessenger.of(context).showSnackBar(error);
-      }
+      } 
 
       if (sliderValue2 != 1 && int.parse(every_hours) > 23 ||
           (sliderValue2 != 1 && int.parse(every_hours) <= 0)) {
@@ -1241,20 +1250,23 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
           ),
         );
         ScaffoldMessenger.of(context).showSnackBar(error);
-      }
+      } 
 
       if (compareTimeOfDay(setTime) == false) {
         SnackBar error = SnackBar(
+          duration: Duration(seconds: 8),
           content: Directionality(
-            textDirection: ui.TextDirection.rtl,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'قم بالتأكد من الوقت المدخل والتكرار وعدد الساعات بين كل جرعة',
-                  style: TextStyle(color: Colors.white, fontSize: 15),
-                ),
-              ],
+                                                textDirection: ui.TextDirection.rtl,
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+ 'يجب أن يتناسب عدد الجرعات في اليوم (التكرار) مع عدد الساعات بين كل جرعة مع وقت أخذ أول جرعة في اليوم',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ],
+              ),
             ),
           ),
         );
