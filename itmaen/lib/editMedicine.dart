@@ -243,7 +243,7 @@ int count = 0;
                               height: 100,
                             ),
                             Text(
-                              "تعديل دواء",
+                              "بيانات الدواء",
                               style: GoogleFonts.tajawal(
                                 fontSize: 30,
                                 //fontStyle: FontStyle.italic,
@@ -271,7 +271,7 @@ int count = 0;
                                     r'^(?=.{3,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
                                 RegExp regex = RegExp(pattern);
                                 if (!regex.hasMatch(value.trim()))
-                                  return 'يجب أن يحتوي اسم الدواء على ثلاثة أحرف على الاقل';
+                                  return 'يجب أن يحتوي اسم الدواء على ثلاثة أحرف على الأقل وأن يكون خالي من الرموز';
                                 return null;
                               },
                               textAlign: TextAlign.right,
@@ -518,7 +518,7 @@ int count = 0;
                                   }
                                 }
                               },
-                              child: Text('تعديل',
+                              child: Text('حفظ',
                                   style: GoogleFonts.tajawal(
                                     color: Color.fromARGB(255, 245, 244, 244),
                                     fontSize: 20,
