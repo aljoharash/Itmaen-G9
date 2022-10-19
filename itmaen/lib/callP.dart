@@ -23,18 +23,6 @@ class callP extends StatefulWidget {
       {Key? key, required this.name, required this.email, required this.mobile})
       : super(key: key);
 
-  /*
-  static String nameO = data.user1;
-  static String emailO = data.email1;
-  static String PassO = data.password1;
-  static String MobileO = data.phoneNum1;*/
-  /*editProfile({Key? key, username, email, password, phoneNum}) {
-    var nameO = username;
-    var emailO = email;
-    var PassO = password;
-    var MobileO = phoneNum;
-  }*/
-
   @override
   _callP createState() => _callP();
 }
@@ -169,7 +157,7 @@ class _callP extends State<callP> {
                       backgroundImage: AssetImage('images/profile.png'),
                     ),
                     Text(
-                      'deem',
+                      '',
                       style: TextStyle(
                         fontFamily: 'Pacifico',
                         fontSize: 40.0,
@@ -214,26 +202,25 @@ class _callP extends State<callP> {
                           ),
                         )),
                     Card(
-                        margin: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 25.0),
-                        //  elevation()
-                        child: Expanded(
-                            child: ListTile(
-                          // ignore: prefer_const_constructors
-                          leading: Icon(Icons.email,
-                              color: Color.fromARGB(255, 140, 167, 190),
-                              textDirection: ui.TextDirection.rtl),
-                          title: Text(
-                            emailO,
+                      margin: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 25.0),
+                      //  elevation()
+                      child: ListTile(
+                        title: Text(emailO,
                             style: GoogleFonts.tajawal(
                               fontSize: 20.0,
                               color: Colors.teal.shade900,
                               // fontFamily: 'Source Sans Pro'
-                            ),
-                            textDirection: ui.TextDirection.rtl,
-                            textAlign: TextAlign.right,
-                          ),
-                        ))),
+                            )),
+                        // ignore: prefer_const_constructors
+                        leading: Icon(Icons.email,
+                            color: Color.fromARGB(255, 140, 167, 190),
+                            textDirection: ui.TextDirection.rtl),
+
+                        // textDirection: ui.TextDirection.rtl,
+                        //textAlign: TextAlign.right,
+                      ),
+                    ),
                   ],
                 )),
           ),
