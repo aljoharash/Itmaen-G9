@@ -958,71 +958,71 @@ class _medBubbleState extends State<medBubble> {
                   SizedBox(
                     height: 15,
                   ),
-                  Container(
-                      alignment: Alignment.topLeft,
-                      child: GestureDetector(
-                        onTap: () async {
-                          //??
+                  // Container(
+                  //     alignment: Alignment.topLeft,
+                  //     child: GestureDetector(
+                  //       onTap: () async {
+                  //         //??
 
-                          // متداخل
+                  //         // متداخل
 
-                          //  function  to call the api but it in any button action it will work
-                          setState(() {
-                            TextToSpeechAPI().isPlaying = widget.doc;
-                          });
+                  //         //  function  to call the api but it in any button action it will work
+                  //         setState(() {
+                  //           TextToSpeechAPI().isPlaying = widget.doc;
+                  //         });
 
-                          TextToSpeechAPI()
-                              .playVoice(
-                                  " تفاصيل الجرعة " +
-                                      " الكمية " +
-                                      widget.MedAmount +
-                                      " " +
-                                      widget.MedUnit +
-                                      " الوقت " +
-                                      " " +
-                                      widget.time +
-                                      " " +
-                                      widget.meddescription,
-                                  widget.audioPlayer)
-                              .then((value) => {
-                                    widget.audioPlayer.onPlayerComplete
-                                        .listen((event) {
-                                      setState(() {
-                                        TextToSpeechAPI().isPlaying = "";
-                                      });
-                                    })
-                                  });
+                  //         TextToSpeechAPI()
+                  //             .playVoice(
+                  //                 " تفاصيل الجرعة " +
+                  //                     " الكمية " +
+                  //                     widget.MedAmount +
+                  //                     " " +
+                  //                     widget.MedUnit +
+                  //                     " الوقت " +
+                  //                     " " +
+                  //                     widget.time +
+                  //                     " " +
+                  //                     widget.meddescription,
+                  //                 widget.audioPlayer)
+                  //             .then((value) => {
+                  //                   widget.audioPlayer.onPlayerComplete
+                  //                       .listen((event) {
+                  //                     setState(() {
+                  //                       TextToSpeechAPI().isPlaying = "";
+                  //                     });
+                  //                   })
+                  //                 });
 
-                          /*٫playVoice(" تفاصيل الجرعة " +
+                  //         /*٫playVoice(" تفاصيل الجرعة " +
 
-                              " الكمية " +
+                  //             " الكمية " +
 
-                              widget.MedAmount +
+                  //             widget.MedAmount +
 
-                              " " +
+                  //             " " +
 
-                              widget.MedUnit +
+                  //             widget.MedUnit +
 
-                              " الوقت " +
+                  //             " الوقت " +
 
-                              " " +
+                  //             " " +
 
-                              widget.time +
+                  //             widget.time +
 
-                              " " +
+                  //             " " +
 
-                              widget.meddescription, AudioPlayer());*/
+                  //             widget.meddescription, AudioPlayer());*/
 
-                          // print("مرحبا بك ");
-                        },
-                        child: Icon(
-                          TextToSpeechAPI().isPlaying != widget.doc
-                              ? Icons.volume_mute
-                              : Icons.volume_up,
-                          color: Color.fromARGB(255, 111, 161, 200),
-                          size: 30,
-                        ),
-                      )),
+                  //         // print("مرحبا بك ");
+                  //       },
+                  //       child: Icon(
+                  //         TextToSpeechAPI().isPlaying != widget.doc
+                  //             ? Icons.volume_mute
+                  //             : Icons.volume_up,
+                  //         color: Color.fromARGB(255, 111, 161, 200),
+                  //         size: 30,
+                  //       ),
+                  //     )),
                   Center(
                     child: Text(widget.MedAmount + ' ' + widget.MedUnit,
                         style: GoogleFonts.tajawal(
@@ -1362,7 +1362,7 @@ class _medBubbleState extends State<medBubble> {
                                                 child: Icon(
                                                   TextToSpeechAPI().isPlaying !=
                                                           widget.doc
-                                                      ? Icons.volume_mute
+                                                      ? Icons.volume_down
                                                       : Icons.volume_up,
                                                   color: Color.fromARGB(
                                                       255, 111, 161, 200),
