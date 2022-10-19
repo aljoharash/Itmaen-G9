@@ -97,7 +97,8 @@ class _EditPatientProfile extends State<EditPatientProfile> {
           style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
         )),
       ),
-      body: Column(children: [
+      body: SingleChildScrollView(
+        child:Column(children: [
         //SizedBox(height: 30),
        
         Padding(
@@ -212,7 +213,7 @@ class _EditPatientProfile extends State<EditPatientProfile> {
                 ),
                 color: Color.fromARGB(255, 140, 167, 190),
                 onPressed: () async {
-                  RegExp r1 = new RegExp(r'^["@$&^)(*&£%!?><_+]');
+                  RegExp r1 = new RegExp(r'^["@$&^)(*&£%!?><_+.]');
                   RegExp r = new RegExp(r'\s');
                   if (r.hasMatch(nameController.text)|| r.hasMatch(ageController.text)) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -238,7 +239,7 @@ class _EditPatientProfile extends State<EditPatientProfile> {
                   }
                   // String? id = await st.readSecureData("caregiverID");
                   else if ((nameController.text.length >= 2 &&
-                      nameController.text.length <= 20) && (ageController.text.length<=3)) {
+                      nameController.text.length <= 20) && (int.parse(ageController.text)  >=1 && int.parse(ageController.text)  <=130)) {
                    
                     var id;
                     await FirebaseFirestore.instance
@@ -297,13 +298,13 @@ class _EditPatientProfile extends State<EditPatientProfile> {
                         ),
                       );
                     }
-                    else if (ageController.text.length >= 3) {
+                    else if (int.parse(ageController.text)  < 1 ||int.parse(ageController.text ) > 130) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           // margin: EdgeInsets.only(right: 10),
 
                           content: Text(
-                              'لا يجب أن يحتوي عمر مستقبل الرعاية على اكثر من ثلاثة أرقام    ',
+                             'نطاق الأرقام المسموح به للعمر من 1 الى 130',
                               style: TextStyle(fontSize: 20),
                               textAlign: TextAlign.right),
                         ),
@@ -326,6 +327,7 @@ class _EditPatientProfile extends State<EditPatientProfile> {
           ),
         ),
       ]),
+      )
     );
   }
 }
