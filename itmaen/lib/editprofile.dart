@@ -15,7 +15,18 @@ import 'package:itmaen/viewDailyDoses.dart';
 import 'navigation.dart';
 
 class editProfile extends StatefulWidget {
-  editProfile({Key? key}) : super(key: key);
+  final String name;
+  final String email;
+  final String pass;
+  final String mobile;
+
+  const editProfile(
+      {Key? key,
+      required this.name,
+      required this.email,
+      required this.pass,
+      required this.mobile})
+      : super(key: key);
 
   @override
   _editProfile createState() => _editProfile();
@@ -47,14 +58,22 @@ class _editProfile extends State<editProfile> {
     }
   }
 
-  final newPasswordController = TextEditingController(text: PassO);
-  final newEmailController = TextEditingController(text: emailO);
-  TextEditingController username = TextEditingController(text: nameO);
-  TextEditingController phoneNum = new TextEditingController(text: MobileO);
+  final newPasswordController = TextEditingController();
+  final newEmailController = TextEditingController();
+  TextEditingController username = TextEditingController();
+  TextEditingController phoneNum = new TextEditingController();
 
   @override
   void initState() {
     retrieve2();
+    nameO = widget.name;
+    emailO = widget.email;
+    PassO = widget.pass;
+    MobileO = widget.mobile;
+    username.text = nameO;
+    newEmailController.text = emailO;
+    newPasswordController.text = PassO;
+    phoneNum.text = MobileO;
 
     super.initState();
     getCurrentUser();
@@ -123,10 +142,11 @@ class _editProfile extends State<editProfile> {
     print(nameO);
     print(PassO);
     print(MobileO);
+    /*
     final newPasswordController = TextEditingController(text: PassO);
     final newEmailController = TextEditingController(text: emailO);
     TextEditingController username = TextEditingController(text: nameO);
-    TextEditingController phoneNum = new TextEditingController(text: MobileO);
+    TextEditingController phoneNum = new TextEditingController(text: MobileO);*/
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -400,7 +420,8 @@ class _editProfile extends State<editProfile> {
                     },
                     child: Text(
                       'حفظ ',
-                      style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                      style: GoogleFonts.tajawal(
+                          fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                     color: Color.fromARGB(255, 140, 167, 190),
                   ),
@@ -423,9 +444,10 @@ class _editProfile extends State<editProfile> {
                     },
                     child: Text(
                       'حذف الحساب ',
-                      style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                      style: GoogleFonts.tajawal(
+                          fontWeight: FontWeight.bold, color: Colors.white),
                     ),
-                    color: Color.fromARGB(255, 255, 0, 0),
+                    color: Color.fromARGB(255, 212, 17, 17),
                   ),
                 ],
               ),

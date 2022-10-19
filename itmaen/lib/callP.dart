@@ -15,19 +15,13 @@ import 'dart:ui' as ui;
 import 'navigation.dart';
 
 class callP extends StatefulWidget {
-  callP({Key? key}) : super(key: key);
+  final String name;
+  final String email;
+  final String mobile;
 
-  /*
-  static String nameO = data.user1;
-  static String emailO = data.email1;
-  static String PassO = data.password1;
-  static String MobileO = data.phoneNum1;*/
-  /*editProfile({Key? key, username, email, password, phoneNum}) {
-    var nameO = username;
-    var emailO = email;
-    var PassO = password;
-    var MobileO = phoneNum;
-  }*/
+  const callP(
+      {Key? key, required this.name, required this.email, required this.mobile})
+      : super(key: key);
 
   @override
   _callP createState() => _callP();
@@ -69,22 +63,15 @@ class _callP extends State<callP> {
       print("$cid_ here 2");
       t = false;
     }
-
-    //retrieve2();
-    /*
-    
-    var snapShotsValue = await FirebaseFirestore.instance
-        .collection("caregivers")
-        .where('caregiverID', isEqualTo: caregiverID)
-        .get();
-   // retrieve(snapShotsValue);
-    print("test enter");*/
   }
 
   @override
   void initState() {
-    retrieve2();
-
+    // retrieve2();
+    nameO = widget.name;
+    print(nameO + "نن");
+    emailO = widget.email;
+    MobileO = widget.mobile;
     super.initState();
     getCurrentUser();
     retrieve2();
@@ -124,19 +111,9 @@ class _callP extends State<callP> {
     super.dispose();
   }
 
-  final currentUser = FirebaseAuth.instance.currentUser;
-  changePassword() async {
-    try {
-      await currentUser!.updateEmail(newEmail);
-      await currentUser!.updatePassword(newPassword);
-      //FirebaseAuth.instance.signOut();
-
-    } catch (e) {}
-  }
-
   _callNumber() async {
     //const number = nameO ; //set the number here
-    bool? res = await FlutterPhoneDirectCaller.callNumber(nameO);
+    bool? res = await FlutterPhoneDirectCaller.callNumber(MobileO);
   }
 
   @override
@@ -180,7 +157,7 @@ class _callP extends State<callP> {
                       backgroundImage: AssetImage('images/profile.png'),
                     ),
                     Text(
-                      'deem',
+                      '',
                       style: TextStyle(
                         fontFamily: 'Pacifico',
                         fontSize: 40.0,
@@ -189,13 +166,13 @@ class _callP extends State<callP> {
                       ),
                     ),
                     Text(
-                      '',
-                      style: TextStyle(
-                        fontFamily: 'Source Sans Pro',
-                        color: Colors.teal.shade100,
-                        fontSize: 20.0,
-                        letterSpacing: 2.5,
+                      '  المشرف على العلاج ',
+                      style: GoogleFonts.tajawal(
                         fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 40, 114, 148),
+                        fontSize: 20.0,
+                        //letterSpacing: 2.5,
+                        // fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(
@@ -211,9 +188,9 @@ class _callP extends State<callP> {
                         child: ListTile(
                           title: Text(
                             nameO,
-                            style: TextStyle(
+                            style: GoogleFonts.tajawal(
                               color: Colors.teal.shade900,
-                              fontFamily: 'Source Sans Pro',
+                              // fontFamily: 'Source Sans Pro',
                               fontSize: 20.0,
                             ),
                             textAlign: TextAlign.right,
@@ -225,25 +202,25 @@ class _callP extends State<callP> {
                           ),
                         )),
                     Card(
-                        margin: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 25.0),
-                        //  elevation()
-                        child: Expanded(
-                            child: ListTile(
-                          // ignore: prefer_const_constructors
-                          leading: Icon(Icons.email,
-                              color: Color.fromARGB(255, 140, 167, 190),
-                              textDirection: ui.TextDirection.rtl),
-                          title: Text(
-                            emailO,
-                            style: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.teal.shade900,
-                                fontFamily: 'Source Sans Pro'),
-                            textDirection: ui.TextDirection.rtl,
-                            textAlign: TextAlign.right,
-                          ),
-                        ))),
+                      margin: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 25.0),
+                      //  elevation()
+                      child: ListTile(
+                        title: Text(emailO,
+                            style: GoogleFonts.tajawal(
+                              fontSize: 20.0,
+                              color: Colors.teal.shade900,
+                              // fontFamily: 'Source Sans Pro'
+                            )),
+                        // ignore: prefer_const_constructors
+                        leading: Icon(Icons.email,
+                            color: Color.fromARGB(255, 140, 167, 190),
+                            textDirection: ui.TextDirection.rtl),
+
+                        // textDirection: ui.TextDirection.rtl,
+                        //textAlign: TextAlign.right,
+                      ),
+                    ),
                   ],
                 )),
           ),

@@ -42,11 +42,18 @@ class _NavigationPatientState extends State<NavigationPatient> {
   late User loggedInUser;
   String id_ = "";
   Timer? timer;
+  var caregiverID2;
+  static String nameO = "";
+  static String emailO = "";
+  static String MobileO = "";
+
   StorageService st = StorageService();
   @override
   void initState() {
     super.initState();
     getCurrentUser();
+    retrieve2();
+    print(nameO + "inside");
 
     Noti.initialize(flutterLocalNotificationsPlugin);
     // timer = Timer.periodic(const Duration(seconds: 60), (Timer t) {
@@ -54,6 +61,28 @@ class _NavigationPatientState extends State<NavigationPatient> {
     // });
     print('first');
   }
+
+  Future<void> retrieve2() async {
+    final user = await _auth.currentUser;
+    var isAvailable = user?.uid;
+    if (isAvailable == null) {
+      id_ = (await st.readSecureData("caregiverID"))!;
+      caregiverID2 = id_;
+      print(caregiverID2 + "test patient");
+      print("$id_ here 1");
+      var collection = FirebaseFirestore.instance.collection('caregivers');
+      var docSnapshot = await collection.doc(caregiverID2).get();
+      if (!docSnapshot.exists) {
+        print("ops");
+      } else if (docSnapshot.exists) {
+        Map<String, dynamic> data = docSnapshot.data()!;
+        nameO = data['user name'];
+        emailO = data['email'];
+        MobileO = data['mobileNum'];
+      }
+    }
+  }
+
 /*
   _callNumber() async {
     const number = '08592119XXXX'; //set the number here
@@ -123,7 +152,7 @@ class _NavigationPatientState extends State<NavigationPatient> {
         return;
         break;
       case 1:
-        return callP();
+        return callP(name: nameO, email: emailO, mobile: MobileO);
         break;
       case 2:
         return PatientCalendar();

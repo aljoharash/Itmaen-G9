@@ -107,7 +107,7 @@ class addByScan extends StatelessWidget {
                                             r'^(?=.{3,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
                                         RegExp regex = RegExp(pattern);
                                         if (!regex.hasMatch(value.trim()))
-                                          return 'يجب أن يحتوي اسم الدواء على ثلاثة أحرف على الاقل';
+                                          return 'يجب أن يحتوي اسم الدواء على ثلاثة أحرف على الأقل وأن يكون خالي من الرموز';
                                         return null;
                                       },
                                       textAlign: TextAlign.right,
