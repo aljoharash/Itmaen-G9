@@ -161,8 +161,8 @@ class _editProfile extends State<editProfile> {
             icon: Icon(Icons.arrow_back_ios),
             color: Color.fromARGB(255, 255, 255, 255),
             onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => Navigation(4)));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => Navigation()));
             },
           ),
         ),
@@ -421,8 +421,9 @@ class _editProfile extends State<editProfile> {
                     child: Text(
                       'حفظ ',
                       style: GoogleFonts.tajawal(
-                        fontSize: 18,
-                          fontWeight: FontWeight.bold, color: Colors.white),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                     ),
                     color: Color.fromARGB(255, 140, 167, 190),
                   ),
@@ -447,7 +448,8 @@ class _editProfile extends State<editProfile> {
                       'حذف الحساب ',
                       style: GoogleFonts.tajawal(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold, color: Colors.white),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                     ),
                     color: Color.fromARGB(255, 212, 17, 17),
                   ),

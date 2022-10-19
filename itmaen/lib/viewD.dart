@@ -354,7 +354,7 @@ class _ViewDPageState extends State<ViewD> {
 
     print("it is working in the background");
 
-    Navigation nv = new Navigation(4);
+    Navigation nv = new Navigation();
 
     final _auth = FirebaseAuth.instance;
 
@@ -826,7 +826,7 @@ class _ViewDPageState extends State<ViewD> {
 
  
 
-                                  Navigation nv = Navigation(4);
+                                  Navigation nv = Navigation();
 
  
 
@@ -1172,7 +1172,7 @@ class _ViewDPageState extends State<ViewD> {
 
  
 
-                                  Navigation nv = Navigation(4);
+                                  Navigation nv = Navigation();
 
  
 
@@ -1456,7 +1456,7 @@ class _medBubbleState extends State<medBubble> {
 
  
 
-  final Navigation nv = new Navigation(4);
+  final Navigation nv = new Navigation();
 
  
 
@@ -2676,7 +2676,7 @@ class _medBubbleState extends State<medBubble> {
 
                                 content: Text(
 
-                                    ' يرجى الإنتظار حتى إنتهاء العملية السابقه ',
+                                    'يرجى الانتظار حتى ينتهي الصوت الذي يتم تشغيله الآن',
 
                                     style: TextStyle(fontSize: 18),
 

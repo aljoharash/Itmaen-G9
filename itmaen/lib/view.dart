@@ -371,7 +371,7 @@ class medBubble extends StatelessWidget {
                                 // Extracting data from snapshot object
                                 final data = snapshot.data as bool;
                                 return Container(
-                                    width: 220,
+                                    width: 242,
                                     child: data == true
                                         ? (MaterialButton(
                                             shape: RoundedRectangleBorder(
@@ -380,7 +380,7 @@ class medBubble extends StatelessWidget {
                                             ),
 
                                             padding: EdgeInsets.fromLTRB(
-                                                47, 10, 50, 10),
+                                                47, 10, 60, 10),
                                             onPressed: () {
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
@@ -433,7 +433,7 @@ class medBubble extends StatelessWidget {
                                                   BorderRadius.circular(10),
                                             ),
                                             padding: EdgeInsets.fromLTRB(
-                                                47, 10, 50, 10),
+                                                47, 10, 60, 10),
                                             onPressed: () {
                                               Navigator.of(context)
                                                   .push(MaterialPageRoute(
@@ -499,7 +499,7 @@ class medBubble extends StatelessWidget {
                               child: Icon(
                                 Icons.edit,
                                 color: Color.fromARGB(255, 111, 161, 200),
-                                size: 30,
+                                size: 25,
                               ),
                             )),
 
@@ -534,7 +534,7 @@ class medBubble extends StatelessWidget {
                                                     await collectionDoses
                                                         .where("name",
                                                             isEqualTo:
-                                                                medicName)
+                                                                medicName).where("caregiverID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                                                         .get();
                                                 for (var doc
                                                     in snapshotDoses.docs) {
@@ -560,7 +560,7 @@ class medBubble extends StatelessWidget {
                                                     await collectionDoseEdit
                                                         .where("name",
                                                             isEqualTo:
-                                                                medicName)
+                                                                medicName).where("caregiverID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                                                         .get();
                                                 for (var doc
                                                     in snapshotoseEdit.docs) {
@@ -576,7 +576,7 @@ class medBubble extends StatelessWidget {
                                                     await collectionMed
                                                         .where("Trade name",
                                                             isEqualTo:
-                                                                medicName)
+                                                                medicName).where("caregiverID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                                                         .get();
                                                 for (var doc
                                                     in snapshotMed.docs) {
@@ -598,8 +598,8 @@ class medBubble extends StatelessWidget {
                             },
                             child: Icon(
                               Icons.delete,
-                              color: ui.Color.fromARGB(255, 254, 0, 8),
-                              size: 30,
+                              color: ui.Color.fromARGB(255, 247, 76, 81),
+                              size: 25,
                             ),
                           )),
 

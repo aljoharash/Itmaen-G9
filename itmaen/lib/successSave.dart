@@ -77,8 +77,10 @@ class _success extends State<success> {
               child: HomeButton(
                 title: 'اغلاق',
                 onTap: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Navigation(4)));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Navigation()));
                 },
               ),
             ),

@@ -432,7 +432,8 @@ class addByScan extends StatelessWidget {
                                   );
                                   _.scannedMedicine.clear();
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => Navigation(2)));
+                                      builder: (context) =>
+                                          Navigation()));
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
