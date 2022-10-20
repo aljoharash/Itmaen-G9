@@ -37,7 +37,7 @@ class Navigation extends StatefulWidget {
   void sendNotificationchecked2(String mediName) async {
     Noti.showBigTextNotification(
         title: "تم أخذ الجرعة",
-        body: "اطمئن، قام مسقبل رعايتك بأخذ ${mediName}",
+        body: "اطمئن، قام مستقبل رعايتك بأخذ ${mediName}",
         fln: flutterLocalNotificationsPlugin);
   }
 
