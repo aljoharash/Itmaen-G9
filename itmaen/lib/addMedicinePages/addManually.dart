@@ -95,9 +95,10 @@ class _addManuallyState extends State<addManually> {
                               height: 40,
                             ),
                             Text(
-                            "اسم الدواء                                                                               ",
-                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-                            textDirection: ui.TextDirection.rtl,
+                              "اسم الدواء                                                                               ",
+                              style: GoogleFonts.tajawal(
+                                  fontWeight: FontWeight.bold),
+                              textDirection: ui.TextDirection.rtl,
                             ),
                             TextFormField(
                               controller: medName,
@@ -140,9 +141,10 @@ class _addManuallyState extends State<addManually> {
                               height: 16.0,
                             ),
                             Text(
-                            "وصف الدواء                                                                               ",
-                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-                            textDirection: ui.TextDirection.rtl,
+                              "وصف الدواء                                                                               ",
+                              style: GoogleFonts.tajawal(
+                                  fontWeight: FontWeight.bold),
+                              textDirection: ui.TextDirection.rtl,
                             ),
                             TextFormField(
                               controller: description,
@@ -173,9 +175,10 @@ class _addManuallyState extends State<addManually> {
                               height: 16.0,
                             ),
                             Text(
-                            "حجم العبوة                                                                               ",
-                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-                            textDirection: ui.TextDirection.rtl,
+                              "حجم العبوة                                                                               ",
+                              style: GoogleFonts.tajawal(
+                                  fontWeight: FontWeight.bold),
+                              textDirection: ui.TextDirection.rtl,
                             ),
                             TextFormField(
                               keyboardType: TextInputType.number,
@@ -210,22 +213,23 @@ class _addManuallyState extends State<addManually> {
                               height: 16.0,
                             ),
                             Text(
-                            " الوحدة                                                                                       ",
-                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-                            textDirection: ui.TextDirection.rtl,
+                              " الوحدة                                                                                       ",
+                              style: GoogleFonts.tajawal(
+                                  fontWeight: FontWeight.bold),
+                              textDirection: ui.TextDirection.rtl,
                             ),
                             TextFormField(
                               controller: doseCount,
                               validator: (value) {
-                                        if (value == null || value.isEmpty)
-                                          return 'الرجاء إدخال الوحدة';
-                                        String pattern =
-                                            r'^(?=.{2,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
-                                        RegExp regex = RegExp(pattern);
-                                        if (!regex.hasMatch(value.trim()))
-                                          return 'يجب أن يحتوي اسم الوحدة على حرفين على الاقل';
-                                        return null;
-                                      },
+                                if (value == null || value.isEmpty)
+                                  return 'الرجاء إدخال الوحدة';
+                                String pattern =
+                                    r'^(?=.{2,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
+                                RegExp regex = RegExp(pattern);
+                                if (!regex.hasMatch(value.trim()))
+                                  return 'يجب أن يحتوي اسم الوحدة على حرفين على الاقل';
+                                return null;
+                              },
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               textAlign: TextAlign.right,

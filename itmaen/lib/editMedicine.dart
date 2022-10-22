@@ -300,7 +300,6 @@ class _EditMedState extends State<EditMed> {
                                   return 'يجب أن يحتوي الوصف على ثلاثة أحرف على الأقل وأن يكون خالي من الرموز';
                                 return null;
                               },
-
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),

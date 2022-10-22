@@ -49,7 +49,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
   DateTime setDate = DateTime.now();
   TimeOfDay setTime = TimeOfDay.now();
   var selectedTime = TimeOfDay.now();
-  String _groupValue = 'تؤخذ الجرعة في أي وقت';
+  String _groupValue = 'في أي وقت';
   DateFormat dateFormat = DateFormat('yyyy-MM-dd');
   DateFormat dateFormatDisplayed = DateFormat('dd/MM/yyyy');
   Color onClickDropDown = Colors.black45;
@@ -354,7 +354,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                     child: Text(
                       ":المدة",
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.right,
                       style: GoogleFonts.tajawal(
                           color: Color.fromARGB(255, 122, 164, 186),
                           fontWeight: FontWeight.bold,
@@ -408,7 +408,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                     height: 40.0,
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 0, 70, 0),
+                    padding: const EdgeInsets.fromLTRB(15, 0, 10, 0),
                     child: Text(
                       ":التكرار",
                       textAlign: TextAlign.right,
@@ -578,15 +578,18 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                     height: 40.0,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        ":تاريخ أخذ أول جرعة",
-                        textAlign: TextAlign.right,
-                        style: GoogleFonts.tajawal(
-                            color: Color.fromARGB(255, 122, 164, 186),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 8, 5, 8),
+                        child: Text(
+                          ":تاريخ أخذ أول جرعة",
+                          textAlign: TextAlign.right,
+                          style: GoogleFonts.tajawal(
+                              color: Color.fromARGB(255, 122, 164, 186),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
                       ),
                     ],
                   ),
@@ -648,15 +651,20 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                     height: 30.0,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        ":وقت أخذ أول جرعة في اليوم",
-                        textAlign: TextAlign.right,
-                        style: GoogleFonts.tajawal(
-                            color: Color.fromARGB(255, 122, 164, 186),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                      Padding(
+                
+                   padding: const EdgeInsets.fromLTRB(0, 8, 5, 8),
+
+                        child: Text(
+                          ":وقت أخذ أول جرعة في اليوم",
+                          textAlign: TextAlign.right,
+                          style: GoogleFonts.tajawal(
+                              color: Color.fromARGB(255, 122, 164, 186),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
                       ),
                     ],
                   ),
@@ -828,17 +836,20 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                     height: 45.0,
                   ),
                   Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       //  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                       children: [
-                        Text(
-                          ":ملاحظات على الجرعة",
-                          textAlign: TextAlign.right,
-                          style: GoogleFonts.tajawal(
-                              color: Color.fromARGB(255, 122, 164, 186),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
+                        Padding(
+                   padding: const EdgeInsets.fromLTRB(0, 8, 5, 8),
+                          child: Text(
+                            ":موعد أخذ الجرعة",
+                            textAlign: TextAlign.right,
+                            style: GoogleFonts.tajawal(
+                                color: Color.fromARGB(255, 122, 164, 186),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
                         ),
                       ]),
                   Center(
@@ -850,39 +861,39 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                             height: 20,
                           ),
                           ListTile(
-                            title: Text('تؤخذ الجرعة قبل الأكل',
+                            title: Text('قبل الأكل',
                                 style: GoogleFonts.tajawal(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18)),
                             leading: Radio(
-                                value: 'تؤخذ الجرعة قبل الأكل',
+                                value: 'قبل الأكل',
                                 groupValue: _groupValue,
                                 onChanged: (value) {
                                   checkRadio(value as String);
                                 }),
                           ),
                           ListTile(
-                            title: Text('تؤخذ الجرعة بعد الأكل',
+                            title: Text('بعد الأكل',
                                 style: GoogleFonts.tajawal(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18)),
                             leading: Radio(
-                                value: 'تؤخذ الجرعة بعد الأكل',
+                                value: 'بعد الأكل',
                                 groupValue: _groupValue,
                                 onChanged: (value) {
                                   checkRadio(value as String);
                                 }),
                           ),
                           ListTile(
-                            title: Text('تؤخذ الجرعة في أي وقت',
+                            title: Text('في أي وقت',
                                 style: GoogleFonts.tajawal(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18)),
                             leading: Radio(
-                                value: 'تؤخذ الجرعة في أي وقت',
+                                value: 'في أي وقت',
                                 groupValue: _groupValue,
                                 onChanged: (value) {
                                   checkRadio(value as String);

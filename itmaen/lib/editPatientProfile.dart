@@ -87,7 +87,8 @@ class _EditPatientProfile extends State<EditPatientProfile> {
             icon: new Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => Navigation()),
+              MaterialPageRoute(
+                  builder: (context) => Navigation()),
             ),
           ),
           backgroundColor: Color.fromARGB(255, 140, 167, 190),
@@ -232,7 +233,7 @@ class _EditPatientProfile extends State<EditPatientProfile> {
                           const SnackBar(
                             // margin: EdgeInsets.only(right: 10),
 
-                            content: Text('يرجى عدم وضع رموز غريبة',
+                            content: Text('يرجى عدم وضع رموز ',
                                 style: TextStyle(fontSize: 20),
                                 textAlign: TextAlign.right),
                           ),
