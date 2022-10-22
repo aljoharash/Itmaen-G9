@@ -519,7 +519,6 @@ class _ViewDPageState extends State<ViewD> {
   @override
 
   Widget build(BuildContext context) {
-
     var data;
 
  
@@ -2798,15 +2797,13 @@ class _medBubbleState extends State<medBubble> {
 
                                                 },
 
-                                                child: Icon(
+                                                child: 
 
                                                   TextToSpeechAPI().isPlaying !=
 
                                                           widget.doc
 
-                                                      ? Icons.volume_down
-
-                                                      : Icons.volume_up,
+                                                      ? Icon(Icons.volume_mute,
 
                                                   color: Color.fromARGB(
 
@@ -2814,7 +2811,24 @@ class _medBubbleState extends State<medBubble> {
 
                                                   size: 30,
 
-                                                ),
+                                                ) :
+                                                BlinkWidget(children: <Widget>[
+                                                  Icon(Icons.volume_mute,
+                                                  color: Color.fromARGB(
+                                                255, 111, 161, 200),
+                                                size: 30,),
+                                                Icon(Icons.volume_down,
+                                                  color: Color.fromARGB(
+                                                255, 111, 161, 200),
+                                                size: 30,),
+                                                Icon(Icons.volume_up,
+                                                  color: Color.fromARGB(
+                                                255, 111, 161, 200),
+                                                size: 30,),
+                                                ] )
+
+
+                                                
 
                                               )
 
@@ -2881,25 +2895,21 @@ class _medBubbleState extends State<medBubble> {
  
 
                                           widget.checked
-
-                                              ? Text(
-
-                                                  '  تم أخذ الدواء  :) ' + '\n',
-
+                                              ? ((widget.timechecked.toDate()).difference(widget.m.toDate())).inMinutes>0? Text(
+                                                  '    تم أخذ الدواء  :) بعد الموعد ب ${((widget.timechecked.toDate()).difference(widget.m.toDate())).inMinutes} دقائق' + '\n',
                                                   style: GoogleFonts.tajawal(
-
-                                                      fontSize: 13,
-
-                                                      color: Colors.green,
-
+                                                      fontSize: 11,
+                                                      color: ui.Color.fromARGB(255, 244, 159, 48),
                                                       fontWeight:
 
                                                           FontWeight.bold),
-
-                                                )
-
-                                              : Text(''),
-
+                                                ):Text('  تم أخذ الدواء  :) قبل الموعد ب ${((widget.timechecked.toDate()).difference(widget.m.toDate())).inMinutes} دقائق' + '\n',
+                                                 style: GoogleFonts.tajawal(
+                                                      fontSize: 11,
+                                                      color: ui.Color.fromARGB(255, 84, 195, 108),
+                                                      fontWeight:  FontWeight.bold),
+                                                        )
+                                              :Text(''),
                                         ],
 
                                       )),
@@ -3026,6 +3036,57 @@ class _medBubbleState extends State<medBubble> {
 
   }
 
+}
+
+
+class BlinkWidget extends StatefulWidget {
+  final List<Widget> children;
+  final int interval;
+
+  BlinkWidget({required this.children, this.interval = 500, Key? key}) : super(key: key);
+
+  @override
+  _BlinkWidgetState createState() => _BlinkWidgetState();
+}
+
+class _BlinkWidgetState extends State<BlinkWidget> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  int _currentWidget = 0;
+
+  initState() {
+    super.initState();
+
+    _controller = new AnimationController(
+      duration: Duration(milliseconds: widget.interval),
+      vsync: this
+    );
+
+    _controller.addStatusListener((status) {
+      if(status == AnimationStatus.completed) {
+        setState(() {
+          if(++_currentWidget == widget.children.length) {
+            _currentWidget = 0;
+          }
+        });
+
+        _controller.forward(from: 0.0);
+      }
+    });
+
+    _controller.forward();
+  }
+
+  dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: widget.children[_currentWidget],
+    );
+  }
 }
 
  

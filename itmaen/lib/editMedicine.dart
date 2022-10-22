@@ -7,18 +7,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:ui' as ui;
 
+
 class EditMed extends StatefulWidget {
   final String name;
   final String description;
   final String strength;
   final String package;
-  const EditMed(
-      {Key? key,
-      required this.name,
-      required this.description,
-      required this.package,
-      required this.strength})
-      : super(key: key);
+  const EditMed({Key? key, required this.name , required this.description , required this.package , required this.strength}) : super(key: key);
+
 
   @override
   State<EditMed> createState() => _EditMedState();
@@ -34,15 +30,15 @@ class _EditMedState extends State<EditMed> {
   String caregiverID = "";
   late User loggedInUser;
 
-  static String medname = "";
-  static String description = "";
-  static String package = "";
-  static String strength = "";
+static String medname = "";
+static String description = "";
+static String package = "";
+static String strength = "";
 
-  TextEditingController medName = TextEditingController();
-  TextEditingController doseCount = TextEditingController();
-  TextEditingController meddescription = TextEditingController();
-  TextEditingController packSize = TextEditingController();
+   TextEditingController medName = TextEditingController();
+   TextEditingController doseCount = TextEditingController();
+   TextEditingController meddescription = TextEditingController();
+   TextEditingController packSize = TextEditingController();
 
   @override
   void initState() {
@@ -57,13 +53,13 @@ class _EditMedState extends State<EditMed> {
     getCurrentUser();
   }
 
-  var oldname;
-  var dosename;
-  var doses;
-  var dosesEdit;
-  List<String> doseName = <String>[];
-  var namee;
-  int count = 0;
+var oldname;
+var dosename;
+var doses;
+var dosesEdit;
+List<String> doseName = <String>[];
+var namee;
+int count = 0;
 
   // retrieve(QuerySnapshot snapshot) {
   //   print("here");
@@ -73,23 +69,28 @@ class _EditMedState extends State<EditMed> {
   //   });
   // }
 
+
 ////////update dose edit
   updateDoseEdit(QuerySnapshot snapshot) {
     print("here doseEdit");
     snapshot.docs.forEach((doc) {
       count++;
-      if (doc['name'] == widget.name) {
-        _doseEditFirestore
-            .collection('dosesEdit')
-            .where('name', isEqualTo: widget.name)
-            .get()
-            .then((value) {
-          value.docs[0].reference.update({'name': medName.text});
+      if(doc['name'] == widget.name){
+         _doseEditFirestore
+        .collection('dosesEdit')
+        .where('name', isEqualTo: widget.name)
+        .get()
+        .then((value){
+          value.docs[0].reference.update({
+            'name': medName.text
+          });
         });
-      } else {
+      }
+      else{
         print('dose not found');
       }
     });
+
   }
 
 ////////update dose
@@ -97,23 +98,27 @@ class _EditMedState extends State<EditMed> {
     print("here dose");
     snapshot.docs.forEach((doc) {
       int countdose = 0;
-      if (doc['name'] == widget.name) {
-        _doseFirestore
-            .collection('doses')
-            .where('name', isEqualTo: widget.name)
-            .get()
-            .then((value) {
-          value.docs[countdose].reference.update({'name': medName.text});
+      if(doc['name'] == widget.name){
+         _doseFirestore
+        .collection('doses')
+        .where('name', isEqualTo: widget.name)
+        .get()
+        .then((value){
+          value.docs[countdose].reference.update({
+            'name': medName.text
+          });
         });
-      } else {
+      }
+      else{
         print('dose not found');
       }
     });
+
   }
 
   var snapShotsValueCheck;
 
-  retrieveCheck(QuerySnapshot snapshot) {
+    retrieveCheck(QuerySnapshot snapshot) {
     print("here");
     snapshot.docs.forEach((doc) {
       // medname = doc['Trade name'];
@@ -124,20 +129,25 @@ class _EditMedState extends State<EditMed> {
       doseName.add(namee);
       print(namee);
     });
+
   }
 
+
   void getCurrentUser() async {
+
     retrieve(QuerySnapshot snapshot) {
-      print("here");
-      snapshot.docs.forEach((doc) {
-        oldname = doc['docName'];
-        // medname = doc['Trade name'];
-        // description = doc['description'];
-        // package = doc['Package size'];
-        // strength = doc['Strength value'];
-        print("name: $oldname " + medname + description + package + strength);
-      });
-    }
+    print("here");
+    snapshot.docs.forEach((doc) {
+      oldname = doc['docName'];
+      // medname = doc['Trade name'];
+      // description = doc['description'];
+      // package = doc['Package size'];
+      // strength = doc['Strength value'];
+      print("name: $oldname " + medname + description + package + strength);
+    });
+
+  }
+
 
     try {
       final user = await _auth.currentUser;
@@ -158,25 +168,34 @@ class _EditMedState extends State<EditMed> {
         // .where('Strength value', isEqualTo: widget.strength)
         .get();
 
-    dosesEdit = await FirebaseFirestore.instance
-        .collection('dosesEdit')
-        .where('caregiverID', isEqualTo: caregiverID)
-        .where('name', isEqualTo: widget.name)
-        .get();
 
-    doses = await FirebaseFirestore.instance
-        .collection('doses')
-        .where('caregiverID', isEqualTo: caregiverID)
-        .where('name', isEqualTo: widget.name)
-        .get();
+         dosesEdit = await FirebaseFirestore.instance
+             .collection('dosesEdit')
+             .where('caregiverID', isEqualTo: caregiverID)
+             .where('name', isEqualTo: widget.name)
+             .get();
 
-    snapShotsValueCheck = await FirebaseFirestore.instance
+
+         doses = await FirebaseFirestore.instance
+             .collection('doses')
+             .where('caregiverID', isEqualTo: caregiverID)
+             .where('name', isEqualTo: widget.name)
+             .get();
+
+         snapShotsValueCheck = await FirebaseFirestore.instance
         .collection("medicines")
         .where('caregiverID', isEqualTo: caregiverID)
         .get();
 
-    retrieve(snapShotsValue);
+
+
+
+
+        retrieve(snapShotsValue);
   }
+
+
+   
 
   final _formKey = GlobalKey<FormState>();
   // TextEditingController medName = new TextEditingController(text: name);
@@ -184,9 +203,13 @@ class _EditMedState extends State<EditMed> {
   // TextEditingController description = new TextEditingController(text:);
   // TextEditingController packSize = new TextEditingController(text:);
   bool medExist = false;
+  
+
+  
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -232,10 +255,9 @@ class _EditMedState extends State<EditMed> {
                               height: 40,
                             ),
                             Text(
-                              "اسم الدواء                                                                               ",
-                              style: GoogleFonts.tajawal(
-                                  fontWeight: FontWeight.bold),
-                              textDirection: ui.TextDirection.rtl,
+                            "اسم الدواء                                                                               ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
                             ),
                             TextFormField(
                               // initialValue: widget.name ,
@@ -278,16 +300,26 @@ class _EditMedState extends State<EditMed> {
                             SizedBox(
                               height: 16.0,
                             ),
-                            Text(
-                              "وصف الدواء                                                                               ",
-                              style: GoogleFonts.tajawal(
-                                  fontWeight: FontWeight.bold),
-                              textDirection: ui.TextDirection.rtl,
+                             Text(
+                            "وصف الدواء                                                                               ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
                             ),
                             TextFormField(
                               // initialValue: widget.description,
                               controller: meddescription,
                               textAlign: TextAlign.right,
+                              validator:  (value) {
+                                if (value == null || value.isEmpty)
+                                  return null;
+                                String pattern =
+                                    r'^(?=.{3,350}$)[\u0621-\u064Aa-zA-Z\d\-.،,_\s]+$';
+                                RegExp regex = RegExp(pattern);
+                                if (!regex.hasMatch(value.trim()))
+                                  return 'يجب أن يحتوي الوصف على ثلاثة أحرف على الأقل وأن يكون خالي من الرموز';
+                                return null;
+                              },
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
@@ -313,11 +345,10 @@ class _EditMedState extends State<EditMed> {
                             SizedBox(
                               height: 16.0,
                             ),
-                            Text(
-                              "حجم العبوة                                                                               ",
-                              style: GoogleFonts.tajawal(
-                                  fontWeight: FontWeight.bold),
-                              textDirection: ui.TextDirection.rtl,
+                             Text(
+                            "حجم العبوة                                                                               ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
                             ),
                             TextFormField(
                               // initialValue: widget.strength,
@@ -352,25 +383,24 @@ class _EditMedState extends State<EditMed> {
                             SizedBox(
                               height: 16.0,
                             ),
-                            Text(
-                              " الوحدة                                                                                       ",
-                              style: GoogleFonts.tajawal(
-                                  fontWeight: FontWeight.bold),
-                              textDirection: ui.TextDirection.rtl,
+                             Text(
+                            " الوحدة                                                                                       ",
+                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                            textDirection: ui.TextDirection.rtl,
                             ),
                             TextFormField(
                               // initialValue: widget.package,
                               controller: doseCount,
                               validator: (value) {
-                                if (value == null || value.isEmpty)
-                                  return 'الرجاء إدخال الوحدة';
-                                String pattern =
-                                    r'^(?=.{2,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
-                                RegExp regex = RegExp(pattern);
-                                if (!regex.hasMatch(value.trim()))
-                                  return 'يجب أن يحتوي اسم الوحدة من 2 إلى 20 حرف وأن يكون خالي من الرموز';
-                                return null;
-                              },
+                                        if (value == null || value.isEmpty)
+                                          return 'الرجاء إدخال الوحدة';
+                                        String pattern =
+                                            r'^(?=.{2,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
+                                        RegExp regex = RegExp(pattern);
+                                        if (!regex.hasMatch(value.trim()))
+                                        return 'يجب أن يحتوي اسم الوحدة من 2 إلى 20 حرف وأن يكون خالي من الرموز';
+                                        return null;
+                                      },
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               textAlign: TextAlign.right,
@@ -411,22 +441,23 @@ class _EditMedState extends State<EditMed> {
                               onPressed: () async {
                                 var doc = await _firestore
                                     .collection("medicines")
-                                    .doc(medName.text + caregiverID)
+                                    .doc( medName.text + caregiverID)
                                     .get();
 
-                                var exist = false;
-                                retrieveCheck(snapShotsValueCheck);
+                                    var exist = false;
+                                    retrieveCheck(snapShotsValueCheck);
+                                    
 
-                                for (int i = 0; i < doseName.length; i++) {
-                                  print(doseName[i]);
-                                  print(medName.text);
-                                  if (doseName[i] == medName.text &&
-                                      doseName[i] != widget.name) {
-                                    print('exist');
-                                    print(doseName[i]);
-                                    exist = true;
-                                  }
-                                }
+                                    for(int i = 0 ; i < doseName.length ; i++){
+                                      print(doseName[i]);
+                                      print(medName.text);
+                                      if(doseName[i] == medName.text && doseName[i] != widget.name ){
+                                        print('exist');
+                                        print(doseName[i]);
+                                        exist= true;
+                                      }
+
+                                    }
 
                                 if (exist) {
                                   print("already exist");
@@ -482,6 +513,8 @@ class _EditMedState extends State<EditMed> {
 
                                     updateDose(doses);
                                     updateDoseEdit(dosesEdit);
+                                    
+
 
                                     print("Med updated");
 
