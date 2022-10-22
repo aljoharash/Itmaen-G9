@@ -265,6 +265,7 @@ Timer? timer;
   //late User? loggedInUser = _auth.currentUser;
   @override
   Widget build(BuildContext context) {
+    
     var data;
 
     return SafeArea(
@@ -1404,15 +1405,20 @@ class _medBubbleState extends State<medBubble> {
                                           ),
 
                                           widget.checked
-                                              ? Text(
-                                                  '  تم أخذ الدواء  :) ' + '\n',
+                                              ? ((widget.timechecked.toDate()).difference(widget.m.toDate())).inMinutes>0? Text(
+                                                  '    تم أخذ الدواء  :) بعد الموعد ب ${((widget.timechecked.toDate()).difference(widget.m.toDate())).inMinutes} دقائق' + '\n',
                                                   style: GoogleFonts.tajawal(
-                                                      fontSize: 13,
-                                                      color: Colors.green,
+                                                      fontSize: 11,
+                                                      color: ui.Color.fromARGB(255, 244, 159, 48),
                                                       fontWeight:
                                                           FontWeight.bold),
-                                                )
-                                              : Text(''),
+                                                ):Text('  تم أخذ الدواء  :) قبل الموعد ب ${((widget.timechecked.toDate()).difference(widget.m.toDate())).inMinutes} دقائق' + '\n',
+                                                 style: GoogleFonts.tajawal(
+                                                      fontSize: 11,
+                                                      color: ui.Color.fromARGB(255, 84, 195, 108),
+                                                      fontWeight:  FontWeight.bold),
+                                                        )
+                                              :Text(''),
                                         ],
                                       )),
                                     ),
