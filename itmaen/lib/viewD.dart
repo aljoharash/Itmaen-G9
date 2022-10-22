@@ -1211,4 +1211,8 @@ class _medBubbleState extends State<medBubble> {
       ),
     );
   }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
