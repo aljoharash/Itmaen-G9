@@ -97,7 +97,7 @@ class _editDoseState extends State<editDose>
     description.text = toBeTransformed[1];
     pillAmountController.text = toBeTransformed[2];
     selectType = toBeTransformed[3];
-    pickerColor = Color(int.parse(toBeTransformed[4]));
+    backColor = pickerColor = Color(int.parse(toBeTransformed[4]));
     sliderValue = double.parse(toBeTransformed[5]);
     sliderValue2 = double.parse(toBeTransformed[6]);
     every_hours = everyH = hoursController.text = toBeTransformed[7];
@@ -951,8 +951,7 @@ class _editDoseState extends State<editDose>
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      Navigation(
-                                                          )));
+                                                      Navigation()));
                                         },
                                         child: Text(
                                           "نعم",
@@ -1191,8 +1190,8 @@ class _editDoseState extends State<editDose>
         // backgroundColor: Color.fromARGB(255, 140, 167, 190),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => Navigation()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Navigation()));
     } else {
       if (changed == true &&
           (DateTime.now().toString().substring(0, 10) ==
