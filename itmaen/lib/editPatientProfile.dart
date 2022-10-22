@@ -9,15 +9,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class EditPatientProfile extends StatefulWidget {
-  List<String> data; 
-  EditPatientProfile({Key? key , required this.data}):super(key: key);
+  List<String> data;
+  EditPatientProfile({Key? key, required this.data}) : super(key: key);
 
   @override
   _EditPatientProfile createState() => _EditPatientProfile(this.data);
 }
 
 class _EditPatientProfile extends State<EditPatientProfile> {
- List<String> data; 
+  List<String> data;
   _EditPatientProfile(this.data);
   final _auth = FirebaseAuth.instance;
   late User? loggedInUser = _auth.currentUser;
@@ -81,253 +81,254 @@ class _EditPatientProfile extends State<EditPatientProfile> {
     nameController.text = data[0];
     ageController.text = data[1];
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Navigation()),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Navigation()),
+            ),
           ),
+          backgroundColor: Color.fromARGB(255, 140, 167, 190),
+          title: Center(
+              child: Text(
+            " تعديل",
+            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+          )),
         ),
-        backgroundColor: Color.fromARGB(255, 140, 167, 190),
-        title: Center(
-            child: Text(
-          " تعديل",
-          style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-        )),
-      ),
-      body: SingleChildScrollView(
-        child:Column(children: [
-        //SizedBox(height: 30),
-       
-        Padding(
-          padding: EdgeInsets.all(30),
-          child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: QrImage(data: loggedInUser!.uid, size: 150)),
-        ),
-          Center(
-        child: Text(
-          ": بيانات مستقبل الرعاية",
-          style: GoogleFonts.tajawal(fontSize: 25,
-                color: Color.fromARGB(255, 140, 167, 190),
-                fontWeight: FontWeight.bold,),
-        )),
-      SizedBox(height: 20),
-      Text('الاسم                                                                                             ',
-                   //labelStyle: TextStyle,
-                    style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-                    textDirection: TextDirection.rtl,
-                  ),
-        Container(
-         // height: 110,
-          width: 400,
-        //  child: Padding(
-           // padding: EdgeInsets.all(30),
-           child:
-             Directionality(
-              textDirection: TextDirection.rtl,
-              child: TextFormField(
-                
-                textAlign: TextAlign.center,
-                controller: nameController,
-                
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                 floatingLabelAlignment: FloatingLabelAlignment.start,
-                      filled: true,
-                      fillColor: Color.fromARGB(255, 239, 237, 237),
-                      enabled: true,
-                      contentPadding: const EdgeInsets.only(
-                          left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(255, 236, 231, 231),
-                              width: 3)),
-                 // border: OutlineInputBorder(),
-                ),
+        body: SingleChildScrollView(
+          child: Column(children: [
+            //SizedBox(height: 30),
 
-                //textAlign: TextAlign.center,
-                //textAlign: TextAlign.right,
-              ),
-           // ),
-          ),
-       ),
-       SizedBox(height:30),
-       Text('العمر  (اختياري)                                                                                 ',
-                   //labelStyle: TextStyle,
-                    style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-                    textDirection: TextDirection.rtl,
-                  ),
-        Container(
-         // height: 110,
-          width: 400,
-         // child: Padding(
-          //  padding: EdgeInsets.all(30),
-            child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: TextFormField(
-                
-               keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                controller: ageController,
-                decoration: const InputDecoration(
-                  floatingLabelAlignment: FloatingLabelAlignment.start,
-                      filled: true,
-                      fillColor: Color.fromARGB(255, 239, 237, 237),
-                      enabled: true,
-                      contentPadding: const EdgeInsets.only(
-                          left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(255, 236, 231, 231),
-                              width: 3)),
-                  border: OutlineInputBorder(),
-                 // labelText: '  العمر  (اختياري)',
-                  labelStyle: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-
-                //textAlign: TextAlign.center,
-                //textAlign: TextAlign.right,
-              ),
-           // ),
-          ),
-        ),
-
-        // Center(
-        Padding(
-          padding: EdgeInsets.all(30),
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: Container(
-              height: 80,
-              width: double.infinity,
-              padding: const EdgeInsets.only(top: 25, left: 24, right: 24),
-              child: MaterialButton(
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                color: Color.fromARGB(255, 140, 167, 190),
-                onPressed: () async {
-                  RegExp r1 = new RegExp(r'^["@$&^)(*&£%!?><_+.]');
-                  RegExp r = new RegExp(r'\s');
-                  if (r.hasMatch(nameController.text)|| r.hasMatch(ageController.text)) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        // margin: EdgeInsets.only(right: 10),
-
-                        content: Text('يرجى عدم وضع فراغات بالحقول ',
-                            style: TextStyle(fontSize: 20),
-                            textAlign: TextAlign.right),
-                      ),
-                    );
-                  }
-                  else if(r1.hasMatch(nameController.text)){
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        // margin: EdgeInsets.only(right: 10),
-
-                        content: Text('يرجى عدم وضع رموز غريبة',
-                            style: TextStyle(fontSize: 20),
-                            textAlign: TextAlign.right),
-                      ),
-                    );
-                  }
-                  // String? id = await st.readSecureData("caregiverID");
-                  else if ((nameController.text.length >= 2 &&
-                      nameController.text.length <= 20) && (int.parse(ageController.text)  >=1 && int.parse(ageController.text)  <=130)) {
-                   
-                    var id;
-                    await FirebaseFirestore.instance
-                        .collection('patients')
-                        .where("caregiverID", isEqualTo: loggedInUser!.uid)
-                        .get()
-                        .then((value) {
-                      id = value.docs[0].id;
-                    });
-                    FirebaseFirestore.instance
-                        .collection('patients')
-                        .doc(id)
-                        .update(
-                      {
-                        'name': nameController.text,
-                        'caregiverID': loggedInUser!.uid,
-                        'age': ageController.text
-                      },
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        // margin: EdgeInsets.only(right: 10),
-
-                        content: Text('تم حفظ التعديلات بنجاح',
-                            style: TextStyle(fontSize: 20),
-                            textAlign: TextAlign.right),
-                      ),
-                    );
-
-                    // FirebaseFirestore.instance.collection('patients').add({'caregiverID': '123'});
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Navigation()));
-                  }
-                  // }
-                  else {
-                    if (nameController.text.length < 2) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          // margin: EdgeInsets.only(right: 10),
-
-                          content: Text(
-                              'يجب أن يحتوي اسم مستقبل الرعاية على حرفين أو أكثر ',
-                              style: TextStyle(fontSize: 20),
-                              textAlign: TextAlign.right),
-                        ),
-                      );
-                    } else if (nameController.text.length >= 20) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          // margin: EdgeInsets.only(right: 10),
-
-                          content: Text(
-                              'يجب أن يحتوي اسم مستقبل الرعاية على أقل من عشرين حرف  ',
-                              style: TextStyle(fontSize: 20),
-                              textAlign: TextAlign.right),
-                        ),
-                      );
-                    }
-                    else if (int.parse(ageController.text)  < 1 ||int.parse(ageController.text ) > 130) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          // margin: EdgeInsets.only(right: 10),
-
-                          content: Text(
-                             'نطاق الأرقام المسموح به للعمر من 1 الى 130',
-                              style: TextStyle(fontSize: 20),
-                              textAlign: TextAlign.right),
-                        ),
-                      );
-                    }
-
-                  }
-                },
+            Padding(
+              padding: EdgeInsets.all(30),
+              child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: QrImage(data: loggedInUser!.uid, size: 150)),
+            ),
+            Center(
                 child: Text(
-                  "حفظ",
-                  style: GoogleFonts.tajawal(
-                    color: Color.fromARGB(255, 245, 244, 244),
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                  ),
+              ": بيانات مستقبل الرعاية",
+              style: GoogleFonts.tajawal(
+                fontSize: 25,
+                color: Color.fromARGB(255, 140, 167, 190),
+                fontWeight: FontWeight.bold,
+              ),
+            )),
+            SizedBox(height: 20),
+            Text(
+              'الاسم                                                                                             ',
+              //labelStyle: TextStyle,
+              style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+              textDirection: TextDirection.rtl,
+            ),
+            Container(
+              // height: 110,
+              width: 400,
+              //  child: Padding(
+              // padding: EdgeInsets.all(30),
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: TextFormField(
                   textAlign: TextAlign.center,
+                  controller: nameController,
+
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    floatingLabelAlignment: FloatingLabelAlignment.start,
+                    filled: true,
+                    fillColor: Color.fromARGB(255, 239, 237, 237),
+                    enabled: true,
+                    contentPadding: const EdgeInsets.only(
+                        left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(255, 236, 231, 231),
+                            width: 3)),
+                    // border: OutlineInputBorder(),
+                  ),
+
+                  //textAlign: TextAlign.center,
+                  //textAlign: TextAlign.right,
+                ),
+                // ),
+              ),
+            ),
+            SizedBox(height: 30),
+            Text(
+              'العمر  (اختياري)                                                                                 ',
+              //labelStyle: TextStyle,
+              style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+              textDirection: TextDirection.rtl,
+            ),
+            Container(
+              // height: 110,
+              width: 400,
+              // child: Padding(
+              //  padding: EdgeInsets.all(30),
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  controller: ageController,
+                  decoration: const InputDecoration(
+                    floatingLabelAlignment: FloatingLabelAlignment.start,
+                    filled: true,
+                    fillColor: Color.fromARGB(255, 239, 237, 237),
+                    enabled: true,
+                    contentPadding: const EdgeInsets.only(
+                        left: 14.0, right: 12.0, bottom: 8.0, top: 8.0),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(255, 236, 231, 231),
+                            width: 3)),
+                    border: OutlineInputBorder(),
+                    // labelText: '  العمر  (اختياري)',
+                    labelStyle: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+
+                  //textAlign: TextAlign.center,
+                  //textAlign: TextAlign.right,
+                ),
+                // ),
+              ),
+            ),
+
+            // Center(
+            Padding(
+              padding: EdgeInsets.all(30),
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Container(
+                  height: 80,
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(top: 25, left: 24, right: 24),
+                  child: MaterialButton(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    color: Color.fromARGB(255, 140, 167, 190),
+                    onPressed: () async {
+                      RegExp r1 = new RegExp(r'^["@$&^)(*&£%!?><_+.]');
+                      RegExp r = new RegExp(r'\s');
+                      if (r.hasMatch(nameController.text) ||
+                          r.hasMatch(ageController.text)) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            // margin: EdgeInsets.only(right: 10),
+
+                            content: Text('يرجى عدم وضع فراغات بالحقول ',
+                                style: TextStyle(fontSize: 20),
+                                textAlign: TextAlign.right),
+                          ),
+                        );
+                      } else if (r1.hasMatch(nameController.text)) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            // margin: EdgeInsets.only(right: 10),
+
+                            content: Text('يرجى عدم وضع رموز ',
+                                style: TextStyle(fontSize: 20),
+                                textAlign: TextAlign.right),
+                          ),
+                        );
+                      }
+                      // String? id = await st.readSecureData("caregiverID");
+                      else if ((nameController.text.length >= 2 &&
+                              nameController.text.length <= 20) &&
+                          (int.parse(ageController.text) >= 1 &&
+                              int.parse(ageController.text) <= 130)) {
+                        var id;
+                        await FirebaseFirestore.instance
+                            .collection('patients')
+                            .where("caregiverID", isEqualTo: loggedInUser!.uid)
+                            .get()
+                            .then((value) {
+                          id = value.docs[0].id;
+                        });
+                        FirebaseFirestore.instance
+                            .collection('patients')
+                            .doc(id)
+                            .update(
+                          {
+                            'name': nameController.text,
+                            'caregiverID': loggedInUser!.uid,
+                            'age': ageController.text
+                          },
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            // margin: EdgeInsets.only(right: 10),
+
+                            content: Text('تم حفظ التعديلات بنجاح',
+                                style: TextStyle(fontSize: 20),
+                                textAlign: TextAlign.right),
+                          ),
+                        );
+
+                        // FirebaseFirestore.instance.collection('patients').add({'caregiverID': '123'});
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Navigation()));
+                      }
+                      // }
+                      else {
+                        if (nameController.text.length < 2) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              // margin: EdgeInsets.only(right: 10),
+
+                              content: Text(
+                                  'يجب أن يحتوي اسم مستقبل الرعاية على حرفين أو أكثر ',
+                                  style: TextStyle(fontSize: 20),
+                                  textAlign: TextAlign.right),
+                            ),
+                          );
+                        } else if (nameController.text.length >= 20) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              // margin: EdgeInsets.only(right: 10),
+
+                              content: Text(
+                                  'يجب أن يحتوي اسم مستقبل الرعاية على أقل من عشرين حرف  ',
+                                  style: TextStyle(fontSize: 20),
+                                  textAlign: TextAlign.right),
+                            ),
+                          );
+                        } else if (int.parse(ageController.text) < 1 ||
+                            int.parse(ageController.text) > 130) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              // margin: EdgeInsets.only(right: 10),
+
+                              content: Text(
+                                  'نطاق الأرقام المسموح به للعمر من 1 الى 130',
+                                  style: TextStyle(fontSize: 20),
+                                  textAlign: TextAlign.right),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                    child: Text(
+                      "حفظ",
+                      style: GoogleFonts.tajawal(
+                        color: Color.fromARGB(255, 245, 244, 244),
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-      ]),
-      )
-    );
+          ]),
+        ));
   }
 }

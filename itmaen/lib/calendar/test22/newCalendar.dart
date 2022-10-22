@@ -166,7 +166,6 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
             title: Center(
                 child: Text(
               "التقويم            ",
-             
               style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
             )),
           ),

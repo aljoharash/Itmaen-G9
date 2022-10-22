@@ -5,6 +5,8 @@ import 'dart:async';
 import 'dart:convert' show Base64Decoder, json, utf8;
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:path_provider/path_provider.dart';
 
@@ -67,14 +69,24 @@ class TextToSpeechAPI {
     }
   }
 
-  Future<void> playVoice(String text, AudioPlayer audioController) async {
-    AudioPlayer audioPlugin = audioController;
-    print(audioPlugin.state);
-    print(AudioPlayer().state);
+  void AppShowToast(
+      {required String text, ToastGravity position = ToastGravity.CENTER}) {
+    Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_LONG,
+        backgroundColor: Colors.black.withOpacity(0.8),
+        gravity: position);
+  }
 
-    if (audioPlugin.state == PlayerState.playing) {
+  Future<void> playVoice(
+      String medDoc, String text, AudioPlayer audioController) async {
+    AudioPlayer audioPlugin = audioController;
+    //print(audioPlugin.state);
+    //print(AudioPlayer().state);
+    if (audioPlugin.state == PlayerState.playing) return;
+    /*if (audioPlugin.state == PlayerState.playing) {
       await audioPlugin.stop();
-    }
+    }*/
 
 // جدبي
 
@@ -89,7 +101,7 @@ class TextToSpeechAPI {
     if (Platform.isAndroid) {
       final dir = await getTemporaryDirectory();
 
-      final file = File('${dir.path}/wavenet.mp3');
+      final file = File('${dir.path}/${medDoc}.mp3');
 
       await file.writeAsBytes(bytes);
 
@@ -99,7 +111,7 @@ class TextToSpeechAPI {
     } else if (Platform.isIOS) {
       final dir = await getApplicationDocumentsDirectory();
 
-      final file = File('${dir.path}/wavenet.mp3');
+      final file = File('${dir.path}/${medDoc}.mp3');
 
       await file.writeAsBytes(bytes);
 

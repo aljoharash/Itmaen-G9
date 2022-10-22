@@ -37,7 +37,7 @@ class Navigation extends StatefulWidget {
   void sendNotificationchecked2(String mediName) async {
     Noti.showBigTextNotification(
         title: "تم أخذ الجرعة",
-        body: "اطمئن، قام مسقبل رعايتك بأخذ ${mediName}",
+        body: "اطمئن، قام مستقبل رعايتك بأخذ ${mediName}",
         fln: flutterLocalNotificationsPlugin);
   }
 
@@ -51,7 +51,7 @@ class _NavigationState extends State<Navigation> {
   final _auth = FirebaseAuth.instance;
   String caregiverID = "";
   //late User loggedInUser;
- Timer? timer ;
+  Timer? timer;
   late User? loggedInUser = _auth.currentUser;
 
   @override
@@ -134,40 +134,39 @@ class _NavigationState extends State<Navigation> {
     // }
   }
 
-  int _selectedIndex = 4;
+  int _selectedIndex = 3;
   Future<Widget> bodyFunction() async {
-    try{
-    switch (_selectedIndex) {
-      // case 0:
-      //   return;
-      //   break;
-      
-      case 1:
-       if (await _isCollectionExits() == true) {
-        return GenerateQR();}
-        else{
-        return AddPatient();}
-        
-        break;
+    try {
+      switch (_selectedIndex) {
+        // case 0:
+        //   return;
+        //   break;
 
-      case 2:
-      
-        return View();
-        break;
-      case 3:
-        return LoadDataFromFireStoree();
-        break;
-      case 4:
-        return ViewD();
-        break;
-       
-       default:
-       return View(); 
-        
+        case 0:
+          if (await _isCollectionExits() == true) {
+            return GenerateQR();
+          } else {
+            return AddPatient();
+          }
+
+          break;
+
+        case 1:
+          return View();
+          break;
+        case 2:
+          return LoadDataFromFireStoree();
+          break;
+        case 3:
+          return ViewD();
+          break;
+
+        default:
+          return View();
+      }
+    } catch (e) {
+      rethrow;
     }
-    }
-     catch(e){
-        rethrow;}
   }
 
   @override
@@ -177,20 +176,20 @@ class _NavigationState extends State<Navigation> {
         final action = await AlertDialogs.yesCancelDialog(
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
-           timer?.cancel(); // stop the timer // no more notification
-         setState(() => timer!.cancel());
-         timer=null;
-          
-          timer?.cancel();//
+          timer?.cancel(); // stop the timer // no more notification
+          setState(() => timer!.cancel());
+          timer = null;
+
+          timer?.cancel(); //
           await FirebaseAuth.instance.signOut();
           timer?.cancel();
           loggedInUser = null;
-          //timer=null; 
-          timer?.cancel(); 
+          //timer=null;
+          timer?.cancel();
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => LoginPage()));
-              timer?.cancel();
-              timer=null ;
+          timer?.cancel();
+          timer = null;
         } else {
           setState(() => tappedYes = false);
           Navigator.pushReplacement(
@@ -200,16 +199,16 @@ class _NavigationState extends State<Navigation> {
         final action = await AlertDialogs.yesCancelDialog(
             context, 'تسجيل الخروج', 'هل أنت متأكد من رغبتك في تسجيل الخروج؟');
         if (action == DialogsAction.yes) {
-           timer?.cancel(); // stop the timer 
-       timer=null; 
+          timer?.cancel(); // stop the timer
+          timer = null;
           setState(() => timer!.cancel());
           timer?.cancel();
-          timer=null; 
+          timer = null;
           // await FirebaseAuth.instance.signOut();
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => patientScreen()));
-              timer?.cancel(); 
-              timer = null ; 
+          timer?.cancel();
+          timer = null;
         } else {
           setState(() => tappedYes = false);
           Navigator.pushReplacement(context,
@@ -222,9 +221,9 @@ class _NavigationState extends State<Navigation> {
       setState(() {
         _selectedIndex = index;
       });
-      if (index == 0) {
-        logout();
-      }
+      // if (index == 0) {
+      //   logout();
+      // }
       // if (index == 1) {
       //   if (await _isCollectionExits() == true) {
       //     Navigator.of(context)
@@ -234,25 +233,25 @@ class _NavigationState extends State<Navigation> {
     }
 
     return Scaffold(
-      body:FutureBuilder<Widget>(
-       future: bodyFunction(),
-       builder: (BuildContext context, AsyncSnapshot<Widget> snapshot){
-         if(snapshot.hasData){
-           return snapshot.data!;}
+      body: FutureBuilder<Widget>(
+          future: bodyFunction(),
+          builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+            if (snapshot.hasData) {
+              return snapshot.data!;
+            }
 
-         return Container(child: CircularProgressIndicator());
-       }
-      ),
+            return Container(child: CircularProgressIndicator());
+          }),
       backgroundColor: Colors.white,
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.white,
         color: Color.fromARGB(255, 140, 167, 190),
         animationDuration: Duration(milliseconds: 300),
         items: [
-          Icon(
-            Icons.logout,
-            color: Colors.white,
-          ),
+          // Icon(
+          //   Icons.logout,
+          //   color: Colors.white,
+          // ),
           Icon(
             Icons.person_add,
             color: Colors.white,

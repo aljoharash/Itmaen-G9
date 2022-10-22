@@ -97,7 +97,7 @@ class _editDoseState extends State<editDose>
     description.text = toBeTransformed[1];
     pillAmountController.text = toBeTransformed[2];
     selectType = toBeTransformed[3];
-    pickerColor = Color(int.parse(toBeTransformed[4]));
+    backColor = pickerColor = Color(int.parse(toBeTransformed[4]));
     sliderValue = double.parse(toBeTransformed[5]);
     sliderValue2 = double.parse(toBeTransformed[6]);
     every_hours = everyH = hoursController.text = toBeTransformed[7];
@@ -128,6 +128,7 @@ class _editDoseState extends State<editDose>
     return new Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(255, 140, 167, 190),
         elevation: 0,
         title: Text(
@@ -244,24 +245,26 @@ class _editDoseState extends State<editDose>
                       Expanded(
                         child: Container(
                           padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
-                              child: TextField(
+                          child: TextField(
                             onSubmitted: (value) {
                               SnackBar error = SnackBar(
-                            duration: Duration(seconds: 8),
-              content: Directionality(
-             textDirection: ui.TextDirection.rtl,
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(
-                        'نطاق الأرقام المسموح به لكمية الجرعة من 1 إلى 50',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                                duration: Duration(seconds: 5),
+                                content: Directionality(
+                                  textDirection: ui.TextDirection.rtl,
+                                  child: Container(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Text(
+                                          'نطاق الأرقام المسموح به لكمية الجرعة من 1 إلى 50',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               );
 
                               if (value != "") {
@@ -442,21 +445,23 @@ class _editDoseState extends State<editDose>
                             controller: hoursController,
                             onSubmitted: (value) {
                               SnackBar error = SnackBar(
-                                       duration: Duration(seconds: 8),
-              content: Directionality(
-             textDirection: ui.TextDirection.rtl,
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(
-                        'نطاق الأرقام المسموح به لعدد الساعات بين كل جرعة من 1 إلى 23',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                                duration: Duration(seconds: 5),
+                                content: Directionality(
+                                  textDirection: ui.TextDirection.rtl,
+                                  child: Container(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Text(
+                                          'نطاق الأرقام المسموح به لعدد الساعات بين كل جرعة من 1 إلى 23',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               );
 
                               if (value != "") {
@@ -724,7 +729,7 @@ class _editDoseState extends State<editDose>
                                                   .toString()
                                                   .substring(13, 15))) {
                                             SnackBar error = SnackBar(
-                                              duration: Duration(seconds: 10),
+                                              duration: Duration(seconds: 5),
                                               content: Directionality(
                                                 textDirection:
                                                     ui.TextDirection.rtl,
@@ -750,7 +755,7 @@ class _editDoseState extends State<editDose>
                                           }
                                         } else {
                                           SnackBar error = SnackBar(
-                                            duration: Duration(seconds: 10),
+                                            duration: Duration(seconds: 5),
                                             content: Directionality(
                                               textDirection:
                                                   ui.TextDirection.rtl,
@@ -1057,6 +1062,7 @@ class _editDoseState extends State<editDose>
       _firestore
           .collection('dosesEdit')
           .where("name", isEqualTo: nameController.text)
+          .where("caregiverID", isEqualTo: caregiverID)
           .get()
           .then((value) {
         value.docs[0].reference.update({
@@ -1078,8 +1084,10 @@ class _editDoseState extends State<editDose>
       });
 
       var collection = FirebaseFirestore.instance.collection('doses');
-      var snapshot =
-          await collection.where("name", isEqualTo: nameController.text).get();
+      var snapshot = await collection
+          .where("name", isEqualTo: nameController.text)
+          .where("caregiverID", isEqualTo: caregiverID)
+          .get();
       for (var doc in snapshot.docs) {
         bool after = DateTime.now().toUtc().isAfter(
               DateTime.fromMillisecondsSinceEpoch(
@@ -1195,7 +1203,7 @@ class _editDoseState extends State<editDose>
           if (int.parse(setTime.toString().substring(13, 15)) <
               int.parse(TimeOfDay.now().toString().substring(13, 15))) {
             SnackBar error = SnackBar(
-              duration: Duration(seconds: 8),
+              duration: Duration(seconds: 5),
               content: Directionality(
                 textDirection: ui.TextDirection.rtl,
                 child: Container(
@@ -1216,16 +1224,19 @@ class _editDoseState extends State<editDose>
           }
         } else {
           SnackBar error = SnackBar(
+            duration: Duration(seconds: 5),
             content: Directionality(
               textDirection: ui.TextDirection.rtl,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                  ),
-                ],
+              child: Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      'تاريخ ووقت أخذ أول جرعة في اليوم يجب أن يبدأ من الوقت الحالي فما بعد',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -1237,16 +1248,19 @@ class _editDoseState extends State<editDose>
       if (pillAmountController.text == "" ||
           (everyH == '' && sliderValue2 != 1)) {
         SnackBar error = SnackBar(
+          duration: Duration(seconds: 5),
           content: Directionality(
             textDirection: ui.TextDirection.rtl,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "الرجاء ملء الحقول الفارغة الإجبارية",
-                  style: TextStyle(color: Colors.white, fontSize: 15),
-                ),
-              ],
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'الرجاء ملء الحقول الفارغة الإجبارية',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -1257,16 +1271,19 @@ class _editDoseState extends State<editDose>
           (double.parse(pillAmountController.text) > 50 ||
               double.parse(pillAmountController.text) <= 0)) {
         SnackBar error = SnackBar(
+          duration: Duration(seconds: 5),
           content: Directionality(
             textDirection: ui.TextDirection.rtl,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'نطاق الأرقام المسموح به لكمية الجرعة من 1 إلى 50',
-                  style: TextStyle(color: Colors.white, fontSize: 15),
-                ),
-              ],
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'نطاق الأرقام المسموح به لكمية الجرعة من 1 إلى 50',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -1276,25 +1293,28 @@ class _editDoseState extends State<editDose>
       if (sliderValue2 != 1 && int.parse(every_hours) > 23 ||
           (sliderValue2 != 1 && int.parse(every_hours) <= 0)) {
         SnackBar error = SnackBar(
+          duration: Duration(seconds: 5),
           content: Directionality(
             textDirection: ui.TextDirection.rtl,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'نطاق الأرقام المسموح به بين الساعات بين كل جرعة من 1 إلى 23',
-                  style: TextStyle(color: Colors.white, fontSize: 15),
-                ),
-              ],
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'نطاق الأرقام المسموح به لعدد الساعات بين كل جرعة من 1 إلى 23',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ],
+              ),
             ),
           ),
         );
         ScaffoldMessenger.of(context).showSnackBar(error);
-      } 
+      }
 
       if (compareTimeOfDay(setTime) == false) {
         SnackBar error = SnackBar(
-          duration: Duration(seconds: 8),
+          duration: Duration(seconds: 5),
           content: Directionality(
             textDirection: ui.TextDirection.rtl,
             child: Container(

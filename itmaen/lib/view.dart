@@ -296,23 +296,7 @@ class medBubble extends StatelessWidget {
                     textDirection: TextDirection.rtl,
                     child: Row(
                       children: [
-                        Container(
-                            alignment: Alignment.topLeft,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => EditMed(
-                                        name: medicName,
-                                        description: meddescription,
-                                        package: package,
-                                        strength: strength)));
-                              },
-                              child: Icon(
-                                Icons.edit,
-                                color: Color.fromARGB(255, 111, 161, 200),
-                                size: 20,
-                              ),
-                            )),
+                      
 
                         Directionality(
                           textDirection: TextDirection.rtl,
@@ -363,105 +347,9 @@ class medBubble extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Container(
-                          padding: EdgeInsets.fromLTRB(12, 10, 0, 10),
-                          alignment: Alignment.bottomLeft,
-                          child: GestureDetector(
-                            onTap: () async {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text(
-                                                "لا",
-                                                style: GoogleFonts.tajawal(),
-                                              ),
-                                            ),
-                                            TextButton(
-                                              onPressed: () async {
-                                                Navigator.pop(context);
-                                                var collectionDoses =
-                                                    FirebaseFirestore.instance
-                                                        .collection('doses');
-                                                var snapshotDoses =
-                                                    await collectionDoses
-                                                        .where("name",
-                                                            isEqualTo:
-                                                                medicName)
-                                                        .get();
-                                                for (var doc
-                                                    in snapshotDoses.docs) {
-                                                  Timestamp doseTime =
-                                                      doc.get("Time");
-                                                  print(doseTime);
 
-                                                  if (doseTime.compareTo(
-                                                          Timestamp.now()) >
-                                                      0) {
-                                                    await doc.reference
-                                                        .delete();
-                                                  }
-                                                }
-
-                                                ;
-
-                                                var collectionDoseEdit =
-                                                    FirebaseFirestore.instance
-                                                        .collection(
-                                                            'dosesEdit');
-                                                var snapshotoseEdit =
-                                                    await collectionDoseEdit
-                                                        .where("name",
-                                                            isEqualTo:
-                                                                medicName)
-                                                        .get();
-                                                for (var doc
-                                                    in snapshotoseEdit.docs) {
-                                                  await doc.reference.delete();
-                                                }
-                                                ;
-
-                                                var collectionMed =
-                                                    FirebaseFirestore.instance
-                                                        .collection(
-                                                            'medicines');
-                                                var snapshotMed =
-                                                    await collectionMed
-                                                        .where("Trade name",
-                                                            isEqualTo:
-                                                                medicName)
-                                                        .get();
-                                                for (var doc
-                                                    in snapshotMed.docs) {
-                                                  await doc.reference.delete();
-                                                }
-                                                ;
-                                              },
-                                              child: Text(
-                                                "نعم",
-                                                style: GoogleFonts.tajawal(),
-                                              ),
-                                            ),
-                                          ],
-                                          content: Text(
-                                            "هل أنت متأكد من رغبتك في حذف الدواء وما يتبعه من جرعات؟",
-                                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold,),
-                                             textAlign: TextAlign.right,
-                                          )));
-                            },
-                            child: Icon(
-                              Icons.delete,
-                              color: Color.fromARGB(255, 111, 161, 200),
-                              size: 30,
-                            ),
-                          )),
-                      SizedBox(
-                        width: 15,
-                      ),
+                   
+                   
                       Container(
                         // ******************
 
@@ -483,7 +371,7 @@ class medBubble extends StatelessWidget {
                                 // Extracting data from snapshot object
                                 final data = snapshot.data as bool;
                                 return Container(
-                                    width: 220,
+                                    width: 242,
                                     child: data == true
                                         ? (MaterialButton(
                                             shape: RoundedRectangleBorder(
@@ -492,7 +380,7 @@ class medBubble extends StatelessWidget {
                                             ),
 
                                             padding: EdgeInsets.fromLTRB(
-                                                47, 10, 50, 10),
+                                                47, 10, 60, 10),
                                             onPressed: () {
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
@@ -545,7 +433,7 @@ class medBubble extends StatelessWidget {
                                                   BorderRadius.circular(10),
                                             ),
                                             padding: EdgeInsets.fromLTRB(
-                                                47, 10, 50, 10),
+                                                47, 10, 60, 10),
                                             onPressed: () {
                                               Navigator.of(context)
                                                   .push(MaterialPageRoute(
@@ -591,6 +479,130 @@ class medBubble extends StatelessWidget {
 
                         //*******************
                       ),
+                      
+                         SizedBox(
+                        width: 15,
+                      ),
+
+
+                        Container(
+                            alignment: Alignment.topLeft,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => EditMed(
+                                        name: medicName,
+                                        description: meddescription,
+                                        package: package,
+                                        strength: strength)));
+                              },
+                              child: Icon(
+                                Icons.edit,
+                                color: Color.fromARGB(255, 111, 161, 200),
+                                size: 25,
+                              ),
+                            )),
+
+                         SizedBox(
+                        width: 15,
+                      ),
+                         Container(
+                          padding: EdgeInsets.fromLTRB(12, 10, 0, 10),
+                          alignment: Alignment.bottomLeft,
+                          child: GestureDetector(
+                            onTap: () async {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text(
+                                                "لا",
+                                                style: GoogleFonts.tajawal(),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                Navigator.pop(context);
+                                                var collectionDoses =
+                                                    FirebaseFirestore.instance
+                                                        .collection('doses');
+                                                var snapshotDoses =
+                                                    await collectionDoses
+                                                        .where("name",
+                                                            isEqualTo:
+                                                                medicName).where("caregiverID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                                                        .get();
+                                                for (var doc
+                                                    in snapshotDoses.docs) {
+                                                  Timestamp doseTime =
+                                                      doc.get("Time");
+                                                  print(doseTime);
+
+                                                  if (doseTime.compareTo(
+                                                          Timestamp.now()) >
+                                                      0) {
+                                                    await doc.reference
+                                                        .delete();
+                                                  }
+                                                }
+
+                                                ;
+
+                                                var collectionDoseEdit =
+                                                    FirebaseFirestore.instance
+                                                        .collection(
+                                                            'dosesEdit');
+                                                var snapshotoseEdit =
+                                                    await collectionDoseEdit
+                                                        .where("name",
+                                                            isEqualTo:
+                                                                medicName).where("caregiverID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                                                        .get();
+                                                for (var doc
+                                                    in snapshotoseEdit.docs) {
+                                                  await doc.reference.delete();
+                                                }
+                                                ;
+
+                                                var collectionMed =
+                                                    FirebaseFirestore.instance
+                                                        .collection(
+                                                            'medicines');
+                                                var snapshotMed =
+                                                    await collectionMed
+                                                        .where("Trade name",
+                                                            isEqualTo:
+                                                                medicName).where("caregiverID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                                                        .get();
+                                                for (var doc
+                                                    in snapshotMed.docs) {
+                                                  await doc.reference.delete();
+                                                }
+                                                ;
+                                              },
+                                              child: Text(
+                                                "نعم",
+                                                style: GoogleFonts.tajawal(),
+                                              ),
+                                            ),
+                                          ],
+                                          content: Text(
+                                            "هل أنت متأكد من رغبتك في حذف الدواء وما يتبعه من جرعات؟",
+                                            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold,),
+                                             textAlign: TextAlign.right,
+                                          )));
+                            },
+                            child: Icon(
+                              Icons.delete,
+                              color: ui.Color.fromARGB(255, 247, 76, 81),
+                              size: 25,
+                            ),
+                          )),
+
                     ],
                   ),
                   SizedBox(
