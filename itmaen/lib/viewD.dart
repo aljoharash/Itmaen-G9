@@ -1105,11 +1105,46 @@ class _medBubbleState extends State<medBubble> {
                                                       widget.MedUnit);
                                                   // print("مرحبا بك ");
                                                 },
+<<<<<<< Updated upstream
                                                   child: Icon(
                                                   Icons.volume_up,
                                                   color: Color.fromARGB(255, 111, 161, 200),
                                                   size: 30,
                                                 ),
+=======
+
+                                                child: 
+
+                                                  TextToSpeechAPI().isPlaying !=
+
+                                                          widget.doc
+
+                                                      ? Icon(Icons.volume_down,
+
+                                                  color: Color.fromARGB(
+
+                                                      255, 111, 161, 200),
+
+                                                  size: 30,
+
+                                                ) :
+                                                BlinkWidget(children: <Widget>[
+                                                  Icon(Icons.volume_down,
+                                                  color: Color.fromARGB(
+                                                255, 111, 161, 200),
+                                                size: 30,),
+                                                Icon(Icons.volume_mute,
+                                                  color: Color.fromARGB(
+                                                255, 111, 161, 200),
+                                                size: 30,),
+                                                Icon(Icons.volume_up,
+                                                  color: Color.fromARGB(
+                                                255, 111, 161, 200),
+                                                size: 30,),
+                                                ] )
+
+
+>>>>>>> Stashed changes
                                                 
                                               )
                                             ],
