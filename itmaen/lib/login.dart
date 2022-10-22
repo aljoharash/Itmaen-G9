@@ -314,7 +314,11 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
+<<<<<<< Updated upstream
             builder: (context) => Navigation(),
+=======
+            builder: (context) => Navigation()
+>>>>>>> Stashed changes
           ),
         );
       } on FirebaseAuthException catch (error) {

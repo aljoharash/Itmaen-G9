@@ -91,6 +91,86 @@ class _ViewDPageState extends State<ViewD> {
     super.initState();
     //HomePage();
     getCurrentUser().then((value) => t = value);
+<<<<<<< Updated upstream
+=======
+
+    //   timer = Timer.periodic(const Duration(seconds: 50), (Timer t) {
+
+    //     callbackDispatcher();
+
+    // });
+
+  }
+
+ 
+
+  void callbackDispatcher() async {
+
+    print("it is working in the background");
+
+    Navigation nv = new Navigation();
+
+    final _auth = FirebaseAuth.instance;
+
+    late User? loggedInUser = _auth.currentUser;
+
+    if (loggedInUser == null) {
+
+      print("stpped");
+
+      timer = null;
+
+      timer?.cancel();
+
+      return;
+
+    }
+
+    print('2');
+
+    await FirebaseFirestore.instance
+
+        .collection('doses')
+
+        .where("caregiverID", isEqualTo: loggedInUser.uid)
+
+        .get()
+
+        .then((value) {
+
+      for (var i = 0; i < value.size; i++) {
+
+        var _query;
+
+        var medName;
+
+        _query = value.docs[i].get('Timecheked');
+
+        medName = value.docs[i].get('name');
+
+        var x = DateTime.now();
+
+        String format = DateFormat('yyy-MM-dd - kk:mm').format(x);
+
+        String format2 =
+
+            DateFormat('yyy-MM-dd - kk:mm').format(_query.toDate());
+
+        print(format == format2);
+
+ 
+
+        if (format == format2) {
+
+          nv.sendNotificationchecked2(' جرعة ${medName} ');
+
+        }
+
+      }
+
+    });
+
+>>>>>>> Stashed changes
   }
 
   Future<bool> getstatu() async {
@@ -231,6 +311,68 @@ class _ViewDPageState extends State<ViewD> {
                                   // final pic = med.get("picture");
                                   // final timechecked = med.get('Timecheked');
                                   // var i = 0;
+<<<<<<< Updated upstream
+=======
+
+ 
+
+                                  Navigation nv = Navigation();
+
+ 
+
+                                  var x = DateTime.now();
+
+ 
+
+                                  String format =
+
+                                      DateFormat('yyy-MM-dd - kk:mm').format(x);
+
+ 
+
+                                  String format2 =
+
+                                      DateFormat('yyy-MM-dd - kk:mm')
+
+                                          .format(timechecked.toDate());
+
+ 
+
+                                  print(format);
+
+ 
+
+                                  print(format2);
+
+ 
+
+                                  print(x == timechecked.toDate());
+
+ 
+
+                                  print(x);
+
+ 
+
+                                  print(timechecked.toDate());
+
+ 
+
+                                  print('herree');
+
+ 
+
+                                  if (format == format2 && send == false) {
+
+                                    nv.sendNotificationchecked2(
+
+                                        ' جرعة ${medName} ');
+
+                                  }
+
+ 
+
+>>>>>>> Stashed changes
                                   final MedBubble = medBubble(
                                       medName,
                                       checked,
@@ -339,7 +481,57 @@ class _ViewDPageState extends State<ViewD> {
                                   // final pic = med.get("picture");
                                   //final timechecked;
 
+<<<<<<< Updated upstream
                                   // timechecked = med.get('Timecheked');
+=======
+ 
+
+                                  final timechecked = med.get('Timecheked');
+
+ 
+
+                                  Navigation nv = Navigation();
+
+ 
+
+                                  var x = DateTime.now();
+
+ 
+
+                                  String format =
+
+                                      DateFormat('yyy-MM-dd - kk:mm').format(x);
+
+ 
+
+                                  String format2 =
+
+                                      DateFormat('yyy-MM-dd - kk:mm')
+
+                                          .format(timechecked.toDate());
+
+                                  //  print(format);
+
+                                  // print(format2);
+
+                                  // print(x == timechecked.toDate());
+
+                                  // print(x);
+
+                                  // print(timechecked.toDate());
+
+                                  print('herree');
+
+                                  if (format == format2 && send == false) {
+
+                                    nv.sendNotificationchecked2(
+
+                                        ' جرعة ${medName} ');
+
+                                  }
+
+ 
+>>>>>>> Stashed changes
 
                                   final MedBubble = medBubble(
                                     medName,
@@ -427,6 +619,16 @@ class _medBubbleState extends State<medBubble> {
   bool _value = false;
   bool _valu = false;
   var msg = "hh";
+<<<<<<< Updated upstream
+=======
+
+ 
+
+  final Navigation nv = new Navigation();
+
+ 
+
+>>>>>>> Stashed changes
   //bool yarab = false;
   Color color = Colors.black;
 

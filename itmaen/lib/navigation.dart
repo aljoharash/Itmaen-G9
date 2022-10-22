@@ -23,7 +23,24 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 class Navigation extends StatefulWidget {
+<<<<<<< Updated upstream
   const Navigation({Key? key}) : super(key: key);
+=======
+  const Navigation( {Key? key}) : super(key: key);
+  void sendNotificationchecked(String mediName) async {
+    Noti.showBigTextNotification(
+        title: "تم أخذ الجرعة",
+        body: "${mediName} ",
+        fln: flutterLocalNotificationsPlugin);
+  }
+
+  void sendNotificationchecked2(String mediName) async {
+    Noti.showBigTextNotification(
+        title: "تم أخذ الجرعة",
+        body: "اطمئن، قام مسقبل رعايتك بأخذ ${mediName}",
+        fln: flutterLocalNotificationsPlugin);
+  }
+>>>>>>> Stashed changes
 
   @override
   State<Navigation> createState() => _NavigationState();
@@ -199,10 +216,7 @@ class _NavigationState extends State<Navigation> {
         color: Color.fromARGB(255, 140, 167, 190),
         animationDuration: Duration(milliseconds: 300),
         items: [
-          Icon(
-            Icons.logout,
-            color: Colors.white,
-          ),
+       
           Icon(
             Icons.person_add,
             color: Colors.white,

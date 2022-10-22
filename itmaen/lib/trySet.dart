@@ -836,6 +836,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(10))),
                         ),
                       ),
+<<<<<<< Updated upstream
                       Container(
                         margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: ElevatedButton(
@@ -886,6 +887,56 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                               primary: Color.fromARGB(255, 140, 167, 190),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10))),
+=======
+                      style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(255, 140, 167, 190),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          "لا",
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Navigation()));
+                                        },
+                                        child: Text(
+                                          "نعم",
+                                        ),
+                                      ),
+                                    ],
+                                    content: Text(
+                                      "هل أنت متأكد من رغبتك في إلغاء تحديد الجرعة؟",
+                                      style: GoogleFonts.tajawal(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.right,
+                                    )));
+                      },
+                      child: Text(
+                        "إلغاء",
+                        style: GoogleFonts.tajawal(
+                          color: Color.fromARGB(255, 245, 244, 244),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+>>>>>>> Stashed changes
                         ),
                       ),
                     ])),
