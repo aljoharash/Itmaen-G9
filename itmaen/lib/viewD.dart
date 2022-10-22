@@ -69,7 +69,7 @@ import 'package:intl/intl.dart';
 
 class ViewD extends StatefulWidget {
   const ViewD({Key? key}) : super(key: key);
-  
+
   @override
   _ViewDPageState createState() => _ViewDPageState();
 }
@@ -97,7 +97,6 @@ class _ViewDPageState extends State<ViewD> {
   AudioPlayer audioPlayer = AudioPlayer();
 
   //Future<String?> loggedInUser = getCurrentUser();
-  
 
   /*
 
@@ -120,7 +119,7 @@ class _ViewDPageState extends State<ViewD> {
     code for voice and google api : end
 
   */
-Timer? timer;
+  Timer? timer;
   late String id = '';
 
   static var id_ = '';
@@ -170,50 +169,45 @@ Timer? timer;
     }
 
     getCurrentUser().then((value) => t = value);
-  //   timer = Timer.periodic(const Duration(seconds: 50), (Timer t) {
-  //     callbackDispatcher();
-  // });
+    //   timer = Timer.periodic(const Duration(seconds: 50), (Timer t) {
+    //     callbackDispatcher();
+    // });
   }
-  void callbackDispatcher()async  {
- 
+
+  void callbackDispatcher() async {
     print("it is working in the background");
-  Navigation nv = new Navigation();
-  final _auth = FirebaseAuth.instance;
-  late User? loggedInUser = _auth.currentUser;
- if(loggedInUser==null){
-  print("stpped");
-  timer = null; 
-  timer?.cancel();
-  return;
- }
- print('2');
+    Navigation nv = new Navigation();
+    final _auth = FirebaseAuth.instance;
+    late User? loggedInUser = _auth.currentUser;
+    if (loggedInUser == null) {
+      print("stpped");
+      timer = null;
+      timer?.cancel();
+      return;
+    }
+    print('2');
     await FirebaseFirestore.instance
         .collection('doses')
         .where("caregiverID", isEqualTo: loggedInUser.uid)
         .get()
         .then((value) {
-          for(var i = 0 ; i<value.size ;i++){
-            var _query;
-      var medName;
-      _query = value.docs[i].get('Timecheked');
-      medName = value.docs[i].get('name');
-      var x = DateTime.now();
-      String format = DateFormat('yyy-MM-dd - kk:mm').format(x);
-      String format2 = DateFormat('yyy-MM-dd - kk:mm').format(_query.toDate());
-      print(format==format2);
+      for (var i = 0; i < value.size; i++) {
+        var _query;
+        var medName;
+        _query = value.docs[i].get('Timecheked');
+        medName = value.docs[i].get('name');
+        var x = DateTime.now();
+        String format = DateFormat('yyy-MM-dd - kk:mm').format(x);
+        String format2 =
+            DateFormat('yyy-MM-dd - kk:mm').format(_query.toDate());
+        print(format == format2);
 
-      if (format == format2) {
-        nv.sendNotificationchecked2(' جرعة ${medName} ');
+        if (format == format2) {
+          nv.sendNotificationchecked2(' جرعة ${medName} ');
+        }
       }
-
-          }
-      
     });
-   
-  
-
-}
-
+  }
 
   Future<bool> getstatu() async {
     bool val = await getCurrentUser();
@@ -272,9 +266,9 @@ Timer? timer;
       child: Directionality(
         textDirection: ui.TextDirection.rtl,
         child: Scaffold(
-          drawer: loggedInUser==null? null : NavBar(),
+          drawer: loggedInUser == null ? null : NavBar(),
           appBar: AppBar(
-           automaticallyImplyLeading: loggedInUser==null? false : true ,
+            automaticallyImplyLeading: loggedInUser == null ? false : true,
             backgroundColor: Color.fromARGB(255, 140, 167, 190),
             title: Text("قائمة الجرعات اليومية",
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
@@ -596,12 +590,12 @@ Timer? timer;
                                   String format2 =
                                       DateFormat('yyy-MM-dd - kk:mm')
                                           .format(timechecked.toDate());
-                                //  print(format);
-                                 // print(format2);
-                                 // print(x == timechecked.toDate());
-                                 // print(x);
-                                 // print(timechecked.toDate());
-                                 print('herree');
+                                  //  print(format);
+                                  // print(format2);
+                                  // print(x == timechecked.toDate());
+                                  // print(x);
+                                  // print(timechecked.toDate());
+                                  print('herree');
                                   if (format == format2 && send == false) {
                                     nv.sendNotificationchecked2(
                                         ' جرعة ${medName} ');
@@ -1268,7 +1262,8 @@ class _medBubbleState extends State<medBubble> {
                                               ? Icon(
                                                   Icons.check_outlined,
                                                   size: 30,
-                                                  color: ui.Color.fromARGB(255, 81, 212, 81),
+                                                  color: ui.Color.fromARGB(
+                                                      255, 81, 212, 81),
                                                 )
                                               : Icon(
                                                   Icons.check_outlined,
@@ -1424,8 +1419,8 @@ class _medBubbleState extends State<medBubble> {
                                     SizedBox(
                                       child: Image.asset(
                                           widget.picture.toString(),
-                                          height: 70,
-                                          width: 70),
+                                          height: 50,
+                                          width: 50),
                                     ),
 
                                     // image here
