@@ -168,7 +168,7 @@ class _NavBar extends State<NavBar> {
             onTap: () =>   Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                     history()))
+                                                     TabBarPage()))
           ),
           /* ListTile(
             leading: Icon(Icons.share),

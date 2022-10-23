@@ -1,33 +1,136 @@
-import 'package:category_picker/category_picker.dart';
-import 'package:category_picker/category_picker_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:itmaen/viewD.dart';
+import 'package:itmaen/view.dart';
+import 'package:itmaen/viewAlldoses.dart';
 
-class history extends StatefulWidget {
+class TabBarPage extends StatefulWidget {
+  const TabBarPage({Key? key}) : super(key: key);
+
   @override
-  _History createState() => _History();
+  _TabBarPageState createState() => _TabBarPageState();
 }
 
-class _History extends State<history> {
+class _TabBarPageState extends State<TabBarPage>
+    with SingleTickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
+  void initState() {
+    tabController = TabController(length: 3, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: CategoryPicker(
-          items: [
-            CategoryPickerItem(
-              value: "Test",
+      appBar: AppBar(
+
+            //automaticallyImplyLeading: loggedInUser == null ? false : true,
+
+            backgroundColor: Color.fromARGB(255, 140, 167, 190),
+
+            title: Text("                          تاريخ الجرعات ",
+
+                style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
+
+          ),
+      backgroundColor: Colors.white,
+      // appBar: AppBar(
+      //   title: Text('Tab bar Without Appbar'),
+      // ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 0),
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+              SizedBox(height: 20),
+                Container(
+                  // height: 50,
+                  width: MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 248, 249, 250),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(0),
+                        child: TabBar(
+                          unselectedLabelColor: Color.fromARGB(255, 70, 69, 69),
+                          labelColor: Color.fromARGB(255, 248, 245, 245),
+                          indicatorColor: Colors.white,
+                          indicatorWeight: 2,
+                          indicator: BoxDecoration(
+                            color: Color.fromARGB(255, 140, 167, 190),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          controller: tabController,
+                          tabs: [
+                            Tab(
+                                child: Row(
+                              children: [
+                                 Icon(
+                                  Icons.check,
+                                  color: Color.fromARGB(255, 40, 228, 131),
+                                ),
+                                SizedBox(width: 5,),
+                                Text('تم أخذها',
+                                    style: GoogleFonts.tajawal(
+                                        fontWeight: FontWeight.bold)),
+                               
+                              ],
+                            )),
+                            Tab(
+                                  child: Row(
+                              children: [
+                                 Icon(
+                                  Icons.close,
+                                  color: Color.fromARGB(255, 228, 68, 40),
+                                ),
+                                //SizedBox(width: 2,),
+                                Text('لم يتم أخذها',
+                                    style: GoogleFonts.tajawal(
+                                        fontWeight: FontWeight.bold)),
+                               
+                              ],
+                            )),
+                             Tab(
+                                child: Row(
+                              children: [
+                                 Icon(
+                                  Icons.list,
+                                  color: Color.fromARGB(255, 245, 183, 59),
+                                ),
+                               SizedBox(width: 5,),
+                                Text('    الكل',
+                                    style: GoogleFonts.tajawal(
+                                        fontWeight: FontWeight.bold)),
+                               
+                              ],
+                            )),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: tabController,
+                    children: [ViewAll(), ViewD(), View()],
+                  ),
+                )
+              ],
             ),
-            CategoryPickerItem(
-              value: "Test2",
-            ),
-            CategoryPickerItem(
-              value: "Test3",
-            ),
-          ],
-          onValueChanged: (value) {
-            print(value.label);
-          },
+          ),
         ),
       ),
     );
