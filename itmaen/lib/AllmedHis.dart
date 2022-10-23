@@ -31,16 +31,13 @@ class _TabBarPageState extends State<TabBarPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //automaticallyImplyLeading: loggedInUser == null ? false : true,
 
-            //automaticallyImplyLeading: loggedInUser == null ? false : true,
+        backgroundColor: Color.fromARGB(255, 140, 167, 190),
 
-            backgroundColor: Color.fromARGB(255, 140, 167, 190),
-
-            title: Text("                          تاريخ الجرعات ",
-
-                style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
-
-          ),
+        title: Text("                          تاريخ الجرعات ",
+            style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
+      ),
       backgroundColor: Colors.white,
       // appBar: AppBar(
       //   title: Text('Tab bar Without Appbar'),
@@ -52,7 +49,7 @@ class _TabBarPageState extends State<TabBarPage>
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
-              SizedBox(height: 20),
+                SizedBox(height: 20),
                 Container(
                   // height: 50,
                   width: MediaQuery.of(context).size.height,
@@ -77,43 +74,44 @@ class _TabBarPageState extends State<TabBarPage>
                             Tab(
                                 child: Row(
                               children: [
-                                 Icon(
-                                  Icons.check,
-                                  color: Color.fromARGB(255, 40, 228, 131),
-                                ),
-                                SizedBox(width: 5,),
                                 Text('تم أخذها',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
-                               
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Icon(
+                                  Icons.check,
+                                  color: Color.fromARGB(255, 40, 228, 131),
+                                ),
                               ],
                             )),
                             Tab(
-                                  child: Row(
+                                child: Row(
                               children: [
-                                 Icon(
-                                  Icons.close,
-                                  color: Color.fromARGB(255, 228, 68, 40),
-                                ),
-                                //SizedBox(width: 2,),
                                 Text('لم يتم أخذها',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
-                               
+                                //SizedBox(width: 2,),
+                                Icon(
+                                  Icons.close,
+                                  color: Color.fromARGB(255, 228, 68, 40),
+                                ),
                               ],
                             )),
-                             Tab(
+                            Tab(
                                 child: Row(
                               children: [
-                                 Icon(
-                                  Icons.list,
-                                  color: Color.fromARGB(255, 245, 183, 59),
-                                ),
-                               SizedBox(width: 5,),
                                 Text('    الكل',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
-                               
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Icon(
+                                  Icons.list,
+                                  color: Color.fromARGB(255, 245, 183, 59),
+                                ),
                               ],
                             )),
                           ],
