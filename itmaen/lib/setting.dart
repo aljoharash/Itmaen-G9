@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:itmaen/AllmedHis.dart';
 import 'package:itmaen/editprofile.dart';
 import 'package:itmaen/patient-login.dart';
 import 'alert_dialog.dart';
@@ -160,6 +161,14 @@ class _NavBar extends State<NavBar> {
             leading: Icon(Icons.logout),
             title: Text('تسجيل الخروج', style: GoogleFonts.tajawal()),
             onTap: () => logout(),
+          ),
+             ListTile(
+            leading: Icon(Icons.history),
+            title: Text('سجل الأدوية ', style: GoogleFonts.tajawal()),
+            onTap: () =>   Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                     history()))
           ),
           /* ListTile(
             leading: Icon(Icons.share),
