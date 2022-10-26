@@ -98,16 +98,18 @@ class _TabBarPageState extends State<TabBarPage>
                             Tab(
                                 child: Row(
                               children: [
-                                Icon(
-                                  Icons.check,
-                                  color: Color.fromARGB(255, 40, 228, 131),
-                                ),
-                                 SizedBox(
-                                  width: 5,
-                                ),
+                               
+                                 
                                 Text('تم أخذها',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
+                                        SizedBox(
+                                  width: 5,
+                                ),
+                                 Icon(
+                                  Icons.check,
+                                  color: Color.fromARGB(255, 40, 228, 131),
+                                ),
                                
                               ],
                             )),
@@ -115,16 +117,17 @@ class _TabBarPageState extends State<TabBarPage>
                              Tab(
                                 child: Row(
                               children: [
-                                 Icon(
-                                  Icons.list,
-                                  color: Color.fromARGB(255, 184, 186, 187),
-                                ),
-                               SizedBox(width: 5,),
+                                
+                             
                                 Text('    الكل',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
                                   width: 5,
+                                ),
+                                 Icon(
+                                  Icons.list,
+                                  color: Color.fromARGB(255, 184, 186, 187),
                                 ),
                                 
                               ],
