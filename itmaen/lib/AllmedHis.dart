@@ -35,6 +35,7 @@ class _TabBarPageState extends State<TabBarPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //automaticallyImplyLeading: loggedInUser == null ? false : true,
 
            leading: IconButton(onPressed: ()=>  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Navigation())), 
            icon: Icon(Icons.arrow_back)),
@@ -57,7 +58,7 @@ class _TabBarPageState extends State<TabBarPage>
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
-              SizedBox(height: 20),
+                SizedBox(height: 20),
                 Container(
                   // height: 50,
                   width: MediaQuery.of(context).size.height,
@@ -83,25 +84,27 @@ class _TabBarPageState extends State<TabBarPage>
                              Tab(
                                   child: Row(
                               children: [
-                                 Icon(
-                                  Icons.close,
-                                  color: Color.fromARGB(255, 228, 68, 40),
-                                ),
+                               
                                 //SizedBox(width: 2,),
                                 Text('لم يتم أخذها',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
-                               
+                                 Icon(
+                                  Icons.close,
+                                  color: Color.fromARGB(255, 228, 68, 40),
+                                ),
                               ],
                             )),
                             Tab(
                                 child: Row(
                               children: [
-                                 Icon(
+                                Icon(
                                   Icons.check,
                                   color: Color.fromARGB(255, 40, 228, 131),
                                 ),
-                                SizedBox(width: 5,),
+                                 SizedBox(
+                                  width: 5,
+                                ),
                                 Text('تم أخذها',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
@@ -120,7 +123,10 @@ class _TabBarPageState extends State<TabBarPage>
                                 Text('    الكل',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
-                               
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                
                               ],
                             )),
 
