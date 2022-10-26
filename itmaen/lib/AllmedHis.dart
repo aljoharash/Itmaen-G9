@@ -100,12 +100,12 @@ class _TabBarPageState extends State<TabBarPage>
                               children: [
                                
                                  
-                                Text('تم أخذها',
+                                Text('    تم أخذها',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
-                                        SizedBox(
-                                  width: 5,
-                                ),
+                                //         SizedBox(
+                                //   width: 5,
+                                // ),
                                  Icon(
                                   Icons.check,
                                   color: Color.fromARGB(255, 40, 228, 131),

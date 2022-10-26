@@ -537,7 +537,8 @@ class _ViewAllCheckPageState extends State<ViewAllCheck> {
                               } //else {
 
                               final medicines = snapshot.data?.docs;
-                              double length =( medicines!.length).toDouble()   ;
+                              double length =( medicines!.length).toDouble() ;
+                               int counter = 0 ; 
 
                               List<medBubble> medBubbles = [];
 
@@ -572,6 +573,10 @@ class _ViewAllCheckPageState extends State<ViewAllCheck> {
                                 final picture = med.get("picture");
 
                                 bool send = false;
+                                if(checked==true){
+                                  counter++; 
+
+                                }
 
                                 // final pic = med.get("picture");
 
@@ -641,13 +646,14 @@ class _ViewAllCheckPageState extends State<ViewAllCheck> {
                               ui.Color.fromARGB(255, 119, 122, 122),
                           valueColor: new AlwaysStoppedAnimation<Color>(
                               ui.Color.fromARGB(255, 54, 244, 130)),
-                          value: length,
+                          value: counter.toDouble()/length,
+                          minHeight: 30,
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         Center(
-                          child: Text('${(length * 100).round()}%',
+                          child: Text('${(counter.toDouble()/length* 100).round()}%',
                               style: GoogleFonts.tajawal(
                                   fontWeight: FontWeight.bold)),
                         ),

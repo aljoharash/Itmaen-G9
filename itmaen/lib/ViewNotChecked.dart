@@ -432,24 +432,24 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
                         SizedBox(
                           height: 20,
                         ),
-                        LinearProgressIndicator(
-                          backgroundColor:
-                              ui.Color.fromARGB(255, 119, 122, 122),
-                          valueColor: new AlwaysStoppedAnimation<Color>(
-                              ui.Color.fromARGB(255, 54, 244, 130)),
-                          value: 0.5,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Center(
-                          child: Text('${(0.1 * 100).round()}%',
-                              style: GoogleFonts.tajawal(
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        // LinearProgressIndicator(
+                        //   backgroundColor:
+                        //       ui.Color.fromARGB(255, 119, 122, 122),
+                        //   valueColor: new AlwaysStoppedAnimation<Color>(
+                        //       ui.Color.fromARGB(255, 54, 244, 130)),
+                        //   value: 0.5,
+                        // ),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
+                        // Center(
+                        //   child: Text('${(0.1 * 100).round()}%',
+                        //       style: GoogleFonts.tajawal(
+                        //           fontWeight: FontWeight.bold)),
+                        // ),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
                         Row(
                           children: [],
                         ),
@@ -466,13 +466,15 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
                               } //else {
 
                               final medicines = snapshot.data?.docs;
+                              double length = (medicines!.length).toDouble();
+                              int counter = 0 ; 
 
                               List<medBubble> medBubbles = [];
 
                               String x = DateFormat('dd/MM/yyyy')
                                   .format(DateTime.now());
 
-                              for (var med in medicines!) {
+                              for (var med in medicines) {
                                 final medDate = med.get('Date');
 
                                 final medName = med.get('name');
@@ -526,6 +528,10 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
                                 // print(timechecked.toDate());
 
                                 print('herree');
+                                if(checked==false){
+                                  counter++; 
+
+                                }
 
                                 if (format == format2 && send == false) {
                                   nv.sendNotificationchecked2(
@@ -558,15 +564,36 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
 
                               }
 
-                              return Expanded(
-                                child: Scrollbar(
-                                  child: ListView(
+                               return Expanded(
+                               // child: Scrollbar(
+                                  child: Column(children:[
+                                    LinearProgressIndicator(
+                          backgroundColor:
+                              ui.Color.fromARGB(255, 119, 122, 122),
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              ui.Color.fromARGB(255, 240, 48, 10)),
+                          value: counter.toDouble()/length,
+                          minHeight: 30,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Center(
+                          child: Text('${(counter.toDouble()/length* 100).round()}%',
+                              style: GoogleFonts.tajawal(
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        Expanded(
+                        child:ListView(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 20),
                                     children: medBubbles,
-                                  ),
-                                ),
+                                    
+                                  ),)
+                                  ]) 
+                               // ),
                               );
+
 
                               // }
                             })

@@ -429,25 +429,25 @@ class _ViewAllPageState extends State<ViewAll> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        SizedBox(
-                          height: 20,
-                        ),
+                        // SizedBox(
+                        //   height: 20,
+                        // ),
                         
-                        LinearProgressIndicator(
-                          backgroundColor:
-                              ui.Color.fromARGB(255, 119, 122, 122),
-                          valueColor: new AlwaysStoppedAnimation<Color>(
-                              ui.Color.fromARGB(255, 54, 244, 130)),
-                          value: 0.5,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Center(
-                          child: Text('${(0.1 * 100).round()}%',
-                              style: GoogleFonts.tajawal(
-                                  fontWeight: FontWeight.bold)),
-                        ),
+                        // LinearProgressIndicator(
+                        //   backgroundColor:
+                        //       ui.Color.fromARGB(255, 119, 122, 122),
+                        //   valueColor: new AlwaysStoppedAnimation<Color>(
+                        //       ui.Color.fromARGB(255, 54, 244, 130)),
+                        //   value: 0.5,
+                        // ),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
+                        // Center(
+                        //   child: Text('${(0.1 * 100).round()}%',
+                        //       style: GoogleFonts.tajawal(
+                        //           fontWeight: FontWeight.bold)),
+                        // ),
                         SizedBox(
                           height: 10,
                         ),
@@ -467,7 +467,7 @@ class _ViewAllPageState extends State<ViewAll> {
                               } //else {
 
                               final medicines = snapshot.data?.docs;
-                              
+
 
                               List<medBubble> medBubbles = [];
 
