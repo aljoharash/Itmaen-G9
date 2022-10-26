@@ -2481,7 +2481,7 @@ class _medBubbleState extends State<medBubble> {
 
                                     width: 1000,
 
-                                    height: 10,
+                                    height: 20,
 
                                     decoration: BoxDecoration(
 

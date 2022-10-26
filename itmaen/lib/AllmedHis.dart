@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:itmaen/navigation.dart';
 import 'package:itmaen/viewD.dart';
 import 'package:itmaen/view.dart';
 import 'package:itmaen/viewAlldoses.dart';
+
+import 'ViewChecked.dart';
+import 'ViewNotChecked.dart';
 
 class TabBarPage extends StatefulWidget {
   const TabBarPage({Key? key}) : super(key: key);
@@ -32,13 +36,14 @@ class _TabBarPageState extends State<TabBarPage>
     return Scaffold(
       appBar: AppBar(
 
-            //automaticallyImplyLeading: loggedInUser == null ? false : true,
+           leading: IconButton(onPressed: ()=>  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Navigation())), 
+           icon: Icon(Icons.arrow_back)),
 
             backgroundColor: Color.fromARGB(255, 140, 167, 190),
 
-            title: Text("                          تاريخ الجرعات ",
+            title: Center(child:Text(" تاريخ الجرعات ",
 
-                style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
+                style: GoogleFonts.tajawal(fontWeight: FontWeight.bold))),
 
           ),
       backgroundColor: Colors.white,
@@ -74,6 +79,21 @@ class _TabBarPageState extends State<TabBarPage>
                           ),
                           controller: tabController,
                           tabs: [
+                            
+                             Tab(
+                                  child: Row(
+                              children: [
+                                 Icon(
+                                  Icons.close,
+                                  color: Color.fromARGB(255, 228, 68, 40),
+                                ),
+                                //SizedBox(width: 2,),
+                                Text('لم يتم أخذها',
+                                    style: GoogleFonts.tajawal(
+                                        fontWeight: FontWeight.bold)),
+                               
+                              ],
+                            )),
                             Tab(
                                 child: Row(
                               children: [
@@ -88,26 +108,13 @@ class _TabBarPageState extends State<TabBarPage>
                                
                               ],
                             )),
-                            Tab(
-                                  child: Row(
-                              children: [
-                                 Icon(
-                                  Icons.close,
-                                  color: Color.fromARGB(255, 228, 68, 40),
-                                ),
-                                //SizedBox(width: 2,),
-                                Text('لم يتم أخذها',
-                                    style: GoogleFonts.tajawal(
-                                        fontWeight: FontWeight.bold)),
-                               
-                              ],
-                            )),
+                           
                              Tab(
                                 child: Row(
                               children: [
                                  Icon(
                                   Icons.list,
-                                  color: Color.fromARGB(255, 245, 183, 59),
+                                  color: Color.fromARGB(255, 184, 186, 187),
                                 ),
                                SizedBox(width: 5,),
                                 Text('    الكل',
@@ -116,6 +123,8 @@ class _TabBarPageState extends State<TabBarPage>
                                
                               ],
                             )),
+
+
                           ],
                         ),
                       ),
@@ -125,7 +134,8 @@ class _TabBarPageState extends State<TabBarPage>
                 Expanded(
                   child: TabBarView(
                     controller: tabController,
-                    children: [ViewAll(), ViewD(), View()],
+                    // ignore: prefer_const_constructors
+                    children: [ViewNotAllCheck(), ViewAllCheck(), ViewAll()],
                   ),
                 )
               ],

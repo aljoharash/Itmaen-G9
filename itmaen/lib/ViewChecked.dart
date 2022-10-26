@@ -74,14 +74,14 @@ import 'package:itmaen/secure-storage.dart';
 
 import 'package:intl/intl.dart';
 
-class ViewAll extends StatefulWidget {
-  const ViewAll({Key? key}) : super(key: key);
+class ViewAllCheck extends StatefulWidget {
+  const ViewAllCheck({Key? key}) : super(key: key);
 
   @override
-  _ViewAllPageState createState() => _ViewAllPageState();
+  _ViewAllCheckPageState createState() => _ViewAllCheckPageState();
 }
 
-class _ViewAllPageState extends State<ViewAll> {
+class _ViewAllCheckPageState extends State<ViewAllCheck> {
   final NavigationPatient nv =
       new NavigationPatient(); // to take notifications method
 
@@ -239,6 +239,18 @@ class _ViewAllPageState extends State<ViewAll> {
       return Future<bool>.value(false);
     }
   }
+   int size  = 0 ; 
+  Future<int> getNumber() async{
+    
+   size = (await FirebaseFirestore.instance
+        .collection('doses')
+        .where("caregiverID", isEqualTo: loggedInUser!.uid).where("cheked", isEqualTo: true)
+        .snapshots().length)  ;
+       // return size ; 
+
+        
+          return size ; 
+        }
 
   //late User? loggedInUser = _auth.currentUser;
 
@@ -254,12 +266,69 @@ class _ViewAllPageState extends State<ViewAll> {
 
     return SafeArea(
       top: false,
-    child: Directionality(
-      textDirection: ui.TextDirection.rtl,
-        child: Scaffold(
+      child: Directionality(
+        textDirection: ui.TextDirection.rtl,
+        child: Container(
           // drawer: loggedInUser == null ? null : NavBar(),
 
-          body: FutureBuilder(
+          child:
+          //  Column(
+          //   children:[
+            // FutureBuilder(
+            //           builder: (context, snapshot) {
+            //             if (snapshot.connectionState == ConnectionState.done) {
+            //               // If we got an error
+            //               if (snapshot.hasError) {
+            //                 return Center(
+            //                   child: Text(
+            //                     '${snapshot.error} occurred',
+            //                     style: TextStyle(fontSize: 18),
+            //                   ),
+            //                 );
+
+            //                 // if we got our data
+            //               } 
+            //               else if (snapshot.hasData) {
+            //                 // Extracting data from snapshot object
+            //                 final data = snapshot.data as double;
+            //                 return Center(
+            //                     child: Row(
+            //                   children: [
+            //                     SizedBox(width: 120),
+            //                     LinearProgressIndicator(
+            //               backgroundColor:
+            //                   ui.Color.fromARGB(255, 119, 122, 122),
+            //               valueColor: new AlwaysStoppedAnimation<Color>(
+            //                   ui.Color.fromARGB(255, 54, 244, 130)),
+            //               value: data,
+            //             ),
+                               
+            //                     Text(
+            //                       '${data} ',
+            //                       style: GoogleFonts.tajawal(
+            //                           fontSize: 30,
+            //                           fontWeight: FontWeight.bold,
+            //                           color: Colors.black),
+            //                       textAlign: TextAlign.right,
+            //                     ),
+            //                   ],
+            //                 )); //)
+
+            //               }
+            //             }
+
+                        // Displaying LoadingSpinner to indicate waiting state
+                    //     return Center(
+                    //       child: CircularProgressIndicator(),
+                    //     );
+                    //   },
+
+                    //   // Future that needs to be resolved
+                    //   // inorder to display something on the Canvas
+                    //   future: getNumber(),
+                    // ),
+
+                    FutureBuilder(
             builder: (ctx, snapshot) {
               // Checking if future is resolved or not
 
@@ -384,6 +453,7 @@ class _ViewAllPageState extends State<ViewAll> {
 
                                 // }
 
+
                                 final MedBubble = medBubble(
                                     medName,
                                     checked,
@@ -433,21 +503,21 @@ class _ViewAllPageState extends State<ViewAll> {
                           height: 20,
                         ),
                         
-                        LinearProgressIndicator(
-                          backgroundColor:
-                              ui.Color.fromARGB(255, 119, 122, 122),
-                          valueColor: new AlwaysStoppedAnimation<Color>(
-                              ui.Color.fromARGB(255, 54, 244, 130)),
-                          value: 0.5,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Center(
-                          child: Text('${(0.1 * 100).round()}%',
-                              style: GoogleFonts.tajawal(
-                                  fontWeight: FontWeight.bold)),
-                        ),
+                        // LinearProgressIndicator(
+                        //   backgroundColor:
+                        //       ui.Color.fromARGB(255, 119, 122, 122),
+                        //   valueColor: new AlwaysStoppedAnimation<Color>(
+                        //       ui.Color.fromARGB(255, 54, 244, 130)),
+                        //   value: 0.5,
+                        // ),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
+                        // Center(
+                        //   child: Text('${(0.1 * 100).round()}%',
+                        //       style: GoogleFonts.tajawal(
+                        //           fontWeight: FontWeight.bold)),
+                        // ),
                         SizedBox(
                           height: 10,
                         ),
@@ -467,14 +537,16 @@ class _ViewAllPageState extends State<ViewAll> {
                               } //else {
 
                               final medicines = snapshot.data?.docs;
-                              
+                              double length =( medicines!.length).toDouble()   ;
 
                               List<medBubble> medBubbles = [];
 
                               String x = DateFormat('dd/MM/yyyy')
                                   .format(DateTime.now());
+                                  
 
-                              for (var med in medicines!) {
+                              for (var med in medicines) {
+                                
                                 final medDate = med.get('Date');
 
                                 final medName = med.get('name');
@@ -552,20 +624,42 @@ class _ViewAllPageState extends State<ViewAll> {
                                     audioPlayer,
                                     medDate);
 
-                                medBubbles.add(MedBubble);
+                                if (checked == true) {
+                                  medBubbles.add(MedBubble);
+                                }
 
                                 //  }
 
                               }
 
+
                               return Expanded(
-                                child: Scrollbar(
-                                  child: ListView(
+                               // child: Scrollbar(
+                                  child: Column(children:[
+                                    LinearProgressIndicator(
+                          backgroundColor:
+                              ui.Color.fromARGB(255, 119, 122, 122),
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              ui.Color.fromARGB(255, 54, 244, 130)),
+                          value: length,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Center(
+                          child: Text('${(length * 100).round()}%',
+                              style: GoogleFonts.tajawal(
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        Expanded(
+                        child:ListView(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 20),
                                     children: medBubbles,
-                                  ),
-                                ),
+                                    
+                                  ),)
+                                  ]) 
+                               // ),
                               );
 
                               // }
@@ -589,8 +683,10 @@ class _ViewAllPageState extends State<ViewAll> {
 
             future: getCurrentUser(),
           ),
+
+          //])
         ),
-),
+      ),
     );
   }
 }
@@ -760,9 +856,116 @@ class _medBubbleState extends State<medBubble> {
 
     var diff = (dosetime).difference(time).inMinutes;
 
-   
+    /*
 
-    
+ 
+
+    code for voice and google api : start
+
+ 
+
+  */
+
+    // List<Voice> _voices = [];
+
+    // Voice? _selectedVoice;
+
+    // AudioPlayer audioPlugin = AudioPlayer();
+
+    // void synthesizeText(String text) async {
+
+    //   if (audioPlugin.state == AudioPlayer().state) {
+
+    //     await audioPlugin.stop();
+
+    //   }
+
+    //   final String audioContent = await TextToSpeechAPI().synthesizeText(text);
+
+    //   if (audioContent == null) return;
+
+    //   final bytes =
+
+    //       Base64Decoder().convert(audioContent, 0, audioContent.length);
+
+    //   final AudioContext audioContext = AudioContext(
+
+    //     iOS: AudioContextIOS(
+
+    //       defaultToSpeaker: true,
+
+    //       category: AVAudioSessionCategory.ambient,
+
+    //       options: [
+
+    //         AVAudioSessionOptions.defaultToSpeaker,
+
+    //         AVAudioSessionOptions.mixWithOthers,
+
+    //       ],
+
+    //     ),
+
+    //     android: AudioContextAndroid(
+
+    //       isSpeakerphoneOn: true,
+
+    //       stayAwake: true,
+
+    //       contentType: AndroidContentType.sonification,
+
+    //       usageType: AndroidUsageType.assistanceSonification,
+
+    //       audioFocus: AndroidAudioFocus.none,
+
+    //     ),
+
+    //   );
+
+    //   AudioPlayer.global.setGlobalAudioContext(audioContext);
+
+    //   if (Platform.isAndroid) {
+
+    //     final dir = await getTemporaryDirectory();
+
+    //     final file = File('${dir.path}/wavenet.mp3');
+
+    //     await file.writeAsBytes(bytes);
+
+    //     UrlSource fileSource = new UrlSource(file.path);
+
+    //     await audioPlugin.play(fileSource);
+
+    //   } else if (Platform.isIOS) {
+
+    //     final dir = await getApplicationDocumentsDirectory();
+
+    //     final file = File('${dir.path}/wavenet.mp3');
+
+    //     await file.writeAsBytes(bytes);
+
+    //     print(file.path);
+
+    //     UrlSource fileSource = new UrlSource(file.path);
+
+    //     DeviceFileSource deviceFileSource = new DeviceFileSource(file.path);
+
+    //     await audioPlugin.play(deviceFileSource);
+
+    //   }
+
+    // }
+
+    /*
+
+ 
+
+    code for voice and google api : end
+
+ 
+
+  */
+
     Future<void> _showMyDialog(String? x) async {
       return showDialog<void>(
         context: context,
@@ -814,8 +1017,131 @@ class _medBubbleState extends State<medBubble> {
                     height: 15,
                   ),
 
+//                   Container(
 
+//                       alignment: Alignment.topLeft,
 
+//                       child: GestureDetector(
+
+//                         onTap: () async {
+
+//                           //??
+
+//
+
+//                           if (widget.audioPlayer.state == PlayerState.playing) {
+
+//                             TextToSpeechAPI().AppShowToast(
+
+//                                 text: "يرجى الانتضار حتى انتهاء الامر السابق");
+
+//                             return;
+
+//                           }
+
+//                           //  function  to call the api but it in any button action it will work
+
+//                           setState(() {
+
+//                             TextToSpeechAPI().isPlaying = widget.doc;
+
+//                           });
+
+//                           TextToSpeechAPI().playVoice(
+
+//                               widget.doc,
+
+//                               " تفاصيل الجرعة " +
+
+//                                   " الكمية " +
+
+//                                   widget.MedAmount +
+
+//                                   " " +
+
+//                                   widget.MedUnit +
+
+//                                   " الوقت " +
+
+//                                   " " +
+
+//                                   widget.time +
+
+//                                   " " +
+
+//                                   widget.meddescription,
+
+//                               widget.audioPlayer);
+
+//                           // .then((value) => {
+
+//                           //       widget.audioPlayer.onPlayerComplete
+
+//                           //           .listen((event) {
+
+//                           //         setState(() {
+
+//                           //           TextToSpeechAPI().isPlaying = "";
+
+//                           //         });
+
+//                           //       })
+
+//                           //     });
+
+//                           widget.audioPlayer.onPlayerComplete.listen((event) {
+
+//                             setState(() {
+
+//                               TextToSpeechAPI().isPlaying = "";
+
+//                             });
+
+//                           });
+
+//
+
+//                            */
+
+//                           //         /*٫playVoice(" تفاصيل الجرعة " +
+
+//                           //             " الكمية " +
+
+//                           //             widget.MedAmount +
+
+//                           //             " " +
+
+//                           //             widget.MedUnit +
+
+//                           //             " الوقت " +
+
+//                           //             " " +
+
+//                           //             widget.time +
+
+//                           //             " " +
+
+//                           //             widget.meddescription, AudioPlayer());*/
+
+//                           //         // print("مرحبا بك ");
+
+//                         },
+
+//                         child: Icon(
+
+//                           TextToSpeechAPI().isPlaying != widget.doc
+
+//                               ? Icons.volume_mute
+
+//                               : Icons.volume_up,
+
+//                           color: Color.fromARGB(255, 111, 161, 200),
+
+//                           size: 30,
+
+//                         ),
+
+//                       )),
 
                   Center(
                     child: Text(widget.MedAmount + ' ' + widget.MedUnit,
@@ -1073,7 +1399,7 @@ class _medBubbleState extends State<medBubble> {
                                                   Icons.close,
                                                   size: 30,
                                                   color: ui.Color.fromARGB(
-                                                      255, 233, 14, 14),
+                                                      255, 235, 41, 23),
                                                 ),
                                           padding: EdgeInsets.all(16),
                                           shape: CircleBorder(
