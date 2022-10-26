@@ -13,6 +13,7 @@ import 'package:itmaen/setting.dart';
 import 'package:itmaen/view.dart';
 import 'package:itmaen/viewD.dart';
 //import 'package:';
+import 'Notes/addNotes.dart';
 import 'add-patient.dart';
 import 'alert_dialog.dart';
 import 'calendar/test22/newCalendar.dart';
@@ -157,7 +158,12 @@ class _NavigationState extends State<Navigation> {
         case 2:
           return LoadDataFromFireStoree();
           break;
+
         case 3:
+          return addNote();
+          break;
+
+        case 4:
           return ViewD();
           break;
 
@@ -262,6 +268,10 @@ class _NavigationState extends State<Navigation> {
           ),
           Icon(
             Icons.calendar_month,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.notes,
             color: Colors.white,
           ),
           Icon(
