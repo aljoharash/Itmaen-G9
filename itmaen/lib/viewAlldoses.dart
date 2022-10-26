@@ -254,8 +254,8 @@ class _ViewAllPageState extends State<ViewAll> {
 
     return SafeArea(
       top: false,
-    child: Directionality(
-      textDirection: ui.TextDirection.rtl,
+      child: Directionality(
+        textDirection: ui.TextDirection.rtl,
         child: Scaffold(
           // drawer: loggedInUser == null ? null : NavBar(),
 
@@ -432,7 +432,7 @@ class _ViewAllPageState extends State<ViewAll> {
                         // SizedBox(
                         //   height: 20,
                         // ),
-                        
+
                         // LinearProgressIndicator(
                         //   backgroundColor:
                         //       ui.Color.fromARGB(255, 119, 122, 122),
@@ -467,7 +467,6 @@ class _ViewAllPageState extends State<ViewAll> {
                               } //else {
 
                               final medicines = snapshot.data?.docs;
-
 
                               List<medBubble> medBubbles = [];
 
@@ -590,7 +589,7 @@ class _ViewAllPageState extends State<ViewAll> {
             future: getCurrentUser(),
           ),
         ),
-),
+      ),
     );
   }
 }
@@ -760,9 +759,6 @@ class _medBubbleState extends State<medBubble> {
 
     var diff = (dosetime).difference(time).inMinutes;
 
-   
-
-    
     Future<void> _showMyDialog(String? x) async {
       return showDialog<void>(
         context: context,
@@ -797,11 +793,9 @@ class _medBubbleState extends State<medBubble> {
                     size: 35,
                     color: ui.Color.fromARGB(255, 111, 161, 200),
                   ),
-
                   SizedBox(
                     height: 10,
                   ),
-
                   Center(
                     child: Text(x!,
                         style: GoogleFonts.tajawal(
@@ -809,14 +803,9 @@ class _medBubbleState extends State<medBubble> {
                             color: ui.Color.fromARGB(255, 99, 163, 206),
                             fontWeight: FontWeight.bold)),
                   ),
-
                   SizedBox(
                     height: 15,
                   ),
-
-
-
-
                   Center(
                     child: Text(widget.MedAmount + ' ' + widget.MedUnit,
                         style: GoogleFonts.tajawal(
@@ -824,11 +813,9 @@ class _medBubbleState extends State<medBubble> {
                             color: ui.Color.fromARGB(255, 81, 99, 110),
                             fontWeight: FontWeight.bold)),
                   ),
-
                   SizedBox(
                     height: 15,
                   ),
-
                   Center(
                     child: Text(" الساعة ${widget.time}  ",
                         style: GoogleFonts.tajawal(
@@ -836,11 +823,9 @@ class _medBubbleState extends State<medBubble> {
                             color: ui.Color.fromARGB(255, 81, 99, 110),
                             fontWeight: FontWeight.bold)),
                   ),
-
                   SizedBox(
                     height: 15,
                   ),
-
                   Center(
                     child: Text('${widget.meddescription}',
                         style: GoogleFonts.tajawal(
@@ -848,11 +833,9 @@ class _medBubbleState extends State<medBubble> {
                             color: ui.Color.fromARGB(255, 81, 99, 110),
                             fontWeight: FontWeight.bold)),
                   ),
-
                   SizedBox(
                     height: 22,
                   ),
-
                   Center(
                     child: Text(
                       'هل تم أخذ الدواء ؟',
@@ -862,7 +845,6 @@ class _medBubbleState extends State<medBubble> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-
                   SizedBox(
                     height: 18,
                   ),
@@ -1155,8 +1137,12 @@ class _medBubbleState extends State<medBubble> {
                                           ),
 
                                           Row(children: [
+                                            Icon(
+                                              Icons.history,
+                                              color: Colors.grey,
+                                            ),
                                             Text(
-                                              '${widget.medDate}',
+                                              ' ' + '${widget.medDate}',
                                               style: GoogleFonts.tajawal(
                                                   fontSize: 15,
                                                   color: ui.Color.fromARGB(
@@ -1166,10 +1152,6 @@ class _medBubbleState extends State<medBubble> {
                                             SizedBox(
                                               width: 5,
                                             ),
-                                            Icon(
-                                              Icons.history,
-                                              color: Colors.grey,
-                                            )
                                           ]),
 
                                           SizedBox(

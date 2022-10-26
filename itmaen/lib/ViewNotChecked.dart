@@ -467,7 +467,7 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
 
                               final medicines = snapshot.data?.docs;
                               double length = (medicines!.length).toDouble();
-                              int counter = 0 ; 
+                              int counter = 0;
 
                               List<medBubble> medBubbles = [];
 
@@ -528,9 +528,8 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
                                 // print(timechecked.toDate());
 
                                 print('herree');
-                                if(checked==false){
-                                  counter++; 
-
+                                if (checked == false) {
+                                  counter++;
                                 }
 
                                 if (format == format2 && send == false) {
@@ -564,36 +563,36 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
 
                               }
 
-                               return Expanded(
-                               // child: Scrollbar(
-                                  child: Column(children:[
-                                    LinearProgressIndicator(
-                          backgroundColor:
-                              ui.Color.fromARGB(255, 119, 122, 122),
-                          valueColor: new AlwaysStoppedAnimation<Color>(
-                              ui.Color.fromARGB(255, 240, 48, 10)),
-                          value: counter.toDouble()/length,
-                          minHeight: 30,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Center(
-                          child: Text('${(counter.toDouble()/length* 100).round()}%',
-                              style: GoogleFonts.tajawal(
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                        Expanded(
-                        child:ListView(
+                              return Expanded(
+                                  // child: Scrollbar(
+                                  child: Column(children: [
+                                LinearProgressIndicator(
+                                  backgroundColor:
+                                      ui.Color.fromARGB(255, 119, 122, 122),
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                      ui.Color.fromARGB(255, 240, 48, 10)),
+                                  value: counter.toDouble() / length,
+                                  minHeight: 30,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Center(
+                                  child: Text(
+                                      '${(counter.toDouble() / length * 100).round()}%',
+                                      style: GoogleFonts.tajawal(
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                Expanded(
+                                  child: ListView(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 20),
                                     children: medBubbles,
-                                    
-                                  ),)
-                                  ]) 
-                               // ),
-                              );
-
+                                  ),
+                                )
+                              ])
+                                  // ),
+                                  );
 
                               // }
                             })
@@ -1412,8 +1411,12 @@ class _medBubbleState extends State<medBubble> {
                                           ),
 
                                           Row(children: [
+                                            Icon(
+                                              Icons.history,
+                                              color: Colors.grey,
+                                            ),
                                             Text(
-                                              '${widget.medDate}',
+                                              ' ' + '${widget.medDate}',
                                               style: GoogleFonts.tajawal(
                                                   fontSize: 15,
                                                   color: ui.Color.fromARGB(
@@ -1423,10 +1426,6 @@ class _medBubbleState extends State<medBubble> {
                                             SizedBox(
                                               width: 5,
                                             ),
-                                            Icon(
-                                              Icons.history,
-                                              color: Colors.grey,
-                                            )
                                           ]),
 
                                           SizedBox(

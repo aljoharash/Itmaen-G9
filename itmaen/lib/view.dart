@@ -183,12 +183,27 @@ class _ViewPageState extends State<View> {
                                 medBubbles.add(MedBubble);
                               }
                               return Expanded(
-                                child: ListView(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 20),
-                                  children: medBubbles,
+                                  // child: Scrollbar(
+                                  child: Column(children: [
+                                SizedBox(
+                                  height: 10,
                                 ),
-                              );
+                                Center(
+                                  child: TextField(
+                                    decoration:
+                                        InputDecoration(hintText: ' بحث... '),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: ListView(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 20),
+                                    children: medBubbles,
+                                  ),
+                                )
+                              ])
+                                  // ),
+                                  );
                               // }
                             }),
                       ],
@@ -224,12 +239,28 @@ class _ViewPageState extends State<View> {
                                 medBubbles.add(MedBubble);
                               }
                               return Expanded(
-                                child: ListView(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 20),
-                                  children: medBubbles,
+                                  // child: Scrollbar(
+                                  child: Column(children: [
+                                SizedBox(
+                                  height: 10,
                                 ),
-                              );
+                                Center(
+                                  child: TextField(
+                                    decoration:
+                                        InputDecoration(hintText: '   بحث... '),
+                                        
+                                  ),
+                                ),
+                                Expanded(
+                                  child: ListView(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 20),
+                                    children: medBubbles,
+                                  ),
+                                )
+                              ])
+                                  // ),
+                                  );
                               // }
                             }),
                       ],

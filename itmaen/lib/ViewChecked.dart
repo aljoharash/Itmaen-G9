@@ -239,18 +239,19 @@ class _ViewAllCheckPageState extends State<ViewAllCheck> {
       return Future<bool>.value(false);
     }
   }
-   int size  = 0 ; 
-  Future<int> getNumber() async{
-    
-   size = (await FirebaseFirestore.instance
-        .collection('doses')
-        .where("caregiverID", isEqualTo: loggedInUser!.uid).where("cheked", isEqualTo: true)
-        .snapshots().length)  ;
-       // return size ; 
 
-        
-          return size ; 
-        }
+  int size = 0;
+  Future<int> getNumber() async {
+    size = (await FirebaseFirestore.instance
+        .collection('doses')
+        .where("caregiverID", isEqualTo: loggedInUser!.uid)
+        .where("cheked", isEqualTo: true)
+        .snapshots()
+        .length);
+    // return size ;
+
+    return size;
+  }
 
   //late User? loggedInUser = _auth.currentUser;
 
@@ -272,63 +273,63 @@ class _ViewAllCheckPageState extends State<ViewAllCheck> {
           // drawer: loggedInUser == null ? null : NavBar(),
 
           child:
-          //  Column(
-          //   children:[
-            // FutureBuilder(
-            //           builder: (context, snapshot) {
-            //             if (snapshot.connectionState == ConnectionState.done) {
-            //               // If we got an error
-            //               if (snapshot.hasError) {
-            //                 return Center(
-            //                   child: Text(
-            //                     '${snapshot.error} occurred',
-            //                     style: TextStyle(fontSize: 18),
-            //                   ),
-            //                 );
+              //  Column(
+              //   children:[
+              // FutureBuilder(
+              //           builder: (context, snapshot) {
+              //             if (snapshot.connectionState == ConnectionState.done) {
+              //               // If we got an error
+              //               if (snapshot.hasError) {
+              //                 return Center(
+              //                   child: Text(
+              //                     '${snapshot.error} occurred',
+              //                     style: TextStyle(fontSize: 18),
+              //                   ),
+              //                 );
 
-            //                 // if we got our data
-            //               } 
-            //               else if (snapshot.hasData) {
-            //                 // Extracting data from snapshot object
-            //                 final data = snapshot.data as double;
-            //                 return Center(
-            //                     child: Row(
-            //                   children: [
-            //                     SizedBox(width: 120),
-            //                     LinearProgressIndicator(
-            //               backgroundColor:
-            //                   ui.Color.fromARGB(255, 119, 122, 122),
-            //               valueColor: new AlwaysStoppedAnimation<Color>(
-            //                   ui.Color.fromARGB(255, 54, 244, 130)),
-            //               value: data,
-            //             ),
-                               
-            //                     Text(
-            //                       '${data} ',
-            //                       style: GoogleFonts.tajawal(
-            //                           fontSize: 30,
-            //                           fontWeight: FontWeight.bold,
-            //                           color: Colors.black),
-            //                       textAlign: TextAlign.right,
-            //                     ),
-            //                   ],
-            //                 )); //)
+              //                 // if we got our data
+              //               }
+              //               else if (snapshot.hasData) {
+              //                 // Extracting data from snapshot object
+              //                 final data = snapshot.data as double;
+              //                 return Center(
+              //                     child: Row(
+              //                   children: [
+              //                     SizedBox(width: 120),
+              //                     LinearProgressIndicator(
+              //               backgroundColor:
+              //                   ui.Color.fromARGB(255, 119, 122, 122),
+              //               valueColor: new AlwaysStoppedAnimation<Color>(
+              //                   ui.Color.fromARGB(255, 54, 244, 130)),
+              //               value: data,
+              //             ),
 
-            //               }
-            //             }
+              //                     Text(
+              //                       '${data} ',
+              //                       style: GoogleFonts.tajawal(
+              //                           fontSize: 30,
+              //                           fontWeight: FontWeight.bold,
+              //                           color: Colors.black),
+              //                       textAlign: TextAlign.right,
+              //                     ),
+              //                   ],
+              //                 )); //)
 
-                        // Displaying LoadingSpinner to indicate waiting state
-                    //     return Center(
-                    //       child: CircularProgressIndicator(),
-                    //     );
-                    //   },
+              //               }
+              //             }
 
-                    //   // Future that needs to be resolved
-                    //   // inorder to display something on the Canvas
-                    //   future: getNumber(),
-                    // ),
+              // Displaying LoadingSpinner to indicate waiting state
+              //     return Center(
+              //       child: CircularProgressIndicator(),
+              //     );
+              //   },
 
-                    FutureBuilder(
+              //   // Future that needs to be resolved
+              //   // inorder to display something on the Canvas
+              //   future: getNumber(),
+              // ),
+
+              FutureBuilder(
             builder: (ctx, snapshot) {
               // Checking if future is resolved or not
 
@@ -453,7 +454,6 @@ class _ViewAllCheckPageState extends State<ViewAllCheck> {
 
                                 // }
 
-
                                 final MedBubble = medBubble(
                                     medName,
                                     checked,
@@ -502,7 +502,7 @@ class _ViewAllCheckPageState extends State<ViewAllCheck> {
                         SizedBox(
                           height: 20,
                         ),
-                        
+
                         // LinearProgressIndicator(
                         //   backgroundColor:
                         //       ui.Color.fromARGB(255, 119, 122, 122),
@@ -537,17 +537,15 @@ class _ViewAllCheckPageState extends State<ViewAllCheck> {
                               } //else {
 
                               final medicines = snapshot.data?.docs;
-                              double length =( medicines!.length).toDouble() ;
-                               int counter = 0 ; 
+                              double length = (medicines!.length).toDouble();
+                              int counter = 0;
 
                               List<medBubble> medBubbles = [];
 
                               String x = DateFormat('dd/MM/yyyy')
                                   .format(DateTime.now());
-                                  
 
                               for (var med in medicines) {
-                                
                                 final medDate = med.get('Date');
 
                                 final medName = med.get('name');
@@ -573,9 +571,8 @@ class _ViewAllCheckPageState extends State<ViewAllCheck> {
                                 final picture = med.get("picture");
 
                                 bool send = false;
-                                if(checked==true){
-                                  counter++; 
-
+                                if (checked == true) {
+                                  counter++;
                                 }
 
                                 // final pic = med.get("picture");
@@ -637,36 +634,36 @@ class _ViewAllCheckPageState extends State<ViewAllCheck> {
 
                               }
 
-
                               return Expanded(
-                               // child: Scrollbar(
-                                  child: Column(children:[
-                                    LinearProgressIndicator(
-                          backgroundColor:
-                              ui.Color.fromARGB(255, 119, 122, 122),
-                          valueColor: new AlwaysStoppedAnimation<Color>(
-                              ui.Color.fromARGB(255, 54, 244, 130)),
-                          value: counter.toDouble()/length,
-                          minHeight: 30,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Center(
-                          child: Text('${(counter.toDouble()/length* 100).round()}%',
-                              style: GoogleFonts.tajawal(
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                        Expanded(
-                        child:ListView(
+                                  // child: Scrollbar(
+                                  child: Column(children: [
+                                LinearProgressIndicator(
+                                  backgroundColor:
+                                      ui.Color.fromARGB(255, 119, 122, 122),
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                      ui.Color.fromARGB(255, 54, 244, 130)),
+                                  value: counter.toDouble() / length,
+                                  minHeight: 30,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Center(
+                                  child: Text(
+                                      '${(counter.toDouble() / length * 100).round()}%',
+                                      style: GoogleFonts.tajawal(
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                Expanded(
+                                  child: ListView(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 20),
                                     children: medBubbles,
-                                    
-                                  ),)
-                                  ]) 
-                               // ),
-                              );
+                                  ),
+                                )
+                              ])
+                                  // ),
+                                  );
 
                               // }
                             })
@@ -1487,8 +1484,12 @@ class _medBubbleState extends State<medBubble> {
                                           ),
 
                                           Row(children: [
+                                            Icon(
+                                              Icons.history,
+                                              color: Colors.grey,
+                                            ),
                                             Text(
-                                              '${widget.medDate}',
+                                              ' ' + '${widget.medDate}',
                                               style: GoogleFonts.tajawal(
                                                   fontSize: 15,
                                                   color: ui.Color.fromARGB(
@@ -1498,10 +1499,6 @@ class _medBubbleState extends State<medBubble> {
                                             SizedBox(
                                               width: 5,
                                             ),
-                                            Icon(
-                                              Icons.history,
-                                              color: Colors.grey,
-                                            )
                                           ]),
 
                                           SizedBox(
