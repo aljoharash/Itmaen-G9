@@ -555,8 +555,8 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
                                     timechecked,
                                     audioPlayer,
                                     medDate);
-
-                                if (checked == false) {
+                               bool y = x.isBefore((m.toDate())) ;
+                                if (checked == false && y==false) {
                                   medBubbles.add(MedBubble);
                                 }
 

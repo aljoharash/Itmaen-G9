@@ -606,10 +606,10 @@ class _ViewAllCheckPageState extends State<ViewAllCheck> {
 
                                 print('herree');
 
-                                if (format == format2 && send == false) {
-                                  nv.sendNotificationchecked2(
-                                      ' جرعة ${medName} ');
-                                }
+                                // if (format == format2 && send == false) {
+                                //   nv.sendNotificationchecked2(
+                                //       ' جرعة ${medName} ');
+                                // }
 
                                 final MedBubble = medBubble(
                                     medName,
@@ -628,8 +628,8 @@ class _ViewAllCheckPageState extends State<ViewAllCheck> {
                                     timechecked,
                                     audioPlayer,
                                     medDate);
-
-                                if (checked == true) {
+                               bool y = x.isBefore((m.toDate())) ; 
+                                if (checked == true && y==false) {
                                   medBubbles.add(MedBubble);
                                 }
 
@@ -718,8 +718,7 @@ class medBubble extends StatefulWidget {
       this.audioPlayer,
       this.medDate);
 
-  // اي الله يدضر عليك
-
+  
   var medicName;
 
   var checked;

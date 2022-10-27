@@ -529,10 +529,10 @@ class _ViewAllPageState extends State<ViewAll> {
 
                                 print('herree');
 
-                                if (format == format2 && send == false) {
-                                  nv.sendNotificationchecked2(
-                                      ' جرعة ${medName} ');
-                                }
+                                // if (format == format2 && send == false) {
+                                //   nv.sendNotificationchecked2(
+                                //       ' جرعة ${medName} ');
+                                // }
 
                                 final MedBubble = medBubble(
                                     medName,
@@ -551,8 +551,10 @@ class _ViewAllPageState extends State<ViewAll> {
                                     timechecked,
                                     audioPlayer,
                                     medDate);
+                                      bool y = x.isBefore((m.toDate())) ;
 
-                                medBubbles.add(MedBubble);
+                                      if(y==false){
+                                medBubbles.add(MedBubble);}
 
                                 //  }
 

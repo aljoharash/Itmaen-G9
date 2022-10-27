@@ -157,19 +157,20 @@ class _NavBar extends State<NavBar> {
                   }
                 : Text(""),
           ),
-          ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('تسجيل الخروج', style: GoogleFonts.tajawal()),
-            onTap: () => logout(),
-          ),
-             ListTile(
+           ListTile(
             leading: Icon(Icons.history),
-            title: Text('سجل الأدوية ', style: GoogleFonts.tajawal()),
+            title: Text('جرعاتي السابقة', style: GoogleFonts.tajawal()),
             onTap: () =>   Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                      TabBarPage()))
           ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('تسجيل الخروج', style: GoogleFonts.tajawal()),
+            onTap: () => logout(),
+          ),
+            
           /* ListTile(
             leading: Icon(Icons.share),
             title: Text('Share'),

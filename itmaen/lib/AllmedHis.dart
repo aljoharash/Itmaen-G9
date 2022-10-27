@@ -58,7 +58,7 @@ class _TabBarPageState extends State<TabBarPage>
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
-                SizedBox(height: 20),
+                SizedBox(height: 25),
                 Container(
                   // height: 50,
                   width: MediaQuery.of(context).size.height,
@@ -76,7 +76,7 @@ class _TabBarPageState extends State<TabBarPage>
                           indicatorWeight: 2,
                           indicator: BoxDecoration(
                             color: Color.fromARGB(255, 140, 167, 190),
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                           controller: tabController,
                           tabs: [
@@ -86,7 +86,7 @@ class _TabBarPageState extends State<TabBarPage>
                               children: [
                                
                                 //SizedBox(width: 2,),
-                                Text('لم يتم أخذها',
+                                Text(' لم يتم أخذها',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
                                  Icon(
@@ -100,7 +100,7 @@ class _TabBarPageState extends State<TabBarPage>
                               children: [
                                
                                  
-                                Text('    تم أخذها',
+                                Text(' تم أخذها   ',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
                                 //         SizedBox(
@@ -119,7 +119,7 @@ class _TabBarPageState extends State<TabBarPage>
                               children: [
                                 
                              
-                                Text('    الكل',
+                                Text('       الكل',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(
