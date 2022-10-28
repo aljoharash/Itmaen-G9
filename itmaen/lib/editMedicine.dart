@@ -12,12 +12,15 @@ class EditMed extends StatefulWidget {
   final String description;
   final String strength;
   final String package;
+  final String medID;//new code
   const EditMed(
       {Key? key,
       required this.name,
       required this.description,
       required this.package,
-      required this.strength})
+      required this.strength,
+      required this.medID//new code
+      })
       : super(key: key);
 
   @override
@@ -144,6 +147,8 @@ class _EditMedState extends State<EditMed> {
       if (user != null) {
         loggedInUser = user;
         caregiverID = loggedInUser.uid;
+        print(caregiverID);
+        print('idddd');
       }
     } catch (e) {
       print(e);
@@ -452,10 +457,13 @@ class _EditMedState extends State<EditMed> {
                                     ),
                                   );
                                 } else {
+                                  print((oldname + caregiverID).toString());
+                                  print("test 111");
                                   if (_formKey.currentState!.validate()) {
                                     _firestore
                                         .collection('medicines')
-                                        .doc(oldname + caregiverID)
+                                        .doc(widget.medID)//new code
+                                        // .doc('testtestFAmv3c30ydRn7PkA2jbL9SBXPOp1')
                                         .update({
                                       //  'Generic name': genericName,
                                       'Trade name': medName.text,
@@ -478,7 +486,7 @@ class _EditMedState extends State<EditMed> {
                                                       ".png"
                                                   : medName.text ==
                                                           "بانادول - PANADOL"
-                                                              "PANADOL"
+                                                      // "PANADOL"
                                                       ? "images/" +
                                                           "بانادول ادفانس - PANADOL" +
                                                           ".png"
