@@ -159,7 +159,7 @@ class _NavBar extends State<NavBar> {
           ),
            ListTile(
             leading: Icon(Icons.history),
-            title: Text('جرعاتي السابقة', style: GoogleFonts.tajawal()),
+            title: Text('الجرعات السابقة', style: GoogleFonts.tajawal()),
             onTap: () =>   Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (context) =>
