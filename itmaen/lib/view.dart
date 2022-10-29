@@ -46,6 +46,14 @@ class _ViewPageState extends State<View> {
 
   static var t;
 
+  bool isLoading = true;
+  List<MedicinesModel> medicineList = [];
+  List<MedicinesModel> medicineSearchList = [];
+  // FirebaseFirestore.instance
+  //                               .collection('medicines')
+  //                               .where('caregiverID', isEqualTo: cid_)
+  //                               .snapshots()
+
   //getCurrentUser();
 
   _ViewPageState() {
@@ -59,7 +67,56 @@ class _ViewPageState extends State<View> {
     super.initState();
     //HomePage();
 
-    getCurrentUser().then((value) => t = value);
+    getCurrentUser().then((value) {
+      t = value;
+      _getMediciens(cid_);
+    });
+  }
+
+  void _getMediciens(var cavID) async {
+    final CollectionReference collectionReference =
+        FirebaseFirestore.instance.collection('medicines');
+
+    collectionReference
+        .where('caregiverID', isEqualTo: cid_)
+        .get()
+        .then((value) {
+      List<QueryDocumentSnapshot> medicines = value.docs;
+      medicineList.clear();
+      medicineSearchList.clear();
+      for (int i = 0; i < medicines.length; i++) {
+        var medicineInfo = medicines[i].data() as Map<String, dynamic>;
+        var med = MedicinesModel.fromJson(medicineInfo);
+        med.medID = medicines[i].id;
+        medicineList.add(med);
+        medicineSearchList.add(med);
+      }
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
+  search(String input) async {
+    if (input.isNotEmpty) {
+      await searchMedicines(input).then((value) {
+        setState(() {
+          medicineList = value;
+        });
+      });
+    } else {
+      _getMediciens(cid_);
+    }
+  }
+
+  Future<List<MedicinesModel>> searchMedicines(String input) async {
+    return medicineSearchList.where((element) {
+      if (element.medicName!.toLowerCase().contains(input.toLowerCase())) {
+        return true;
+      } else {
+        return false;
+      }
+    }).toList();
   }
 
   Future<bool> getstatu() async {
@@ -107,145 +164,100 @@ class _ViewPageState extends State<View> {
     }
 
     var data;
-    return SafeArea(
-      top: false,
-      child: Directionality(
-        textDirection: ui.TextDirection.rtl,
-        child: Scaffold(
-          drawer: NavBar(),
-          appBar: AppBar(
-            // automaticallyImplyLeading: false,
-            backgroundColor: Color.fromARGB(255, 140, 167, 190),
-            title: Text("قائمة الأدوية",
-                style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
-          ),
-          floatingActionButton: ElevatedButton(
-            onPressed: () {
-              showAddDialog();
-            },
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: SafeArea(
+        top: false,
+        child: Directionality(
+          textDirection: ui.TextDirection.rtl,
+          child: Scaffold(
+            drawer: NavBar(),
+            appBar: AppBar(
+              // automaticallyImplyLeading: false,
+              backgroundColor: Color.fromARGB(255, 140, 167, 190),
+              title: Text("قائمة الأدوية",
+                  style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
             ),
-            style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-              padding: EdgeInsets.all(15),
-              //backgroundColor: Color.fromARGB(255, 140, 167, 190),
-              primary: Color.fromARGB(255, 140, 167, 190),
-              surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
+            floatingActionButton: ElevatedButton(
+              onPressed: () {
+                showAddDialog();
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              style: ElevatedButton.styleFrom(
+                shape: CircleBorder(),
+                padding: EdgeInsets.all(15),
+                //backgroundColor: Color.fromARGB(255, 140, 167, 190),
+                primary: Color.fromARGB(255, 140, 167, 190),
+                surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
+              ),
             ),
-          ),
-          body: FutureBuilder(
-            builder: (ctx, snapshot) {
-              // Checking if future is resolved or not
-              if (snapshot.connectionState == ConnectionState.done) {
-                // If we got an error
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text(
-                      '${snapshot.error} occurred',
-                      style: TextStyle(fontSize: 18),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: double.maxFinite,
+                  height: 60,
+                  margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                  padding: EdgeInsets.only(left: 5, right: 5),
+                  decoration: BoxDecoration(
+                    // borderRadius: BorderRadius.circular(20),
+                    color: Colors.grey.shade200,
+                  ),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          hintText: "ابحث عن الدواء بواسطة الاسم",
+                          filled: true,
+                          fillColor: Colors.grey.shade200,
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2.0, color: Colors.blue),
+                          ),
+                          icon: Icon(
+                            Icons.search,
+                            size: 30,
+                            color: Colors.blue,
+                          ),
+                          contentPadding: EdgeInsets.only(right: 3)),
+                      onChanged: (value) async {
+                        search(value);
+                        // CustomersController.search(value.trim());
+                      },
                     ),
-                  );
-
-                  // if we got our data
-                } else if (snapshot.hasData) {
-                  // Extracting data from snapshot object
-                  data = snapshot.data as bool;
-                  if (data == true) {
-                    return SafeArea(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        StreamBuilder(
-                            stream: FirebaseFirestore.instance
-                                .collection('medicines')
-                                .where('caregiverID', isEqualTo: id_)
-                                .snapshots(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (!snapshot.hasData) {
-                                return Text("");
-                              } //else {
-                              final medicines = snapshot.data?.docs;
-                              List<medBubble> medBubbles = [];
-                              for (var med in medicines!) {
-                                //final medName = med.data();
-                                final medName = med.get('Trade name');
-                                final meddescription = med.get('description');
-                                final package = med.get('Package size');
-                                final picture = med.get('picture');
-                                final strength = med.get('Unit of volume');
-                                //final unit = med.get('Unit of volume');
-                                final MedBubble = medBubble(medName,
-                                    meddescription, package, picture, strength);
-                                medBubbles.add(MedBubble);
-                              }
-                              return Expanded(
-                                child: ListView(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 20),
-                                  children: medBubbles,
-                                ),
-                              );
-                              // }
-                            }),
-                      ],
-                    ));
-                  } else {
-                    return SafeArea(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        StreamBuilder(
-                            stream: FirebaseFirestore.instance
-                                .collection('medicines')
-                                .where('caregiverID', isEqualTo: cid_)
-                                .snapshots(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (!snapshot.hasData) {
-                                return Text("");
-                              } //else {
-                              final medicines = snapshot.data?.docs;
-                              List<medBubble> medBubbles = [];
-                              for (var med in medicines!) {
-                                //final medName = med.data();
-                                final medName = med.get('Trade name');
-                                final meddescription = med.get('description');
-                                final package = med.get('Package size');
-                                final picture = med.get('picture');
-                                final strength = med.get('Unit of volume');
-                                //final unit = med.get('Unit of volume');
-                                final MedBubble = medBubble(medName,
-                                    meddescription, package, picture, strength);
-                                medBubbles.add(MedBubble);
-                              }
-                              return Expanded(
-                                child: ListView(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 20),
-                                  children: medBubbles,
-                                ),
-                              );
-                              // }
-                            }),
-                      ],
-                    ));
-                  }
-                }
-              }
-
-              // Displaying LoadingSpinner to indicate waiting state
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-            // Future that needs to be resolved
-            // inorder to display something on the Canvas
-            future: getCurrentUser(),
+                  ),
+                ),
+                Expanded(
+                  // height: 170,
+                  child: isLoading == true
+                      ? Center(
+                          child: CircularProgressIndicator(color: Colors.blue),
+                        )
+                      : ListView.builder(
+                          // scrollDirection: Axis.vertical,
+                          // shrinkWrap: true,
+                          itemCount: medicineList.length,
+                          itemBuilder: (context, index) {
+                            return medBubble(
+                                medicineList[index].medicName,
+                                medicineList[index].meddescription,
+                                medicineList[index].package,
+                                medicineList[index].remaining,
+                                medicineList[index].picture,
+                                medicineList[index].strength,
+                                _getMediciens,
+                                cid_,
+                                medicineList[index].medID);
+                          },
+                        ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -254,17 +266,21 @@ class _ViewPageState extends State<View> {
 }
 
 class medBubble extends StatelessWidget {
-  medBubble(this.medicName, this.meddescription, this.package, this.picture,
-      this.strength);
+  medBubble(this.medicName, this.meddescription, this.package, this.remaining,
+      this.picture, this.strength, this.refreshList, this.cid, this.medID);
+  Function refreshList;
   var medicName;
   var meddescription;
   var package;
+  var remaining;
   var picture;
+  var cid;
+  var medID;
 
   late List<String> toBeTransformed = [];
   var strength;
 
-  // ********** editing purposes ***********
+  // **** editing purposes *****
 
   var editAmount;
   var editDescription;
@@ -277,7 +293,7 @@ class medBubble extends StatelessWidget {
   var editTime;
   var editDate;
 
-  //********** editing purposes ***********
+  //**** editing purposes *****
 
   @override
   Widget build(BuildContext context) {
@@ -347,7 +363,7 @@ class medBubble extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        // ******************
+                        // ******
 
                         child: FutureBuilder(
                           builder: (context, snapshot) {
@@ -367,7 +383,7 @@ class medBubble extends StatelessWidget {
                                 // Extracting data from snapshot object
                                 final data = snapshot.data as bool;
                                 return Container(
-                                    width: 242,
+                                    width: 235,
                                     child: data == true
                                         ? (MaterialButton(
                                             shape: RoundedRectangleBorder(
@@ -396,7 +412,9 @@ class medBubble extends StatelessWidget {
                                                               selectedNote,
                                                               editTime
                                                                   .toString(),
-                                                              editDate
+                                                              editDate,
+                                                              package,
+                                                              remaining
                                                             ],
                                                           )));
                                             },
@@ -437,6 +455,8 @@ class medBubble extends StatelessWidget {
                                                   value: toBeTransformed,
                                                   toBeTransformed: [
                                                     medicName,
+                                                    package,
+                                                    remaining
                                                   ],
                                                 ),
                                               ));
@@ -473,7 +493,7 @@ class medBubble extends StatelessWidget {
                           future: checkHasValue(medicName),
                         ),
 
-                        //*******************
+                        //*******
                       ),
                       SizedBox(
                         width: 15,
@@ -484,10 +504,12 @@ class medBubble extends StatelessWidget {
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => EditMed(
-                                      name: medicName,
-                                      description: meddescription,
-                                      package: package,
-                                      strength: strength)));
+                                        name: medicName,
+                                        description: meddescription,
+                                        package: package,
+                                        strength: strength,
+                                        medID: medID,
+                                      )));
                             },
                             child: Icon(
                               Icons.edit,
@@ -593,7 +615,8 @@ class medBubble extends StatelessWidget {
                                                     in snapshotMed.docs) {
                                                   await doc.reference.delete();
                                                 }
-                                                ;
+                                                refreshList(cid);
+                                                // refreshList;
                                               },
                                               child: Text(
                                                 "نعم",
@@ -659,4 +682,28 @@ class medBubble extends StatelessWidget {
           editDate = (value.docs[0].get('Date'));
         }
       });
+}
+
+class MedicinesModel {
+  var medicName, meddescription, package, remaining, picture, strength, medID;
+  MedicinesModel(
+      {this.medicName,
+      this.meddescription,
+      this.package,
+      this.remaining,
+      this.picture,
+      this.strength,
+      this.medID});
+  MedicinesModel.fromJson(Map<String, dynamic> map) {
+    if (map == null) {
+      return;
+    }
+
+    medicName = map['Trade name'];
+    meddescription = map['description'];
+    package = map['Package size'];
+    remaining = map['Remaining Package'];
+    picture = map['picture'];
+    strength = map['Unit of volume'];
+  }
 }

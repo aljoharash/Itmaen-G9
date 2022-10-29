@@ -297,6 +297,7 @@ class _addManuallyState extends State<addManually> {
                                       // 'Volume': volume,
                                       //'Unit of volume': unitOfVolume,
                                       'Package size': packSize.text,
+                                      'Remaining Package': packSize.text,
                                       //'barcode': barcode,
                                       'description': description.text,
                                       'caregiverID': caregiverID,

@@ -32,6 +32,7 @@ class editDose extends StatefulWidget {
     " ",
     " ",
     " ",
+    " ",
     " "
   ];
 
@@ -52,6 +53,8 @@ class _editDoseState extends State<editDose>
   late User loggedInUser;
 
   bool changed = false;
+  var package;
+  var remaining;
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   final nameController = TextEditingController();
@@ -100,6 +103,8 @@ class _editDoseState extends State<editDose>
     backColor = pickerColor = Color(int.parse(toBeTransformed[4]));
     sliderValue = double.parse(toBeTransformed[5]);
     sliderValue2 = double.parse(toBeTransformed[6]);
+    package = toBeTransformed[11];
+    remaining = toBeTransformed[12];
     every_hours = everyH = hoursController.text = toBeTransformed[7];
     _groupValue = toBeTransformed[8];
     setTime = selectedTime = timeDisplayed = TimeOfDay(
@@ -591,11 +596,8 @@ class _editDoseState extends State<editDose>
                     height: 40.0,
                   ),
                   Row(
-
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                   
-                      
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 8, 5, 8),
                         child: Text(
@@ -671,7 +673,7 @@ class _editDoseState extends State<editDose>
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Padding(
-                       padding: const EdgeInsets.fromLTRB(0, 8, 5, 8),
+                        padding: const EdgeInsets.fromLTRB(0, 8, 5, 8),
                         child: Text(
                           ":وقت أخذ أول جرعة في اليوم",
                           textAlign: TextAlign.right,
@@ -1131,6 +1133,8 @@ class _editDoseState extends State<editDose>
           DateTime oldDate = DateTime.utc(2022);
           if (tempTimeDate.isAfter(DateTime.now())) {
             _firestore.collection('doses').add({
+              'Package size': package,
+              'Remaining Package' : remaining,
               'Day': newDate.day,
               'Month': newDate.month,
               'Year': newDate.year,

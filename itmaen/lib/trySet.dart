@@ -42,6 +42,8 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
 
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+    var package;
+    var remaining ;
   final nameController = TextEditingController();
   final hoursController = TextEditingController();
   final pillAmountController = TextEditingController();
@@ -81,6 +83,9 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     getCurrentUser();
+       package = toBeTransformed[1];
+     remaining = toBeTransformed[2];
+
 
     print(TimeOfDay.now());
 
@@ -102,6 +107,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     nameController.text = toBeTransformed[0];
+
     //  selectType = toBeTransformed[2];
 
     return new Scaffold(
@@ -654,9 +660,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Padding(
-                
-                   padding: const EdgeInsets.fromLTRB(0, 8, 5, 8),
-
+                        padding: const EdgeInsets.fromLTRB(0, 8, 5, 8),
                         child: Text(
                           ":وقت أخذ أول جرعة في اليوم",
                           textAlign: TextAlign.right,
@@ -841,7 +845,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                       //  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                       children: [
                         Padding(
-                   padding: const EdgeInsets.fromLTRB(0, 8, 5, 8),
+                          padding: const EdgeInsets.fromLTRB(0, 8, 5, 8),
                           child: Text(
                             ":موعد أخذ الجرعة",
                             textAlign: TextAlign.right,
@@ -948,8 +952,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      Navigation(
-                                                          )));
+                                                      Navigation()));
                                         },
                                         child: Text(
                                           "نعم",
@@ -1086,6 +1089,8 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
           DateTime oldDate = DateTime.utc(2022);
 
           _firestore.collection('doses').add({
+            'Package size': package,
+            'Remaining Package' : remaining,
             'Day': newDate.day,
             'Month': newDate.month,
             'Year': newDate.year,
@@ -1155,8 +1160,8 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
         // backgroundColor: Color.fromARGB(255, 140, 167, 190),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => Navigation()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Navigation()));
     } else {
       if ((DateTime.now().toString().substring(0, 10) ==
               setDate.toString().substring(0, 10)) &&
