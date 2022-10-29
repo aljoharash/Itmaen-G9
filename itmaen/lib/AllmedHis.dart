@@ -22,6 +22,7 @@ class _TabBarPageState extends State<TabBarPage>
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
+    tabController.animateTo(2);
     super.initState();
   }
 
@@ -42,7 +43,7 @@ class _TabBarPageState extends State<TabBarPage>
 
             backgroundColor: Color.fromARGB(255, 140, 167, 190),
 
-            title: Center(child:Text(" تاريخ الجرعات ",
+            title: Center(child:Text(" الجرعات السابقة  ",
 
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold))),
 
@@ -64,19 +65,20 @@ class _TabBarPageState extends State<TabBarPage>
                   width: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 248, 249, 250),
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(20)),
                   child: Column(
                     children: [
                       Padding(
                         padding: EdgeInsets.all(0),
                         child: TabBar(
+                          isScrollable: true,
                           unselectedLabelColor: Color.fromARGB(255, 70, 69, 69),
                           labelColor: Color.fromARGB(255, 248, 245, 245),
                           indicatorColor: Colors.white,
                           indicatorWeight: 2,
                           indicator: BoxDecoration(
                             color: Color.fromARGB(255, 140, 167, 190),
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(25),
                           ),
                           controller: tabController,
                           tabs: [
@@ -86,7 +88,7 @@ class _TabBarPageState extends State<TabBarPage>
                               children: [
                                
                                 //SizedBox(width: 2,),
-                                Text(' لم يتم أخذها',
+                                Text(' لم يتم أخذها  ',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
                                  Icon(
@@ -119,7 +121,7 @@ class _TabBarPageState extends State<TabBarPage>
                               children: [
                                 
                              
-                                Text('       الكل',
+                                Text('    الكل     ',
                                     style: GoogleFonts.tajawal(
                                         fontWeight: FontWeight.bold)),
                                 SizedBox(

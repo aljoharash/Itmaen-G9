@@ -468,6 +468,7 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
                               final medicines = snapshot.data?.docs;
                               double length = (medicines!.length).toDouble();
                               int counter = 0;
+                              int counter2=0; 
 
                               List<medBubble> medBubbles = [];
 
@@ -526,11 +527,11 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
                                 // print(x);
 
                                 // print(timechecked.toDate());
-
+                                // int counter2=0;
                                 print('herree');
-                                if (checked == false) {
-                                  counter++;
-                                }
+                                // if (checked == false) {
+                                //   counter++;
+                                // }
 
                                 if (format == format2 && send == false) {
                                   nv.sendNotificationchecked2(
@@ -555,23 +556,33 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
                                     audioPlayer,
                                     medDate);
                                bool y = x.isBefore((m.toDate())) ;
+                               if(y==false){
+                                counter2++; 
+
+                               }
                                 if (checked == false && y==false) {
+                                  counter++;
+                                 
                                   medBubbles.add(MedBubble);
                                 }
 
                                 //  }
 
                               }
+                               medBubbles.sort((a, b) {
+                                  return a.m.compareTo(b.m);
+                                  
+                                  },);
 
                               return Expanded(
-                                  // child: Scrollbar(
+                                  child: Scrollbar(
                                   child: Column(children: [
                                 LinearProgressIndicator(
                                   backgroundColor:
                                       ui.Color.fromARGB(255, 119, 122, 122),
                                   valueColor: new AlwaysStoppedAnimation<Color>(
                                       ui.Color.fromARGB(255, 240, 48, 10)),
-                                  value: counter.toDouble() / length,
+                                  value: counter.toDouble() / counter2.toDouble(),
                                   minHeight: 30,
                                 ),
                                 SizedBox(
@@ -579,19 +590,20 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
                                 ),
                                 Center(
                                   child: Text(
-                                      '${(counter.toDouble() / length * 100).round()}%',
+                                      '${(counter.toDouble() / counter2.toDouble() * 100).round()}%',
                                       style: GoogleFonts.tajawal(
                                           fontWeight: FontWeight.bold)),
                                 ),
                                 Expanded(
-                                  child: ListView(
+                                  child: Scrollbar(child: ListView(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 20),
-                                    children: medBubbles,
+                                    children: medBubbles.reversed.toList(),
+                                  ),
                                   ),
                                 )
                               ])
-                                  // ),
+                                   ),
                                   );
 
                               // }

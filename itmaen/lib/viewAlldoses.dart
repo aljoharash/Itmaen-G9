@@ -564,7 +564,7 @@ class _ViewAllPageState extends State<ViewAll> {
                                   child: ListView(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 20),
-                                    children: medBubbles,
+                                    children: medBubbles.reversed.toList(),
                                   ),
                                 ),
                               );
