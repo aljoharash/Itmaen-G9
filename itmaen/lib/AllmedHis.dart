@@ -58,13 +58,13 @@ class _TabBarPageState extends State<TabBarPage>
             child: Text(" الجرعات السابقة  ",
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold))),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor:  Color.fromARGB(255, 248, 249, 250),
       // appBar: AppBar(
       //   title: Text('Tab bar Without Appbar'),
       // ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 0),
+          padding: EdgeInsets.symmetric(horizontal:0),
           child: Container(
             height: MediaQuery.of(context).size.height,
             child: Column(
@@ -168,7 +168,7 @@ class _NestedTabBarState extends State<NestedTabBar>
   @override
   void initState() {
     super.initState();
-    _nestedTabController = new TabController(length:3, vsync: this);
+    _nestedTabController = new TabController(length:4 , vsync: this);
     _nestedTabController.animateTo(2);
   }
 
@@ -183,7 +183,7 @@ class _NestedTabBarState extends State<NestedTabBar>
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
                   // height: 50,
-                 // width: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 248, 249, 250),
                       borderRadius: BorderRadius.circular(20)),
@@ -197,6 +197,15 @@ class _NestedTabBarState extends State<NestedTabBar>
           unselectedLabelColor: Colors.black54,
           isScrollable: true,
           tabs: <Widget>[
+               Tab(
+                child: Row(
+              children: [
+                //SizedBox(width: 2,),
+              Text('  قبل ذلك  ',
+                    style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
+               
+              ],
+            )),
             Tab(
                 child: Row(
               children: [
@@ -235,7 +244,7 @@ class _NestedTabBarState extends State<NestedTabBar>
           margin: EdgeInsets.only(left: 16.0, right: 16.0),
           child: TabBarView(
             controller: _nestedTabController,
-            children: [ViewAllMonthly(), ViewAllWeekly(), ViewAllDaily()],
+            children: [ViewAll(),ViewAllMonthly(), ViewAllWeekly(), ViewAllDaily()],
           ),
         )
       ],
@@ -256,7 +265,7 @@ class _NestedTabBar2State extends State<NestedTabBar2>
   @override
   void initState() {
     super.initState();
-    _nestedTabController = new TabController(length:3, vsync: this);
+    _nestedTabController = new TabController(length:4 , vsync: this);
     _nestedTabController.animateTo(2);
   }
 
@@ -285,6 +294,15 @@ class _NestedTabBar2State extends State<NestedTabBar2>
           unselectedLabelColor: Colors.black54,
           isScrollable: true,
           tabs: <Widget>[
+             Tab(
+                child: Row(
+              children: [
+                //SizedBox(width: 2,),
+              Text('  قبل ذلك  ',
+                    style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
+               
+              ],
+            )),
             Tab(
                 child: Row(
               children: [
@@ -323,7 +341,7 @@ class _NestedTabBar2State extends State<NestedTabBar2>
           margin: EdgeInsets.only(left: 16.0, right: 16.0),
           child: TabBarView(
             controller: _nestedTabController,
-            children: [ViewNotAllCheckMonthly(), ViewNotAllCheckWeekly(), ViewNotAllCheckDaily()],
+            children: [ViewNotAllCheck(), ViewNotAllCheckMonthly(), ViewNotAllCheckWeekly(), ViewNotAllCheckDaily()],
           ),
         )
       ],
@@ -345,7 +363,7 @@ class _NestedTabBar3State extends State<NestedTabBar3>
   @override
   void initState() {
     super.initState();
-    _nestedTabController = new TabController(length:3, vsync: this);
+    _nestedTabController = new TabController(length:4, vsync: this);
     _nestedTabController.animateTo(2);
   }
 
@@ -374,6 +392,15 @@ class _NestedTabBar3State extends State<NestedTabBar3>
           unselectedLabelColor: Colors.black54,
           isScrollable: true,
           tabs: <Widget>[
+             Tab(
+                child: Row(
+              children: [
+                //SizedBox(width: 2,),
+              Text('  قبل ذلك  ',
+                    style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
+               
+              ],
+            )),
             Tab(
                 child: Row(
               children: [
@@ -412,7 +439,7 @@ class _NestedTabBar3State extends State<NestedTabBar3>
           margin: EdgeInsets.only(left: 16.0, right: 16.0),
           child: TabBarView(
             controller: _nestedTabController,
-            children: [ViewAllCheckMonthly(), ViewAllCheckWeekly(), ViewAllCheckDaily()],
+            children: [ViewAllCheck(),ViewAllCheckMonthly(), ViewAllCheckWeekly(), ViewAllCheckDaily()],
           ),
         )
       ],
