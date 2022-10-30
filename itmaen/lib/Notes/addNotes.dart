@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:googleapis/photoslibrary/v1.dart';
 import 'package:itmaen/navigation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,7 +43,54 @@ class _addNoteState extends State<addNote> {
   }
 
   final _formKey = GlobalKey<FormState>();
+  TextEditingController title = new TextEditingController();
   TextEditingController note = new TextEditingController();
+  List<String> list = [
+    'عام',
+     'طارئ', 
+     'حساسية',
+     'آثار جانبية'
+  ];
+  String? selectType = "عام";
+  Color? iconColor;
+  double dropDownwidth = 2;
+  Color onClickDropDown = Colors.black45;
+  DropdownMenuItem<String> buildMenuItem(String item) {
+    if(item == 'عام'){
+      iconColor = Color.fromARGB(255, 83, 138, 182);
+    }
+    else if(item == 'طارئ'){
+      iconColor = Color.fromARGB(255, 192, 67, 53);
+    }
+    else if(item == 'حساسية'){
+      iconColor = Color.fromARGB(255, 221, 66, 136);
+    }
+    else if(item == 'آثار جانبية'){
+      iconColor = Color.fromARGB(255, 231, 147, 68);
+    }
+    return DropdownMenuItem(
+      value: item,
+      child: Container(
+        child:Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children:[
+          Text(
+          item,
+        ),
+        SizedBox(
+          width: 15,
+        ),
+        Icon(
+            Icons.circle_rounded,
+            color: iconColor,
+            size: 15,
+            ),
+        ]),
+        alignment:Alignment.topRight,
+      ),
+    );
+  }
+  
   bool medExist = false;
 
   @override
@@ -63,7 +111,7 @@ class _addNoteState extends State<addNote> {
           SingleChildScrollView(
             child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: 560, //للسماوي اللي شلتيه  كان تحت صفحة بيضاء
+                height: MediaQuery.of(context).size.height, //للسماوي اللي شلتيه  كان تحت صفحة بيضاء
 
                 child: Center(
                   child: Container(
@@ -74,7 +122,34 @@ class _addNoteState extends State<addNote> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                          
+                            TextFormField(
+                              controller: title,
+                              textAlign: TextAlign.right,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 239, 237, 237),
+                                hintText: 'عنوان الملاحظة',
+                                enabled: true,
+                                contentPadding: const EdgeInsets.only(
+                                    left: 14.0,
+                                    right: 12.0,
+                                    bottom: 8.0,
+                                    top: 8.0),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 236, 231, 231),
+                                        width: 3)),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: new BorderSide(
+                                      color: Color.fromARGB(79, 255, 255, 255)),
+                                  borderRadius: new BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
                             TextFormField(
                               minLines: 9,
                               maxLines: 14,
@@ -103,7 +178,51 @@ class _addNoteState extends State<addNote> {
                               ),
                             ),
                            SizedBox(
-                              height: 24.0,
+                              height: 16.0,
+                            ),
+                            Container(
+                            
+                          child: DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            contentPadding:const EdgeInsets.only(
+                                    left: 14.0,
+                                    right: 12.0,
+                                    bottom: 8.0,
+                                    top: 8.0),
+
+                            fillColor: Color.fromARGB(255, 239, 237, 237),
+                            filled: true,
+                            enabledBorder:OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 236, 231, 231),
+                                        width: 3)),
+
+                            focusedBorder: OutlineInputBorder(
+                                  borderSide: new BorderSide(
+                                      color: Color.fromARGB(79, 255, 255, 255)),
+                                  borderRadius: new BorderRadius.circular(10),
+                                ),
+
+                          ),
+                          isExpanded: true,
+                          items: list.map(buildMenuItem).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectType = value;
+                              dropDownwidth = 2;
+                              onClickDropDown =
+                                  Color.fromARGB(79, 255, 255, 255);
+                            });
+                          },
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          value: selectType,
+                        ),
+                            ),
+                            SizedBox(
+                              height: 20,
+
                             ),
                             MaterialButton(
                               shape: RoundedRectangleBorder(
@@ -117,10 +236,16 @@ class _addNoteState extends State<addNote> {
                               onPressed: () async {
                                   if (_formKey.currentState!.validate()) {
                                     _firestore
-                                        .collection('medicines')
-                                        .doc(caregiverID)
+                                        .collection('Notes')
+                                        .doc(title.text + caregiverID)
                                         .set({
-                                    
+                                        'caregiverID': caregiverID,
+                                        'note_title': title.text,
+                                        'note_content': note.text,
+                                        'creation_date': DateTime.now(),
+                                        'color': iconColor.toString(),
+                                        'type': selectType,
+                                        'docName': title.text
                                     });
 
                                     print("Note added");
