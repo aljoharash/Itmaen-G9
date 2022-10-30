@@ -7,6 +7,7 @@ import 'AppStyle.dart';
 import 'NoteEditorScreen.dart';
 import 'NoteReaderScreen.dart';
 import 'note_card.dart';
+import 'addNotes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -87,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: ElevatedButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => NoteEditorScreen()));
+              MaterialPageRoute(builder: (context) => addNote()));
         },
         child: Icon(
           Icons.add,

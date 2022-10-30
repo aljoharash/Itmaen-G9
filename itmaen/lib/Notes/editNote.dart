@@ -7,14 +7,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:ui' as ui;
 
-class addNote extends StatefulWidget {
-  const addNote({Key? key}) : super(key: key);
+class editNote extends StatefulWidget {
+  final String title;
+  final String note;
+  final String type;
+  const editNote(
+    {Key? key,
+    required this.title,
+    required this.note,
+    required this.type
+  }) : super(key: key);
 
   @override
-  State<addNote> createState() => _addNoteState();
+  State<editNote> createState() => _editNoteState();
 }
 
-class _addNoteState extends State<addNote> {
+class _editNoteState extends State<editNote> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   late List<String> toBeTransformed = [];
@@ -22,12 +30,48 @@ class _addNoteState extends State<addNote> {
   String caregiverID = "";
   late User loggedInUser;
 
+  String? selectType;
+  TextEditingController title = new TextEditingController();
+  TextEditingController note = new TextEditingController();
+
   @override
   void initState() {
+    selectType = widget.type;
+    title.text = widget.title;
+    note.text = widget.note;
     getCurrentUser();
   }
 
+  var oldname;
+  var snapShotsValueCheck;
+  var titlee;
+  List<String> titles = <String>[];
+
+  retrieveCheck(QuerySnapshot snapshot) {
+    print("here");
+    snapshot.docs.forEach((doc) {
+      // medname = doc['Trade name'];
+      // description = doc['description'];
+      // package = doc['Package size'];
+      // strength = doc['Strength value'];
+      titlee = doc['note_title'];
+      titles.add(titlee);
+      print(titlee);
+    });
+  }
+
   void getCurrentUser() async {
+    retrieve(QuerySnapshot snapshot) {
+      print("here");
+      snapshot.docs.forEach((doc) {
+        oldname = doc['docName'];
+        // medname = doc['Trade name'];
+        // description = doc['description'];
+        // package = doc['Package size'];
+        // strength = doc['Strength value'];
+        print("name: $oldname");
+      });
+    }
     try {
       final user = await _auth.currentUser;
       if (user != null) {
@@ -37,18 +81,29 @@ class _addNoteState extends State<addNote> {
     } catch (e) {
       print(e);
     }
+
+    var snapShotsValue = await FirebaseFirestore.instance
+        .collection("Notes")
+        .where('caregiverID', isEqualTo: caregiverID)
+        .where('note_title', isEqualTo: widget.title)
+        .get();
+
+      snapShotsValueCheck = await FirebaseFirestore.instance
+        .collection("Notes")
+        .where('caregiverID', isEqualTo: caregiverID)
+        .get();
+
+        retrieve(snapShotsValue);
   }
 
   final _formKey = GlobalKey<FormState>();
-  TextEditingController title = new TextEditingController();
-  TextEditingController note = new TextEditingController();
   List<String> list = [
     'عام',
      'طارئ', 
      'حساسية',
      'آثار جانبية'
   ];
-  String? selectType = "عام";
+  
   Color? iconColor;
   double dropDownwidth = 2;
   Color onClickDropDown = Colors.black45;
@@ -231,21 +286,51 @@ class _addNoteState extends State<addNote> {
                                   vertical: 11, horizontal: 122),
                               color: Color.fromARGB(255, 140, 167, 190),
                               onPressed: () async {
+                                 var doc = await _firestore
+                                    .collection("Notes")
+                                    .doc(title.text + caregiverID)
+                                    .get();
+
+                                var exist = false;
+                                retrieveCheck(snapShotsValueCheck);
+
+                                for (int i = 0; i < titles.length; i++) {
+                                  print(titles[i]);
+                                  print(title.text);
+                                  if (titles[i] == title.text &&
+                                      titles[i] != widget.title) {
+                                    print('exist');
+                                    print(titles[i]);
+                                    exist = true;
+                                  }
+                                }
+
+                                if (exist) {
+                                  print("already exist");
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      // margin: EdgeInsets.only(right: 10),
+
+                                      content: Text('تمت إضافة الملاحظة مسبقًا',
+                                          style: TextStyle(fontSize: 15),
+                                          textAlign: TextAlign.right),
+                                    ),
+                                  );
+                                } else {
                                   if (_formKey.currentState!.validate()) {
                                     _firestore
                                         .collection('Notes')
                                         .doc(title.text + caregiverID)
-                                        .set({
+                                        .update({
                                         'caregiverID': caregiverID,
                                         'note_title': title.text,
                                         'note_content': note.text,
                                         'creation_date': DateTime.now(),
                                         'color': iconColor.toString(),
                                         'type': selectType,
-                                        'docName': title.text
                                     });
 
-                                    print("Note added");
+                                    print("Note edited");
 
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -253,8 +338,8 @@ class _addNoteState extends State<addNote> {
                                                 Navigation()));
                                   }
                                 }
-                              ,
-                              child: Text('إضافة',
+                              },
+                              child: Text('حفظ',
                                   style: GoogleFonts.tajawal(
                                     color: Color.fromARGB(255, 245, 244, 244),
                                     fontSize: 20,
