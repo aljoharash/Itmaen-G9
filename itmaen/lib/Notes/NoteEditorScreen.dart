@@ -94,7 +94,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
         onPressed: () {
           FirebaseFirestore.instance.collection("Notes").add({
             "note_title": _titleController.text,
-            "creation_date": date,
+            // "creation_date": date,
             "note_content": _mainController.text,
             "color_id": color_id
           }).then((value) {

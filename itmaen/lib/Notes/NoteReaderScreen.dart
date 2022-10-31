@@ -15,11 +15,11 @@ class NoteReaderScreen extends StatefulWidget {
 class _NoteReaderScreenState extends State<NoteReaderScreen> {
   @override
   Widget build(BuildContext context) {
-    int color_id = widget.doc['color_id'];
+    //String color_id = widget.doc['color'];
     return Scaffold(
-        backgroundColor: AppStyle.cardsColor[color_id],
+        backgroundColor: Colors.amber,
         appBar: AppBar(
-          backgroundColor: AppStyle.cardsColor[color_id],
+          backgroundColor: Colors.amber,
           elevation: 0.0,
         ),
         body: SafeArea(
@@ -37,7 +37,8 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
                   height: 4.0,
                 ),
                 Text(
-                  widget.doc["creation_date"],
+                  "hh",
+                  //  widget.doc["creation_date"],
                   style: AppStyle.dateTitle,
                 ),
                 SizedBox(

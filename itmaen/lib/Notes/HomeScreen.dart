@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -17,6 +18,31 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String caregiverID = "";
+  late User loggedInUser;
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    getCurrentUser();
+    print("caregiverID");
+    print(caregiverID);
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        caregiverID = loggedInUser.uid;
+        print("inside" + caregiverID);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,8 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection("Notes").snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection("Notes")
+                    .where('caregiverID', isEqualTo: _auth.currentUser?.uid)
+                    .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
@@ -87,8 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
       )),
       floatingActionButton: ElevatedButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => addNote()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => addNote()));
         },
         child: Icon(
           Icons.add,

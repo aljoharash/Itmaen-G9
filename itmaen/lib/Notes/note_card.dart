@@ -11,7 +11,7 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
         padding: EdgeInsets.all(8.0),
         margin: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          color: AppStyle.cardsColor[doc['color_id']],
+          // color: AppStyle.cardsColor[doc['color']],
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Directionality(
@@ -27,7 +27,9 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                 height: 4.0,
               ),
               Text(
-                doc["creation_date"],
+                // DateTime dateTime = documents[i].data["duedate"].toDate();
+                "hh",
+                // doc["creation_date"],
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
               ),
               SizedBox(
