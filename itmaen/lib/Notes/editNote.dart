@@ -109,16 +109,16 @@ class _editNoteState extends State<editNote> {
   Color onClickDropDown = Colors.black45;
   DropdownMenuItem<String> buildMenuItem(String item) {
     if(item == 'عام'){
-      iconColor = Color.fromARGB(255, 83, 138, 182);
+      iconColor = Colors.blue.shade300; 
     }
     else if(item == 'طارئ'){
-      iconColor = Color.fromARGB(255, 192, 67, 53);
+      iconColor = Colors.red.shade500;
     }
     else if(item == 'حساسية'){
-      iconColor = Color.fromARGB(255, 221, 66, 136);
+      iconColor = Colors.pink.shade100;
     }
     else if(item == 'آثار جانبية'){
-      iconColor = Color.fromARGB(255, 231, 147, 68);
+      iconColor = Colors.orange.shade300;
     }
     return DropdownMenuItem(
       value: item,
@@ -317,6 +317,18 @@ class _editNoteState extends State<editNote> {
                                     ),
                                   );
                                 } else {
+                                   if(selectType == 'عام'){
+                                iconColor = Colors.blue.shade300; 
+                                 }
+                                else if(selectType == 'طارئ'){
+                                 iconColor = Colors.red.shade500;
+                                  }
+                                 else if(selectType == 'حساسية'){
+                                 iconColor = Colors.pink.shade100;
+                                  }
+                                 else if(selectType == 'آثار جانبية'){
+                                 iconColor = Colors.orange.shade300;
+                                }
                                   if (_formKey.currentState!.validate()) {
                                     _firestore
                                         .collection('Notes')
@@ -325,12 +337,12 @@ class _editNoteState extends State<editNote> {
                                         'caregiverID': caregiverID,
                                         'note_title': title.text,
                                         'note_content': note.text,
-                                        'creation_date': DateTime.now(),
-                                        'color': iconColor.toString(),
+                                        'creation_date': DateTime.now().toString(),
+                                        'color': int.parse(iconColor.toString().substring(6, 16)),
                                         'type': selectType,
                                     });
 
-                                    print("Note edited");
+                                    print("Note updated");
 
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
