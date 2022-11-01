@@ -46,7 +46,7 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                 GestureDetector(
                 child: Icon(
                   Icons.edit,
-                  color: Colors.grey,
+                  color: Colors.white,
                 ),
                 onTap: (){
                   Navigator.of(context).push(MaterialPageRoute(
@@ -58,11 +58,14 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                 },
 
               ),
+              SizedBox(
+                width: 8,
+              ),
 
               GestureDetector(
                 child: Icon(
                   Icons.delete,
-                  color: Colors.grey,
+                  color: Colors.red,
                 ),
                 onTap: (){
                  
