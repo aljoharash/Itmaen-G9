@@ -161,8 +161,8 @@ class _editProfile extends State<editProfile> {
             icon: Icon(Icons.arrow_back_ios),
             color: Color.fromARGB(255, 255, 255, 255),
             onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => Navigation()));
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => Navigation()));
             },
           ),
         ),

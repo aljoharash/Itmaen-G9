@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itmaen/Notes/editNote.dart';
@@ -21,16 +22,16 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                doc["note_title"],
+                // DateTime dateTime = documents[i].data["duedate"].toDate();
+
+                doc["creation_date"],
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 4.0,
               ),
               Text(
-                // DateTime dateTime = documents[i].data["duedate"].toDate();
-                "hh",
-                // doc["creation_date"],
+                doc["note_title"],
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
               ),
               SizedBox(
@@ -41,43 +42,87 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
                 overflow: TextOverflow.ellipsis,
               ),
-              Builder(
-              builder: (context) => 
-              Row(
-                children: [
-                GestureDetector(
-                child: Icon(
-                  Icons.edit,
-                  color: Colors.white,
-                ),
-                onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => editNote(
-                      title: doc["note_title"] ,
-                      note: doc["note_content"] ,
-                      type: doc["type"],
-                      )));
-                },
-
-              ),
               SizedBox(
-                width: 8,
+                height: 50,
               ),
+              Builder(
+                builder: (context) => Row(children: [
+                  GestureDetector(
+                    child: Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => editNote(
+                                title: doc["note_title"],
+                                note: doc["note_content"],
+                                type: doc["type"],
+                              )));
+                    },
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  GestureDetector(
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        "لا",
+                                        style: GoogleFonts.tajawal(),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () async {
+                                        Navigator.pop(context);
+                                        var collectionNotes = FirebaseFirestore
+                                            .instance
+                                            .collection('Notes');
+                                        var snapshotNotes =
+                                            await collectionNotes
+                                                .where(
+                                                  "note_title",
+                                                  isEqualTo: doc["note_title"],
+                                                )
+                                                .where("caregiverID",
+                                                    isEqualTo: FirebaseAuth
+                                                        .instance
+                                                        .currentUser!
+                                                        .uid)
+                                                .get();
 
-              GestureDetector(
-                child: Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                ),
-                onTap: (){
-                 
-                },
-
-              ),
-              ]
-
-              ),
-             
+                                        for (var doc in snapshotNotes.docs) {
+                                          await doc.reference.delete();
+                                        }
+                                        ;
+                                      },
+                                      child: Text(
+                                        "نعم",
+                                        style: GoogleFonts.tajawal(),
+                                      ),
+                                    ),
+                                  ],
+                                  content: Text(
+                                    "هل أنت متأكد من رغبتك في حذف الملاحظة؟",
+                                    style: GoogleFonts.tajawal(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                  )));
+                    },
+                  ),
+                ]),
               ),
             ],
           ),

@@ -242,7 +242,9 @@ class _addNoteState extends State<addNote> {
                                     'caregiverID': caregiverID,
                                     'note_title': title.text,
                                     'note_content': note.text,
-                                    'creation_date': DateTime.now().toString(),
+                                    'creation_date': DateTime.now()
+                                        .toString()
+                                        .substring(0, 16),
                                     'color': int.parse(
                                         iconColor.toString().substring(6, 16)),
                                     'type': selectType,

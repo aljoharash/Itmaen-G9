@@ -16,7 +16,7 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor:Color(widget.doc['color']),
+        backgroundColor: Color(widget.doc['color']),
         appBar: AppBar(
           backgroundColor: Color(widget.doc['color']),
           elevation: 0.0,
@@ -29,16 +29,23 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
+                  "                               " +
+                      widget.doc["creation_date"],
+                  textAlign: TextAlign.center,
+                  style: AppStyle.dateTitle,
+                ),
+                Text(
+                  "                                                                         ",
+                  textAlign: TextAlign.right,
+                  style: AppStyle.mainTitle,
+                ),
+                Text(
                   widget.doc["note_title"],
+                  textAlign: TextAlign.right,
                   style: AppStyle.mainTitle,
                 ),
                 SizedBox(
                   height: 4.0,
-                ),
-                Text(
-                  "hh",
-                  //  widget.doc["creation_date"],
-                  style: AppStyle.dateTitle,
                 ),
                 SizedBox(
                   height: 28.0,

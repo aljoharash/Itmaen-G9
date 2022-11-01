@@ -12,11 +12,8 @@ class editNote extends StatefulWidget {
   final String note;
   final String type;
   const editNote(
-    {Key? key,
-    required this.title,
-    required this.note,
-    required this.type
-  }) : super(key: key);
+      {Key? key, required this.title, required this.note, required this.type})
+      : super(key: key);
 
   @override
   State<editNote> createState() => _editNoteState();
@@ -72,6 +69,7 @@ class _editNoteState extends State<editNote> {
         print("name: $oldname");
       });
     }
+
     try {
       final user = await _auth.currentUser;
       if (user != null) {
@@ -88,61 +86,51 @@ class _editNoteState extends State<editNote> {
         .where('note_title', isEqualTo: widget.title)
         .get();
 
-      snapShotsValueCheck = await FirebaseFirestore.instance
+    snapShotsValueCheck = await FirebaseFirestore.instance
         .collection("Notes")
         .where('caregiverID', isEqualTo: caregiverID)
         .get();
 
-        retrieve(snapShotsValue);
+    retrieve(snapShotsValue);
   }
 
   final _formKey = GlobalKey<FormState>();
-  List<String> list = [
-    'عام',
-     'طارئ', 
-     'حساسية',
-     'آثار جانبية'
-  ];
-  
+  List<String> list = ['عام', 'طارئ', 'حساسية', 'آثار جانبية'];
+
   Color? iconColor;
   double dropDownwidth = 2;
   Color onClickDropDown = Colors.black45;
   DropdownMenuItem<String> buildMenuItem(String item) {
-    if(item == 'عام'){
-      iconColor = Color.fromARGB(255, 148, 207, 255); 
-    }
-    else if(item == 'طارئ'){
+    if (item == 'عام') {
+      iconColor = Color.fromARGB(255, 148, 207, 255);
+    } else if (item == 'طارئ') {
       iconColor = Color.fromARGB(255, 255, 160, 153);
-    }
-    else if(item == 'حساسية'){
+    } else if (item == 'حساسية') {
       iconColor = Color.fromARGB(255, 223, 255, 207);
-    }
-    else if(item == 'آثار جانبية'){
+    } else if (item == 'آثار جانبية') {
       iconColor = Color.fromARGB(255, 255, 200, 117);
     }
     return DropdownMenuItem(
       value: item,
       child: Container(
-        child:Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children:[
+        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
           Text(
-          item,
-        ),
-        SizedBox(
-          width: 15,
-        ),
-        Icon(
+            item,
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          Icon(
             Icons.circle_rounded,
             color: iconColor,
             size: 15,
-            ),
+          ),
         ]),
-        alignment:Alignment.topRight,
+        alignment: Alignment.topRight,
       ),
     );
   }
-  
+
   bool medExist = false;
 
   @override
@@ -163,7 +151,9 @@ class _editNoteState extends State<editNote> {
           SingleChildScrollView(
             child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height, //للسماوي اللي شلتيه  كان تحت صفحة بيضاء
+                height: MediaQuery.of(context)
+                    .size
+                    .height, //للسماوي اللي شلتيه  كان تحت صفحة بيضاء
 
                 child: Center(
                   child: Container(
@@ -229,52 +219,48 @@ class _editNoteState extends State<editNote> {
                                 ),
                               ),
                             ),
-                           SizedBox(
+                            SizedBox(
                               height: 16.0,
                             ),
                             Container(
-                            
-                          child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            contentPadding:const EdgeInsets.only(
-                                    left: 14.0,
-                                    right: 12.0,
-                                    bottom: 8.0,
-                                    top: 8.0),
-
-                            fillColor: Color.fromARGB(255, 239, 237, 237),
-                            filled: true,
-                            enabledBorder:OutlineInputBorder(
-                                    borderSide: BorderSide(
+                              child: DropdownButtonFormField<String>(
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.only(
+                                      left: 14.0,
+                                      right: 12.0,
+                                      bottom: 8.0,
+                                      top: 8.0),
+                                  fillColor: Color.fromARGB(255, 239, 237, 237),
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 236, 231, 231),
+                                          width: 3)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: new BorderSide(
                                         color:
-                                            Color.fromARGB(255, 236, 231, 231),
-                                        width: 3)),
-
-                            focusedBorder: OutlineInputBorder(
-                                  borderSide: new BorderSide(
-                                      color: Color.fromARGB(79, 255, 255, 255)),
-                                  borderRadius: new BorderRadius.circular(10),
+                                            Color.fromARGB(79, 255, 255, 255)),
+                                    borderRadius: new BorderRadius.circular(10),
+                                  ),
                                 ),
-
-                          ),
-                          isExpanded: true,
-                          items: list.map(buildMenuItem).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              selectType = value;
-                              dropDownwidth = 2;
-                              onClickDropDown =
-                                  Color.fromARGB(79, 255, 255, 255);
-                            });
-                          },
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          value: selectType,
-                        ),
+                                isExpanded: true,
+                                items: list.map(buildMenuItem).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectType = value;
+                                    dropDownwidth = 2;
+                                    onClickDropDown =
+                                        Color.fromARGB(79, 255, 255, 255);
+                                  });
+                                },
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
+                                value: selectType,
+                              ),
                             ),
                             SizedBox(
                               height: 20,
-
                             ),
                             MaterialButton(
                               shape: RoundedRectangleBorder(
@@ -286,7 +272,7 @@ class _editNoteState extends State<editNote> {
                                   vertical: 11, horizontal: 122),
                               color: Color.fromARGB(255, 140, 167, 190),
                               onPressed: () async {
-                                 var doc = await _firestore
+                                var doc = await _firestore
                                     .collection("Notes")
                                     .doc(title.text + caregiverID)
                                     .get();
@@ -317,29 +303,34 @@ class _editNoteState extends State<editNote> {
                                     ),
                                   );
                                 } else {
-                                   if(selectType == 'عام'){
-                                   iconColor = Color.fromARGB(255, 148, 207, 255); 
-                                   }
-                                    else if(selectType == 'طارئ'){
-                                    iconColor = Color.fromARGB(255, 255, 160, 153);
-                                    }
-                                    else if(selectType == 'حساسية'){
-                                    iconColor = Color.fromARGB(255, 223, 255, 207);
-                                    }
-                                    else if(selectType == 'آثار جانبية'){
-                                     iconColor = Color.fromARGB(255, 255, 200, 117);
-                                      }
+                                  if (selectType == 'عام') {
+                                    iconColor =
+                                        Color.fromARGB(255, 148, 207, 255);
+                                  } else if (selectType == 'طارئ') {
+                                    iconColor =
+                                        Color.fromARGB(255, 255, 160, 153);
+                                  } else if (selectType == 'حساسية') {
+                                    iconColor =
+                                        Color.fromARGB(255, 223, 255, 207);
+                                  } else if (selectType == 'آثار جانبية') {
+                                    iconColor =
+                                        Color.fromARGB(255, 255, 200, 117);
+                                  }
                                   if (_formKey.currentState!.validate()) {
                                     _firestore
                                         .collection('Notes')
                                         .doc(oldname + caregiverID)
                                         .update({
-                                        'caregiverID': caregiverID,
-                                        'note_title': title.text,
-                                        'note_content': note.text,
-                                        'creation_date': DateTime.now().toString(),
-                                        'color': int.parse(iconColor.toString().substring(6, 16)),
-                                        'type': selectType,
+                                      'caregiverID': caregiverID,
+                                      'note_title': title.text,
+                                      'note_content': note.text,
+                                      'creation_date': DateTime.now()
+                                          .toString()
+                                          .substring(0, 16),
+                                      'color': int.parse(iconColor
+                                          .toString()
+                                          .substring(6, 16)),
+                                      'type': selectType,
                                     });
 
                                     print("Note updated");
