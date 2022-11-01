@@ -332,7 +332,7 @@ class _editNoteState extends State<editNote> {
                                   if (_formKey.currentState!.validate()) {
                                     _firestore
                                         .collection('Notes')
-                                        .doc(title.text + caregiverID)
+                                        .doc(oldname + caregiverID)
                                         .update({
                                         'caregiverID': caregiverID,
                                         'note_title': title.text,
