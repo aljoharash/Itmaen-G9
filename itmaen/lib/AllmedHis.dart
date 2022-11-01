@@ -142,10 +142,11 @@ class _TabBarPageState extends State<TabBarPage>
                   ),
                 ),
                 Expanded(
-                  child: TabBarView(
+                child:TabBarView(
                     controller: tabController,
                     // ignore: prefer_const_constructors
                     children: [NestedTabBar2(), NestedTabBar3(),NestedTabBar()],
+                  
                   ),
                 )
               ],

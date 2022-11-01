@@ -2893,20 +2893,43 @@ class _medBubbleState extends State<medBubble> {
  
 
                                           widget.checked
-                                              ? ((widget.timechecked.toDate()).difference(widget.m.toDate())).inMinutes>0? Text(
-                                                  '    تم أخذ الدواء  :) بعد الموعد ب ${((widget.timechecked.toDate()).difference(widget.m.toDate())).inMinutes} دقائق' + '\n',
+                                              ? ((widget.timechecked.toDate()).difference(widget.m.toDate())).inMinutes>0? 
+                                              (((widget.timechecked.toDate()).difference(widget.m.toDate())).inMinutes>60)?
+                                              Text(
+                                                  '    تم أخذ الدواء  بعد الموعد ب ${((widget.timechecked.toDate()).difference(widget.m.toDate())).inHours}   ساعات :) ' + '\n',
                                                   style: GoogleFonts.tajawal(
-                                                      fontSize: 11,
+                                                      fontSize: 10,
                                                       color: ui.Color.fromARGB(255, 244, 159, 48),
                                                       fontWeight:
 
                                                           FontWeight.bold),
-                                                ):Text('  تم أخذ الدواء  :) قبل الموعد ب ${((widget.timechecked.toDate()).difference(widget.m.toDate())).inMinutes} دقائق' + '\n',
+                                                          
+                                                ):
+                                                  Text(
+                                                  '    تم أخذ الدواء  بعد الموعد ب ${((widget.timechecked.toDate()).difference(widget.m.toDate())).inMinutes}   دقائق :) ' + '\n',
+                                                  style: GoogleFonts.tajawal(
+                                                      fontSize: 10,
+                                                      color: ui.Color.fromARGB(255, 244, 159, 48),
+                                                      fontWeight:
+
+                                                          FontWeight.bold),
+                                                          
+                                                ):
+                                           (((widget.timechecked.toDate()).difference(widget.m.toDate())).abs().inMinutes>60)?
+                                                Text('  تم أخذ الدواء  قبل الموعد ب ${((widget.timechecked.toDate()).difference(widget.m.toDate())).abs().inHours}     ساعات :) ' + '\n',
                                                  style: GoogleFonts.tajawal(
-                                                      fontSize: 11,
+                                                      fontSize: 10,
                                                       color: ui.Color.fromARGB(255, 84, 195, 108),
                                                       fontWeight:  FontWeight.bold),
                                                         )
+                                                        :
+                                                        Text('  تم أخذ الدواء  قبل الموعد ب ${((widget.timechecked.toDate()).difference(widget.m.toDate())).abs().inMinutes} دقائق :) ' + '\n',
+                                                 style: GoogleFonts.tajawal(
+                                                      fontSize: 10,
+                                                      color: ui.Color.fromARGB(255, 84, 195, 108),
+                                                      fontWeight:  FontWeight.bold),
+                                                        )
+
                                               :Text(''),
                                         ],
 

@@ -71,11 +71,15 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
   List<bool> doseCheck = <bool>[];
   List<String> doseUnit = <String>[];
   List<DateTime> doseTime = <DateTime>[];
+  List<DateTime> doseCheckTime = <DateTime>[];
   var currDes;
   var currAmount;
   var currCheck;
   var currUnit;
+  var currtiemcheck;
   var isChecked;
+  var timechecked;
+  var currtime; 
   int count = 0;
 
   retrieve(QuerySnapshot snapshot) {
@@ -87,12 +91,14 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
       checked = doc['cheked'];
       unit = doc['unit'];
       theTime = DateTime.parse(doc['Time'].toDate().toString());
+      timechecked = DateTime.parse(doc['Timecheked'].toDate().toString());
       doseDes.add(description);
       doseAmount.add(amount);
       doseName.add(namee);
       doseCheck.add(checked);
       doseUnit.add(unit);
       doseTime.add(theTime!);
+      doseCheckTime.add(timechecked!);
     });
   }
 
@@ -103,9 +109,32 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
         currAmount = doseAmount[i];
         currCheck = doseCheck[i];
         currUnit = doseUnit[i];
+        currtime = doseTime[i];
+         currtiemcheck= doseCheckTime[i];
       }
       if (currCheck == true) {
-        isChecked = "تم أخذ الدواء";
+        if(currtiemcheck.difference(currtime).inMinutes >0){
+            if(currtiemcheck.difference(currtime).inMinutes >60){
+              isChecked = 'تم أخذ الدواء  بعد الموعد ب ${currtiemcheck.difference(currtime).inHours}   ساعات  ';
+            }
+            else{
+               isChecked = 'تم أخذ الدواء  بعد الموعد ب ${currtiemcheck.difference(currtime).inMinutes}  دقائق  ';
+
+            }
+
+        }
+        else{
+           if(currtiemcheck.difference(currtime).abs().inMinutes >60){
+              isChecked = 'تم أخذ الدواء  قبل الموعد ب ${currtiemcheck.difference(currtime).abs().inHours}   ساعات  ';
+            }
+            else{
+               isChecked = 'تم أخذ الدواء  قبل الموعد ب ${currtiemcheck.difference(currtime).abs().inMinutes}  دقائق  ';
+
+            }
+
+        }
+        
+        //isChecked = "تم أخذ الدواء";
       } else {
         isChecked = "لم يتم أخذ الدواء";
       }
