@@ -471,7 +471,7 @@ class _editNoteState extends State<editNote> {
                                           .toString()
                                           .substring(6, 16)),
                                       'type': selectType,
-                                      'photo': notesPicLink,
+                                      'photo': widget.photo == " "? notesPicLink : widget.photo,
                                     });
 
                                     print("Note updated");
