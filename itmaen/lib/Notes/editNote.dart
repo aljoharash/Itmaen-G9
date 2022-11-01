@@ -109,16 +109,16 @@ class _editNoteState extends State<editNote> {
   Color onClickDropDown = Colors.black45;
   DropdownMenuItem<String> buildMenuItem(String item) {
     if(item == 'عام'){
-      iconColor = Colors.blue.shade300; 
+      iconColor = Color.fromARGB(255, 148, 207, 255); 
     }
     else if(item == 'طارئ'){
-      iconColor = Colors.red.shade500;
+      iconColor = Color.fromARGB(255, 255, 160, 153);
     }
     else if(item == 'حساسية'){
-      iconColor = Colors.pink.shade100;
+      iconColor = Color.fromARGB(255, 223, 255, 207);
     }
     else if(item == 'آثار جانبية'){
-      iconColor = Colors.orange.shade300;
+      iconColor = Color.fromARGB(255, 255, 200, 117);
     }
     return DropdownMenuItem(
       value: item,
@@ -318,21 +318,21 @@ class _editNoteState extends State<editNote> {
                                   );
                                 } else {
                                    if(selectType == 'عام'){
-                                iconColor = Colors.blue.shade300; 
-                                 }
-                                else if(selectType == 'طارئ'){
-                                 iconColor = Colors.red.shade500;
-                                  }
-                                 else if(selectType == 'حساسية'){
-                                 iconColor = Colors.pink.shade100;
-                                  }
-                                 else if(selectType == 'آثار جانبية'){
-                                 iconColor = Colors.orange.shade300;
-                                }
+                                   iconColor = Color.fromARGB(255, 148, 207, 255); 
+                                   }
+                                    else if(selectType == 'طارئ'){
+                                    iconColor = Color.fromARGB(255, 255, 160, 153);
+                                    }
+                                    else if(selectType == 'حساسية'){
+                                    iconColor = Color.fromARGB(255, 223, 255, 207);
+                                    }
+                                    else if(selectType == 'آثار جانبية'){
+                                     iconColor = Color.fromARGB(255, 255, 200, 117);
+                                      }
                                   if (_formKey.currentState!.validate()) {
                                     _firestore
                                         .collection('Notes')
-                                        .doc(title.text + caregiverID)
+                                        .doc(oldname + caregiverID)
                                         .update({
                                         'caregiverID': caregiverID,
                                         'note_title': title.text,

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:itmaen/Notes/editNote.dart';
 import 'dart:ui' as ui;
 import 'AppStyle.dart';
 
@@ -39,6 +40,44 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                 doc["note_content"],
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
                 overflow: TextOverflow.ellipsis,
+              ),
+              Builder(
+              builder: (context) => 
+              Row(
+                children: [
+                GestureDetector(
+                child: Icon(
+                  Icons.edit,
+                  color: Colors.white,
+                ),
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => editNote(
+                      title: doc["note_title"] ,
+                      note: doc["note_content"] ,
+                      type: doc["type"],
+                      )));
+                },
+
+              ),
+              SizedBox(
+                width: 8,
+              ),
+
+              GestureDetector(
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ),
+                onTap: (){
+                 
+                },
+
+              ),
+              ]
+
+              ),
+             
               ),
             ],
           ),
