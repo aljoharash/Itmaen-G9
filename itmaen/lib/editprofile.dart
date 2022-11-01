@@ -408,12 +408,15 @@ class _editProfile extends State<editProfile> {
                           newEmail = newEmailController.text;
                         });
                         changePassword();
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const success(
-                                      title: '',
-                                    )));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              ' تم حفظ التغيرات بنجاح',
+                              textAlign: TextAlign.right,
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                          ),
+                        );
                       }
                       print("goal");
                       print(emailO);
