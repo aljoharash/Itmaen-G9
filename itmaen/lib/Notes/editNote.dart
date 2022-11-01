@@ -11,12 +11,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:ui' as ui;
 
 class editNote extends StatefulWidget {
-  final String title;
-  final String note;
-  final String type;
-  final String photo;
-  const editNote(
-      {Key? key, required this.title, required this.note, required this.type, required this.photo})
+   QueryDocumentSnapshot doc;
+   editNote(
+      {Key? key, required this.doc})
       : super(key: key);
 
   @override
@@ -37,9 +34,9 @@ class _editNoteState extends State<editNote> {
 
   @override
   void initState() {
-    selectType = widget.type;
-    title.text = widget.title;
-    note.text = widget.note;
+    selectType = widget.doc['type'];
+    title.text = widget.doc['note_title'];
+    note.text = widget.doc['note_content'];
     getCurrentUser();
   }
 
@@ -87,7 +84,7 @@ class _editNoteState extends State<editNote> {
     var snapShotsValue = await FirebaseFirestore.instance
         .collection("Notes")
         .where('caregiverID', isEqualTo: caregiverID)
-        .where('note_title', isEqualTo: widget.title)
+        .where('note_title', isEqualTo: widget.doc['note_title'])
         .get();
 
     snapShotsValueCheck = await FirebaseFirestore.instance
@@ -162,7 +159,7 @@ class _editNoteState extends State<editNote> {
 
   Widget getWidget(){
 
-    if(widget.photo == " "  && notesPicLink == " "){
+    if(widget.doc['photo'] == " "  && notesPicLink == " "){
     return Text(
     "لم يتم تحميل اي صورة",
     style: GoogleFonts.tajawal(
@@ -174,7 +171,7 @@ class _editNoteState extends State<editNote> {
     } else{
       return ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child: notesPicLink == " "? Image.network(widget.photo)
+        child: notesPicLink == " "? Image.network(widget.doc['photo'])
         : Image.network(notesPicLink)
         );
     }
@@ -183,7 +180,7 @@ class _editNoteState extends State<editNote> {
 
   Widget getWidget2(){
 
-    if(widget.photo == " "  && notesPicLink == " "){
+    if(widget.doc['photo'] == " "  && notesPicLink == " "){
     return const Icon(
      Icons.photo,
      color: Color.fromARGB(255, 84, 84, 84),
@@ -192,7 +189,7 @@ class _editNoteState extends State<editNote> {
     } else{
       return ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child: notesPicLink == " "? Image.network(widget.photo)
+        child: notesPicLink == " "? Image.network(widget.doc['photo'])
         : Image.network(notesPicLink)
         );
     }
@@ -424,7 +421,7 @@ class _editNoteState extends State<editNote> {
                                   print(titles[i]);
                                   print(title.text);
                                   if (titles[i] == title.text &&
-                                      titles[i] != widget.title) {
+                                      titles[i] != widget.doc['note_title']) {
                                     print('exist');
                                     print(titles[i]);
                                     exist = true;
@@ -471,7 +468,7 @@ class _editNoteState extends State<editNote> {
                                           .toString()
                                           .substring(6, 16)),
                                       'type': selectType,
-                                      'photo': widget.photo == " "? notesPicLink : widget.photo,
+                                      'photo': widget.doc['photo'] == " "? notesPicLink : widget.doc['photo'],
                                     });
 
                                     print("Note updated");

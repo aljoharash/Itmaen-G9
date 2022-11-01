@@ -3,10 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:itmaen/Notes/editNote.dart';
 import 'dart:ui' as ui;
 import 'AppStyle.dart';
-import 'NoteEditorScreen.dart';
-import 'NoteReaderScreen.dart';
 import 'note_card.dart';
 import 'addNotes.dart';
 
@@ -97,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          NoteReaderScreen(note),
+                                          editNote(doc: note,),
                                     ));
                               }, note))
                           .toList(),
