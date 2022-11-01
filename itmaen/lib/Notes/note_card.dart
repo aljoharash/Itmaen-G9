@@ -58,6 +58,7 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                                 title: doc["note_title"],
                                 note: doc["note_content"],
                                 type: doc["type"],
+                                photo: doc["photo"]
                               )));
                     },
                   ),
@@ -122,6 +123,19 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                                   )));
                     },
                   ),
+                  SizedBox(
+                    width: 60,
+                  ),
+                    Container(
+                      height: 40,
+                      width: 40,                      
+                    child: doc['photo'] == " " ? SizedBox()
+                    : ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(doc['photo']),
+                  ),
+
+                  )
                 ]),
               ),
             ],
