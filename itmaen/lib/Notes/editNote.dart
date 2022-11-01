@@ -224,7 +224,7 @@ class _editNoteState extends State<editNote> {
                                  if (value == null || value.isEmpty)
                                   return 'الرجاء ادخال عنوان الملاحظة';
                                 String pattern =
-                                    r'^(?=.{1,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
+                                    r'^(?=.{2,30}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
                                 RegExp regex = RegExp(pattern);
                                 if (!regex.hasMatch(value.trim()))
                                   return 'يجب أن يحتوي العنوان من حرف واحد إلى 25 حرف وأن يكون خالي من الرموز';
