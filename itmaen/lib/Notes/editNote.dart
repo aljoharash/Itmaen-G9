@@ -160,6 +160,46 @@ class _editNoteState extends State<editNote> {
     });
   }
 
+  Widget getWidget(){
+
+    if(widget.photo == " "  && notesPicLink == " "){
+    return Text(
+    "لم يتم تحميل اي صورة",
+    style: GoogleFonts.tajawal(
+    fontWeight: FontWeight.bold,
+    fontSize: 20, 
+    ),
+    textAlign: TextAlign.center,
+    ) ;
+    } else{
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: notesPicLink == " "? Image.network(widget.photo)
+        : Image.network(notesPicLink)
+        );
+    }
+                            
+  }
+
+  Widget getWidget2(){
+
+    if(widget.photo == " "  && notesPicLink == " "){
+    return const Icon(
+     Icons.photo,
+     color: Color.fromARGB(255, 84, 84, 84),
+     size: 60,
+     ) ;
+    } else{
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: notesPicLink == " "? Image.network(widget.photo)
+        : Image.network(notesPicLink)
+        );
+    }
+                            
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +209,7 @@ class _editNoteState extends State<editNote> {
           backgroundColor: Color.fromARGB(255, 140, 167, 190),
           elevation: 0,
           title: Text(
-            "إضافة مفكرة",
+            "تعديل مفكرة",
             style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
           ),
         ),
@@ -194,7 +234,18 @@ class _editNoteState extends State<editNote> {
                           children: [
                              GestureDetector(
               onTap: () {
-                pickUploadNotePic();
+                showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                  actions: [
+                                    Container(
+                                      width: 400,
+                                      height: 400,
+                                      child: getWidget()
+
+                                    )
+                          ]));
+                
               },
               child: Container(
                 margin: const EdgeInsets.only(top: 80, bottom: 24),
@@ -205,15 +256,35 @@ class _editNoteState extends State<editNote> {
                   borderRadius: BorderRadius.circular(20),
                   color: primary,
                 ),
-                child: Center(
-                  child: widget.photo == " " ? const Icon(
-                    Icons.add_a_photo,
-                    color: Color.fromARGB(255, 84, 84, 84),
-                    size: 60,
-                  ) : ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.network(widget.photo),
-                  ),
+                child:Stack(
+               children: [
+             Center(
+                  child: getWidget2()
+                ),
+                Align(
+               alignment: Alignment.bottomRight,
+              child: CircleAvatar(
+             //radius: 20,
+            backgroundColor: Color.fromARGB(255, 140, 167, 190),
+            child: ElevatedButton(
+              child: Icon(
+                Icons.add_a_photo,
+                color: Colors.white,
+                size: 20,) ,
+              onPressed:(){
+                pickUploadNotePic();
+              },
+          style: ElevatedButton.styleFrom(
+          shape: CircleBorder(),
+          padding: EdgeInsets.all(5),
+          //backgroundColor: Color.fromARGB(255, 140, 167, 190),
+          primary: Color.fromARGB(255, 140, 167, 190),
+          surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
+        ),
+              )
+             ),
+             ),
+               ] 
                 ),
               ),
             ),
