@@ -43,10 +43,36 @@ class _addManuallyState extends State<addManually> {
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController medName = new TextEditingController();
-  TextEditingController doseCount = new TextEditingController();
+  //TextEditingController doseCount = new TextEditingController();
   TextEditingController description = new TextEditingController();
   TextEditingController packSize = new TextEditingController();
   bool medExist = false;
+
+  List<String> list = [
+    'مل',
+     'مجم', 
+     'حبة',
+  ];
+  String? selectType = 'مل';
+  double dropDownwidth = 2;
+  Color onClickDropDown = Colors.black45;
+  DropdownMenuItem<String> buildMenuItem(String item) {
+    return DropdownMenuItem(
+      value: item,
+      child: Container(
+        child:Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children:[
+          Text(
+          item,
+        ),      
+        ]),
+        alignment:Alignment.topRight,
+      ),
+    );
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -218,43 +244,47 @@ class _addManuallyState extends State<addManually> {
                                   fontWeight: FontWeight.bold),
                               textDirection: ui.TextDirection.rtl,
                             ),
-                            TextFormField(
-                              controller: doseCount,
-                              validator: (value) {
-                                if (value == null || value.isEmpty)
-                                  return 'الرجاء إدخال الوحدة';
-                                String pattern =
-                                    r'^(?=.{2,20}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
-                                RegExp regex = RegExp(pattern);
-                                if (!regex.hasMatch(value.trim()))
-                                  return 'يجب أن يحتوي اسم الوحدة على حرفين على الاقل';
-                                return null;
-                              },
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              textAlign: TextAlign.right,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Color.fromARGB(255, 239, 237, 237),
-                                hintText: 'الوحدة',
-                                enabled: true,
-                                contentPadding: const EdgeInsets.only(
+                            Container(
+                            
+                          child: DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            contentPadding:const EdgeInsets.only(
                                     left: 14.0,
                                     right: 12.0,
                                     bottom: 8.0,
                                     top: 8.0),
-                                enabledBorder: OutlineInputBorder(
+
+                            fillColor: Color.fromARGB(255, 239, 237, 237),
+                            filled: true,
+                            enabledBorder:OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color:
                                             Color.fromARGB(255, 236, 231, 231),
                                         width: 3)),
-                                focusedBorder: OutlineInputBorder(
+
+                            focusedBorder: OutlineInputBorder(
                                   borderSide: new BorderSide(
                                       color: Color.fromARGB(79, 255, 255, 255)),
                                   borderRadius: new BorderRadius.circular(10),
                                 ),
-                              ),
+
+                          ),
+                          isExpanded: true,
+                          items: list.map(buildMenuItem).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectType = value;
+                              dropDownwidth = 2;
+                              onClickDropDown =
+                                  Color.fromARGB(79, 255, 255, 255);
+                            });
+                          },
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          value: selectType,
+                        ),
                             ),
+                            
                             SizedBox(
                               height: 24.0,
                             ),
@@ -292,7 +322,7 @@ class _addManuallyState extends State<addManually> {
                                       'docName': medName.text,
                                       //  'Generic name': genericName,
                                       'Trade name': medName.text,
-                                      'Unit of volume': doseCount.text,
+                                      'Unit of volume': selectType,
                                       //   'Unit of strength': unitOfStrength,
                                       // 'Volume': volume,
                                       //'Unit of volume': unitOfVolume,
