@@ -43,7 +43,7 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                 overflow: TextOverflow.ellipsis,
               ),
               SizedBox(
-                height: 50,
+                height: 40,
               ),
               Builder(
                 builder: (context) => Row(children: [
@@ -106,7 +106,7 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                     },
                   ),
                   SizedBox(
-                    width: 60,
+                    width: 40,
                   ),
                   Container(
                     height: 40,
