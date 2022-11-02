@@ -39,7 +39,7 @@ class addByScan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new WillPopScope(
+    return WillPopScope(
         onWillPop: () async {
 
   
@@ -350,7 +350,7 @@ class addByScan extends StatelessWidget {
                             color: Color.fromARGB(255, 140, 167, 190),
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: TextButton(
+                          child: addMedicineController.notFound ? TextButton(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
@@ -375,20 +375,8 @@ class addByScan extends StatelessWidget {
                             onPressed: () {
                               _.scanBarcode();
                             },
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          height: 60.0,
-                          width: 200,
-                          margin: EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 140, 167, 190),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: TextButton(
+                          )
+                          : TextButton(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
@@ -495,6 +483,8 @@ class addByScan extends StatelessWidget {
                               }),
                         ),
                       ),
+                       
+                        
                     ],
                   );
                 }),
