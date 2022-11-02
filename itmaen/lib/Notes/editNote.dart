@@ -141,7 +141,7 @@ class _editNoteState extends State<editNote> {
       imageQuality: 90,
     );
 
-    Reference ref = FirebaseStorage.instance.ref().child("notes/notepic.jpg");
+    Reference ref = FirebaseStorage.instance.ref().child("notes/${title.text + caregiverID}.jpg");
 
     if (image != null) {
       await ref.putFile(File(image.path));
@@ -282,7 +282,7 @@ class _editNoteState extends State<editNote> {
                                     r'^(?=.{2,30}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
                                 RegExp regex = RegExp(pattern);
                                 if (!regex.hasMatch(value.trim()))
-                                  return 'يجب أن يحتوي العنوان من حرف واحد إلى 25 حرف وأن يكون خالي من الرموز';
+                                  return 'يجب أن يحتوي العنوان من حرف واحد إلى 30 حرف وأن يكون خالي من الرموز';
                                 return null;
                               },
                               autovalidateMode:
@@ -319,6 +319,12 @@ class _editNoteState extends State<editNote> {
                               validator: (value) {
                                 if (value == null || value.isEmpty)
                                   return 'الرجاء ادخال الملاحظة';
+                                String pattern =
+                                    r'[^ ]';
+                                RegExp regex = RegExp(pattern);
+                                if (!regex.hasMatch(value.trim()))
+                                  return 'يجب أن لا تحتوي الملاحظة على مسافات فارغة';
+                                return null;
                               },
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
