@@ -141,7 +141,9 @@ class _editNoteState extends State<editNote> {
       imageQuality: 90,
     );
 
-    Reference ref = FirebaseStorage.instance.ref().child("notes/${title.text + caregiverID}.jpg");
+    Reference ref = FirebaseStorage.instance
+        .ref()
+        .child("notes/${title.text + caregiverID}.jpg");
 
     if (image != null) {
       await ref.putFile(File(image.path));
@@ -197,7 +199,7 @@ class _editNoteState extends State<editNote> {
           backgroundColor: Color.fromARGB(255, 140, 167, 190),
           elevation: 0,
           title: Text(
-            "تعديل مفكرة",
+            "تعديل ملاحظة",
             style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
           ),
         ),
@@ -319,8 +321,7 @@ class _editNoteState extends State<editNote> {
                               validator: (value) {
                                 if (value == null || value.isEmpty)
                                   return 'الرجاء ادخال الملاحظة';
-                                String pattern =
-                                    r'[^ ]';
+                                String pattern = r'[^ ]';
                                 RegExp regex = RegExp(pattern);
                                 if (!regex.hasMatch(value.trim()))
                                   return 'يجب أن لا تحتوي الملاحظة على مسافات فارغة';

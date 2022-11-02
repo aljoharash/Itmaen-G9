@@ -136,7 +136,7 @@ class _NavigationState extends State<Navigation> {
     // }
   }
 
-  int _selectedIndex = 3;
+  int _selectedIndex = 4;
   Future<Widget> bodyFunction() async {
     try {
       switch (_selectedIndex) {
@@ -154,14 +154,14 @@ class _NavigationState extends State<Navigation> {
           break;
 
         case 1:
-          return View();
+          return HomeScreen();
           break;
         case 2:
-          return LoadDataFromFireStoree();
+          return View();
           break;
 
         case 3:
-          return HomeScreen();
+          return LoadDataFromFireStoree();
           break;
 
         case 4:
@@ -264,15 +264,15 @@ class _NavigationState extends State<Navigation> {
             color: Colors.white,
           ),
           FaIcon(
+            Icons.assignment,
+            color: Colors.white,
+          ),
+          Icon(
             FontAwesomeIcons.pills,
             color: Colors.white,
           ),
           Icon(
             Icons.calendar_month,
-            color: Colors.white,
-          ),
-          Icon(
-            Icons.assignment,
             color: Colors.white,
           ),
           Icon(

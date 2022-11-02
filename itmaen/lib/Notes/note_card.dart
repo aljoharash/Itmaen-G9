@@ -24,17 +24,17 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
               Row(
                 children: [
                   Text(
-                // DateTime dateTime = documents[i].data["duedate"].toDate();
+                    // DateTime dateTime = documents[i].data["duedate"].toDate();
 
-                doc["creation_date"],
-                style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                width: 30,
-              ),
-              Container(
-                    height: 40,
-                    width: 40,
+                    doc["creation_date"],
+                    style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Container(
+                    height: 37,
+                    width: 37,
                     child: doc['photo'] == " "
                         ? SizedBox()
                         : ClipRRect(
@@ -42,8 +42,6 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                             child: Image.network(doc['photo']),
                           ),
                   )
-
-              
                 ],
               ),
               // Text(
@@ -57,10 +55,10 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
               ),
               Text(
                 doc["note_title"],
-                style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+                //style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
               ),
               SizedBox(
-                height: 8.0,
+                height: 4.0,
               ),
               Text(
                 doc["note_content"],
@@ -68,7 +66,7 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                 overflow: TextOverflow.ellipsis,
               ),
               SizedBox(
-                height: 40,
+                height: 30,
               ),
               Builder(
                 builder: (context) => Row(children: [
@@ -130,9 +128,9 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                                   )));
                     },
                   ),
-                  SizedBox(
-                    width: 40,
-                  ),
+                  //  SizedBox(
+                  //   width: 40,
+                  // ),
                   // Container(
                   //   height: 40,
                   //   width: 40,
