@@ -595,7 +595,7 @@ class _EditMedState extends State<EditMed> {
                                                       Navigator.of(context).push(
                                                           MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  Navigation(data: 1,)));
+                                                                  Navigation(data: 2,)));
                                                     }
                                                   },
                                                   child: Text(
