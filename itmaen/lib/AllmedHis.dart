@@ -250,7 +250,7 @@ class _NestedTabBarState extends State<NestedTabBar>
         ),
         ),
         Container(
-         height: screenHeight * 0.7,
+         height: screenHeight * 0.73,
           margin: EdgeInsets.only(left: 0.0, right: 0.0),
           child: TabBarView(
             controller: _nestedTabController,
@@ -356,7 +356,7 @@ class _NestedTabBar2State extends State<NestedTabBar2>
         ),
         ),
         Container(
-         height: screenHeight * 0.7,
+         height: screenHeight * 0.73,
           margin: EdgeInsets.only(left: 0.0, right: 0.0),
           child: TabBarView(
             controller: _nestedTabController,
@@ -463,7 +463,7 @@ class _NestedTabBar3State extends State<NestedTabBar3>
         ),
         ),
         Container(
-         height: screenHeight * 0.7,
+         height: screenHeight * 0.73,
           margin: EdgeInsets.only(left: 0.0, right: 0.0),
           child: TabBarView(
             controller: _nestedTabController,

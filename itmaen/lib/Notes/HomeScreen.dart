@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 backgroundColor: Color.fromARGB(255, 140, 167, 190),
                 title: Center(
                     child: Text(
-                  " ملاحظاتي",
+                  "ملاحظاتي             ",
                   style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
                 )),
               ),

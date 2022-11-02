@@ -133,7 +133,7 @@ class _NavigationPatientState extends State<NavigationPatient> {
               title: "تذكير بأخذ الجرعة",
               body: '''
   [${value.docs[i].get("name")}]
- لقد تبقى 5 دقائق على موعد جرعتك''',
+ لا تنسى أخذ جرعتك''',
               fln: flutterLocalNotificationsPlugin);
         }
         //  else if(diff <= -1440){ // passed a day over the medication , it will be removed

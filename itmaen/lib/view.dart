@@ -34,7 +34,7 @@ class _ViewPageState extends State<View> {
   StorageService st = StorageService();
   //var caregiverID;
   final _auth = FirebaseAuth.instance;
-  late User loggedUser;
+  late User? loggedUser  = _auth.currentUser;
 
   //Future<String?> loggedInUser = getCurrentUser();
 
@@ -333,18 +333,14 @@ class medBubble extends StatelessWidget {
                       children: [
                         Directionality(
                           textDirection: TextDirection.rtl,
-                          child: 
-                          photo == " "?
-                          Image.asset(picture.toString(),
-                              height: 65, width: 65) : 
-                            Container(
-                              height: 65,
-                              width: 65,
-                              child:
-                                Image.network(photo),
-                              
-                            ),
-
+                          child: photo == " "
+                              ? Image.asset(picture.toString(),
+                                  height: 65, width: 65)
+                              : Container(
+                                  height: 65,
+                                  width: 65,
+                                  child: Image.network(photo),
+                                ),
                         ),
                         Text(
                           ' $medicName ',
@@ -684,6 +680,7 @@ class medBubble extends StatelessWidget {
     await FirebaseFirestore.instance
         .collection('dosesEdit')
         .where("name", isEqualTo: name)
+         .where("caregiverID", isEqualTo: cid)
         .get()
         .then((value) {
       hasV = value.docs.isNotEmpty;
@@ -696,6 +693,8 @@ class medBubble extends StatelessWidget {
   void retrieveInfo(String name) => FirebaseFirestore.instance
           .collection('dosesEdit')
           .where("name", isEqualTo: name)
+          .where("caregiverID",
+              isEqualTo: cid)
           .get()
           .then((value) {
         //hasValue = value.docs[0].exists;
