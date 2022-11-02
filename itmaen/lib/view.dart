@@ -251,6 +251,7 @@ class _ViewPageState extends State<View> {
                                 medicineList[index].medicName,
                                 medicineList[index].meddescription,
                                 medicineList[index].package,
+                                medicineList[index].remaining,
                                 medicineList[index].picture,
                                 medicineList[index].strength,
                                 _getMediciens,
@@ -269,12 +270,13 @@ class _ViewPageState extends State<View> {
 }
 
 class medBubble extends StatelessWidget {
-  medBubble(this.medicName, this.meddescription, this.package, this.picture,
+  medBubble(this.medicName, this.meddescription, this.package, this.remaining, this.picture,
       this.strength, this.refreshList, this.cid, this.medID);
   Function refreshList;
   var medicName;
   var meddescription;
   var package;
+  var remaining;
   var picture;
   var cid;
   var medID;
@@ -414,7 +416,9 @@ class medBubble extends StatelessWidget {
                                                               selectedNote,
                                                               editTime
                                                                   .toString(),
-                                                              editDate
+                                                              editDate,
+                                                              package,
+                                                              remaining
                                                             ],
                                                           )));
                                             },
@@ -455,6 +459,9 @@ class medBubble extends StatelessWidget {
                                                   value: toBeTransformed,
                                                   toBeTransformed: [
                                                     medicName,
+                                                      package,
+                                                    remaining,
+                                                    strength
                                                   ],
                                                 ),
                                               ));
@@ -505,6 +512,7 @@ class medBubble extends StatelessWidget {
                                       name: medicName,
                                       description: meddescription,
                                       package: package,
+                                      remaining: remaining,
                                       strength: strength,
                                       medID: medID,)));
                             },
@@ -682,11 +690,12 @@ class medBubble extends StatelessWidget {
 }
 
 class MedicinesModel {
-  var medicName, meddescription, package, picture, strength, medID;
+  var medicName, meddescription, package, remaining, picture, strength, medID;
   MedicinesModel(
       {this.medicName,
       this.meddescription,
       this.package,
+      this.remaining,
       this.picture,
       this.strength,
       this.medID});
@@ -698,6 +707,7 @@ class MedicinesModel {
     medicName = map['Trade name'];
     meddescription = map['description'];
     package = map['Package size'];
+    remaining = map['Remaining Package'];
     picture = map['picture'];
     strength = map['Unit of volume'];
   }
