@@ -183,7 +183,7 @@ class _NestedTabBarState extends State<NestedTabBar>
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-                  // height: 50,
+                  height: 180,
                   width: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 248, 249, 250),
@@ -191,7 +191,13 @@ class _NestedTabBarState extends State<NestedTabBar>
    child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        TabBar(
+        Expanded(
+          child:Container(
+         height:70,
+          //flex:20,
+       child: AppBar(
+         backgroundColor:  Color.fromARGB(255, 248, 249, 250),
+        bottom:TabBar(
           controller: _nestedTabController,
           indicatorColor: Color.fromARGB(255, 140, 167, 190),
           labelColor:  Color.fromARGB(255, 140, 167, 190),
@@ -239,10 +245,13 @@ class _NestedTabBarState extends State<NestedTabBar>
               ],
             )),
           ],
+        )
+        ),
+        ),
         ),
         Container(
-         height: screenHeight * 0.74,
-          margin: EdgeInsets.only(left: 16.0, right: 16.0),
+         height: screenHeight * 0.7,
+          margin: EdgeInsets.only(left: 0.0, right: 0.0),
           child: TabBarView(
             controller: _nestedTabController,
             children: [ViewAll(),ViewAllMonthly(), ViewAllWeekly(), ViewAllDaily()],
@@ -280,7 +289,7 @@ class _NestedTabBar2State extends State<NestedTabBar2>
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-                  // height: 50,
+                  height: 180,
                   width: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 248, 249, 250),
@@ -288,14 +297,20 @@ class _NestedTabBar2State extends State<NestedTabBar2>
    child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        TabBar(
+        Expanded(
+          child:Container(
+         height:70,
+          //flex:20,
+       child: AppBar(
+         backgroundColor:  Color.fromARGB(255, 248, 249, 250),
+        bottom:TabBar(
           controller: _nestedTabController,
           indicatorColor: Color.fromARGB(255, 140, 167, 190),
           labelColor:  Color.fromARGB(255, 140, 167, 190),
           unselectedLabelColor: Colors.black54,
           isScrollable: true,
           tabs: <Widget>[
-             Tab(
+               Tab(
                 child: Row(
               children: [
                 //SizedBox(width: 2,),
@@ -308,7 +323,7 @@ class _NestedTabBar2State extends State<NestedTabBar2>
                 child: Row(
               children: [
                 //SizedBox(width: 2,),
-               Text('    الشهر الماضي   ',
+              Text('    الشهر الماضي   ',
                     style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
                
               ],
@@ -336,10 +351,13 @@ class _NestedTabBar2State extends State<NestedTabBar2>
               ],
             )),
           ],
+        )
+        ),
+        ),
         ),
         Container(
-         height: screenHeight * 0.74,
-          margin: EdgeInsets.only(left: 16.0, right: 16.0),
+         height: screenHeight * 0.7,
+          margin: EdgeInsets.only(left: 0.0, right: 0.0),
           child: TabBarView(
             controller: _nestedTabController,
             children: [ViewNotAllCheck(), ViewNotAllCheckMonthly(), ViewNotAllCheckWeekly(), ViewNotAllCheckDaily()],
@@ -378,7 +396,7 @@ class _NestedTabBar3State extends State<NestedTabBar3>
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-                  // height: 50,
+                  height: 180,
                   width: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 248, 249, 250),
@@ -386,14 +404,20 @@ class _NestedTabBar3State extends State<NestedTabBar3>
    child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        TabBar(
+        Expanded(
+          child:Container(
+         height:70,
+          //flex:20,
+       child: AppBar(
+         backgroundColor:  Color.fromARGB(255, 248, 249, 250),
+        bottom:TabBar(
           controller: _nestedTabController,
           indicatorColor: Color.fromARGB(255, 140, 167, 190),
           labelColor:  Color.fromARGB(255, 140, 167, 190),
           unselectedLabelColor: Colors.black54,
           isScrollable: true,
           tabs: <Widget>[
-             Tab(
+               Tab(
                 child: Row(
               children: [
                 //SizedBox(width: 2,),
@@ -406,7 +430,7 @@ class _NestedTabBar3State extends State<NestedTabBar3>
                 child: Row(
               children: [
                 //SizedBox(width: 2,),
-                Text('    الشهر الماضي   ',
+              Text('    الشهر الماضي   ',
                     style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
                
               ],
@@ -414,7 +438,7 @@ class _NestedTabBar3State extends State<NestedTabBar3>
             Tab(
                 child: Row(
               children: [
-                Text('   الأسبوع الماضي  ',
+               Text('   الأسبوع الماضي  ',
                     style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
                 //         SizedBox(
                 //   width: 5,
@@ -434,10 +458,13 @@ class _NestedTabBar3State extends State<NestedTabBar3>
               ],
             )),
           ],
+        )
+        ),
+        ),
         ),
         Container(
-         height: screenHeight * 0.74,
-          margin: EdgeInsets.only(left: 16.0, right: 16.0),
+         height: screenHeight * 0.7,
+          margin: EdgeInsets.only(left: 0.0, right: 0.0),
           child: TabBarView(
             controller: _nestedTabController,
             children: [ViewAllCheck(),ViewAllCheckMonthly(), ViewAllCheckWeekly(), ViewAllCheckDaily()],
