@@ -40,54 +40,70 @@ class addByScan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async {
-
-  
-           return (await
-
-      showDialog(
-                           
-                            builder: (context) => AlertDialog(
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop(false);
-                                        },
-                                        child: Text(
-                                          "لا",
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Navigation(data:2)));
-                                        },
-                                        child: Text(
-                                          "نعم",
-                                        ),
-                                      ),
-                                    ],
-                                    content: Text(
-                                      "هل أنت متأكد من رغبتك في إلغاء إضافة الدواء؟",
-                                      style: GoogleFonts.tajawal(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      textAlign: TextAlign.right,
-                                    )
-                                    
-                                    ),
-                                    
-                                     context: context)
-                                     
-    
-     );
-
-          
-        
-         
-        },
+      onWillPop: () async {
+        if (await showDialog(
+                builder: (context) => AlertDialog(
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(false);
+                            },
+                            child: Text(
+                              "لا",
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Navigation(data: 2)));
+                            },
+                            child: Text(
+                              "نعم",
+                            ),
+                          ),
+                        ],
+                        content: Text(
+                          "هل أنت متأكد من رغبتك في إلغاء إضافة الدواء؟",
+                          style: GoogleFonts.tajawal(
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.right,
+                        )),
+                context: context) !=
+            null) {
+          return (await showDialog(
+              builder: (context) => AlertDialog(
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(false);
+                          },
+                          child: Text(
+                            "لا",
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Navigation(data: 2)));
+                          },
+                          child: Text(
+                            "نعم",
+                          ),
+                        ),
+                      ],
+                      content: Text(
+                        "هل أنت متأكد من رغبتك في إلغاء إضافة الدواء؟",
+                        style: GoogleFonts.tajawal(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.right,
+                      )),
+              context: context));
+        } else {
+          return false;
+        }
+      },
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 140, 167, 190),
@@ -105,12 +121,19 @@ class addByScan extends StatelessWidget {
             child: GetBuilder<addMedicineController>(
                 init: addMedicineController(),
                 builder: (_) {
-                  if (_.scannedMedicine.isNotEmpty) {
-                    medName.text = _.scannedMedicine[0].tradeName.toString();
-                    descriptionControl.text =
-                        _.scannedMedicine[0].description.toString();
-                    packSize.text = _.scannedMedicine[0].packageSize.toString();
-                    doseUnit.text = _.scannedMedicine[0].unitOfVolume.toString();
+                  if (addMedicineController.scannedMedicine.isNotEmpty) {
+                    medName.text = addMedicineController
+                        .scannedMedicine[0].tradeName
+                        .toString();
+                    descriptionControl.text = addMedicineController
+                        .scannedMedicine[0].description
+                        .toString();
+                    packSize.text = addMedicineController
+                        .scannedMedicine[0].packageSize
+                        .toString();
+                    doseUnit.text = addMedicineController
+                        .scannedMedicine[0].unitOfVolume
+                        .toString();
                   }
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -119,7 +142,6 @@ class addByScan extends StatelessWidget {
                       SizedBox(
                         height: 40,
                       ),
-                  
                       SizedBox(
                         height: 30,
                       ),
@@ -130,7 +152,7 @@ class addByScan extends StatelessWidget {
                         // elevation: 5,
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
-                          child: _.scannedMedicine.isEmpty
+                          child: addMedicineController.scannedMedicine.isEmpty
                               ? Container(
                                   alignment: Alignment.center,
                                   height: 100,
@@ -142,7 +164,8 @@ class addByScan extends StatelessWidget {
                                               child: Text(
                                                 'لم يتم المسح حتى الان أو لم يتم العثور على الدواء',
                                                 style: GoogleFonts.tajawal(
-                                                    fontWeight: FontWeight.bold),
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                             )
                                           : Text(
@@ -151,7 +174,8 @@ class addByScan extends StatelessWidget {
                                                   fontWeight: FontWeight.bold),
                                             )))
                               : Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     SizedBox(
                                       height: 30,
@@ -350,141 +374,156 @@ class addByScan extends StatelessWidget {
                             color: Color.fromARGB(255, 140, 167, 190),
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: addMedicineController.notFound ? TextButton(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Center(
-                                    child: Icon(
-                                  FontAwesomeIcons.barcode,
-                                  size: 16,
-                                  color: Colors.white,
-                                )),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "الماسح الضوئي",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.tajawal(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              ],
-                            ),
-                            onPressed: () {
-                              _.scanBarcode();
-                            },
-                          )
-                          : TextButton(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  // ******* Go to setDose *********
-    
-                                  SizedBox(
-                                    width: 10,
+                          child: addMedicineController.notFound
+                              ? TextButton(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Center(
+                                          child: Icon(
+                                        FontAwesomeIcons.barcode,
+                                        size: 16,
+                                        color: Colors.white,
+                                      )),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "الماسح الضوئي",
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.tajawal(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ],
                                   ),
-    
-                                  Text(
-                                    "إضافة",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.tajawal(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
+                                  onPressed: () {
+                                    _.scanBarcode();
+                                  },
+                                )
+                              : TextButton(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      // ******* Go to setDose *********
+
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+
+                                      Text(
+                                        "إضافة",
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.tajawal(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              onPressed: () async {
-                                var doc = await _firestore
-                                    .collection("medicines")
-                                    .doc(medName.text + loggedInUser!.uid)
-                                    .get();
-                                if (doc.exists) {
-                                  print("already exist");
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      // margin: EdgeInsets.only(right: 10),
-    
-                                      content: Text('تمت إضافة الدواء مسبقًا',
-                                          style: TextStyle(fontSize: 20),
-                                          textAlign: TextAlign.right),
-                                    ),
-                                  );
-                                } else {
-                                  if (addMedicineController.notFound == false) {
-                                    _firestore
-                                        .collection('medicines')
+                                  onPressed: () async {
+                                    var doc = await _firestore
+                                        .collection("medicines")
                                         .doc(medName.text + loggedInUser!.uid)
-                                        .set({
-                                      'docName': medName.text,
-                                      'Generic name': genericName,
-                                      'Trade name': medName.text,
-                                      'Strength value': strengthValue,
-                                      'Unit of strength': unitOfStrength,
-                                      'Volume': volume,
-                                      'Unit of volume': doseUnit.text,
-                                      'Package size': packSize.text,
-                                      'Remaining Package': packSize.text,
-                                      'barcode': barcode,
-                                      'description': descriptionControl.text,
-                                      'caregiverID': loggedInUser!.uid,
-                                      'photo': " ",
-                                      'picture': medName.text == "جليترا"
-                                          ? "images/" + "جليترا" + ".png"
-                                          : medName.text == "سبراليكس"
-                                              ? "images/" + "سبراليكس" + ".png"
-                                              : medName.text == "سنترم - CENTRUM"
+                                        .get();
+                                    if (doc.exists) {
+                                      print("already exist");
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          // margin: EdgeInsets.only(right: 10),
+
+                                          content: Text(
+                                              'تمت إضافة الدواء مسبقًا',
+                                              style: TextStyle(fontSize: 20),
+                                              textAlign: TextAlign.right),
+                                        ),
+                                      );
+                                    } else {
+                                      if (addMedicineController.notFound ==
+                                          false) {
+                                        _firestore
+                                            .collection('medicines')
+                                            .doc(medName.text +
+                                                loggedInUser!.uid)
+                                            .set({
+                                          'docName': medName.text,
+                                          'Generic name': genericName,
+                                          'Trade name': medName.text,
+                                          'Strength value': strengthValue,
+                                          'Unit of strength': unitOfStrength,
+                                          'Volume': volume,
+                                          'Unit of volume': doseUnit.text,
+                                          'Package size': packSize.text,
+                                          'Remaining Package': packSize.text,
+                                          'barcode': barcode,
+                                          'description':
+                                              descriptionControl.text,
+                                          'caregiverID': loggedInUser!.uid,
+                                          'photo': " ",
+                                          'picture': medName.text == "جليترا"
+                                              ? "images/" + "جليترا" + ".png"
+                                              : medName.text == "سبراليكس"
                                                   ? "images/" +
-                                                      "CENTRUM - سنترم" +
+                                                      "سبراليكس" +
                                                       ".png"
                                                   : medName.text ==
-                                                          "بانادول - PANADOL"
+                                                          "سنترم - CENTRUM"
                                                       ? "images/" +
-                                                          "بانادول ادفانس - PANADOL" +
+                                                          "CENTRUM - سنترم" +
                                                           ".png"
                                                       : medName.text ==
-                                                              "فيدروب - VIDROP"
+                                                              "بانادول - PANADOL"
                                                           ? "images/" +
-                                                              "VIDROP" +
+                                                              "بانادول ادفانس - PANADOL" +
                                                               ".png"
-                                                          : "images/" +
-                                                              "no" +
-                                                              ".png"
-                                    });
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        // margin: EdgeInsets.only(right: 10),
-    
-                                        content: Text('تمت إضافة الدواء بنجاح',
-                                            style: TextStyle(fontSize: 20),
-                                            textAlign: TextAlign.right),
-                                      ),
-                                    );
-                                    _.scannedMedicine.clear();
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) =>
-                                            Navigation(data: 2,)));
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        // margin: EdgeInsets.only(right: 10),
-    
-                                        content: Text(
-                                            'عليك استخدام الماسح الضوئي أولاً ',
-                                            style: TextStyle(fontSize: 20),
-                                            textAlign: TextAlign.right),
-                                      ),
-                                    );
-                                  }
-    
-                                  _.scannedMedicine.clear();
-                                }
-                              }),
+                                                          : medName.text ==
+                                                                  "فيدروب - VIDROP"
+                                                              ? "images/" +
+                                                                  "VIDROP" +
+                                                                  ".png"
+                                                              : "images/" +
+                                                                  "no" +
+                                                                  ".png"
+                                        });
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            // margin: EdgeInsets.only(right: 10),
+
+                                            content: Text(
+                                                'تمت إضافة الدواء بنجاح',
+                                                style: TextStyle(fontSize: 20),
+                                                textAlign: TextAlign.right),
+                                          ),
+                                        );
+                                        addMedicineController.scannedMedicine
+                                            .clear();
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Navigation(
+                                                      data: 2,
+                                                    )));
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            // margin: EdgeInsets.only(right: 10),
+
+                                            content: Text(
+                                                'عليك استخدام الماسح الضوئي أولاً ',
+                                                style: TextStyle(fontSize: 20),
+                                                textAlign: TextAlign.right),
+                                          ),
+                                        );
+                                      }
+
+                                      addMedicineController.scannedMedicine
+                                          .clear();
+                                    }
+                                  }),
                         ),
                       ),
-                       
-                        
                     ],
                   );
                 }),

@@ -50,6 +50,8 @@ class _AddMedicineState extends State<AddMedicine> {
           ElevatedButton(
             onPressed: () {
               addMedicineController.notFound = true;
+              addMedicineController.scannedMedicine.clear();
+
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => addByScan()));
             },
