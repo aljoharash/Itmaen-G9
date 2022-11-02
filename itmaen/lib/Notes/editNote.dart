@@ -474,7 +474,7 @@ class _editNoteState extends State<editNote> {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Navigation(data: 3,)));
+                                                Navigation(data: 1,)));
                                   }
                                 }
                               },

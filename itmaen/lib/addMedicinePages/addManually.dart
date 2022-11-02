@@ -261,6 +261,18 @@ class _addManuallyState extends State<addManually> {
                             TextFormField(
                               controller: description,
                               textAlign: TextAlign.right,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+
+                              validator: (value) {
+                                if (value == null || value.isEmpty) return null;
+                                String pattern =
+                                    r'^(?=.{3,350}$)[\u0621-\u064Aa-zA-Z\d\-.،,_\s]+$';
+                                RegExp regex = RegExp(pattern);
+                                if (!regex.hasMatch(value.trim()))
+                                  return 'يجب أن يحتوي الوصف على ثلاثة أحرف على الأقل وأن يكون خالي من الرموز';
+                                return null;
+                              },
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
@@ -448,7 +460,7 @@ class _addManuallyState extends State<addManually> {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Navigation(data: 3,)));
+                                                Navigation(data: 2,)));
                                   }
                                 }
                               },

@@ -378,7 +378,7 @@ class _addNoteState extends State<addNote> {
                                   print("Note added");
 
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => Navigation(data: 3,)));
+                                      builder: (context) => Navigation(data: 1,)));
                                 }
                               },
                               child: Text('إضافة',
