@@ -247,7 +247,7 @@ class _EditMedState extends State<EditMed> {
                 showAlertDialogg(context);
               } else {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => Navigation())
+                    MaterialPageRoute(builder: (context) => Navigation(data: 2,))
                     );
                     
               }
@@ -595,7 +595,7 @@ class _EditMedState extends State<EditMed> {
                                                       Navigator.of(context).push(
                                                           MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  Navigation(data: 1,)));
+                                                                  Navigation(data: 2,)));
                                                     }
                                                   },
                                                   child: Text(
@@ -817,7 +817,7 @@ class _EditMedState extends State<EditMed> {
       ),
       onPressed: () {
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => Navigation()));
+            MaterialPageRoute(builder: (context) => Navigation(data: 2,)));
       },
     );
     // set up the AlertDialog
