@@ -295,7 +295,7 @@ class _editNoteState extends State<editNote> {
                                     r'^(?=.{2,30}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
                                 RegExp regex = RegExp(pattern);
                                 if (!regex.hasMatch(value.trim()))
-                                  return 'يجب أن يحتوي العنوان من حرف واحد إلى 25 حرف وأن يكون خالي من الرموز';
+                                  return 'يجب أن يحتوي العنوان من حرف واحد إلى 30 حرف وأن يكون خالي من الرموز';
                                 return null;
                               },
                               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -331,6 +331,12 @@ class _editNoteState extends State<editNote> {
                               validator: (value){
                                 if (value == null || value.isEmpty)
                                   return 'الرجاء ادخال الملاحظة';
+                                String pattern =
+                                    r'[^ ]';
+                                RegExp regex = RegExp(pattern);
+                                if (!regex.hasMatch(value.trim()))
+                                  return 'يجب أن لا تحتوي الملاحظة على مسافات فارغة';
+                                return null;
                               },
                               autovalidateMode: AutovalidateMode.onUserInteraction,
                               textAlign: TextAlign.right,
