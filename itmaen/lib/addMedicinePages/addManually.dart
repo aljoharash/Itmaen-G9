@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +8,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:itmaen/setDose.dart';
 import 'package:itmaen/trySet.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'dart:ui' as ui;
 
 class addManually extends StatefulWidget {
@@ -72,7 +75,74 @@ class _addManuallyState extends State<addManually> {
     );
   }
 
+    String medPicLink = " ";
+    Color primary = Color.fromARGB(251, 193, 193, 193);
 
+
+  void pickUploadNotePic(ImageSource source) async {
+    final image = await ImagePicker().pickImage(
+      source: source,
+      maxHeight: 512,
+      maxWidth: 512,
+      imageQuality: 90,
+    );
+
+    Reference ref = FirebaseStorage.instance
+        .ref()
+        .child("medPictures/${medName.text + caregiverID}.jpg");
+
+    if (image != null) {
+      await ref.putFile(File(image.path));
+    }
+
+    ref.getDownloadURL().then((value) async {
+      setState(() {
+        medPicLink = value;
+      });
+    });
+  }
+
+  _selectImage(BuildContext parentContext) async {
+    return showDialog(
+      context: parentContext,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16.0))),
+          title: const Text(' صورة  ', textAlign: TextAlign.right),
+          children: <Widget>[
+            SimpleDialogOption(
+                padding: const EdgeInsets.all(20),
+                child: const Text('التقاط صورة', textAlign: TextAlign.right),
+                onPressed: () {
+                  pickUploadNotePic(ImageSource.camera);
+                  Navigator.pop(context);
+                }),
+            SimpleDialogOption(
+                padding: const EdgeInsets.all(20),
+                child: const Text('اختيار صورة من الملفات',
+                    textAlign: TextAlign.right),
+                onPressed: () {
+                  pickUploadNotePic(ImageSource.gallery);
+                  print(pickUploadNotePic.toString());
+                  Navigator.pop(context);
+                }),
+            SimpleDialogOption(
+              padding: const EdgeInsets.all(20),
+              child: const Text(
+                "الغاء",
+                textAlign: TextAlign.right,
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,21 +175,37 @@ class _addManuallyState extends State<addManually> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              height: 100,
-                            ),
-                            Text(
-                              "إضافة دواء",
-                              style: GoogleFonts.tajawal(
-                                fontSize: 30,
-                                //fontStyle: FontStyle.italic,
-                                color: Color.fromARGB(255, 122, 164, 186),
-                                fontWeight: FontWeight.bold,
+                                GestureDetector(
+                              onTap: () {
+                                _selectImage(context);
+                              },
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.only(top: 80, bottom: 24),
+                                height: 100,
+                                width: 100,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: primary,
+                                ),
+                                child: Center(
+                                  child: medPicLink == " "
+                                      ? const Icon(
+                                          Icons.add_a_photo,
+                                          color:
+                                              Color.fromARGB(255, 84, 84, 84),
+                                          size: 60,
+                                        )
+                                      : ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Image.network(medPicLink),
+                                        ),
+                                ),
                               ),
                             ),
-                            SizedBox(
-                              height: 40,
-                            ),
+                           
                             Text(
                               "اسم الدواء                                                                               ",
                               style: GoogleFonts.tajawal(
@@ -331,6 +417,7 @@ class _addManuallyState extends State<addManually> {
                                       //'barcode': barcode,
                                       'description': description.text,
                                       'caregiverID': caregiverID,
+                                      'photo': medPicLink,
                                       'picture': (medName.text == "جليترا"
                                           ? "images/" + "جليترا" + ".png"
                                           : medName.text == "سبراليكس"

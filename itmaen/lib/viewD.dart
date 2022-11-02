@@ -2589,7 +2589,7 @@ class _medBubbleState extends State<medBubble> {
                                                ? () {
                                                   dialog(widget.medicName);
                                                 }
-                                              : double.parse(widget.remaining) <= 0
+                                              : (double.parse(widget.remaining) <= 0 || double.parse(widget.MedAmount) > double.parse(widget.remaining))
                                                   ? () {
                                                       packageDialog(widget.medicName);
                                                   }

@@ -7,6 +7,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:ui' as ui;
 
+import 'package:itmaen/view.dart';
+
 class EditMed extends StatefulWidget {
   final String name;
   final String description;
@@ -232,6 +234,24 @@ class _EditMedState extends State<EditMed> {
           title: Text(
             "تعديل دواء",
             style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            color: Color.fromARGB(255, 255, 255, 255),
+            onPressed: () {
+              if (medName.text != widget.name ||
+                  meddescription.text != widget.description ||
+                  packSize.text != widget.package ||
+                  selectType != widget.strength) {
+                print("entered");
+                showAlertDialogg(context);
+              } else {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => Navigation())
+                    );
+                    
+              }
+            },
           ),
         ),
         body: SingleChildScrollView(
@@ -776,5 +796,51 @@ class _EditMedState extends State<EditMed> {
 
   String? ValidateDose(String? FormDose) {
     if (FormDose == null || FormDose.isEmpty) return 'الرجاء ادخال الجرعة ';
+  }
+
+    showAlertDialogg(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text(
+        "لا",
+        style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+      ),
+      onPressed: () {
+        Navigator.pop(context, false);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "نعم ",
+        style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+        textAlign: TextAlign.right,
+      ),
+      onPressed: () {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => Navigation()));
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(""),
+      content: Text(
+        "هل أنت متأكد من العوده دون حفظ التغيرات ",
+        style: GoogleFonts.tajawal(
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

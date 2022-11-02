@@ -220,8 +220,9 @@ class _ViewPageState extends State<View> {
                           //   borderRadius: BorderRadius.circular(50)
                           // ),
                           focusedBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2.0, color: Color.fromARGB(255, 140, 167, 190)),
+                            borderSide: BorderSide(
+                                width: 2.0,
+                                color: Color.fromARGB(255, 140, 167, 190)),
                           ),
                           icon: Icon(
                             Icons.search,
@@ -242,22 +243,25 @@ class _ViewPageState extends State<View> {
                       ? Center(
                           child: CircularProgressIndicator(color: Colors.blue),
                         )
-                      : ListView.builder(
-                          // scrollDirection: Axis.vertical,
-                          // shrinkWrap: true,
-                          itemCount: medicineList.length,
-                          itemBuilder: (context, index) {
-                            return medBubble(
-                                medicineList[index].medicName,
-                                medicineList[index].meddescription,
-                                medicineList[index].package,
-                                medicineList[index].remaining,
-                                medicineList[index].picture,
-                                medicineList[index].strength,
-                                _getMediciens,
-                                cid_,
-                                 medicineList[index].medID);
-                          },
+                      : Scrollbar(
+                          child: ListView.builder(
+                            // scrollDirection: Axis.vertical,
+                            // shrinkWrap: true,
+                            itemCount: medicineList.length,
+                            itemBuilder: (context, index) {
+                              return medBubble(
+                                  medicineList[index].medicName,
+                                  medicineList[index].meddescription,
+                                  medicineList[index].package,
+                                  medicineList[index].remaining,
+                                  medicineList[index].picture,
+                                  medicineList[index].photo,
+                                  medicineList[index].strength,
+                                  _getMediciens,
+                                  cid_,
+                                  medicineList[index].medID);
+                            },
+                          ),
                         ),
                 ),
               ],
@@ -270,14 +274,24 @@ class _ViewPageState extends State<View> {
 }
 
 class medBubble extends StatelessWidget {
-  medBubble(this.medicName, this.meddescription, this.package, this.remaining, this.picture,
-      this.strength, this.refreshList, this.cid, this.medID);
+  medBubble(
+      this.medicName,
+      this.meddescription,
+      this.package,
+      this.remaining,
+      this.picture,
+      this.photo,
+      this.strength,
+      this.refreshList,
+      this.cid,
+      this.medID);
   Function refreshList;
   var medicName;
   var meddescription;
   var package;
   var remaining;
   var picture;
+  var photo;
   var cid;
   var medID;
 
@@ -319,8 +333,18 @@ class medBubble extends StatelessWidget {
                       children: [
                         Directionality(
                           textDirection: TextDirection.rtl,
-                          child: Image.asset(picture.toString(),
-                              height: 65, width: 65),
+                          child: 
+                          photo == " "?
+                          Image.asset(picture.toString(),
+                              height: 65, width: 65) : 
+                            Container(
+                              height: 65,
+                              width: 65,
+                              child:
+                                Image.network(photo),
+                              
+                            ),
+
                         ),
                         Text(
                           ' $medicName ',
@@ -459,7 +483,7 @@ class medBubble extends StatelessWidget {
                                                   value: toBeTransformed,
                                                   toBeTransformed: [
                                                     medicName,
-                                                      package,
+                                                    package,
                                                     remaining,
                                                     strength
                                                   ],
@@ -509,12 +533,13 @@ class medBubble extends StatelessWidget {
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => EditMed(
-                                      name: medicName,
-                                      description: meddescription,
-                                      package: package,
-                                      remaining: remaining,
-                                      strength: strength,
-                                      medID: medID,)));
+                                        name: medicName,
+                                        description: meddescription,
+                                        package: package,
+                                        remaining: remaining,
+                                        strength: strength,
+                                        medID: medID,
+                                      )));
                             },
                             child: Icon(
                               Icons.edit,
@@ -690,13 +715,21 @@ class medBubble extends StatelessWidget {
 }
 
 class MedicinesModel {
-  var medicName, meddescription, package, remaining, picture, strength, medID;
+  var medicName,
+      meddescription,
+      package,
+      remaining,
+      picture,
+      photo,
+      strength,
+      medID;
   MedicinesModel(
       {this.medicName,
       this.meddescription,
       this.package,
       this.remaining,
       this.picture,
+      this.photo,
       this.strength,
       this.medID});
   MedicinesModel.fromJson(Map<String, dynamic> map) {
@@ -709,6 +742,7 @@ class MedicinesModel {
     package = map['Package size'];
     remaining = map['Remaining Package'];
     picture = map['picture'];
+    photo = map['photo'];
     strength = map['Unit of volume'];
   }
 }
