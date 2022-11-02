@@ -190,10 +190,12 @@ class _editProfile extends State<editProfile> {
                   SizedBox(
                     height: 180,
                   ),
-                  Icon(
-                    Icons.person,
-                    size: 60,
+
+                  CircleAvatar(
+                    radius: 50.0,
+                    backgroundImage: AssetImage('images/profile.png'),
                   ),
+
                   SizedBox(
                     height: 19,
                   ),
