@@ -205,24 +205,28 @@ class _ViewPageState extends State<View> {
                   margin: EdgeInsets.only(top: 10, left: 10, right: 10),
                   padding: EdgeInsets.only(left: 5, right: 5),
                   decoration: BoxDecoration(
-                    // borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(20),
                     color: Colors.grey.shade200,
                   ),
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: TextFormField(
+                    child: TextField(
                       decoration: InputDecoration(
-                          hintText: "ابحث عن الدواء بواسطة الاسم",
+                          hintText: "اسم الدواء",
                           filled: true,
                           fillColor: Colors.grey.shade200,
+                          // enabledBorder: OutlineInputBorder(
+                          //   borderSide: BorderSide( width:3 , color:Color.fromARGB(255, 140, 167, 190)),
+                          //   borderRadius: BorderRadius.circular(50)
+                          // ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide:
-                                BorderSide(width: 2.0, color: Colors.blue),
+                                BorderSide(width: 2.0, color: Color.fromARGB(255, 140, 167, 190)),
                           ),
                           icon: Icon(
                             Icons.search,
                             size: 30,
-                            color: Colors.blue,
+                            color: Color.fromARGB(255, 140, 167, 190),
                           ),
                           contentPadding: EdgeInsets.only(right: 3)),
                       onChanged: (value) async {
