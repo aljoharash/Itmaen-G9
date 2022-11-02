@@ -170,7 +170,7 @@ class _NestedTabBarState extends State<NestedTabBar>
   void initState() {
     super.initState();
     _nestedTabController = new TabController(length:4 , vsync: this);
-    _nestedTabController.animateTo(2);
+    _nestedTabController.animateTo(3);
   }
 
   @override
@@ -211,7 +211,7 @@ class _NestedTabBarState extends State<NestedTabBar>
                 child: Row(
               children: [
                 //SizedBox(width: 2,),
-              Text('   طوال الشهر الماضي   ',
+              Text('    الشهر الماضي   ',
                     style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
                
               ],
@@ -219,7 +219,7 @@ class _NestedTabBarState extends State<NestedTabBar>
             Tab(
                 child: Row(
               children: [
-               Text('  طوال الأسبوع الماضي  ',
+               Text('   الأسبوع الماضي  ',
                     style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
                 //         SizedBox(
                 //   width: 5,
@@ -241,7 +241,7 @@ class _NestedTabBarState extends State<NestedTabBar>
           ],
         ),
         Container(
-         height: screenHeight * 0.90,
+         height: screenHeight * 0.74,
           margin: EdgeInsets.only(left: 16.0, right: 16.0),
           child: TabBarView(
             controller: _nestedTabController,
@@ -267,7 +267,7 @@ class _NestedTabBar2State extends State<NestedTabBar2>
   void initState() {
     super.initState();
     _nestedTabController = new TabController(length:4 , vsync: this);
-    _nestedTabController.animateTo(2);
+    _nestedTabController.animateTo(3);
   }
 
   @override
@@ -308,7 +308,7 @@ class _NestedTabBar2State extends State<NestedTabBar2>
                 child: Row(
               children: [
                 //SizedBox(width: 2,),
-               Text('   طوال الشهر الماضي   ',
+               Text('    الشهر الماضي   ',
                     style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
                
               ],
@@ -316,7 +316,7 @@ class _NestedTabBar2State extends State<NestedTabBar2>
             Tab(
                 child: Row(
               children: [
-               Text('  طوال الأسبوع الماضي  ',
+               Text('   الأسبوع الماضي  ',
                     style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
                 //         SizedBox(
                 //   width: 5,
@@ -338,7 +338,7 @@ class _NestedTabBar2State extends State<NestedTabBar2>
           ],
         ),
         Container(
-         height: screenHeight * 0.90,
+         height: screenHeight * 0.74,
           margin: EdgeInsets.only(left: 16.0, right: 16.0),
           child: TabBarView(
             controller: _nestedTabController,
@@ -365,7 +365,7 @@ class _NestedTabBar3State extends State<NestedTabBar3>
   void initState() {
     super.initState();
     _nestedTabController = new TabController(length:4, vsync: this);
-    _nestedTabController.animateTo(2);
+    _nestedTabController.animateTo(3);
   }
 
   @override
@@ -406,7 +406,7 @@ class _NestedTabBar3State extends State<NestedTabBar3>
                 child: Row(
               children: [
                 //SizedBox(width: 2,),
-                Text('   طوال الشهر الماضي   ',
+                Text('    الشهر الماضي   ',
                     style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
                
               ],
@@ -414,7 +414,7 @@ class _NestedTabBar3State extends State<NestedTabBar3>
             Tab(
                 child: Row(
               children: [
-                Text('  طوال الأسبوع الماضي  ',
+                Text('   الأسبوع الماضي  ',
                     style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
                 //         SizedBox(
                 //   width: 5,
@@ -436,7 +436,7 @@ class _NestedTabBar3State extends State<NestedTabBar3>
           ],
         ),
         Container(
-         height: screenHeight * 0.90,
+         height: screenHeight * 0.74,
           margin: EdgeInsets.only(left: 16.0, right: 16.0),
           child: TabBarView(
             controller: _nestedTabController,

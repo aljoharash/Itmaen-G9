@@ -7,6 +7,7 @@ import 'package:itmaen/AllmedHis.dart';
 import 'package:itmaen/editprofile.dart';
 import 'package:itmaen/patient-login.dart';
 import 'alert_dialog.dart';
+import 'bar.dart';
 import 'login.dart';
 import 'navigation.dart';
 import 'navigationPatient.dart';
@@ -163,7 +164,7 @@ class _NavBar extends State<NavBar> {
             onTap: () =>   Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                     TabBarPage()))
+                                                     MyTabbedPage()))
           ),
           ListTile(
             leading: Icon(Icons.logout),
