@@ -21,12 +21,37 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              Row(
+                children: [
+                  Text(
                 // DateTime dateTime = documents[i].data["duedate"].toDate();
 
                 doc["creation_date"],
                 style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
               ),
+              SizedBox(
+                width: 30,
+              ),
+              Container(
+                    height: 40,
+                    width: 40,
+                    child: doc['photo'] == " "
+                        ? SizedBox()
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(doc['photo']),
+                          ),
+                  )
+
+              
+                ],
+              ),
+              // Text(
+              //   // DateTime dateTime = documents[i].data["duedate"].toDate();
+
+              //   doc["creation_date"],
+              //   style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+              // ),
               SizedBox(
                 height: 4.0,
               ),
@@ -108,16 +133,16 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                   SizedBox(
                     width: 40,
                   ),
-                  Container(
-                    height: 40,
-                    width: 40,
-                    child: doc['photo'] == " "
-                        ? SizedBox()
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.network(doc['photo']),
-                          ),
-                  )
+                  // Container(
+                  //   height: 40,
+                  //   width: 40,
+                  //   child: doc['photo'] == " "
+                  //       ? SizedBox()
+                  //       : ClipRRect(
+                  //           borderRadius: BorderRadius.circular(8),
+                  //           child: Image.network(doc['photo']),
+                  //         ),
+                  // )
                 ]),
               ),
             ],
