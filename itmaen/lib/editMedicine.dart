@@ -12,14 +12,16 @@ class EditMed extends StatefulWidget {
   final String description;
   final String strength;
   final String package;
-  final String medID;//new code
+  final String remaining;
+  final String medID; //new code
   const EditMed(
       {Key? key,
       required this.name,
       required this.description,
       required this.package,
+      required this.remaining,
       required this.strength,
-      required this.medID//new code
+      required this.medID //new code
       })
       : super(key: key);
 
@@ -40,6 +42,7 @@ class _EditMedState extends State<EditMed> {
   static String medname = "";
   static String description = "";
   static String package = "";
+  static String remaining = "";
   static String strength = "";
 
   TextEditingController medName = TextEditingController();
@@ -52,6 +55,7 @@ class _EditMedState extends State<EditMed> {
     medname = widget.name;
     description = widget.description;
     package = widget.package;
+    remaining = widget.remaining;
     strength = widget.strength;
     medName.text = medname;
     doseCount.text = strength;
@@ -87,7 +91,7 @@ class _EditMedState extends State<EditMed> {
             .where('name', isEqualTo: widget.name)
             .get()
             .then((value) {
-          value.docs[0].reference.update({'name': medName.text});
+          value.docs[0].reference.update({'name': medName.text, "unit": doseCount.text});
         });
       } else {
         print('dose not found');
@@ -106,7 +110,12 @@ class _EditMedState extends State<EditMed> {
             .where('name', isEqualTo: widget.name)
             .get()
             .then((value) {
-          value.docs[countdose].reference.update({'name': medName.text, 'Package size': package, 'Remaining Package': package});
+          value.docs[countdose].reference.update({
+            'name': medName.text,
+            'Package size': packSize.text,
+            'Remaining Package': packSize.text,
+            "unit": doseCount.text
+          });
         });
       } else {
         print('dose not found');
@@ -426,6 +435,8 @@ class _EditMedState extends State<EditMed> {
                                   vertical: 11, horizontal: 122),
                               color: Color.fromARGB(255, 140, 167, 190),
                               onPressed: () async {
+
+                               
                                 var doc = await _firestore
                                     .collection("medicines")
                                     .doc(medName.text + caregiverID)
@@ -456,13 +467,109 @@ class _EditMedState extends State<EditMed> {
                                           textAlign: TextAlign.right),
                                     ),
                                   );
-                                } else {
+                                } 
+                                else if (double.parse(remaining) > double.parse(packSize.text)) {
+
+   
+                                  showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text(
+                                                "لا",
+                                                style: GoogleFonts.tajawal(),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+
+                                                print((oldname + caregiverID).toString());
+                                  print("test 111");
+                                  if (_formKey.currentState!.validate()) {
+                                    _firestore
+                                        .collection('medicines')
+                                        .doc(widget.medID) //new code
+                                        // .doc('testtestFAmv3c30ydRn7PkA2jbL9SBXPOp1')
+                                        .update({
+                                      //  'Generic name': genericName,
+                                      'Trade name': medName.text,
+                                      'Unit of volume': doseCount.text,
+                                      //   'Unit of strength': unitOfStrength,
+                                      // 'Volume': volume,
+                                      //'Unit of volume': unitOfVolume,
+                                      'Package size': packSize.text,
+                                      'Remaining Package': packSize.text,
+                                      //'barcode': barcode,
+                                      'description': meddescription.text,
+                                      'caregiverID': caregiverID,
+                                      'picture': (medName.text == "جليترا"
+                                          ? "images/" + "جليترا" + ".png"
+                                          : medName.text == "سبراليكس"
+                                              ? "images/" + "سبراليكس" + ".png"
+                                              : medName.text ==
+                                                      "سنترم - CENTRUM"
+                                                  ? "images/" +
+                                                      "CENTRUM - سنترم" +
+                                                      ".png"
+                                                  : medName.text ==
+                                                          "بانادول - PANADOL"
+                                                      // "PANADOL"
+                                                      ? "images/" +
+                                                          "بانادول ادفانس - PANADOL" +
+                                                          ".png"
+                                                      : medName.text ==
+                                                              "فيدروب - VIDROP"
+                                                          ? "images/" +
+                                                              "VIDROP" +
+                                                              ".png"
+                                                          : "images/" +
+                                                              "no" +
+                                                              ".png"),
+                                    });
+
+                                    updateDose(doses);
+                                    updateDoseEdit(dosesEdit);
+
+                                    print("Med updated");
+
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Navigation()));
+                                  }
+                                              
+                                              
+                                              },
+                                              child: Text(
+                                                "نعم",
+                                                style: GoogleFonts.tajawal(),
+                                              ),
+                                            ),
+                                          ],
+                                          content: Text(
+                                         "تبقى لديك مسبقًا من الدواء " + remaining + " " + strength + "، " + "هل أنت متأكد من رغبتك في حذف الكمية المتبقية واستبدالها بحجم العبوة الذي قمت بإدخاله؟",
+
+                                            style: GoogleFonts.tajawal(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            textAlign: TextAlign.right,
+                                          )));
+
+
+
+                                }
+
+                                else {
                                   print((oldname + caregiverID).toString());
                                   print("test 111");
                                   if (_formKey.currentState!.validate()) {
                                     _firestore
                                         .collection('medicines')
-                                        .doc(widget.medID)//new code
+                                        .doc(widget.medID) //new code
                                         // .doc('testtestFAmv3c30ydRn7PkA2jbL9SBXPOp1')
                                         .update({
                                       //  'Generic name': genericName,

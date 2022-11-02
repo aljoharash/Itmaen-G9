@@ -45,6 +45,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
     var package;
     var remaining ;
   final nameController = TextEditingController();
+  final unitController = TextEditingController();
   final hoursController = TextEditingController();
   final pillAmountController = TextEditingController();
   final TextEditingController description = new TextEditingController();
@@ -107,6 +108,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     nameController.text = toBeTransformed[0];
+    unitController.text = toBeTransformed[3];
 
     //  selectType = toBeTransformed[2];
 
@@ -181,6 +183,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                   Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: TextField(
+                      maxLength: 40,
                       inputFormatters: [
                         new LengthLimitingTextInputFormatter(40),
                       ],
@@ -207,37 +210,40 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                   ),
                   Row(
                     children: [
-                      Expanded(
+                     Expanded(
                           child: Container(
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        margin: EdgeInsets.only(left: 15),
-                        decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                side: BorderSide(
-                                    width: dropDownwidth,
-                                    color: onClickDropDown))),
-                        child: DropdownButton<String>(
-                          isExpanded: true,
-                          items: list.map(buildMenuItem).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              selectType = value;
-
-                              dropDownwidth = 2;
-                              onClickDropDown =
-                                  Color.fromARGB(79, 255, 255, 255);
-                            });
-                          },
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          value: selectType,
-                        ),
+                        padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                        margin: EdgeInsets.only(left: 3),
+                        // decoration: ShapeDecoration(
+                        //     shape: RoundedRectangleBorder(
+                        //         borderRadius:
+                        //             BorderRadius.all(Radius.circular(10)),
+                        //         side: BorderSide(
+                        //             width: dropDownwidth,
+                        //             color: onClickDropDown))),
+                        child: TextField(
+                            readOnly: true,
+                            controller: unitController,
+                            textAlign: TextAlign.right,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 239, 237, 237),
+                              hintText: "الوحدة",
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 236, 231, 231),
+                                      width: 3)),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: new BorderSide(
+                                    color: Color.fromARGB(79, 255, 255, 255)),
+                                borderRadius: new BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
                       )),
                       Expanded(
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                           child: TextField(
                             onSubmitted: (value) {
                               SnackBar error = SnackBar(
@@ -587,7 +593,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 8, 5, 8),
+                        padding: const EdgeInsets.fromLTRB(0, 8, 12, 8),
                         child: Text(
                           ":تاريخ أخذ أول جرعة",
                           textAlign: TextAlign.right,
@@ -660,7 +666,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 8, 5, 8),
+                        padding: const EdgeInsets.fromLTRB(0, 8, 12, 8),
                         child: Text(
                           ":وقت أخذ أول جرعة في اليوم",
                           textAlign: TextAlign.right,
@@ -845,7 +851,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                       //  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 8, 5, 8),
+                          padding: const EdgeInsets.fromLTRB(0, 8, 12, 8),
                           child: Text(
                             ":موعد أخذ الجرعة",
                             textAlign: TextAlign.right,
@@ -1056,7 +1062,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
         'selectedDescription': _groupValue,
         'description': description.text,
         'amount': pillAmountController.text,
-        'unit': selectType,
+        'unit': unitController.text,
         'days': sliderValue.toString(),
         'freqPerDay': sliderValue2.toString(),
         'hoursBetweenDoses': every_hours,
@@ -1105,7 +1111,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                     : newTime.format(context),
 
             'amount': pillAmountController.text,
-            'unit': selectType,
+            'unit': unitController.text,
             'days': sliderValue.toString(),
             'name': nameController.text,
             //'type': medType,

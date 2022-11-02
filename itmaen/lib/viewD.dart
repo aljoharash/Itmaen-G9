@@ -424,7 +424,8 @@ class _ViewDPageState extends State<ViewD> {
                                   .format(DateTime.now());
 
                               for (var med in medicines!) {
-                       
+                                final package = med.get('Package size');
+                                final remaining = med.get('Remaining Package');
                                 //final medName = med.data();
 
                                 final medDate = med.get('Date');
@@ -451,8 +452,6 @@ class _ViewDPageState extends State<ViewD> {
                                   final m = med.get('Time');
 
                                   final picture = med.get('picture');
-
-                                
 
                                   bool send = true;
 
@@ -485,17 +484,15 @@ class _ViewDPageState extends State<ViewD> {
 
                                   print('herree');
 
-                                  
-
                                   if (format == format2 && send == false) {
                                     nv.sendNotificationchecked2(
                                         ' جرعة ${medName} ');
                                   }
 
-                                
-
                                   final MedBubble = medBubble(
                                       medName,
+                                      package,
+                                      remaining,
                                       checked,
                                       caregiverID,
                                       doc,
@@ -606,10 +603,9 @@ class _ViewDPageState extends State<ViewD> {
                                   .format(DateTime.now());
 
                               for (var med in medicines!) {
+                                final package = med.get('Package size');
+                                final remaining = med.get('Remaining Package');
 
-                                  final package = med.get('Package size');
-                                  final remaining = med.get('Remaining Package');
-                                
                                 final medDate = med.get('Date');
 
                                 if (x == medDate) {
@@ -648,10 +644,10 @@ class _ViewDPageState extends State<ViewD> {
                                   var x = DateTime.now();
 
                                   String format =
-                                      DateFormat('yyy-MM-dd - kk:mm').format(x);
+                                      DateFormat('yyy-MM-dd - HH:mm:ss').format(x);
 
                                   String format2 =
-                                      DateFormat('yyy-MM-dd - kk:mm')
+                                      DateFormat('yyy-MM-dd - HH:mm:ss')
                                           .format(timechecked.toDate());
 
                                   //  print(format);
@@ -666,9 +662,9 @@ class _ViewDPageState extends State<ViewD> {
 
                                   print('herree');
 
-                                     if (format == format2 && double.parse(remaining) ==
-                                          (double.parse(package) / 4))
-                                       {
+                                  if (format == format2 &&
+                                      double.parse(remaining) ==
+                                          (double.parse(package) / 4)) {
                                     nv.sendNotificationPackage(
                                       medName,
                                     );
@@ -681,6 +677,8 @@ class _ViewDPageState extends State<ViewD> {
 
                                   final MedBubble = medBubble(
                                       medName,
+                                      package,
+                                      remaining,
                                       checked,
                                       caregiverID,
                                       doc,
@@ -742,6 +740,8 @@ class medBubble extends StatefulWidget {
 
   medBubble(
       this.medicName,
+      this.package,
+      this.remaining,
       this.checked,
       this.ID,
       this.doc,
@@ -760,6 +760,10 @@ class medBubble extends StatefulWidget {
   // اي الله يدضر عليك
 
   var medicName;
+
+  var package;
+
+  var remaining;
 
   var checked;
 
@@ -888,6 +892,47 @@ class _medBubbleState extends State<medBubble> {
       },
     );
   }
+
+Future<void> packageDialog(String? x) async {
+    return showDialog<void>(
+      context: context,
+
+      barrierDismissible: false, // user must tap button!
+
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(
+                    child: Text(
+                  "لقد نفذت كمية الدواء، قم بتجديده حتى يتمكن مستقبل رعايتك من أخذ الجرعة",
+                   textAlign: TextAlign.center,
+                      style: GoogleFonts.tajawal(
+                          fontSize: 18,
+                          color:  Color.fromARGB(255, 212, 17, 17),
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+          actions: <Widget>[
+            TextButton(
+              child: Directionality(
+                textDirection: ui.TextDirection.rtl,
+                child: Text('حسنا',
+                    style: GoogleFonts.tajawal(
+                        fontSize: 18,
+                        color: ui.Color.fromARGB(255, 24, 25, 25),
+                        fontWeight: FontWeight.bold)),
+              ),
+              onPressed: () {
+                //Navigator.of(context).pop();
+
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -1248,18 +1293,31 @@ class _medBubbleState extends State<medBubble> {
 
               //  textDirection: ui.TextDirection.rtl,
 
-              TextButton(
-                child: Text('ليس بعد',
-                    style: GoogleFonts.tajawal(
-                        fontSize: 18,
-                        color: ui.Color.fromARGB(255, 24, 25, 25),
-                        fontWeight: FontWeight.bold)),
-                onPressed: () {
-                  //Navigator.of(context).pop();
+              double.parse(widget.remaining) <= 0
+                  ? TextButton(
+                      child: Text('لا',
+                          style: GoogleFonts.tajawal(
+                              fontSize: 18,
+                              color: ui.Color.fromARGB(255, 24, 25, 25),
+                              fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        //Navigator.of(context).pop();
 
-                  Navigator.of(context).pop();
-                },
-              ),
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  : TextButton(
+                      child: Text('ليس بعد',
+                          style: GoogleFonts.tajawal(
+                              fontSize: 18,
+                              color: ui.Color.fromARGB(255, 24, 25, 25),
+                              fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        //Navigator.of(context).pop();
+
+                        Navigator.of(context).pop();
+                      },
+                    ),
 
               //  ),
 
@@ -1281,33 +1339,6 @@ class _medBubbleState extends State<medBubble> {
                   onPressed: widget.checked
                       ? null
                       : () async {
-                          FirebaseFirestore.instance
-                              .collection('doses')
-                              .doc(widget.doc)
-                              .update({'cheked': true});
-
-                         // if (widget.send) {
-                            // if edited by the patient
-
-                            FirebaseFirestore.instance
-                                .collection('doses')
-                                .doc(widget.doc)
-                                .update({'Timecheked': DateTime.now()});
-                        //  }
-
-                          var medicineSnapShot = FirebaseFirestore.instance
-                              .collection("medicines")
-                              .where('caregiverID', isEqualTo: widget.ID)
-                              .where('Trade name', isEqualTo: widget.medicName)
-                              .get()
-                              .then((value) {
-                            var packSize = double.parse(
-                                    value.docs[0].get('Remaining Package')) -
-                                double.parse(widget.MedAmount);
-                            value.docs[0].reference.update(
-                                {'Remaining Package': packSize.toString()});
-                          });
-
                           var collection =
                               FirebaseFirestore.instance.collection('doses');
                           var snapshot = await collection
@@ -1322,36 +1353,61 @@ class _medBubbleState extends State<medBubble> {
                                 {'Remaining Package': packSize.toString()});
                           }
 
-                          
+                          FirebaseFirestore.instance
+                              .collection('doses')
+                              .doc(widget.doc)
+                              .update({'cheked': true});
 
-                          if (diff == 0) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                    ' "تم أخذ الجرعة على الموعد تماما " ',
-                                    style: TextStyle(fontSize: 18),
-                                    textAlign: TextAlign.right),
-                              ),
-                            );
-                          } else if (diff > 0) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                    ' " تم أخذ الجرعة قبل الموعد ب ${diff.abs()} دقائق" ',
-                                    style: TextStyle(fontSize: 18),
-                                    textAlign: TextAlign.right),
-                              ),
-                            );
-                          } else if (diff < 0) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                    ' " تم أخذ الجرعة بعد الموعد ب ${diff.abs()} دقائق" ',
-                                    style: TextStyle(fontSize: 18),
-                                    textAlign: TextAlign.right),
-                              ),
-                            );
-                          }
+                          // if (widget.send) {
+                          // if edited by the patient
+
+                          FirebaseFirestore.instance
+                              .collection('doses')
+                              .doc(widget.doc)
+                              .update({'Timecheked': DateTime.now()});
+                          //  }
+
+                          var medicineSnapShot = FirebaseFirestore.instance
+                              .collection("medicines")
+                              .where('caregiverID', isEqualTo: widget.ID)
+                              .where('Trade name', isEqualTo: widget.medicName)
+                              .get()
+                              .then((value) {
+                            var packSize = double.parse(
+                                    value.docs[0].get('Remaining Package')) -
+                                double.parse(widget.MedAmount);
+                            value.docs[0].reference.update(
+                                {'Remaining Package': packSize.toString()});
+                          });
+
+                          // if (diff == 0) {
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //     const SnackBar(
+                          //       content: Text(
+                          //           ' "تم أخذ الجرعة على الموعد تماما " ',
+                          //           style: TextStyle(fontSize: 18),
+                          //           textAlign: TextAlign.right),
+                          //     ),
+                          //   );
+                          // } else if (diff > 0) {
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //     SnackBar(
+                          //       content: Text(
+                          //           ' " تم أخذ الجرعة قبل الموعد ب ${diff.abs()} دقائق" ',
+                          //           style: TextStyle(fontSize: 18),
+                          //           textAlign: TextAlign.right),
+                          //     ),
+                          //   );
+                          // } else if (diff < 0) {
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //     SnackBar(
+                          //       content: Text(
+                          //           ' " تم أخذ الجرعة بعد الموعد ب ${diff.abs()} دقائق" ',
+                          //           style: TextStyle(fontSize: 18),
+                          //           textAlign: TextAlign.right),
+                          //     ),
+                          //   );
+                          // }
 
                           Navigator.of(context).pop();
                         }),
@@ -1455,10 +1511,14 @@ class _medBubbleState extends State<medBubble> {
                                               ? () {
                                                   dialog(widget.medicName);
                                                 }
-                                              : () {
-                                                  _showMyDialog(
-                                                      widget.medicName);
-                                                },
+                                              : double.parse(widget.remaining) <= 0
+                                                  ? () {
+                                                      packageDialog(widget.medicName);
+                                                  }
+                                                  : () {
+                                                      _showMyDialog(
+                                                          widget.medicName);
+                                                    },
                                           color: ui.Color.fromARGB(
                                               255, 218, 239, 251),
                                           textColor: Colors.white,

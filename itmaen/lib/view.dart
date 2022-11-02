@@ -456,7 +456,8 @@ class medBubble extends StatelessWidget {
                                                   toBeTransformed: [
                                                     medicName,
                                                     package,
-                                                    remaining
+                                                    remaining,
+                                                    strength
                                                   ],
                                                 ),
                                               ));
@@ -507,6 +508,7 @@ class medBubble extends StatelessWidget {
                                         name: medicName,
                                         description: meddescription,
                                         package: package,
+                                        remaining: remaining,
                                         strength: strength,
                                         medID: medID,
                                       )));
