@@ -141,7 +141,7 @@ class _editNoteState extends State<editNote> {
       imageQuality: 90,
     );
 
-    Reference ref = FirebaseStorage.instance.ref().child("notes/notepic.jpg");
+    Reference ref = FirebaseStorage.instance.ref().child("notes/${title.text + caregiverID}.jpg");
 
     if (image != null) {
       await ref.putFile(File(image.path));
