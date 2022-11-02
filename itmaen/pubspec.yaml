@@ -75,7 +75,8 @@ dependencies:
   flutter_datetime_picker: ^1.5.1
   audioplayers: ^1.1.1
   workmanager: ^0.5.0
-  
+  image_picker: ^0.8.6
+
   flutter_phone_direct_caller: ^2.1.1
   # category_picker: ^1.0.1
   

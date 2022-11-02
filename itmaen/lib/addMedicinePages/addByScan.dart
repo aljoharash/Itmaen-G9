@@ -396,6 +396,7 @@ class addByScan extends StatelessWidget {
                                     'Volume': volume,
                                     'Unit of volume': doseUnit.text,
                                     'Package size': packSize.text,
+                                    'Remaining Package': packSize.text,
                                     'barcode': barcode,
                                     'description': descriptionControl.text,
                                     'caregiverID': loggedInUser!.uid,

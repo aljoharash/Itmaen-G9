@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:itmaen/Notes/HomeScreen.dart';
 import 'package:itmaen/addMedicinePages/adddialog.dart';
 import 'package:itmaen/callP.dart';
 import 'package:itmaen/generateqr.dart';
@@ -13,6 +14,7 @@ import 'package:itmaen/setting.dart';
 import 'package:itmaen/view.dart';
 import 'package:itmaen/viewD.dart';
 //import 'package:';
+import 'Notes/addNotes.dart';
 import 'add-patient.dart';
 import 'alert_dialog.dart';
 import 'calendar/test22/newCalendar.dart';
@@ -38,6 +40,13 @@ class Navigation extends StatefulWidget {
     Noti.showBigTextNotification(
         title: "تم أخذ الجرعة",
         body: "اطمئن، قام مستقبل رعايتك بأخذ ${mediName}",
+        fln: flutterLocalNotificationsPlugin);
+  }
+
+  void sendNotificationPackage(String mediName ) async {
+    Noti.showBigTextNotification(
+        title: "دواء على وشك الانتهاء",
+        body: "قارب دواء ${mediName} على الانتهاء، قم بتجديده",
         fln: flutterLocalNotificationsPlugin);
   }
 
@@ -157,7 +166,12 @@ class _NavigationState extends State<Navigation> {
         case 2:
           return LoadDataFromFireStoree();
           break;
+
         case 3:
+          return HomeScreen();
+          break;
+
+        case 4:
           return ViewD();
           break;
 
@@ -262,6 +276,10 @@ class _NavigationState extends State<Navigation> {
           ),
           Icon(
             Icons.calendar_month,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.assignment,
             color: Colors.white,
           ),
           Icon(
