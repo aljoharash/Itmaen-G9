@@ -345,7 +345,7 @@ class PatientCalendar_ extends State<PatientCalendar> {
                                   },
                                   icon: FaIcon(FontAwesomeIcons.pills),
                                   label: Text(
-                                    'قائمة الأدوية',
+                                    'قائمة الجرعات اليومية',
                                     style: GoogleFonts.tajawal(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
