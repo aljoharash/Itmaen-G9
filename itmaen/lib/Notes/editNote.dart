@@ -11,10 +11,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:ui' as ui;
 
 class editNote extends StatefulWidget {
-   QueryDocumentSnapshot doc;
-   editNote(
-      {Key? key, required this.doc})
-      : super(key: key);
+  QueryDocumentSnapshot doc;
+  editNote({Key? key, required this.doc}) : super(key: key);
 
   @override
   State<editNote> createState() => _editNoteState();
@@ -143,60 +141,53 @@ class _editNoteState extends State<editNote> {
       imageQuality: 90,
     );
 
-    Reference ref = FirebaseStorage.instance
-        .ref().child("notes/notepic.jpg");
+    Reference ref = FirebaseStorage.instance.ref().child("notes/notepic.jpg");
 
-      if(image != null){
+    if (image != null) {
       await ref.putFile(File(image.path));
-      }
+    }
 
     ref.getDownloadURL().then((value) async {
       setState(() {
-       notesPicLink = value;
+        notesPicLink = value;
       });
     });
   }
 
-  Widget getWidget(){
-
-    if(widget.doc['photo'] == " "  && notesPicLink == " "){
-    return Text(
-    "لم يتم تحميل اي صورة",
-    style: GoogleFonts.tajawal(
-    fontWeight: FontWeight.bold,
-    fontSize: 20, 
-    ),
-    textAlign: TextAlign.center,
-    ) ;
-    } else{
+  Widget getWidget() {
+    if (widget.doc['photo'] == " " && notesPicLink == " ") {
+      return Text(
+        "لم يتم تحميل اي صورة",
+        style: GoogleFonts.tajawal(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+        textAlign: TextAlign.center,
+      );
+    } else {
       return ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: notesPicLink == " "? Image.network(widget.doc['photo'])
-        : Image.network(notesPicLink)
-        );
+          borderRadius: BorderRadius.circular(20),
+          child: notesPicLink == " "
+              ? Image.network(widget.doc['photo'])
+              : Image.network(notesPicLink));
     }
-                            
   }
 
-  Widget getWidget2(){
-
-    if(widget.doc['photo'] == " "  && notesPicLink == " "){
-    return const Icon(
-     Icons.photo,
-     color: Color.fromARGB(255, 84, 84, 84),
-     size: 60,
-     ) ;
-    } else{
+  Widget getWidget2() {
+    if (widget.doc['photo'] == " " && notesPicLink == " ") {
+      return const Icon(
+        Icons.photo,
+        color: Color.fromARGB(255, 84, 84, 84),
+        size: 60,
+      );
+    } else {
       return ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: notesPicLink == " "? Image.network(widget.doc['photo'])
-        : Image.network(notesPicLink)
-        );
+          borderRadius: BorderRadius.circular(20),
+          child: notesPicLink == " "
+              ? Image.network(widget.doc['photo'])
+              : Image.network(notesPicLink));
     }
-                            
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -229,67 +220,63 @@ class _editNoteState extends State<editNote> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                             GestureDetector(
-              onTap: () {
-                showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                  actions: [
-                                    Container(
-                                      width: 400,
-                                      height: 400,
-                                      child: getWidget()
-
-                                    )
-                          ]));
-                
-              },
-              child: Container(
-                margin: const EdgeInsets.only(top: 80, bottom: 24),
-                height: 100,
-                width: 100,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: primary,
-                ),
-                child:Stack(
-               children: [
-             Center(
-                  child: getWidget2()
-                ),
-                Align(
-               alignment: Alignment.bottomRight,
-              child: CircleAvatar(
-             //radius: 20,
-            backgroundColor: Color.fromARGB(255, 140, 167, 190),
-            child: ElevatedButton(
-              child: Icon(
-                Icons.add_a_photo,
-                color: Colors.white,
-                size: 20,) ,
-              onPressed:(){
-                pickUploadNotePic();
-              },
-          style: ElevatedButton.styleFrom(
-          shape: CircleBorder(),
-          padding: EdgeInsets.all(5),
-          //backgroundColor: Color.fromARGB(255, 140, 167, 190),
-          primary: Color.fromARGB(255, 140, 167, 190),
-          surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
-        ),
-              )
-             ),
-             ),
-               ] 
-                ),
-              ),
-            ),
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(actions: [
+                                          Container(
+                                              width: 400,
+                                              height: 400,
+                                              child: getWidget())
+                                        ]));
+                              },
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.only(top: 80, bottom: 24),
+                                height: 100,
+                                width: 100,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: primary,
+                                ),
+                                child: Stack(children: [
+                                  Center(child: getWidget2()),
+                                  Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: CircleAvatar(
+                                        //radius: 20,
+                                        backgroundColor:
+                                            Color.fromARGB(255, 140, 167, 190),
+                                        child: ElevatedButton(
+                                          child: Icon(
+                                            Icons.add_a_photo,
+                                            color: Colors.white,
+                                            size: 20,
+                                          ),
+                                          onPressed: () {
+                                            pickUploadNotePic();
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            shape: CircleBorder(),
+                                            padding: EdgeInsets.all(5),
+                                            //backgroundColor: Color.fromARGB(255, 140, 167, 190),
+                                            primary: Color.fromARGB(
+                                                255, 140, 167, 190),
+                                            surfaceTintColor: Color.fromARGB(
+                                                255, 84, 106, 125),
+                                          ),
+                                        )),
+                                  ),
+                                ]),
+                              ),
+                            ),
                             TextFormField(
                               controller: title,
                               textAlign: TextAlign.right,
-                              validator: (value){
-                                 if (value == null || value.isEmpty)
+                              validator: (value) {
+                                if (value == null || value.isEmpty)
                                   return 'الرجاء ادخال عنوان الملاحظة';
                                 String pattern =
                                     r'^(?=.{2,30}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
@@ -298,7 +285,8 @@ class _editNoteState extends State<editNote> {
                                   return 'يجب أن يحتوي العنوان من حرف واحد إلى 30 حرف وأن يكون خالي من الرموز';
                                 return null;
                               },
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
@@ -328,7 +316,7 @@ class _editNoteState extends State<editNote> {
                               minLines: 9,
                               maxLines: 14,
                               controller: note,
-                              validator: (value){
+                              validator: (value) {
                                 if (value == null || value.isEmpty)
                                   return 'الرجاء ادخال الملاحظة';
                                 String pattern =
@@ -338,7 +326,8 @@ class _editNoteState extends State<editNote> {
                                   return 'يجب أن لا تحتوي الملاحظة على مسافات فارغة';
                                 return null;
                               },
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,
@@ -474,7 +463,9 @@ class _editNoteState extends State<editNote> {
                                           .toString()
                                           .substring(6, 16)),
                                       'type': selectType,
-                                      'photo': widget.doc['photo'] == " "? notesPicLink : widget.doc['photo'],
+                                      'photo': widget.doc['photo'] == " "
+                                          ? notesPicLink
+                                          : widget.doc['photo'],
                                     });
 
                                     print("Note updated");

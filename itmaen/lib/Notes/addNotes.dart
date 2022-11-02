@@ -85,7 +85,7 @@ class _addNoteState extends State<addNote> {
   String notesPicLink = " ";
   Color primary = Color.fromARGB(251, 193, 193, 193);
 
-    void pickUploadNotePic() async {
+  void pickUploadNotePic() async {
     final image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       maxHeight: 512,
@@ -93,20 +93,18 @@ class _addNoteState extends State<addNote> {
       imageQuality: 90,
     );
 
-    Reference ref = FirebaseStorage.instance
-        .ref().child("notes/notepic.jpg");
+    Reference ref = FirebaseStorage.instance.ref().child("notes/notepic.jpg");
 
-      if(image != null){
+    if (image != null) {
       await ref.putFile(File(image.path));
-      }
+    }
 
     ref.getDownloadURL().then((value) async {
       setState(() {
-       notesPicLink = value;
+        notesPicLink = value;
       });
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -140,36 +138,40 @@ class _addNoteState extends State<addNote> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             GestureDetector(
-              onTap: () {
-                pickUploadNotePic();
-              },
-              child: Container(
-                margin: const EdgeInsets.only(top: 80, bottom: 24),
-                height: 100,
-                width: 100,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: primary,
-                ),
-                child: Center(
-                  child: notesPicLink == " " ? const Icon(
-                    Icons.add_a_photo,
-                    color: Color.fromARGB(255, 84, 84, 84),
-                    size: 60,
-                  ) : ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.network(notesPicLink),
-                  ),
-                ),
-              ),
-            ),
-
+                              onTap: () {
+                                pickUploadNotePic();
+                              },
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.only(top: 80, bottom: 24),
+                                height: 100,
+                                width: 100,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: primary,
+                                ),
+                                child: Center(
+                                  child: notesPicLink == " "
+                                      ? const Icon(
+                                          Icons.add_a_photo,
+                                          color:
+                                              Color.fromARGB(255, 84, 84, 84),
+                                          size: 60,
+                                        )
+                                      : ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Image.network(notesPicLink),
+                                        ),
+                                ),
+                              ),
+                            ),
                             TextFormField(
                               controller: title,
                               textAlign: TextAlign.right,
-                              validator: (value){
-                                if (value == null || value.isEmpty)
+                              validator: (value) {
+                                 if (value == null || value.isEmpty)
                                   return 'الرجاء ادخال عنوان الملاحظة';
                                 String pattern =
                                     r'^(?=.{2,30}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
@@ -178,7 +180,8 @@ class _addNoteState extends State<addNote> {
                                   return 'يجب أن يحتوي العنوان من حرف واحد إلى 30 حرف وأن يكون خالي من الرموز';
                                 return null;
                               },
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 239, 237, 237),
@@ -208,7 +211,7 @@ class _addNoteState extends State<addNote> {
                               minLines: 9,
                               maxLines: 14,
                               controller: note,
-                              validator: (value){
+                              validator: (value) {
                                 if (value == null || value.isEmpty)
                                   return 'الرجاء ادخال الملاحظة';
                                   String pattern =
@@ -218,7 +221,8 @@ class _addNoteState extends State<addNote> {
                                   return 'يجب أن لا تحتوي الملاحظة على مسافات فارغة';
                                 return null;
                               },
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 filled: true,

@@ -43,7 +43,7 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                 overflow: TextOverflow.ellipsis,
               ),
               SizedBox(
-                height: 50,
+                height: 40,
               ),
               Builder(
                 builder: (context) => Row(children: [
@@ -106,17 +106,17 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                     },
                   ),
                   SizedBox(
-                    width: 60,
+                    width: 40,
                   ),
-                    Container(
-                      height: 40,
-                      width: 40,                      
-                    child: doc['photo'] == " " ? SizedBox()
-                    : ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(doc['photo']),
-                  ),
-
+                  Container(
+                    height: 40,
+                    width: 40,
+                    child: doc['photo'] == " "
+                        ? SizedBox()
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(doc['photo']),
+                          ),
                   )
                 ]),
               ),
