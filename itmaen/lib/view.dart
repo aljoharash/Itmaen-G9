@@ -164,145 +164,104 @@ class _ViewPageState extends State<View> {
     }
 
     var data;
-    return SafeArea(
-      top: false,
-      child: Directionality(
-        textDirection: ui.TextDirection.rtl,
-        child: Scaffold(
-          drawer: NavBar(),
-          appBar: AppBar(
-            // automaticallyImplyLeading: false,
-            backgroundColor: Color.fromARGB(255, 140, 167, 190),
-            title: Text("قائمة الأدوية",
-                style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
-          ),
-          floatingActionButton: ElevatedButton(
-            onPressed: () {
-              showAddDialog();
-            },
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: SafeArea(
+        top: false,
+        child: Directionality(
+          textDirection: ui.TextDirection.rtl,
+          child: Scaffold(
+            drawer: NavBar(),
+            appBar: AppBar(
+              // automaticallyImplyLeading: false,
+              backgroundColor: Color.fromARGB(255, 140, 167, 190),
+              title: Text("قائمة الأدوية",
+                  style: GoogleFonts.tajawal(fontWeight: FontWeight.bold)),
             ),
-            style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-              padding: EdgeInsets.all(15),
-              //backgroundColor: Color.fromARGB(255, 140, 167, 190),
-              primary: Color.fromARGB(255, 140, 167, 190),
-              surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
+            floatingActionButton: ElevatedButton(
+              onPressed: () {
+                showAddDialog();
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              style: ElevatedButton.styleFrom(
+                shape: CircleBorder(),
+                padding: EdgeInsets.all(15),
+                //backgroundColor: Color.fromARGB(255, 140, 167, 190),
+                primary: Color.fromARGB(255, 140, 167, 190),
+                surfaceTintColor: Color.fromARGB(255, 84, 106, 125),
+              ),
             ),
-          ),
-          body: FutureBuilder(
-            builder: (ctx, snapshot) {
-              // Checking if future is resolved or not
-              if (snapshot.connectionState == ConnectionState.done) {
-                // If we got an error
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text(
-                      '${snapshot.error} occurred',
-                      style: TextStyle(fontSize: 18),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: double.maxFinite,
+                  height: 60,
+                  margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                  padding: EdgeInsets.only(left: 5, right: 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.grey.shade200,
+                  ),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: TextField(
+                      decoration: InputDecoration(
+                          hintText: "اسم الدواء",
+                          filled: true,
+                          fillColor: Colors.grey.shade200,
+                          // enabledBorder: OutlineInputBorder(
+                          //   borderSide: BorderSide( width:3 , color:Color.fromARGB(255, 140, 167, 190)),
+                          //   borderRadius: BorderRadius.circular(50)
+                          // ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2.0, color: Color.fromARGB(255, 140, 167, 190)),
+                          ),
+                          icon: Icon(
+                            Icons.search,
+                            size: 30,
+                            color: Color.fromARGB(255, 140, 167, 190),
+                          ),
+                          contentPadding: EdgeInsets.only(right: 3)),
+                      onChanged: (value) async {
+                        search(value);
+                        // CustomersController.search(value.trim());
+                      },
                     ),
-                  );
-
-                  // if we got our data
-                } else if (snapshot.hasData) {
-                  // Extracting data from snapshot object
-                  data = snapshot.data as bool;
-                  if (data == true) {
-                    return SafeArea(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        StreamBuilder(
-                            stream: FirebaseFirestore.instance
-                                .collection('medicines')
-                                .where('caregiverID', isEqualTo: id_)
-                                .snapshots(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (!snapshot.hasData) {
-                                return Text("");
-                              } //else {
-                              final medicines = snapshot.data?.docs;
-                              List<medBubble> medBubbles = [];
-                              for (var med in medicines!) {
-                                //final medName = med.data();
-                                final medName = med.get('Trade name');
-                                final meddescription = med.get('description');
-                                final package = med.get('Package size');
-                                final picture = med.get('picture');
-                                final strength = med.get('Unit of volume');
-                                //final unit = med.get('Unit of volume');
-                                final MedBubble = medBubble(medName,
-                                    meddescription, package, picture, strength);
-                                medBubbles.add(MedBubble);
-                              }
-                              return Expanded(
-                                child: ListView(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 20),
-                                  children: medBubbles,
-                                ),
-                              );
-                              // }
-                            }),
-                      ],
-                    ));
-                  } else {
-                    return SafeArea(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        StreamBuilder(
-                            stream: FirebaseFirestore.instance
-                                .collection('medicines')
-                                .where('caregiverID', isEqualTo: cid_)
-                                .snapshots(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (!snapshot.hasData) {
-                                return Text("");
-                              } //else {
-                              final medicines = snapshot.data?.docs;
-                              List<medBubble> medBubbles = [];
-                              for (var med in medicines!) {
-                                //final medName = med.data();
-                                final medName = med.get('Trade name');
-                                final meddescription = med.get('description');
-                                final package = med.get('Package size');
-                                final picture = med.get('picture');
-                                final strength = med.get('Unit of volume');
-                                //final unit = med.get('Unit of volume');
-                                final MedBubble = medBubble(medName,
-                                    meddescription, package, picture, strength);
-                                medBubbles.add(MedBubble);
-                              }
-                              return Expanded(
-                                child: ListView(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 20),
-                                  children: medBubbles,
-                                ),
-                              );
-                              // }
-                            }),
-                      ],
-                    ));
-                  }
-                }
-              }
-
-              // Displaying LoadingSpinner to indicate waiting state
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-            // Future that needs to be resolved
-            // inorder to display something on the Canvas
-            future: getCurrentUser(),
+                  ),
+                ),
+                Expanded(
+                  // height: 170,
+                  child: isLoading == true
+                      ? Center(
+                          child: CircularProgressIndicator(color: Colors.blue),
+                        )
+                      : ListView.builder(
+                          // scrollDirection: Axis.vertical,
+                          // shrinkWrap: true,
+                          itemCount: medicineList.length,
+                          itemBuilder: (context, index) {
+                            return medBubble(
+                                medicineList[index].medicName,
+                                medicineList[index].meddescription,
+                                medicineList[index].package,
+                                medicineList[index].remaining,
+                                medicineList[index].picture,
+                                medicineList[index].strength,
+                                _getMediciens,
+                                cid_,
+                                 medicineList[index].medID);
+                          },
+                        ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -311,8 +270,8 @@ class _ViewPageState extends State<View> {
 }
 
 class medBubble extends StatelessWidget {
-  medBubble(this.medicName, this.meddescription, this.package, this.remaining,
-      this.picture, this.strength, this.refreshList, this.cid, this.medID);
+  medBubble(this.medicName, this.meddescription, this.package, this.remaining, this.picture,
+      this.strength, this.refreshList, this.cid, this.medID);
   Function refreshList;
   var medicName;
   var meddescription;
@@ -500,7 +459,7 @@ class medBubble extends StatelessWidget {
                                                   value: toBeTransformed,
                                                   toBeTransformed: [
                                                     medicName,
-                                                    package,
+                                                      package,
                                                     remaining,
                                                     strength
                                                   ],
@@ -550,13 +509,12 @@ class medBubble extends StatelessWidget {
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => EditMed(
-                                        name: medicName,
-                                        description: meddescription,
-                                        package: package,
-                                        remaining: remaining,
-                                        strength: strength,
-                                        medID: medID,
-                                      )));
+                                      name: medicName,
+                                      description: meddescription,
+                                      package: package,
+                                      remaining: remaining,
+                                      strength: strength,
+                                      medID: medID,)));
                             },
                             child: Icon(
                               Icons.edit,
