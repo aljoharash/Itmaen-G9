@@ -272,7 +272,7 @@ class _NavigationState extends State<Navigation> {
             color: Colors.white,
           ),
           Icon(
-            Icons.notes,
+            Icons.assignment,
             color: Colors.white,
           ),
           Icon(
