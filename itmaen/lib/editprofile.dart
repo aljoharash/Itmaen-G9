@@ -161,8 +161,16 @@ class _editProfile extends State<editProfile> {
             icon: Icon(Icons.arrow_back_ios),
             color: Color.fromARGB(255, 255, 255, 255),
             onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => Navigation()));
+              if (newEmailController.text != widget.email ||
+                  newPasswordController.text != widget.pass ||
+                  username.text != widget.name ||
+                  phoneNum.text != widget.mobile) {
+                print("entered");
+                showAlertDialogg(context);
+              } else {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => Navigation()));
+              }
             },
           ),
         ),
@@ -182,15 +190,10 @@ class _editProfile extends State<editProfile> {
                   SizedBox(
                     height: 180,
                   ),
-                  /* Text(
-                    "مرحبا",
-                    style: GoogleFonts.tajawal(
-                      fontSize: 30,
-                      //fontStyle: FontStyle.italic,
-                      color: Color.fromARGB(255, 122, 164, 186),
-                      fontWeight: FontWeight.bold,
-                    ), 
-                  ),*/
+                  Icon(
+                    Icons.person,
+                    size: 60,
+                  ),
                   SizedBox(
                     height: 19,
                   ),
@@ -405,12 +408,15 @@ class _editProfile extends State<editProfile> {
                           newEmail = newEmailController.text;
                         });
                         changePassword();
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const success(
-                                      title: '',
-                                    )));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              ' تم حفظ التغيرات بنجاح',
+                              textAlign: TextAlign.right,
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                          ),
+                        );
                       }
                       print("goal");
                       print(emailO);
@@ -493,6 +499,52 @@ class _editProfile extends State<editProfile> {
           fontWeight: FontWeight.bold,
         ),
         textAlign: TextAlign.right,
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertDialogg(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text(
+        "لا",
+        style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+      ),
+      onPressed: () {
+        Navigator.pop(context, false);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "نعم ",
+        style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
+        textAlign: TextAlign.right,
+      ),
+      onPressed: () {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => Navigation()));
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(""),
+      content: Text(
+        "هل أنت متأكد من العوده دون حفظ التغيرات ",
+        style: GoogleFonts.tajawal(
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.center,
       ),
       actions: [
         cancelButton,
