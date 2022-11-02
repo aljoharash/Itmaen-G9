@@ -119,7 +119,7 @@ class _addNoteState extends State<addNote> {
           children: <Widget>[
             SimpleDialogOption(
                 padding: const EdgeInsets.all(20),
-                child: const Text('التقاط صوره', textAlign: TextAlign.right),
+                child: const Text('التقاط صورة', textAlign: TextAlign.right),
                 onPressed: () {
                   pickUploadNotePic(ImageSource.camera);
                   Navigator.pop(context);
@@ -378,7 +378,7 @@ class _addNoteState extends State<addNote> {
                                   print("Note added");
 
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => Navigation()));
+                                      builder: (context) => Navigation(data: 1,)));
                                 }
                               },
                               child: Text('إضافة',

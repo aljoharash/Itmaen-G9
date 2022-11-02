@@ -331,12 +331,13 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                         },
                                         child: Text(
                                           "اختيار اللون",
-                                          style: GoogleFonts.tajawal(
+                                          
+                                          style:
+                                    
+                                           TextStyle(
+                                            decoration: TextDecoration.underline,
                                             fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color.fromARGB(
-                                                255, 140, 167, 190),
-                                          ),
+                                           ),
                                         ),
                                       )
                                     ],
@@ -958,7 +959,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      Navigation()));
+                                                      Navigation(data: 1,)));
                                         },
                                         child: Text(
                                           "نعم",
@@ -1167,7 +1168,7 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Navigation()));
+          .push(MaterialPageRoute(builder: (context) => Navigation(data: 1,)));
     } else {
       if ((DateTime.now().toString().substring(0, 10) ==
               setDate.toString().substring(0, 10)) &&

@@ -80,7 +80,7 @@ class _success extends State<success> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Navigation()));
+                          builder: (context) => Navigation(data: 4,)));
                 },
               ),
             ),

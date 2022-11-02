@@ -372,7 +372,7 @@ new FlutterPwValidator(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              Navigation(),
+                                              Navigation(data: 4,),
                                         ),
                                       );
                                     }

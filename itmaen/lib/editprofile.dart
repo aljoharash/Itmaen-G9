@@ -169,7 +169,7 @@ class _editProfile extends State<editProfile> {
                 showAlertDialogg(context);
               } else {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => Navigation()));
+                    MaterialPageRoute(builder: (context) => Navigation(data: 4,)));
               }
             },
           ),
@@ -535,7 +535,7 @@ class _editProfile extends State<editProfile> {
       ),
       onPressed: () {
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => Navigation()));
+            MaterialPageRoute(builder: (context) => Navigation(data: 4,)));
       },
     );
     // set up the AlertDialog

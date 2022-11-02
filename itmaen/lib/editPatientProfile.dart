@@ -88,7 +88,7 @@ class _EditPatientProfile extends State<EditPatientProfile> {
             onPressed: () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => Navigation()),
+                  builder: (context) => Navigation(data: 0,)),
             ),
           ),
           backgroundColor: Color.fromARGB(255, 140, 167, 190),
@@ -274,7 +274,7 @@ class _EditPatientProfile extends State<EditPatientProfile> {
 
                         // FirebaseFirestore.instance.collection('patients').add({'caregiverID': '123'});
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Navigation()));
+                            builder: (context) => Navigation(data: 0,)));
                       }
                       // }
                       else {

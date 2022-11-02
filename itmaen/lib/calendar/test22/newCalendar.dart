@@ -335,11 +335,11 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Navigation()));
+                                                Navigation(data: 4,)));
                                   },
                                   icon: FaIcon(FontAwesomeIcons.pills),
                                   label: Text(
-                                    'قائمة الأدوية',
+                                    'قائمة الجرعات اليومية',
                                     style: GoogleFonts.tajawal(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,

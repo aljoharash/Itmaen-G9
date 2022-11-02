@@ -3,11 +3,12 @@ import 'package:flutter/services.dart' show PlatformException, rootBundle;
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:itmaen/model/medicines.dart';
 import 'package:get/get.dart';
+import 'package:itmaen/addMedicinePages/addByScan.dart';
 
 class addMedicineController extends GetxController {
   String scan = '-1';
   List<medicines> medicinesList = [];
-  List<medicines> scannedMedicine = [];
+  static List<medicines> scannedMedicine = [];
   static bool notFound = true;
 
   /*onInit() {
@@ -36,6 +37,8 @@ class addMedicineController extends GetxController {
   }
 
   Future<void> scanBarcode() async {
+    
+   
     medicinesList = await ReadJsonData() as List<medicines>;
     String barcodeResult;
 
