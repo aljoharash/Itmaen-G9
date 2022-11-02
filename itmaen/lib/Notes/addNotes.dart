@@ -119,7 +119,7 @@ class _addNoteState extends State<addNote> {
           children: <Widget>[
             SimpleDialogOption(
                 padding: const EdgeInsets.all(20),
-                child: const Text('التقاط صوره', textAlign: TextAlign.right),
+                child: const Text('التقاط صورة', textAlign: TextAlign.right),
                 onPressed: () {
                   pickUploadNotePic(ImageSource.camera);
                   Navigator.pop(context);

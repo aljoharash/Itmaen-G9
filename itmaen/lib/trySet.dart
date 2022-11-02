@@ -331,12 +331,13 @@ class _SetDoseState extends State<SetDose> with SingleTickerProviderStateMixin {
                                         },
                                         child: Text(
                                           "اختيار اللون",
-                                          style: GoogleFonts.tajawal(
+                                          
+                                          style:
+                                    
+                                           TextStyle(
+                                            decoration: TextDecoration.underline,
                                             fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color.fromARGB(
-                                                255, 140, 167, 190),
-                                          ),
+                                           ),
                                         ),
                                       )
                                     ],
