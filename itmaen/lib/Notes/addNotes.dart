@@ -85,15 +85,17 @@ class _addNoteState extends State<addNote> {
   String notesPicLink = " ";
   Color primary = Color.fromARGB(251, 193, 193, 193);
 
-  void pickUploadNotePic() async {
+  void pickUploadNotePic(ImageSource source) async {
     final image = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
+      source: source,
       maxHeight: 512,
       maxWidth: 512,
       imageQuality: 90,
     );
 
-    Reference ref = FirebaseStorage.instance.ref().child("notes/${title.text + caregiverID}.jpg");
+    Reference ref = FirebaseStorage.instance
+        .ref()
+        .child("notes/${title.text + caregiverID}.jpg");
 
     if (image != null) {
       await ref.putFile(File(image.path));
@@ -106,6 +108,48 @@ class _addNoteState extends State<addNote> {
     });
   }
 
+  _selectImage(BuildContext parentContext) async {
+    return showDialog(
+      context: parentContext,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16.0))),
+          title: const Text(' صورة  ', textAlign: TextAlign.right),
+          children: <Widget>[
+            SimpleDialogOption(
+                padding: const EdgeInsets.all(20),
+                child: const Text('التقاط صوره', textAlign: TextAlign.right),
+                onPressed: () {
+                  pickUploadNotePic(ImageSource.camera);
+                  Navigator.pop(context);
+                }),
+            SimpleDialogOption(
+                padding: const EdgeInsets.all(20),
+                child: const Text('اختيار صورة من الملفات',
+                    textAlign: TextAlign.right),
+                onPressed: () {
+                  pickUploadNotePic(ImageSource.gallery);
+                  print(pickUploadNotePic.toString());
+                  Navigator.pop(context);
+                }),
+            SimpleDialogOption(
+              padding: const EdgeInsets.all(20),
+              child: const Text(
+                "الغاء",
+                textAlign: TextAlign.right,
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,7 +158,7 @@ class _addNoteState extends State<addNote> {
           backgroundColor: Color.fromARGB(255, 140, 167, 190),
           elevation: 0,
           title: Text(
-            "إضافة مفكرة",
+            "إضافة ملاحظة",
             style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
           ),
         ),
@@ -139,7 +183,7 @@ class _addNoteState extends State<addNote> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                pickUploadNotePic();
+                                _selectImage(context);
                               },
                               child: Container(
                                 margin:
@@ -171,7 +215,7 @@ class _addNoteState extends State<addNote> {
                               controller: title,
                               textAlign: TextAlign.right,
                               validator: (value) {
-                                 if (value == null || value.isEmpty)
+                                if (value == null || value.isEmpty)
                                   return 'الرجاء ادخال عنوان الملاحظة';
                                 String pattern =
                                     r'^(?=.{2,30}$)[\u0621-\u064Aa-zA-Z\d\-_\s]+$';
@@ -214,8 +258,7 @@ class _addNoteState extends State<addNote> {
                               validator: (value) {
                                 if (value == null || value.isEmpty)
                                   return 'الرجاء ادخال الملاحظة';
-                                  String pattern =
-                                    r'[^ ]';
+                                String pattern = r'[^ ]';
                                 RegExp regex = RegExp(pattern);
                                 if (!regex.hasMatch(value.trim()))
                                   return 'يجب أن لا تحتوي الملاحظة على مسافات فارغة';
