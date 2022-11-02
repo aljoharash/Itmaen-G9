@@ -752,6 +752,8 @@ class _ViewDPageState extends State<ViewD> {
  
 
                               for (var med in medicines!) {
+                                final package = med.get('Package size');
+                                final remaining = med.get('Remaining Package');
 
                                 //final medName = med.data();
 
@@ -882,6 +884,8 @@ class _ViewDPageState extends State<ViewD> {
                                   final MedBubble = medBubble(
 
                                       medName,
+                                       package,
+                                      remaining,
 
                                       checked,
 
@@ -1102,6 +1106,8 @@ class _ViewDPageState extends State<ViewD> {
  
 
                               for (var med in medicines!) {
+                                 final package = med.get('Package size');
+                                final remaining = med.get('Remaining Package');
 
                                 final medDate = med.get('Date');
 
@@ -1179,13 +1185,13 @@ class _ViewDPageState extends State<ViewD> {
 
                                   String format =
 
-                                      DateFormat('yyy-MM-dd - kk:mm').format(x);
+                                      DateFormat('yyy-MM-dd - HH:mm:ss').format(x);
 
  
 
                                   String format2 =
 
-                                      DateFormat('yyy-MM-dd - kk:mm')
+                                      DateFormat('yyy-MM-dd - HH:mm:ss')
 
                                           .format(timechecked.toDate());
 
@@ -1201,6 +1207,14 @@ class _ViewDPageState extends State<ViewD> {
 
                                   print('herree');
 
+                                    if (format == format2 &&
+                                      double.parse(remaining) ==
+                                          (double.parse(package) / 4)) {
+                                    nv.sendNotificationPackage(
+                                      medName,
+                                    );
+                                  }
+
                                   if (format == format2 && send == false) {
 
                                     nv.sendNotificationchecked2(
@@ -1214,6 +1228,8 @@ class _ViewDPageState extends State<ViewD> {
                                   final MedBubble = medBubble(
 
                                       medName,
+                                      package,
+                                      remaining,
 
                                       checked,
 
@@ -1336,6 +1352,8 @@ class medBubble extends StatefulWidget {
   medBubble(
 
       this.medicName,
+      this.package,
+      this.remaining,
 
       this.checked,
 
@@ -1367,11 +1385,14 @@ class medBubble extends StatefulWidget {
 
  
 
-  // اي الله يدضر عليك
 
  
 
   var medicName;
+
+  var package;
+
+  var remaining;
 
  
 
@@ -1627,6 +1648,46 @@ class _medBubbleState extends State<medBubble> {
 
     );
 
+  }
+
+  Future<void> packageDialog(String? x) async {
+    return showDialog<void>(
+      context: context,
+
+      barrierDismissible: false, // user must tap button!
+
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(
+                    child: Text(
+                  "لقد نفذت كمية الدواء، قم بتجديده حتى يتمكن مستقبل رعايتك من أخذ الجرعة",
+                   textAlign: TextAlign.center,
+                      style: GoogleFonts.tajawal(
+                          fontSize: 18,
+                          color:  Color.fromARGB(255, 212, 17, 17),
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+          actions: <Widget>[
+            TextButton(
+              child: Directionality(
+                textDirection: ui.TextDirection.rtl,
+                child: Text('حسنا',
+                    style: GoogleFonts.tajawal(
+                        fontSize: 18,
+                        color: ui.Color.fromARGB(255, 24, 25, 25),
+                        fontWeight: FontWeight.bold)),
+              ),
+              onPressed: () {
+                //Navigator.of(context).pop();
+
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
  
@@ -2161,29 +2222,31 @@ class _medBubbleState extends State<medBubble> {
 
  
 
-              TextButton(
+                   double.parse(widget.remaining) <= 0
+                  ? TextButton(
+                      child: Text('لا',
+                          style: GoogleFonts.tajawal(
+                              fontSize: 18,
+                              color: ui.Color.fromARGB(255, 24, 25, 25),
+                              fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        //Navigator.of(context).pop();
 
-                child: Text('ليس بعد',
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  : TextButton(
+                      child: Text('ليس بعد',
+                          style: GoogleFonts.tajawal(
+                              fontSize: 18,
+                              color: ui.Color.fromARGB(255, 24, 25, 25),
+                              fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        //Navigator.of(context).pop();
 
-                    style: GoogleFonts.tajawal(
-
-                        fontSize: 18,
-
-                        color: ui.Color.fromARGB(255, 24, 25, 25),
-
-                        fontWeight: FontWeight.bold)),
-
-                onPressed: () {
-
-                  //Navigator.of(context).pop();
-
- 
-
-                  Navigator.of(context).pop();
-
-                },
-
-              ),
+                        Navigator.of(context).pop();
+                      },
+                    ),
 
  
 
@@ -2222,36 +2285,48 @@ class _medBubbleState extends State<medBubble> {
  
 
                   onPressed: widget.checked
-
-                      ? null
-
-                      : () {
+      ? null
+                      : () async {
+                          var collection =
+                              FirebaseFirestore.instance.collection('doses');
+                          var snapshot = await collection
+                              .where("name", isEqualTo: widget.medicName)
+                              .where("caregiverID", isEqualTo: widget.ID)
+                              .get();
+                          for (var doc in snapshot.docs) {
+                            var packSize =
+                                double.parse(doc.get('Remaining Package')) -
+                                    double.parse(widget.MedAmount);
+                            doc.reference.update(
+                                {'Remaining Package': packSize.toString()});
+                          }
 
                           FirebaseFirestore.instance
-
                               .collection('doses')
-
                               .doc(widget.doc)
-
                               .update({'cheked': true});
 
- 
+                          // if (widget.send) {
+                          // if edited by the patient
 
-                          if (widget.send) {
+                          FirebaseFirestore.instance
+                              .collection('doses')
+                              .doc(widget.doc)
+                              .update({'Timecheked': DateTime.now()});
+                          //  }
 
-                            // if edited by the patient
-
- 
-
-                            FirebaseFirestore.instance
-
-                                .collection('doses')
-
-                                .doc(widget.doc)
-
-                                .update({'Timecheked': DateTime.now()});
-
-                          }
+                          var medicineSnapShot = FirebaseFirestore.instance
+                              .collection("medicines")
+                              .where('caregiverID', isEqualTo: widget.ID)
+                              .where('Trade name', isEqualTo: widget.medicName)
+                              .get()
+                              .then((value) {
+                            var packSize = double.parse(
+                                    value.docs[0].get('Remaining Package')) -
+                                double.parse(widget.MedAmount);
+                            value.docs[0].reference.update(
+                                {'Remaining Package': packSize.toString()});
+                          });
 
  
 
@@ -2511,19 +2586,17 @@ class _medBubbleState extends State<medBubble> {
 
                                           onPressed: widget.checked
 
-                                              ? () {
-
+                                               ? () {
                                                   dialog(widget.medicName);
-
                                                 }
-
-                                              : () {
-
-                                                  _showMyDialog(
-
-                                                      widget.medicName);
-
-                                                },
+                                              : double.parse(widget.remaining) <= 0
+                                                  ? () {
+                                                      packageDialog(widget.medicName);
+                                                  }
+                                                  : () {
+                                                      _showMyDialog(
+                                                          widget.medicName);
+                                                    },
 
                                           color: ui.Color.fromARGB(
 
@@ -2731,22 +2804,7 @@ class _medBubbleState extends State<medBubble> {
 
                                                       widget.audioPlayer);
 
-                                                  //test ok I am testing no
-
-                                                  //your text not what you want to read
-
-                                                  //just check
-
-                                                  //do you have telegram ? yes this is my account
-
-                                                  // https://t.me/DEV847 ok
-
-                                                  // sometimes it pronounce something  else and sometimes it shows me the toast now
-
-                                                  //yes it will wait until the player stop completlly then it will allow you to play another voice
-
-                                                  // the toast works but it pronounce something else
-
+                                                 
                                                   // .then((value) => {
 
                                                   //       widget.audioPlayer

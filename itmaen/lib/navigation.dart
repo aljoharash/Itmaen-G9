@@ -43,6 +43,13 @@ class Navigation extends StatefulWidget {
         fln: flutterLocalNotificationsPlugin);
   }
 
+  void sendNotificationPackage(String mediName ) async {
+    Noti.showBigTextNotification(
+        title: "دواء على وشك الانتهاء",
+        body: "قارب دواء ${mediName} على الانتهاء، قم بتجديده",
+        fln: flutterLocalNotificationsPlugin);
+  }
+
   @override
   State<Navigation> createState() => _NavigationState();
 }
