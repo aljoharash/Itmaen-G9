@@ -354,7 +354,7 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
 
                                 // var i = 0;
 
-                                Navigation nv = Navigation();
+                                Navigation nv = Navigation(data: 3);
 
                                 var x = DateTime.now();
 
@@ -508,7 +508,7 @@ class _ViewNotAllCheckPageState extends State<ViewNotAllCheck> {
 
                                 final timechecked = med.get('Timecheked');
 
-                                Navigation nv = Navigation();
+                                Navigation nv = Navigation(data: 3);
 
                                 var x = DateTime.now();
 
@@ -697,7 +697,7 @@ class _medBubbleState extends State<medBubble> {
 
   var msg = "hh";
 
-  final Navigation nv = new Navigation();
+  final Navigation nv = new Navigation(data: 3);
 
   //bool yarab = false;
 

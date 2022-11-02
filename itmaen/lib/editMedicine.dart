@@ -575,7 +575,7 @@ class _EditMedState extends State<EditMed> {
                                                       Navigator.of(context).push(
                                                           MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  Navigation()));
+                                                                  Navigation(data: 1,)));
                                                     }
                                                   },
                                                   child: Text(
@@ -650,7 +650,7 @@ class _EditMedState extends State<EditMed> {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Navigation()));
+                                                Navigation(data: 1,)));
                                   }
                                 }
                               },

@@ -28,7 +28,9 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 class Navigation extends StatefulWidget {
-  const Navigation({Key? key}) : super(key: key);
+  int data;
+   Navigation({Key? key, required this.data}) : super(key: key);
+
   void sendNotificationchecked(String mediName) async {
     Noti.showBigTextNotification(
         title: "تم أخذ الجرعة",
@@ -51,10 +53,12 @@ class Navigation extends StatefulWidget {
   }
 
   @override
-  State<Navigation> createState() => _NavigationState();
+  State<Navigation> createState() => _NavigationState(this.data);
 }
 
 class _NavigationState extends State<Navigation> {
+  int data;
+  _NavigationState(this.data);
   String title = 'AlertDialog';
   bool tappedYes = false;
   final _auth = FirebaseAuth.instance;
@@ -62,10 +66,13 @@ class _NavigationState extends State<Navigation> {
   //late User loggedInUser;
   Timer? timer;
   late User? loggedInUser = _auth.currentUser;
+  late var _selectedIndex;
 
   @override
   void initState() {
     super.initState();
+  getCurrentUser();
+    _selectedIndex= data;
     getCurrentUser();
     Noti.initialize(flutterLocalNotificationsPlugin);
 
@@ -89,11 +96,13 @@ class _NavigationState extends State<Navigation> {
   }
 
   Future<bool> _isCollectionExits() async {
+    print(caregiverID);
     QuerySnapshot<Map<String, dynamic>> _query = await FirebaseFirestore
         .instance
         .collection('patients')
-        .where("caregiverID", isEqualTo: caregiverID)
+        .where("caregiverID", isEqualTo: loggedInUser!.uid)
         .get();
+        print('hereeeeeeee');
 
     if (_query.docs.isNotEmpty) {
       // Collection exits
@@ -143,8 +152,12 @@ class _NavigationState extends State<Navigation> {
     // }
   }
 
-  int _selectedIndex = 3;
+ 
+
+  
   Future<Widget> bodyFunction() async {
+    // _selectedIndex = _select ; 
+    // _selectedIndex = data; 
     try {
       switch (_selectedIndex) {
         // case 0:
@@ -154,7 +167,7 @@ class _NavigationState extends State<Navigation> {
         case 0:
           if (await _isCollectionExits() == true) {
             return GenerateQR();
-          } else {
+          } else  {
             return AddPatient();
           }
 
@@ -207,7 +220,7 @@ class _NavigationState extends State<Navigation> {
         } else {
           setState(() => tappedYes = false);
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Navigation()));
+              context, MaterialPageRoute(builder: (context) => Navigation(data: 4,)));
         }
       } else {
         final action = await AlertDialogs.yesCancelDialog(
@@ -233,6 +246,7 @@ class _NavigationState extends State<Navigation> {
 
     Future<void> _onItemTapped(int index) async {
       setState(() {
+        //index = data ; 
         _selectedIndex = index;
       });
       // if (index == 0) {

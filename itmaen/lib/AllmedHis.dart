@@ -49,7 +49,7 @@ class _TabBarPageState extends State<TabBarPage>
 
         leading: IconButton(
             onPressed: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => Navigation())),
+                MaterialPageRoute(builder: (context) => Navigation(data: 4,))),
             icon: Icon(Icons.arrow_back)),
 
         backgroundColor: Color.fromARGB(255, 140, 167, 190),

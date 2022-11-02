@@ -229,7 +229,7 @@ class _setDoseState extends State<setDose> {
                                   });
 
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => Navigation()));
+                                      builder: (context) => Navigation(data: 4,)));
                                 }
                               },
                               child: Text('إضافة',

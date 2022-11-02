@@ -361,7 +361,7 @@ class _addManuallyState extends State<addManually> {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Navigation()));
+                                                Navigation(data: 3,)));
                                   }
                                 }
                               },

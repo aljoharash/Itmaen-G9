@@ -352,7 +352,7 @@ class _ViewDPageState extends State<ViewD> {
 
     print("it is working in the background");
 
-    Navigation nv = new Navigation();
+    Navigation nv = new Navigation(data: 3);
 
     final _auth = FirebaseAuth.instance;
 
@@ -825,7 +825,7 @@ class _ViewDPageState extends State<ViewD> {
 
  
 
-                                  Navigation nv = Navigation();
+                                  Navigation nv = Navigation(data: 3);
 
  
 
@@ -1175,7 +1175,7 @@ class _ViewDPageState extends State<ViewD> {
 
  
 
-                                  Navigation nv = Navigation();
+                                  Navigation nv = Navigation(data: 3);
 
  
 
@@ -1474,7 +1474,7 @@ class _medBubbleState extends State<medBubble> {
 
  
 
-  final Navigation nv = new Navigation();
+  final Navigation nv = new Navigation(data: 3);
 
  
 

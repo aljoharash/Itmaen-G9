@@ -335,7 +335,7 @@ class LoadDataFromFireStoreeState extends State<LoadDataFromFireStoree> {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Navigation()));
+                                                Navigation(data: 4,)));
                                   },
                                   icon: FaIcon(FontAwesomeIcons.pills),
                                   label: Text(

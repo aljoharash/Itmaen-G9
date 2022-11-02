@@ -970,7 +970,7 @@ class _editDoseState extends State<editDose>
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      Navigation()));
+                                                      Navigation(data: 1,)));
                                         },
                                         child: Text(
                                           "نعم",
@@ -1212,7 +1212,7 @@ class _editDoseState extends State<editDose>
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Navigation()));
+          .push(MaterialPageRoute(builder: (context) => Navigation(data: 1,)));
     } else {
       if (changed == true &&
           (DateTime.now().toString().substring(0, 10) ==
