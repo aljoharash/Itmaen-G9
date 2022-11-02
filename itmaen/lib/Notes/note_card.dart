@@ -49,24 +49,6 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                 builder: (context) => Row(children: [
                   GestureDetector(
                     child: Icon(
-                      Icons.edit,
-                      color: Colors.white,
-                    ),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => editNote(
-                                title: doc["note_title"],
-                                note: doc["note_content"],
-                                type: doc["type"],
-                                photo: doc["photo"]
-                              )));
-                    },
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  GestureDetector(
-                    child: Icon(
                       Icons.delete,
                       color: Colors.red,
                     ),
@@ -126,15 +108,15 @@ Widget noteCard(Function()? onTap, QueryDocumentSnapshot doc) {
                   SizedBox(
                     width: 60,
                   ),
-                    Container(
-                      height: 40,
-                      width: 40,                      
-                    child: doc['photo'] == " " ? SizedBox()
-                    : ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(doc['photo']),
-                  ),
-
+                  Container(
+                    height: 40,
+                    width: 40,
+                    child: doc['photo'] == " "
+                        ? SizedBox()
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(doc['photo']),
+                          ),
                   )
                 ]),
               ),
