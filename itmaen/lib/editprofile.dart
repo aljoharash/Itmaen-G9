@@ -153,11 +153,12 @@ class _editProfile extends State<editProfile> {
           backgroundColor: Color.fromARGB(255, 140, 167, 190),
           title: Center(
               child: Text(
-            "         الملف الشخصي                      ",
-            textAlign: TextAlign.left,
+            "الملف الشخصي      ",
+         //  textAlign: TextAlign.left,
             style: GoogleFonts.tajawal(fontWeight: FontWeight.bold),
           )),
           leading: IconButton(
+           
             icon: Icon(Icons.arrow_back_ios),
             color: Color.fromARGB(255, 255, 255, 255),
             onPressed: () {
