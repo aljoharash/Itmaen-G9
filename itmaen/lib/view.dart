@@ -201,39 +201,47 @@ class _ViewPageState extends State<View> {
               children: [
                 Container(
                   width: double.maxFinite,
-                  height: 60,
+                  height: 46,
                   margin: EdgeInsets.only(top: 10, left: 10, right: 10),
                   padding: EdgeInsets.only(left: 5, right: 5),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.grey.shade300,
                   ),
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: "اسم الدواء",
-                          filled: true,
-                          fillColor: Colors.grey.shade200,
-                          // enabledBorder: OutlineInputBorder(
-                          //   borderSide: BorderSide( width:3 , color:Color.fromARGB(255, 140, 167, 190)),
-                          //   borderRadius: BorderRadius.circular(50)
-                          // ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 2.0,
-                                color: Color.fromARGB(255, 140, 167, 190)),
-                          ),
-                          icon: Icon(
-                            Icons.search,
-                            size: 30,
-                            color: Color.fromARGB(255, 140, 167, 190),
-                          ),
-                          contentPadding: EdgeInsets.only(right: 3)),
-                      onChanged: (value) async {
-                        search(value);
-                        // CustomersController.search(value.trim());
-                      },
+                    child: SizedBox(
+                      height: 35,
+                      width: 350,
+                      child: TextField(
+                        decoration: const InputDecoration( 
+                            hintText: "اسم الدواء",
+                            filled: true,
+                            fillColor: Color(0x00000000),
+                            // enabledBorder: OutlineInputBorder(
+                            //   borderSide: BorderSide( width:3 , color:Color.fromARGB(255, 140, 167, 190)),
+                            //   borderRadius: BorderRadius.circular(50)
+                            // ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 2.0,
+                                  color: Color.fromARGB(255, 140, 167, 190)),
+                            ),
+                            icon: Icon(
+                              Icons.search,
+                              size: 25,
+                              color: Color.fromARGB(255, 140, 167, 190),
+                            ),
+                            contentPadding: EdgeInsets.only(
+                                        left: 14.0,
+                                        right: 12.0,
+                                        bottom: 8.0,
+                                        top: 8.0)),
+                        onChanged: (value) async {
+                          search(value);
+                          // CustomersController.search(value.trim());
+                        },
+                      ),
                     ),
                   ),
                 ),

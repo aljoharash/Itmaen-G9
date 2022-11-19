@@ -83,7 +83,9 @@ class _GenerateQRState extends State<GenerateQR> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  QrImage(data: loggedInUser!.uid),
+                  QrImage(data: loggedInUser!.uid,
+                  backgroundColor: Color.fromARGB(255, 140, 167, 190),
+                  foregroundColor: Colors.white),
                   SizedBox(height: 20),
                   Text(
                     " كود تسجيل الدخول الخاص ب: ",
