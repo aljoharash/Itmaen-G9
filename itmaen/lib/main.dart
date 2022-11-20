@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -61,7 +62,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           //primarySwatch: Colors.blueGrey,
           ),
-      home: patientScreen(),
+      home: //patientScreen(),
+      AnimatedSplashScreen(
+        duration: 3000,
+        splashIconSize: 200,
+        splash: Container(
+          alignment: Alignment.center,
+          child: Image.asset('images/BlueLogosq.jpg',
+        ),),
+        splashTransition: SplashTransition.fadeTransition,
+        backgroundColor: const Color(0xFF5f84a2),
+       nextScreen: patientScreen()),
     );
   }
 }

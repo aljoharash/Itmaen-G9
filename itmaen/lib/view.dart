@@ -206,7 +206,7 @@ class _ViewPageState extends State<View> {
                   padding: EdgeInsets.only(left: 5, right: 5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
-                    color: Colors.grey.shade300,
+                    color: const ui.Color.fromARGB(255, 231, 231, 231),
                   ),
                   child: Align(
                     alignment: Alignment.centerRight,
