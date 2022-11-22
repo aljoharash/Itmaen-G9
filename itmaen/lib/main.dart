@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
       home: //patientScreen(),
       AnimatedSplashScreen(
         duration: 3000,
-        splashIconSize: 200,
+        splashIconSize: 160,
         splash: Container(
           alignment: Alignment.center,
           child: Image.asset('images/BlueLogosq.jpg',
