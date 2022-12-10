@@ -1207,21 +1207,23 @@ class _ViewDPageState extends State<ViewD> {
 
                                   print('herree');
 
-                                    if (format == format2 &&
-                                      double.parse(remaining) ==
-                                          (double.parse(package) / 4)) {
-                                    nv.sendNotificationPackage(
-                                      medName,
-                                    );
-                                  }
-
-                                  if (format == format2 && send == false) {
+                                   if (format == format2 && send == false) {
 
                                     nv.sendNotificationchecked2(
 
                                         ' جرعة ${medName} ');
 
                                   }
+
+                                    if (format == format2 &&
+                                      double.parse(remaining) ==
+                                          (double.parse(package) / 4) && send == false) {
+                                    nv.sendNotificationPackage(
+                                      medName,
+                                    );
+                                  }
+
+                                 
 
  
 

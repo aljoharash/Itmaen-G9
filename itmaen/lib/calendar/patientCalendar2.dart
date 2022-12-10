@@ -76,10 +76,11 @@ class PatientCalendar_ extends State<PatientCalendar> {
   var currAmount;
   var currCheck;
   var currUnit;
-  var isChecked;
-  var currtime; 
-  var timechecked;
   var currtiemcheck;
+  var isChecked;
+  var currtime;
+  var timechecked;
+
   int count = 0;
 
   retrieve(QuerySnapshot snapshot) {
@@ -90,13 +91,13 @@ class PatientCalendar_ extends State<PatientCalendar> {
       amount = doc['amount'];
       checked = doc['cheked'];
       unit = doc['unit'];
+      timechecked = DateTime.parse(doc['Timecheked'].toDate().toString());
       theTime = DateTime.parse(doc['Time'].toDate().toString());
       doseDes.add(description);
       doseAmount.add(amount);
       doseName.add(namee);
       doseCheck.add(checked);
       doseUnit.add(unit);
-      doseTime.add(theTime!);
       doseTime.add(theTime!);
       doseCheckTime.add(timechecked!);
     });
@@ -109,32 +110,29 @@ class PatientCalendar_ extends State<PatientCalendar> {
         currAmount = doseAmount[i];
         currCheck = doseCheck[i];
         currUnit = doseUnit[i];
-        currtiemcheck= doseCheckTime[i];
-         currtime = doseTime[i];
+        currtiemcheck = doseCheckTime[i];
+        currtime = doseTime[i];
       }
 
       if (currCheck == true) {
-        if(currtiemcheck.difference(currtime).inMinutes >0){
-            if(currtiemcheck.difference(currtime).inMinutes >60){
-              isChecked = 'تم أخذ الدواء  بعد الموعد ب ${currtiemcheck.difference(currtime).inHours}   ساعات  ';
-            }
-            else{
-               isChecked = 'تم أخذ الدواء  بعد الموعد ب ${currtiemcheck.difference(currtime).inMinutes}  دقائق  ';
-
-            }
-
+        if (currtiemcheck.difference(currtime).inMinutes > 0) {
+          if (currtiemcheck.difference(currtime).inMinutes > 60) {
+            isChecked =
+                'تم أخذ الدواء  بعد الموعد ب ${currtiemcheck.difference(currtime).inHours}   ساعات  ';
+          } else {
+            isChecked =
+                'تم أخذ الدواء  بعد الموعد ب ${currtiemcheck.difference(currtime).inMinutes}  دقائق  ';
+          }
+        } else {
+          if (currtiemcheck.difference(currtime).abs().inMinutes > 60) {
+            isChecked =
+                'تم أخذ الدواء  قبل الموعد ب ${currtiemcheck.difference(currtime).abs().inHours}   ساعات  ';
+          } else {
+            isChecked =
+                'تم أخذ الدواء  قبل الموعد ب ${currtiemcheck.difference(currtime).abs().inMinutes}  دقائق  ';
+          }
         }
-        else{
-           if(currtiemcheck.difference(currtime).abs().inMinutes >60){
-              isChecked = 'تم أخذ الدواء  قبل الموعد ب ${currtiemcheck.difference(currtime).abs().inHours}   ساعات  ';
-            }
-            else{
-               isChecked = 'تم أخذ الدواء  قبل الموعد ب ${currtiemcheck.difference(currtime).abs().inMinutes}  دقائق  ';
 
-            }
-
-        }
-        
         //isChecked = "تم أخذ الدواء";
       } else {
         isChecked = "لم يتم أخذ الدواء";

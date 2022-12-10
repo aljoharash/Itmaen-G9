@@ -34,7 +34,7 @@ class _ViewPageState extends State<View> {
   StorageService st = StorageService();
   //var caregiverID;
   final _auth = FirebaseAuth.instance;
-  late User loggedUser;
+  late User? loggedUser  = _auth.currentUser;
 
   //Future<String?> loggedInUser = getCurrentUser();
 
@@ -201,39 +201,47 @@ class _ViewPageState extends State<View> {
               children: [
                 Container(
                   width: double.maxFinite,
-                  height: 60,
+                  height: 46,
                   margin: EdgeInsets.only(top: 10, left: 10, right: 10),
                   padding: EdgeInsets.only(left: 5, right: 5),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(50),
+                    color: const ui.Color.fromARGB(255, 231, 231, 231),
                   ),
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: "اسم الدواء",
-                          filled: true,
-                          fillColor: Colors.grey.shade200,
-                          // enabledBorder: OutlineInputBorder(
-                          //   borderSide: BorderSide( width:3 , color:Color.fromARGB(255, 140, 167, 190)),
-                          //   borderRadius: BorderRadius.circular(50)
-                          // ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 2.0,
-                                color: Color.fromARGB(255, 140, 167, 190)),
-                          ),
-                          icon: Icon(
-                            Icons.search,
-                            size: 30,
-                            color: Color.fromARGB(255, 140, 167, 190),
-                          ),
-                          contentPadding: EdgeInsets.only(right: 3)),
-                      onChanged: (value) async {
-                        search(value);
-                        // CustomersController.search(value.trim());
-                      },
+                    child: SizedBox(
+                      height: 35,
+                      width: 350,
+                      child: TextField(
+                        decoration: const InputDecoration( 
+                            hintText: "اسم الدواء",
+                            filled: true,
+                            fillColor: Color(0x00000000),
+                            // enabledBorder: OutlineInputBorder(
+                            //   borderSide: BorderSide( width:3 , color:Color.fromARGB(255, 140, 167, 190)),
+                            //   borderRadius: BorderRadius.circular(50)
+                            // ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 2.0,
+                                  color: Color.fromARGB(255, 140, 167, 190)),
+                            ),
+                            icon: Icon(
+                              Icons.search,
+                              size: 25,
+                              color: Color.fromARGB(255, 140, 167, 190),
+                            ),
+                            contentPadding: EdgeInsets.only(
+                                        left: 14.0,
+                                        right: 12.0,
+                                        bottom: 8.0,
+                                        top: 8.0)),
+                        onChanged: (value) async {
+                          search(value);
+                          // CustomersController.search(value.trim());
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -333,18 +341,14 @@ class medBubble extends StatelessWidget {
                       children: [
                         Directionality(
                           textDirection: TextDirection.rtl,
-                          child: 
-                          photo == " "?
-                          Image.asset(picture.toString(),
-                              height: 65, width: 65) : 
-                            Container(
-                              height: 65,
-                              width: 65,
-                              child:
-                                Image.network(photo),
-                              
-                            ),
-
+                          child: photo == " "
+                              ? Image.asset(picture.toString(),
+                                  height: 65, width: 65)
+                              : Container(
+                                  height: 65,
+                                  width: 65,
+                                  child: Image.network(photo),
+                                ),
                         ),
                         Text(
                           ' $medicName ',
@@ -684,6 +688,7 @@ class medBubble extends StatelessWidget {
     await FirebaseFirestore.instance
         .collection('dosesEdit')
         .where("name", isEqualTo: name)
+         .where("caregiverID", isEqualTo: cid)
         .get()
         .then((value) {
       hasV = value.docs.isNotEmpty;
@@ -696,6 +701,8 @@ class medBubble extends StatelessWidget {
   void retrieveInfo(String name) => FirebaseFirestore.instance
           .collection('dosesEdit')
           .where("name", isEqualTo: name)
+          .where("caregiverID",
+              isEqualTo: cid)
           .get()
           .then((value) {
         //hasValue = value.docs[0].exists;
